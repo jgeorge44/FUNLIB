@@ -1,0 +1,151 @@
+0001 H                                      1                             SCAN20
+0002 FPRGMS   IP    800  80            DISK
+0003 FKEYBOARDID         79            KEYBORD
+0004 FREPORT  O         132     OF     PRINTER
+0005 E                    X       1  15 79
+0006 E                    Y       1  15 79
+0007 IPRGMS   NS  01   1 C/   2 C/   4 CC
+0008 I       AND       5 CO   6 CP   7 CY
+0009 I                                       24  29 PGNAME
+0010 I        NS  10   1 C/   2 C/   4 CC
+0011 I       AND       5 CE   6 CN   7 CD
+0012 I        NS  02   6 CF
+0013 I       OR   03   6 CE
+0014 I       OR   04   6 CL
+0015 I       OR   05   6 CI
+0016 I       OR   06   6 CC
+0017 I       OR   07   6 CO
+0018 I       OR   08   1 C*   2 C*
+0019 I       OR   09
+0020 I                                        1  80 RECORD
+0021 I                                        7  14 FILNAM    02
+0022 I                                       54  59 WSOPT     02
+0023 I                                       27  32 TBLARR    03
+0024 I                                       27  29 TBXNAM    03
+0025 I                                       53  58 INNAME    05
+0026 I                                       18  27 FACT1     06
+0027 I                                       33  42 FACT2     06
+0028 I                                       28  32 OPER      06
+0029 I                                       43  48 RESULT    06
+0030 I                                       32  37 OUTNAM    07
+0031 I                                       45  70 OUTLIT    07
+0032 C           START     TAG
+0033 C   99                GOTO BEGIN
+0034 C           X,1       SET
+0035 C           X,2       SET
+0036 C           X,3       SET
+0037 C           X,4       SET
+0038 C           X,5       SET
+0039 C           X,6       SET
+0040 C           X,7       SET
+0041 C           X,8       SET
+0042 C           X,9       SET
+0043 C           X,10      SET
+0044 C           X,11      SET
+0045 C           X,12      SET
+0046 C           X,13      SET
+0047 C           X,14      SET
+0048 C           X,15      KEY01          OPTION  2
+0049 C           OPTION    COMP 'FN'                     21
+0050 C           OPTION    COMP 'WS'                     22
+0051 C           OPTION    COMP 'TA'                     23
+0052 C           OPTION    COMP 'LC'                     24
+0053 C           OPTION    COMP 'IF'                     25
+0054 C           OPTION    COMP 'F1'                     26
+0055 C           OPTION    COMP 'F2'                     27
+0056 C           OPTION    COMP 'OP'                     28
+0057 C           OPTION    COMP 'RF'                     29
+0058 C           OPTION    COMP 'OF'                     30
+0059 C           OPTION    COMP 'OL'                     31
+0060 C           OPTION    COMP '**'                     32
+0061 C           OPTION    COMP 'TX'                     33
+0062 C           OPTION    COMP 'AX'                     34
+0063 C                     SETON                     70
+0064 C   21
+0065 COR 22
+0066 COR 23
+0067 COR 24
+0068 COR 25
+0069 COR 26
+0070 COR 27
+0071 COR 28                SETOF                     70
+0072 C   29
+0073 COR 30
+0074 COR 31
+0075 COR 32
+0076 COR 33
+0077 COR    34             SETOF                     70
+0078 C   70      'INVALID' SET
+0079 C   70                GOTO START
+0080 C   21      Y,1       KEY01          KEYFIL  8
+0081 C   22      Y,2       KEY01          KEYWSO  6
+0082 C   23      Y,3       KEY01          KEYTAB  6
+0083 C   25      Y,4       KEY01          KEYINP  6
+0084 C   26      Y,5       KEY01          KEYF1  10
+0085 C   27      Y,6       KEY01          KEYF2  10
+0086 C   28      Y,7       KEY01          KEYOPR  5
+0087 C   29      Y,8       KEY01          KEYRES  6
+0088 C   30      Y,9       KEY01          KEYOUT  6
+0089 C   31      Y,10      KEY01          KEYLIT 26
+0090 C                     SETON                     99
+0091 C           BEGIN     TAG
+0092 C   01                SETOF                     8182
+0093 C                     SETOF                     80
+0094 C   08                SETON                     82
+0095 C   82                GOTO CONT
+0096 C   02 21   KEYFIL    COMP FILNAM                   80
+0097 C   02 22   KEYWSO    COMP WSOPT                    80
+0098 C   03 23   KEYTAB    COMP TBLARR                   80
+0099 C   04 24             SETON                     80
+0100 C   05 25   KEYINP    COMP INNAME                   80
+0101 C   06 26   KEYF1     COMP FACT1                    80
+0102 C   06 27   KEYF2     COMP FACT2                    80
+0103 C   06 28   KEYOPR    COMP OPER                     80
+0104 C   06 29   KEYRES    COMP RESULT                   80
+0105 C   07 30   KEYOUT    COMP OUTNAM                   80
+0106 C   07 31   KEYLIT    COMP OUTLIT                   80
+0107 C   03 33   TBXNAM    COMP 'TAB'                    80
+0108 C   03 34   TBXNAM    COMP 'TAB'                8080
+0109 C           CONT      TAG
+0110 C   08 32             SETON                     81
+0111 C   81                SETON                     80
+0112 OREPORT  H  101   1P
+0113 O       OR        OF
+0114 O                                   22 'PROGRAM SCAN'
+0115 O                         UDATE Y   40
+0116 O        H  2     1P
+0117 O       OR        OF
+0118 O                                   30 '1.......10........20'
+0119 O                                   50 '........30........40'
+0120 O                                   70 '........50........60'
+0121 O                                   90 '........70........80'
+0122 O        D  1     80N01N10
+0123 O                         PGNAME     6
+0124 O                         RECORD    90
+**
+ENTER OPTION DESIRED:
+  FN = SCAN FOR FILE NAME
+  WS = SCAN FOR WORKSTN CONTINUATION OPTIONS
+  TA = SCAN FOR TABLE/ARRAY NAME
+  LC = PRINT ALL LINE COUNTER SPECS
+  IF = SCAN FOR INPUT FIELD NAME
+  F1 = SCAN FOR FACTOR 1
+  F2 = SCAN FOR FACTOR 2
+  OP = SCAN FOR OPERATION CODE
+  RF = SCAN FOR RESULT FIELD
+  OF = SCAN FOR OUTPUT FIELD NAME
+  OL = SCAN FOR OUTPUT LITERAL
+  ** = PRINT ALL COMPILE TIME TABLES/ARRAYS
+  TX = PRINT ALL TABLE NAMES
+  AX = PRINT ALL ARRAY NAMES
+**
+ENTER FILE NAME
+ENTER WORKSTN CONTINUATION OPTION
+ENTER TABLE/ARRAY NAME
+ENTER INPUT FIELD NAME
+ENTER FACTOR 1
+ENTER FACTOR 2
+ENTER OPERATION CODE
+ENTER RESULT FIELD
+ENTER OUTPUT FIELD NAME
+ENTER OUTPUT LITERAL - INCLUDE QUOTES

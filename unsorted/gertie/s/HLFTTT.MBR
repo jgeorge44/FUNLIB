@@ -1,0 +1,402 @@
+HLFTTT   START 0
+         LA    WS,2                                   OPEN WS FILE.
+         SBN   $WSAT3(,2),4                           'OPEN'DTF.
+         $OPEN
+DE       EQU   *
+         $WSIO OPC-ACI,RCAD-INPUT
+         B     CHECK                                  CHECK FOR EXCEPT
+*                                                     -ION RET. CODES.
+         CLI   WS+$WSRTC,$WSRACC       IF THIS IS NEW REQUESTOR, CK FOR
+         JNE   DA                      X, O, OR INVALID REQUEST.
+         CLI   XID,0                   IF 'X' ALREADY ESTABLISHED, CK
+         JE    DB                      FOR 'O', ELSE IF 'O' ALREADY
+         J     DC
+CTR      DS    CL1                     MOVE CTR FOR CAT'S GAME.
+DB       EQU   *
+         MVI   CTR,64                  INIT CTR FOR CAT'S GAME.
+         MVC   XID,WS+$WSNAME(2)                      SAVE 1ST WS ID.
+         SBN   IND@,2                  TURN OFF DISPLAY OF ROW NUMBERS.
+         CLI   INPUT,C'1'              THIS EFFECTS OPTION FOR DELETING
+         JNE   DL                      VERTICLE LINES OF THIRD POS.
+         SBF   IND@,2                  SET OFF OPTIONAL BLINK.
+DL       EQU   *
+         LA    MSG5,2                  INFORM 'X' THAT 'O' IS AWAITED.
+         LA    XID,1
+         B     PUT
+         B     DE
+DC       MVC   OID,WS+$WSNAME(2)                      SAVE 2ND WS ID.
+         LA    OID,1                                  PUT GAME TO 2ND.
+         LA    0,2                     WS WITH NO MSG.
+         B     PUT
+         LA    XID,1                                  PUT TO 1ST.
+         MVC   MSG0-10,PLAYER(1)       REMIND PLAYER WHO HE IS.
+         LA    MSG0,2                                 SEND 'ENTER'MSG
+         B     PUT                                    AND INVITE.
+         B     DE                                     ACCEPT INPUT.
+* END    OF    INITIALIZATION PORTION OF MAINLINE.
+         SPACE
+* START  OF    MAIN PORTION OF MAINLINE.
+         SPACE
+DA       EQU   *
+         LA    XID,1                   ENSURE THAT 'PLAYER' IS ONE
+         CLI   OID,0                   IF PLAYER 'O' NOT YET SET, 'X'
+         JE    DR                      CANNOT ENTER HIS MOVES.
+         CLI   PLAYER,C'X'             WHO HAS JUST SATISFIED INVITE.
+         JE    DD
+         LA    OID,1                   IF NOT, ISSUE 'ERROR' MSG IN
+DD       CLC   WS+$WSNAME,0(2,1)       THAT THE WAIT MSG IS RE-ISSUED.
+         JE    DM
+DR       LA    MSG5,2
+         B     PUT
+         B     DE
+DM       EQU   *
+         B     B                                      VALIDATE INPUT.
+         LA    WIN,2                                  CHECK FOR WIN,
+         B     C                                      GIVE 'EXIT'ADDR.
+         SLC   CTR,K1(1)               IF CAT'S GAME GIVE MESSAGE TO
+         BZ    CAT                     BOTH PLAYERS.
+         MVC   MSG0-10,PLAYER(1)       PROMPT APPROPRIATE PLAYER ID.
+         LA    XID,1                                  IF NO WINNER,
+         LA    MSG0,2                                 PUT GAME TO BOTH
+MSG0@    EQU   *-1
+         CLI   PLAYER,C'X'                            PLAYERS WITH THE
+         JE    DJ                                     PROPER INVITE
+         LA    OID,1                                  TO NEXT PLAYER.
+DJ       B     PUT                                    PUT TO NEXT/INV.
+         LA    XID,1                                  ALSO PUT TO THE
+         LA    0,2                                    PLAYER WHO JUST
+         CLI   PLAYER,C'X'                            JUST MOVED.
+         JNE   DK
+         LA    OID,1
+DK       B     PUT
+         LA    IND-7,1                 UNCONDITIONALLY RESET HI/BLINK
+PF       SBF   0(,1),0                 CONDITIONING INDICATORS.
+         B     DE                                     NEXT TURN
+* END    OF    MAINLINE
+         SPACE 3
+* START  OF    ERROR HANDLING SUBROUTINE.
+         SPACE 2
+ERR1     LA    MSG1,2
+         J     ERR0
+ERR2     LA    MSG2,2
+ERR0     LA    XID,1
+         CLI   PLAYER,C'X'
+         JE    DH
+         LA    OID,1
+DH       B     PUT
+         B     DE                                     PUT EXCPT MSG.
+         SPACE
+* END    OF    ERROR HANDLING ROUTINE.
+         SPACE 3
+* START  OF    ROUTINE THAT HANDLES A GAME WINNER.
+         SPACE
+CAT      LA    MSG6,2                  GIVE 'CAT'S GAME' MSG TO BOTH
+         LA    XID,1                   PLAYERS.
+         B     PUT
+         LA    MSG6,2
+         LA    OID,1
+         B     PUT
+         B     REL
+         SPACE
+WIN      EQU   *                                      END OF GAME.
+         LA    MSG3-23,2
+         MVI   0(,2),C'X'
+         CLI   PLAYER,C'O'
+         JE    DF
+         MVI   0(,2),C'O'
+DF       EQU   *                       SET 4 'WINNERS' BLINKING.
+         LA    IND-7,2                 CONVERT FROM FORMAT'S BIT
+         MZZ   0(,2),0(,1)             ARRANGEMENT TO THE PROPER
+         MZN   2(,2),0(,1)             INDICATOR MASK.
+         MZZ   4(,2),1(,1)
+         MZN   6(,2),1(,1)
+         MNZ   0(,2),2(,1)             DIGITS FOR IND ARE..ROW0/PLN0,
+         MNN   2(,2),2(,1)             ROW0/PLN1, ROW0/PLN2, ROW0/PLN3,
+         MNZ   4(,2),3(,1)             THEN, ROW1/PLN0, ETC..UNTIL
+         MNN   6(,2),3(,1)
+         MZZ   1(,2),4(,1)             DIGITS FOR WIN TBL ARE PLN0/
+         MZN   3(,2),4(,1)             ROW0, ROW1, ROW2, ROW3, THEN
+         MZZ   5(,2),5(,1)             PLN1/ROW0, ROW1, ROW2, ETC.
+         MZN   7(,2),5(,1)
+         MNZ   1(,2),6(,1)
+         MNN   3(,2),6(,1)
+         MNZ   5(,2),7(,1)
+         MNN   7(,2),7(,1)
+         LA    MSG3,2
+         LA    XID,1
+         CLI   PLAYER,C'X'             GIVE WINNING PLAYER A WINNER
+         JNE   DN                      MESSAGE AND THE LOSER A 'LOSER'
+         LA    OID,1                   MESSAGE.
+DN       EQU   *
+         B     PUT
+         LA    MSG7,2                  THIS IS THE LOSER MSG.
+         LA    XID,1
+         CLI   PLAYER,C'X'
+         JE    DP
+         LA    OID,1
+DP       B     PUT
+REL      MVC   WS+$WSNAME,XID(2)       RELEASE WORKSTATION 'X'.
+         $WSIO DTF-WS,OPC-REL
+         MVC   WS+$WSNAME,OID(2)       RELEASE WORKSTATION 'O'.
+         $WSIO DTF-WS,OPC-REL
+         LA    X'FFFF',2               FIND OUT IF ANY OTHER REQUESTORS
+         $WSIO PRIV-Y
+         A     ZIP,2                   IS WAITING AND IF SO, PREPARE
+         BNZ   DE                      TO START NEW GAME.
+EJ       $EOJ
+* CHECK  INPUT COORDINDATES FOR VALID COMBINATIONS
+         SPACE 2
+* INPUT        VERIFICATION SUBROUTINE.
+         SPACE
+B        ST    AF+3,8                                 SAVE RET ADDR.
+         LA    INPUT,1                                R1 -> 3 COORDS.
+         SBF   0(,1),X'F0'                            ALL MUST NUMBERS
+         SBF   1(,1),X'F0'                            LESS THAN 4.
+         SBF   2(,1),X'F0'
+         TBF   2(,1),X'0C'
+         TBF   1(,1),X'0C'
+         TBF   0(,1),X'0C'
+         BF    ERR1
+         MNN   AA+2,PLN(,1)                           CONVERT TO OUT-
+         ALC   AA+2,AA+2(1)                           PUT BUFFER @.
+         ALC   AA+2,AA+2(1)
+         ALC   AA+2,COL(1,1)
+         MZN   AA+2,ROW(,1)
+         LA    OUTPUT,2
+AA       LA    0(,2),2                                GET OUTPUT @.
+AE       CLI   0(,2),C' '                             CHECK FOR POS
+         BNE   ERR2                                   OCCUPIED, IF SO,
+         MVC   0(1,2),PLAYER                          ERR, ELSE
+         CLI   PLAYER,C'X'                            FLIP-FLOP THE
+         MVI   PLAYER,C'X'
+         JNE   AF                                     PLAYER ID.
+         MVI   PLAYER,C'O'
+AF       B     0                                      RETURN.
+         SPACE 3
+* THIS         ROUTINE CHECKS FOR 4-IN-A-ROW; A WINNER
+         SPACE
+C        ST    BR+3,2                                 PREPARE FOR WIN.
+         ST    BJ+3,8                                 INIT RETURN.
+         MVI   DISP,0                                 FIND THE LOC OF
+         MNN   DISP,PLN(,1)                           THE MOVE FROM
+         ALC   DISP,DISP                              THE MOVE COORD'S
+         TBN   ROW(,1),2                              JUST ENTERED.
+         JF    BA                                     DISP IS PLANE.
+         ALC   DISP,K1(1)                             TOP 2 ROWS IN
+BA       MVC   BB+4,COL(1,1)                          1ST BYTE.
+BC       LA    TBL-7,2                                GET MASK & MOVE
+         TBN   ROW(,1),1               GET BIT MASK FROM TABLE.
+         JF    BB
+         LA    4(,2),2
+BB       MVC   MASK,0(1,2)                            TO MSK/DSP FLD.
+         LA    MASKO,2                                ASSUME PLAYER 2.
+         CLI   PLAYER,C'X'                            CHANGE IF PLR X.
+         JE    BD
+         LA    MASKX,2
+BD       MVC   BE+2,DISP(2)
+BE       SBN   0(,2),0                                DUMMY INST.
+         MVC   BF+2,DISP(2)                           USE SAME MASK
+         LA    WTBL,1                                 FOR TEST FOR WIN
+BG       CLI   0(,1),X'FF'                            TEST FOR TBL END
+BJ       BE    0                                      GO IF WINNER.
+BF       TBN   0(,1),0                                DUMMY TEST INST
+         JT    BH
+BI       LA    8(,1),1                                GO TO NEXT.
+         B     BG
+BH       MVC   BJA+1,0(1,1)                           INITIALIZE TEST
+         MVC   BK+1,1(1,1)
+         MVC   BL+1,2(1,1)
+         MVC   BM+1,3(1,1)
+         MVC   BN+1,4(1,1)
+         MVC   BO+1,5(1,1)                            8-BYT MASK TEST.
+         MVC   BP+1,6(1,1)
+         MVC   BQ+1,7(1,1)
+BJA      TBN   0(,2),0                                THIS IS THE TEST
+BK       TBN   1(,2),0                                FOR A 4-IN-A-ROW
+BL       TBN   2(,2),0                                CONDITION.
+BM       TBN   3(,2),0
+BN       TBN   4(,2),0
+BO       TBN   5(,2),0
+BP       TBN   6(,2),0
+BQ       TBN   7(,2),0
+BR       BT    0                                      RETURN IF WINNER
+         B     BI                                     TRY NEXT MASK.
+         SPACE 3
+* THIS   IS A  GENERALIZED SCREEN OUTPUT ROUTINE.
+         SPACE
+PUT      EQU   *
+* ASSUME  REG  1 -> X OR O ID FIELD. REG 2 -> MSG ELSE0 IF NO OUTPUT
+         ST    PA+3,8                                 INIT RETURN
+         MVC   WS+$WSNAME,0(2,1)                      PUT WS ID IN DTF
+         SBN   IND@,4                  CONDITION OFF PROMPT BLINK.
+         ST    PG+3,2                  SAVE REG 2 FOR COMPARE.
+         CLC   PG+3,MSG0@(2)           ONLY CONDITION HI/BLINK IF THE
+         JNE   PG                      OUTPUT IS RESULT OF NORMAL MOVE.
+         SBF   IND@,4                  NO-BLINK FOR STANDARD PROMPT.
+         LA    IND-7,1                 REG 1 IS AVAILABLE FOR USE.
+         MNZ   PE+2,AA+2               USE THE FORMAT-PUT AREA FOR AN
+         ALC   PE+2,PE+2(2)            INPUT TO CONDITION NEXT OURPUT.
+         TBN   AA+2,8                  CARRY OVER THE LOW-ORDER BIT.
+         SBF   AA+2,8                  SET OFF SO MNN WILL WORK.
+         JF    PH
+         SBN   PE+2,1
+PH       MNN   PI+4,AA+2               SET MOVE OF INIT OF MASK BYTE.
+         LA    TBL-7,2
+PI       MVC   PE+1,0(1,2)             THIS SETS MASK FOR OUTPUT IND.
+         MVC   PF+2,PE+2(2)            ALSO RESET INDICATOR AFTER PUT.
+PE       SBN   0(,1),0                 THIS SETS INDICATOR FOR WSDM.
+PG       LA    0,2                     RE-LOAD REG 2...ALSO COMP. AREA.
+         A     ZIP,2                                  IF NO OUTPUT,
+         JZ    PB                                     DONT TRY MOVE.
+         MVC   MSGBUF,0(40,2)                         ELSE MOVE MSG.
+         J     PC                                     & DONT BLNK BUF
+PB       MVI   MSGBUF,C' '                            CLEAR MSG AREA.
+         MVC   MSGBUF-1,MSGBUF(39)
+PC       EQU   *
+PD       $WSIO DTF-WS,OPC-PTI,OUTLEN-BUFLEN,RCAD-OUTPUT,FORMAT-HLFTTT
+         B     CHECK
+PA       B     0                                      END OF PUT RTNE.
+CHECK    ST    CK+3,8                                 INIT RETURN.
+         CLI   WS+$WSRTC,$WSRNAV       IF OPERATOR RELEASED,ASSUME HE
+         JE    QUIT                    HAS RESIGNED.
+         CLI   WS+$WSAID,$AIDCM13      AN OPERATOR MAY ALSO QUIT BY
+         MVI   WS+$WSAID,0             CLEAR AID BYTE TO PREVENT LOOP.
+         JE    QUIT                    HITTING COMMAND KEY 13.
+         CLI   WS+$WSRTC,$WSRPE                       TEST FOR ANY COD
+CK       BNE   0                                      EXCEPT REQ & PP.
+         B     EJ                                     ELSE KILL PGM.
+         SPACE 2
+QUIT     CLC   WS+$WSNAME,XID(2)       FIND OUT WHICH PLAYER QUIT GAME.
+         LA    XID,1                   ASSUME THAT 'X' DID.
+         JNE   KA                      IF 'X' WAS QUITTER, GIVE HIM MSG
+         LA    OID,1                   ELSE, IT 'O' WHO QUIT.
+KA       EQU   *
+         CLI   0(,1),0                 IF NO OTHER PLAYER, NO MSG.
+         BE    EJ
+         LA    MSG4,2                  GIVE QUITTER APPROPRIATE MSG.
+         B     PUT
+         MVC   XID,ZIP(2)              BE RE-USABLE.
+         MVC   OID,ZIP(2)              BE RE-USABLE.
+         B     EJ
+         EJECT
+WTBL     EQU   *
+         DC    XL8'F000000000000000'                  76 POSSIBLE WAYS
+         DC    XL8'8888000000000000'                  TO WIN IN BIT
+         DC    XL8'8421000000000000'                  ARRAY FORM.
+         DC    XL8'8000800080008000'
+         DC    XL8'8000080000800008'
+         DC    XL8'8000400020001000'
+         DC    XL8'8000040000200001'
+         DC    XL8'4000400040004000'
+         DC    XL8'4000040000400004'
+         DC    XL8'4444000000000000'
+         DC    XL8'2000200020002000'
+         DC    XL8'2222000000000000'
+         DC    XL8'2000020000200002'
+         DC    XL8'1111000000000000'
+         DC    XL8'1000100010001000'
+         DC    XL8'1000200040008000'
+         DC    XL8'1000010000100001'
+         DC    XL8'1000020000400008'
+         DC    XL8'0800080008000800'
+         DC    XL8'0F00000000000000'
+         DC    XL8'0800040002000100'
+         DC    XL8'0400040004000400'
+         DC    XL8'0200020002000200'
+         DC    XL8'0100010001000100'
+         DC    XL8'0100020004000800'
+         DC    XL8'0080008000800080'
+         DC    XL8'00F0000000000000'
+         DC    XL8'0080004000200010'
+         DC    XL8'0040004000400040'
+         DC    XL8'0020002000200020'
+         DC    XL8'0010001000100010'
+         DC    XL8'0010002000400080'
+         DC    XL8'0008000800080008'
+         DC    XL8'0008008008008000'
+         DC    XL8'000F000000000000'
+         DC    XL8'0008000400020001'
+         DC    XL8'0008004002001000'
+         DC    XL8'1248000000000000'
+         DC    XL8'0004000400040004'
+         DC    XL8'0004004004004000'
+         DC    XL8'0002000200020002'
+         DC    XL8'0002002002002000'
+         DC    XL8'0001000100010001'
+         DC    XL8'0001001001001000'
+         DC    XL8'0001002004008000'
+         DC    XL8'0001000200040008'
+         DC    XL8'0000F00000000000'
+         DC    XL8'0000888800000000'
+         DC    XL8'0000842100000000'
+         DC    XL8'0000444400000000'
+         DC    XL8'0000222200000000'
+         DC    XL8'0000111100000000'
+         DC    XL8'00000F0000000000'
+         DC    XL8'000000F000000000'
+         DC    XL8'0000000F00000000'
+         DC    XL8'0000124800000000'
+         DC    XL8'00000000F0000000'
+         DC    XL8'0000000088880000'
+         DC    XL8'0000000084210000'
+         DC    XL8'0000000044440000'
+         DC    XL8'0000000022220000'
+         DC    XL8'0000000011110000'
+         DC    XL8'000000000F000000'
+         DC    XL8'0000000000F00000'
+         DC    XL8'00000000000F0000'
+         DC    XL8'0000000012480000'
+         DC    XL8'000000000000F000'
+         DC    XL8'0000000000008888'
+         DC    XL8'0000000000008421'
+         DC    XL8'0000000000004444'
+         DC    XL8'0000000000002222'
+         DC    XL8'0000000000001111'
+         DC    XL8'0000000000000F00'
+         DC    XL8'00000000000000F0'
+         DC    XL8'000000000000000F'
+         DC    XL8'0000000000001248'
+         DC    XL1'FF'                                END OF TABLE.
+READY    DC    XL1'0'
+XID      DC    XL2'0'                                 WSID FOR 'X'
+OID      DC    XL2'0'                                 WSID FOR 'O'.
+MSG1     DC    CL40'INVALID COORDINATES, PLEASE RE-KEY'
+MSG2     DC    CL40'POSITION OCCUPIED, PLEASE RE-KEY'
+MSG0     DC    CL40'ENTER NEXT MOVE COORDINATES'
+MSG3     DC    CL40'CONGRATULATIONS  , YOU ARE THE WINNER'
+MSG4     DC    CL40'YOU WIN AS YOUR OPPONENT/TURKEY RESIGNED'
+MSG5     DC    CL40'WAIT...YOUR OPPONENT IS NOT READY'
+MSG6     DC    CL40'CATS GAME....TRY AGAIN'
+MSG7     DC    CL40'SORRY, YOUR OPPONENT HAS WON THIS TIME'
+ZIP      DC    AL2(0)                                 TEST FOR 0 IN RG
+IND@     EQU   *
+IND      DC    XL9'0'
+         ORG   *,8
+INPUT    EQU   *
+         DS    CL3                                    INPUT BUFFER.
+K1       DC    XL2'1'                                 CONSTANT OF 1.
+COL      EQU   1
+PLN      EQU   0
+ROW      EQU   2
+OUTPUT   EQU   *
+MSGBUF   DC    CL104' '                               LAST 40 PROMT FL
+BUFLEN   EQU   *-OUTPUT
+PLAYER   DC    CL1'X'
+MASKO    EQU   *
+         DC    XL8'0'
+MASKX    EQU   *
+         DC    XL8'0'
+TBL      DC    XL8'8040201008040201'
+DISP     DS    CL2
+MASK     EQU   DISP-1
+NDX      EQU   *
+         DS    CL128
+         EJECT
+WS       EQU   *
+         $DTFW MEMBER-HLFFMT,INLEN-3,INDA-IND@,TNUM-2,INDEXA-NDX
+         PRINT OFF
+         $DTFO WS-Y,FIELD-Y
+         $WSEQ
+         $WIND
+         PRINT ON
+         END

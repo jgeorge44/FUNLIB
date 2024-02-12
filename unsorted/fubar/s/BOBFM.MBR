@@ -1,0 +1,149 @@
+0001 SGEORG8    0124  Y
+0002 DCUST      400121Y               Y                CPLOT-UR-OWN GRAPHS INC.
+0003 D          010108Y                         Y
+0004 D        00010208Y                         Y
+0005 D        00010308Y                         Y
+0006 D        00010408Y                         Y
+0007 D        00010508Y                         Y
+0008 D        00010608Y                         Y
+0009 D        00010708Y                         Y
+0010 D        00010808Y                         Y
+0011 D        00010908Y                         Y
+0012 D        00011008Y                         Y
+0013 D        00011108Y                         Y
+0014 D        00011208Y                         Y
+0015 D        00011308Y                         Y
+0016 D        00011408Y                         Y
+0017 D        00011508Y                         Y
+0018 D        00011608Y                         Y
+0019 D        00011708Y                         Y
+0020 D        00011808Y                         Y
+0021 D        00011908Y                         Y
+0022 D        00012008Y                         Y
+0023 D        00012108Y                         Y
+0024 D        00012208Y                         Y
+0025 D        00012308Y                         Y
+0026 DFIELDS  00712310Y                       Y
+0027 DINFO    00712410Y
+0029 SGEORG9    V 00
+0030 DAMOUNT     60101Y
+0031 DFLD01      2011011                  5811         CAA
+0032 DFLD02      2011313              Y   5913         CBB
+0033 DFLD03      2011615                  6015         CCC
+0034 DFLD04      2011917              Y   6117         CDD
+0035 DFLD05      2 12219                  6219         CEE
+0036 DFLD06      2 12521              Y   6321         CFF
+0037 DFLD07      2 12823                  6423         CGG
+0038 DFLD08      2 13125              Y   8225         CHH
+0039 DFLD09      2 13427                  6527         CII
+0040 DFLD10      2 13729              Y   6629         CJJ
+0041 DFLD11      2 14031                  6731         CKK
+0042 DFLD12      2 14333              Y   6833         CLL
+0043 DFLD13      2 14635                  6935         CMM
+0044 DFLD14      2 14937              Y   7037         CNN
+0045 DFLD15      2 15239                  7139         COO
+0046 DFLD16      2 15541              Y   7241         CPP
+0047 DFLD17      2 15843                  7343         CQQ
+0048 DFLD18      2 16145              Y   7445         CRR
+0049 DFLD19      2 16447                  7547         CSS
+0050 DFLD20      2 16749              Y   7649         CTT
+0051 DFLD21      2 17051                  7751         CUU
+0052 DFLD22      2 17353              Y   7853         CVV
+0053 DFLD23      2 17655                  7955         CWW
+0054 DFLD24      2 17957              Y   8057         CXX
+     SSTART     01          Y
+     DFL0001  00150202Y                                CENTER THE UPPER
+     DFL0002  00370244Y               Y                C***********************X
+     D**************
+     DFL0003  00160302Y                                CAND LOWER LIMITS
+     DFL0004  00060326Y                                CUPPER:
+     DUPPER   00070333   YS Y B
+     DFL0006  00370344Y               Y                C*    BAR-GRAPH PREPARATX
+     DION SCREEN   *
+     DFL0007  00300402Y                                CFOR THE GRAPH'S SCALE..X
+     D.LOWER:
+     DLOWER   00070433   YS Y B
+     DFL0009  00370444Y               Y                C***********************X
+     D**************
+     DFL0010  00520715Y                                CENTER UP TO 24 TWO CHARX
+     DACTER FIELD NAMES IF DESIRED.
+     DFL0011  00010814Y                                C/
+     DF1      00020907   Y                  Y
+     DF2      00020910   Y                  Y
+     DF3      00020913   Y                  Y
+     DF4      00020916   Y                  Y
+     DF5      00020919   Y                  Y
+     DF6      00020922   Y                  Y
+     DF7      00020925   Y                  Y
+     DF8      00020928   Y                  Y
+     DF9      00020931   Y                  Y
+     DF10     00020934   Y                  Y
+     DF11     00020937   Y                  Y
+     DF12     00020940   Y                  Y
+     DF13     00020943   Y                  Y
+     DF14     00020946   Y                  Y
+     DF15     00020949   Y                  Y
+     DF16     00020952   Y                  Y
+     DF17     00020955   Y                  Y
+     DF18     00020958   Y                  Y
+     DF19     00020961   Y                  Y
+     DF20     00020964   Y                  Y
+     DF21     00020967   Y                  Y
+     DF22     00020970   Y                  Y
+     DF23     00020973   Y                  Y
+     DF24     00020976   Y                  Y
+     DDESCR   00711007   Y                      Y
+     DFL0014  00011114Y                                C\
+     DFL0015  00561215Y                                CENTER A 72 CHARACTER DEX
+     DSCRIPTION TO GO UNDER THE FIELDS.
+     DFL0016  00111502Y                                CENTER UP TO
+     DFL0017  00151602Y                                C24 FIELD VALUES
+     DFL0018  00181702Y                                CTO BE SHOWN ON THE
+     DFL0019  00231802Y                                CBAR GRAPH........... 1)
+     DB1      00071826   YS Y B
+     DFL0021  00031834Y                                C 2)
+     DB2      00071838   YS   B
+     DFL0023  00031846Y                                C 3)
+     DB3      00071850   YS   B
+     DFL0025  00031858Y                                C 4)
+     DB4      00071862   YS   B
+     DFL0027  00021923Y                                C5)
+     DB5      00071926   YS   B
+     DFL0029  00031934Y                                C 6)
+     DB6      00071938   YS   B
+     DFL0031  00031946Y                                C 7)
+     DB7      00071950   YS   B
+     DFL0033  00031958Y                                C 8)
+     DB8      00071962   YS   B
+     DFL0035  00022023Y                                C9)
+     DB9      00072026   YS   B
+     DFL0037  00032034Y                                C10)
+     DB10     00072038   YS   B
+     DFL0039  00032046Y                                C11)
+     DB11     00072050   YS   B
+     DFL0041  00032058Y                                C12)
+     DB12     00072062   YS   B
+     DFL0043  00032122Y                                C13)
+     DB13     00072126   YS   B
+     DFL0045  00032134Y                                C14)
+     DB14     00072138   YS   B
+     DFL0047  00032146Y                                C15)
+     DB15     00072150   YS   B
+     DFL0049  00032158Y                                C16)
+     DB16     00072162   YS   B
+     DFL0051  00032222Y                                C17)
+     DB17     00072226   YS   B
+     DFL0053  00032234Y                                C18)
+     DB18     00072238   YS   B
+     DFL0055  00032246Y                                C19)
+     DB19     00072250   YS   B
+     DFL0057  00032258Y                                C20)
+     DB20     00072262   YS   B
+     DFL0059  00032322Y                                C21)
+     DB21     00072326   YS   B
+     DFL0061  00032334Y                                C22)
+     DB22     00072338   YS   B
+     DFL0063  00032346Y                                C23)
+     DB23     00072350   YS   B
+     DFL0065  00032358Y                                C24)
+     DB24     00072362   YS   B

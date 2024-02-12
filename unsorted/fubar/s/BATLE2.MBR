@@ -1,0 +1,157 @@
+0001 H     014                                      5                     BATLE2
+0002 F*
+0003 F* BATTLE SHIP - A GAME OF/FOR WITS/HALF-WITS
+0004 F*
+0005 F*  D AHLBERG/CRM  3/24/78
+0006 F*
+0007 FWK1     CP        724            WORKSTN
+0008 FBATTLE  IC    228 228R 2AI     1 DISK
+0009 E                    ARI       225  1
+0010 E                    ARY       225  1
+0011 E                    ARZ       225  1
+0012 E                    AR0       225  3
+0013 E                    AR1        15  3
+0014 E                    AR2        15  3
+0015 E                    AR3        15  3
+0016 E                    AR4        15  3
+0017 E                    AR5        15  3
+0018 E                    AR6        15  3
+0019 E                    AR7        15  3
+0020 E                    AR8        15  3
+0021 E                    AR9        15  3
+0022 E                    AR10       15  3
+0023 E                    AR11       15  3
+0024 E                    AR12       15  3
+0025 E                    AR13       15  3
+0026 E                    AR14       15  3
+0027 E                    AR15       15  3
+0028 E                    TABLTR 15  15  1   TABNUM  2 0
+0029 E                    MSGS    1   5 40
+0030 IWK1     MS  01   1 CA
+0031 I* FORMAT- START
+0032 I                                     00020002 TEST
+0033 I* FORMAT- DSPLAY
+0034 I        NS  02   1 CB
+0035 I                                     00020004 SHOT
+0036 I        NS  99
+0037 IBATTLE  NS  05
+0038 I                                        1   2 BTLKEY
+0039 I                                        3   3 ACTION
+0040 I                                        4 228 ARI
+0041 I            DS
+0042 I                                        1   3 SHOT
+0043 I                                        1   1 LETTER
+0044 I                                        2   3 NUMBER
+0045 C   KG                GOTO END
+0046 C                     MOVE MSGS,1    MSG
+0047 C                     SETOF                     09
+0048 C   99                GOTO END
+0049 C   KA                GOTO END
+0050 C   02                GOTO SHTCHK
+0051 C                     Z-ADD50        #SHOTL  20
+0052 C                     EXSR SUBRGO
+0053 C           RNUM      DIV  25        CHAIN#  20
+0054 C                     MVR            CHAIN#
+0055 C           1         ADD  CHAIN#    CHAIN#
+0056 C           CHAIN#    CHAINBATTLE               91
+0057 C                     MOVE ARI       ARY
+0058 C                     GOTO END
+0059 C           SHTCHK    TAG
+0060 C           LETTER    COMP 'O'                  90
+0061 C   90                MOVE MSGS,2    MSG
+0062 C   90                SETON                     09
+0063 C   90                GOTO END
+0064 C           LETTER    COMP 'A'                    90
+0065 C   90                MOVE MSGS,2    MSG
+0066 C   90                SETON                     09
+0067 C   90                GOTO END
+0068 C           NUMBER    COMP '01'                   90
+0069 C   90                MOVE MSGS,3    MSG
+0070 C   90                SETON                     09
+0071 C   90                GOTO END
+0072 C           NUMBER    COMP '15'                 90
+0073 C   90                MOVE MSGS,3    MSG    40
+0074 C   90                SETON                     09
+0075 C   90                GOTO END
+0076 C           LETTER    LOKUPTABLTR    TABNUM         40
+0077 C           TABNUM    MULT 15        Z       40
+0078 C                     MOVE NUMBER    NUM     20
+0079 C           Z         ADD  NUM       Z
+0080 C           ARY,Z     COMP 'X'                      50
+0081 C           #SHOTL    SUB  1         #SHOTL       9090
+0082 C   90                SETON                     LR
+0083 C   90                GOTO END
+0084 C   50                MOVE 'H'       ARZ,Z
+0085 C  N50                MOVE '*'       ARZ,Z
+0086 C   50                MOVE ' '       ARY,Z
+0087 C   50      1         ADD  #HITS     #HITS   30
+0088 C  N50      1         ADD  #MISS     #MISS   30
+0089 C           END       TAG
+0090 C   LR                SETON                     10
+0091 C   KG                SETON                     10
+0092 C  N99                EXSR DSPLOD
+0093 C   10      'X'       LOKUPARY                      90
+0094 C   10 90             MOVE MSGS,4    MSG
+0095 C   10N90             MOVE MSGS,5    MSG
+0096 C   10                SETON                     09LR
+0097 C                     SETOF                     KAKG10
+0098 CSR         SUBRGO    BEGSR
+0099 CSR                   TIME           TIMCHK  60
+0100 CSR                   MOVE TIMCHK    TIME1   40
+0101 CSR                   MOVELTIME1     TIME2   30
+0102 CSR                   MOVE TIME1     TIME3   10
+0103 CSR         TIME3     ADD  1         TIME4   20
+0104 CSR         TIME2     MULT TIME4     RNUM    40
+0105 CSR         TIME2     ENDSR
+0106 CSR         DSPLOD    BEGSR
+0107 CSRNKANKGN10          MOVELARZ       AR0
+0108 CSR KA                MOVELARY       AR0
+0109 CSR 10                MOVELARY       AR0
+0110 CSR                   MOVEAAR0,1     AR1
+0111 CSR                   MOVEAAR0,16    AR2
+0112 CSR                   MOVEAAR0,31    AR3
+0113 CSR                   MOVEAAR0,46    AR4
+0114 CSR                   MOVEAAR0,61    AR5
+0115 CSR                   MOVEAAR0,76    AR6
+0116 CSR                   MOVEAAR0,91    AR7
+0117 CSR                   MOVEAAR0,106   AR8
+0118 CSR                   MOVEAAR0,121   AR9
+0119 CSR                   MOVEAAR0,136   AR10
+0120 CSR                   MOVEAAR0,151   AR11
+0121 CSR                   MOVEAAR0,166   AR12
+0122 CSR                   MOVEAAR0,181   AR13
+0123 CSR                   MOVEAAR0,196   AR14
+0124 CSR                   MOVEAAR0,211   AR15
+0125 CSR                   ENDSR
+0126 OWK1     D        99
+0127 O                                   K8 'START   '
+0128 O        D        01
+0129 O       OR        02
+0130 O                                   K8 'DSPLAY  '
+0131 O                         #SHOTL  0003
+0132 O                         #HITS   0006
+0133 O                         #MISS   0009
+0134 O                         AR1     0054
+0135 O                         AR2     0099
+0136 O                         AR3     0144
+0137 O                         AR4     0189
+0138 O                         AR5     0234
+0139 O                         AR6     0279
+0140 O                         AR7     0324
+0141 O                         AR8     0369
+0142 O                         AR9     0414
+0143 O                         AR10    0459
+0144 O                         AR11    0504
+0145 O                         AR12    0549
+0146 O                         AR13    0594
+0147 O                         AR14    0639
+0148 O                         AR15    0684
+0149 O                         MSG     0724
+** TABLTR/TABNUM
+A00B01C02D03E04F05G06H07I08J09K10L11M12N13O14
+** MSGS
+
+INVALID LETTER CODE ENTERED - RETRY
+INVALID NUMBER CODE ENTERED - RETRY
+THANKS FOR PLAYING - YOU MISSED A FEW
+THANKS FOR PLAYING - YOU GOT 'EM ALL!

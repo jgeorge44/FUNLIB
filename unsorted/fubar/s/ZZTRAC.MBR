@@ -1,0 +1,64 @@
+     SZZTRAC    0124  Y N
+     DLN0167    120167Y                                C 24
+     DLN0256    230256Y                                C       * * * * * *
+     DLN0302    360302Y                                C    * *      ENTER THROX
+     DTTLE FACTOR =
+     DACCEL      10339Y  YN    Y      Y
+     DLITA      100342Y               50  90           C* INVALID
+     DLN0356    230356Y                                C 23  *            *
+     DLN0402    360402Y                                C   *   *     ENTER GEARX
+     D FACTOR     =
+     DGEAR       10439Y  YN           Y
+     DLITB      100442Y               51  91           C* INVALID
+     DLN0456    230456Y                                C   *              * 25
+     DLN0502    360502Y                                C 7 *    * 8  ENTER BRAKX
+     DE FACTOR    =
+     DDECEL      10539Y  YN           Y
+     DLITC      100542Y               52  92           C* INVALID
+     DLN0556    230556Y                                C *                *
+     DLN0605    210605Y                                C*     *      POSITION
+     DLN0627     50627Y               Y                CSTART
+     DLN0633    460633Y                                C                      *X
+     D                  *
+     DLN0702    240702Y                                C   *      *     & SPEEDX
+     D
+     DSPEED      30728Y               Y                C000
+     DLN0733    460733Y                                C K.P.H.          22 *  X
+     D                  *
+     DLN0802    770802Y                                C   *       *           X
+     D                          *                      *
+     DLN0902    770902Y                                C   *      9 *         1X
+     D0                       *                        *
+     DLN1002    771002Y                                C 6 *         * * * * * X
+     D* * * *               *                          * 26
+     DLN1102    771102Y                                C   *                   X
+     D        * 11    21  *                            *
+     DLN1202    771202Y                                C   *                   X
+     D          *       *                              *
+     DLN1302    771302Y                                C   *                   X
+     D            *   *                                *
+     DLN1402    771402Y                                C   *                   X
+     D              *  12                              *
+     DLN1502    771502Y                                C 5 *      19           X
+     D   20       *   *          13          14        * 27
+     DLN1602    771602Y                                C   *     * * * * * * * X
+     D* * * * * *       * * * * * * * * * * * * *      *
+     DLN1702     81702Y                                C   *   *
+     DMSG1      231712Y               21  95           CYOU HAVEN'T MOVED YET!
+     DMSG2      251740Y               21  95           CREKEY YOUR FACTORS AGAIX
+     DN,
+     DLN1768    111768Y                                C *    *
+     DLN1802     91802Y                                C   *   *
+     DLN1868    111868Y                                C *    *
+     DLN1902    771902Y                                C   *     * * * * * * * X
+     D* * * * * * * * * * * * * * * * * * * * * *      * 28
+     DLN2002    772002Y                                C 4 *        18         X
+     D       17            16            15            *
+     DLN2102    772102Y                                C   *                   X
+     D                       |||                       *
+     DLN2202    772202Y                                C    * * * * * * * * * *X
+     D * * * * * * * * * * * ||| * * * * * * * * * * *
+     DLN2302    772302Y                                C          3           2X
+     D           1           |||        30        29
+     DLN2442    162442Y                                C START   FINISH
+/*

@@ -1,0 +1,114 @@
+0001 H    P                                 1                             AMORT1
+0002 FWORKSTN CP  F     256            WORKSTN
+0003 F                                              KID    WSID
+0004 E                    IN          7  1  A            INTEREST INPUT ARRAY
+0005 E                    WK          6  1               INTEREST WORK ARRAY
+0006 IWORKSTN AA  01   1 C1
+0007 I                                        2   8 IN
+0008 I                                        9  110#P            0505
+0009 I                                       12  180P$            0606
+0010 I        AB  02
+0011 IDATAS       DS
+0012 I                                        1  32 LAST
+0013 I                                        1   66YRINT
+0014 I                                        1   6 WK
+0015 I                                        7  159MOINT
+0016 I                                       16  180#P
+0017 I                                       19  250P$
+0018 I                                       26  332PAYMNT
+0019 C                     SETOF                     808182RESET INDICATORS
+0020 C                     SETOF                     8384  RESET INDICATORS
+0021 C        NKA          SETOF                     60    RESET PRNT ALLOWED
+0022 C         KI          SETON                     LRU2  CMD 9 - SET LR
+0023 C         02                                          1ST TIME OR
+0024 COR       LR          GOTO END                        LR - END
+0025 C         KA          GOTO SKIP01                     PRNT REQ-SKIP01
+0026 C                     EXSR GETINT                     GET INTEREST
+0027 C      05N80          SETON                     8082  NO #P-SET ERROR
+0028 C      06N80          SETON                     8083  NO P$-SET ERROR
+0029 C        N80          EXSR CALC                       DO CALCS
+0030 C                     GOTO END                        GO TO END
+0031 C           SKIP01    TAG
+0032 C        N60          SETON                     8084  PRNT NOT ALLOWED
+0033 C         60          EXSR PRNT                       SET UP PRINTING
+0034 C           END       TAG
+0035 C*
+0036 C********************************************************************
+0037 C*
+0038 CSR         GETINT    BEGSR
+0039 CSR                   SETON                     8081  SET FOR ERROR
+0040 CSR                   Z-ADD1         S       10       INITIALIZE INDEX
+0041 CSR         '0'       LOKUPIN,S                 10    FIND 1ST NUMBER
+0042 CSR      N10          GOTO GETEND                     N/F-GETEND
+0043 CSR                   Z-ADD1         P       10       INITIALIZE INDEX
+0044 CSR         '.'       LOKUPIN,P                     10FIND DEC POINT
+0045 CSR      N10          Z-ADD8         P                N/F-SET P TO 8
+0046 CSR         P         SUB  S         L       10   11  CALC DIFF
+0047 CSR      N11L         COMP 2                    11    L GT 2
+0048 CSR       11          GOTO GETEND                     TOO LARGE-GETEND
+0049 CSR         3         SUB  L         L                SUB L FROM 3
+0050 CSR                   MOVE ' '       WK               BLANK OUT WK
+0051 CSR                   MOVEAIN,S      WK,L             MOVE IN TO WK
+0052 CSR                   MOVEA'0000'    WK,3             MOVE 0'S TO WK
+0053 CSR       101         ADD  P         P                POINT TO NEXT POS
+0054 CSR       10P         COMP 7                      1010P LE 7
+0055 CSR       10          MOVEAIN,P      WK,3             MOVE DECIMALS
+0056 CSR                   SETOF                     8081  RESET ERROR
+0057 CSR         GETEND    ENDSR
+0058 C*
+0059 C********************************************************************
+0060 C*
+0061 CSR         CALC      BEGSR
+0062 CSR         YRINT     DIV  12        MOINT   99       CALC MOINT
+0063 CSR         #P        SUB  1         CNT     30 10    SET UP CNT
+0064 CSR         1         ADD  MOINT     FACTR1 159       SET UP FACTR1
+0065 CSR                   Z-ADDFACTR1    FACTR2 159       SET UP FACTR2
+0066 CSR      N10          GOTO CALC02                     N/POS - CALC02
+0067 CSR         CALC01    TAG
+0068 CSR         FACTR1    MULT FACTR2    FACTR2           RAISE FACTR2 TO
+0069 CSR         CNT       SUB  1         CNT        10    THE #P-1 POWER
+0070 CSR       10          GOTO CALC01                     N/DONE-CALC01
+0071 CSR         1         DIV  FACTR2    FACTR2           GET RECIPRICAL
+0072 CSR         1         SUB  FACTR2    FACTR2           SUB FACTR2 FROM 1
+0073 CSR         MOINT     DIV  FACTR2    FACTR2           DIV MOINT BY FACTR2
+0074 CSR         CALC02    TAG
+0075 CSR         P$        MULT FACTR2    PAYMNT  92H      CALC PAYMNT
+0076 CSR         PAYMNT    MULT #P        PAYTOT 102       CALC PAYTOT
+0077 CSR         PAYTOT    SUB  P$        INTTOT  92       CALC INTTOT
+0078 CSR                   SETON                     6070  PUT
+0079 CSR                   EXCPT                           OUT
+0080 CSR                   SETOF                     70    SCREEN
+0081 CSR         CALEND    ENDSR
+0082 C*
+0083 C********************************************************************
+0084 C*
+0085 CSR         PRNT      BEGSR
+0086 CSR                   SETON                     02U1LRSET INDICATORS
+0087 CSR                   SETOF                     60    RESET PRNT ALLOWED
+0088 CSR                   MOVE 'O'       OP      1        SET UP OP
+0089 CSR                   EXIT SUBR21                     OUTPUT
+0090 CSR                   RLABL          OP               LAST
+0091 CSR                   RLABL          WSID             TO
+0092 CSR                   RLABL          RCODE   1        WORKSTN
+0093 CSR                   RLABL          LAST             LOCAL AREA
+0094 CSR                   ENDSR
+0095 OWORKSTN D        02
+0096 O       OR        80
+0097 O                                   K5 'AMORT'
+0098 O                       81          40 'INTEREST RATE IS MISSING'
+0099 O                       81          55 ' OR INVALID    '
+0100 O                       82          40 'NUMBER OF PERIODS IS MIS'
+0101 O                       82          55 'SING OR INVALID'
+0102 O                       83          40 'PRINCIPAL AMOUNT IS MISS'
+0103 O                       83          55 'ING OR INVALID '
+0104 O                       84          40 'PRINT REQUEST IS INVALID'
+0105 O                       84          64 ' -- LAST CALCULATION WAS'
+0106 O                       84          76 ' UNSUCESSFUL'
+0107 O        E        70
+0108 O                                   K5 'AMORT'
+0109 O                         YRINT      7 '0 .    '
+0110 O                         #P    Z   10
+0111 O                         P$    Z   17
+0112 O                         PAYMNT1   87
+0113 O                         PAYTOT1  100
+0114 O                         INTTOT1  112

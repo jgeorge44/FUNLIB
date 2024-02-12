@@ -1,0 +1,5 @@
+// * '*** WELCOME TO SECTOR***'
+// * 'DO YOU NEED INSTRUCTIONS?'
+// * 'YES OR NO (Y OR N)'
+// IF ?1R?/Y SECMSG
+// ELSE SECTOR

@@ -1,0 +1,143 @@
+     H                              B              03                     MASTER            0001
+     FWORKSTN CP  F      50            WORKSTN                                              0002
+     F                                              KNUM        8                           0003
+     F                                              KSLN   LINE                             0004
+     F                                              KSAVDS SAVE                             0005
+     F                                              KID    TNO                              0006
+     E                    XAB    18  18  1                                                  0007
+     E                    XAB2    4   4  1                                                  0008
+     E                    COL     6   6  1   CLR     6                                      0009
+     E                    XAB0        4  1   XAB1    1                                      0010
+     E                    LST         4  8                                                  0011
+     IWORKSTN NS  01   1 C1                                                                 0012
+     I                                        2   5 XAB0                                    0013
+     I        NS                                                                            0014
+     ISAVE        DS                                                                        0015
+     I                                        1   20LINE                                    0016
+     I                                        3   6 XAB1                                    0017
+     I                                        7  120TIME                                    0018
+     I                                        7   80HR                                      0019
+     I                                        9  100MN                                      0020
+     I                                       11  120SC                                      0021
+     C   KA      TNO       REL  WORKSTN                                                     0022
+     C   KA                GOTO END                                                         0023
+     C*                                                                                     0024
+     C                     SETOF                     58                                     0025
+     C  N90                EXSR TIME                                                        0026
+     C                     SETON                     90                                     0027
+     C*                                                                                     0028
+     C   01                GOTO ON01                                                        0029
+     C           NEWRND    TAG                                                              0030
+     C                     EXSR RANDOM                                                      0031
+     C           FRED      MULT 18        X       20                                        0032
+     C           X         ADD  1         X                                                 0033
+     C                     EXSR RANDOM                                                      0034
+     C           FRED      MULT 18        Y       20                                        0035
+     C*                                                                                     0036
+     C                     Z-ADD1         Z       20                                        0037
+     C                     MOVEAXAB1      XABX    4                                         0038
+     C           LOOP      TAG                                                              0039
+     C           X         COMP 18                   98                                     0040
+     C   98      X         SUB  18        X                                                 0041
+     C                     MOVE XAB,X     XAB1,Z                                            0042
+     C           X         ADD  Y         X                                                 0043
+     C           1         ADD  Z         Z                                                 0044
+     C           Z         COMP 4                    97                                     0045
+     C  N97                GOTO LOOP                                                        0046
+     C                     Z-ADD1         LINE                                              0047
+     C                     GOTO END2                                                        0048
+     C*                                                                                     0049
+     C           ON01      TAG                                                              0050
+     C                     Z-ADD0         BULL                                              0051
+     C                     Z-ADD0         COW                                               0052
+     C                     MOVE ' '       FLAG    1                                         0053
+     C                     MOVE ' '       FLAG1   1                                         0054
+     C                     Z-ADD1         X                                                 0055
+     C           LOOP1     TAG                                                              0056
+     C                     Z-ADD1         Y                                                 0057
+     C           XAB0,X    LOKUPCOL,Y                    95                                 0058
+     C   95                MOVELCLR,Y     LST,X                                             0059
+     C   95                MOVE ' '       LST,X                                             0060
+     C  N95                MOVEL'INVALID' LST,X                                             0061
+     C           XAB0,X    COMP XAB1,X                   97                                 0062
+     C   97      1         ADD  BULL      BULL    10                                        0063
+     C   97                BITONXAB2,X    FLAG                                              0064
+     C   97                BITONXAB2,X    FLAG1                                             0065
+     C           1         ADD  X         X                                                 0066
+     C           X         COMP 4                    97                                     0067
+     C  N97                GOTO LOOP1                                                       0068
+     C*                                                                                     0069
+     C                     TESTB'01234567'FLAG           57                                 0070
+     C   57                GOTO END                                                         0071
+     C*                                                                                     0072
+     C                     Z-ADD1         X                                                 0073
+     C           LOOP2     TAG                                                              0074
+     C                     Z-ADD1         Y                                                 0075
+     C           LOOP3     TAG                                                              0076
+     C                     TESTBXAB2,X    FLAG1          95                                 0077
+     C   95                GOTO END1                                                        0078
+     C           XAB0,X    COMP XAB1,Y                   95                                 0079
+     C   95                TESTBXAB2,Y    FLAG           90                                 0080
+     C   95N90   1         ADD  COW       COW     10                                        0081
+     C   95N90             BITONXAB2,Y    FLAG                                              0082
+     C   95N90             GOTO END1                                                        0083
+     C           1         ADD  Y         Y                                                 0084
+     C           Y         COMP 4                    95                                     0085
+     C  N95                GOTO LOOP3                                                       0086
+     C*                                                                                     0087
+     C           END1      TAG                                                              0088
+     C           1         ADD  X         X                                                 0089
+     C           X         COMP 4                    95                                     0090
+     C  N95                GOTO LOOP2                                                       0091
+     C*                                                                                     0092
+     C           1         ADD  LINE      LINE                                              0093
+     C           LINE      COMP 11                       56                                 0094
+     C           END       TAG                                                              0095
+     C   56                                                                                 0096
+     COR 57                SETON                     58                                     0097
+     C   58                SETOF                     01                                     0098
+     C   58                GOTO NEWRND                                                      0099
+     C           END2      TAG                                                              0100
+     C*                                                                                     0101
+     CSR         RANDOM    BEGSR                                                            0102
+     CSR         RNDNO     MULT XUPRE     XUPRE   70                                        0103
+     CSR                   MOVE XUPRE     RNDFLD  5                                         0104
+     CSR                   Z-ADD0         XUPRE                                             0105
+     CSR                   MOVE RNDFLD    XUPRE                                             0106
+     CSR                   MOVE RNDFLD    FRED    55                                        0107
+     CSR                   ENDSR                                                            0108
+     C*                                                                                     0109
+     CSR         TIME      BEGSR                                                            0110
+     CSR                   TIME           TIME                                              0111
+     CSR         HR        ADD  MN        RND     30                                        0112
+     CSR         RND       ADD  SC        RND                                               0113
+     CSR         RND       MULT 99        RNDNO   50                                        0114
+     CSR         RNDNO     DIV  144       RNDNO                                             0115
+     CSR         RNDNO     ADD  300       RNDNO                                             0116
+     CSR         RNDNO     DIV  2         RND                                               0117
+     CSR                   MVR            RND                                               0118
+     CSR         RND       COMP 0                        97                                 0119
+     CSR 97      1         ADD  RNDNO     RNDNO                                             0120
+     C                     Z-ADD10        XUPRE                                             0121
+     CSR                   ENDSR                                                            0122
+     OWORKSTN D       N01NKA                                                                0123
+     O                                   K8 'MASTER00'                                      0124
+     OWORKSTN D        01NKA                                                                0125
+     O                                   K8 'MASTER02'                                      0126
+     O                         LST    B  32                                                 0127
+     O                                   37 '( + )'                                         0128
+     O                         BULL      34                                                 0129
+     O                         COW       36                                                 0130
+     OWORKSTN D       NKA                                                                   0131
+     O                                   K8 'MASTER01'                                      0132
+     O                 57                24 'CORRECT - CONGRATULATION'                      0133
+     O                 57                26 'S.'                                            0134
+     O                 56                19 'FAILURE I''M AFRAID.'                          0135
+     O                 58                37 'CORRECT WAS'                                   0136
+     O                 58      XABX      41                                                 0137
+**                                                                                          0138
+BRGYWXBRGYWXBRGYWX                                                                          0139
+**                                                                                          0140
+8421                                                                                        0141
+**                                                                                          0142
+BBLUE  RRED   GGREEN YYELLOWWWHITE XBLACK                                                   0143

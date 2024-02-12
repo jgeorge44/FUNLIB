@@ -1,0 +1,97 @@
+0001 SZZ0101     124 YY     Y
+0002 DSCRN       6 1 2Y  Y          Y                  CZZ0101
+0003 D          10 331Y                       Y        CDIRECTIONS
+0004 D          71 4 6Y                                CA MAXIMUM OF 10 PLAYERSX
+0005 D CAN PLAY.  EACH PLAYER MUST ENTER THE AMOUNT OF
+0006 D          72 5 2Y                                CHIS BET, THE HORSE NUMBX
+0007 DER, AND POSTION HE THINKS THE HORSE WILL FINISH
+0008 D          72 6 6Y                                CEACH PLAYER BEGINS WITHX
+0009 D $250.00. THE PAY OFFS ARE 6 TIMES THE BET IF YOU
+0010 D          73 7 2Y                                CPICKED THE HORSE TO WINX
+0011 D, 3 TIMES THE BET IF YOU PICKED HORSE TO PLACE AND
+0012 D          50 8 2Y                                C1 TIMES THE BET IF YOU X
+0013 DPICK THE HORSE TO SHOW.
+0014 D          35 9 6Y                                CTHERE ARE 4 RACES.  GOOX
+0015 DD LUCK....
+0016 D           61133Y                                CENTER
+0017 D          141229Y                       Y        CPLAYERS  NAMES
+0018 DPNME1     101431   Y     Y                Y
+0019 DPNME2     101531   Y                      Y
+0020 DPNME3     101631   Y                      Y
+0021 DPNME4     101731   Y                      Y
+0022 DPNME5     101831   Y                      Y
+0023 DPNME6     101931   Y                      Y
+0024 DPNME7     102031   Y                      Y
+0025 DPNME8     102131   Y                      Y
+0026 DPNME9     102231   Y                      Y
+0027 D          2024 1Y               Y                CPRESS ENTER WHEN ALL
+0028 D          232422Y               Y                CPLAYERS NAMES HAVE BEEN
+0029 D           72446Y               Y                CENTERED
+0030 SZZ0102     124  N
+0031 DSCRN       6 1 2Y  Y          Y                  CZZ0102
+0032 D          11 329Y                       Y        CRACE NUMBER
+0033 DRECENO     1 341Y
+0034 D           5 421Y                                CHORSE
+0035 D           5 440Y                                CHORSE
+0036 D           6 521Y                       Y        CNUMBER
+0037 D           4 540Y                       Y        CNAME
+0038 SZZ0103    V  1  N
+0039 DSCRN       6 1 2Y  Y          Y     Y            CZZ0103
+0040 DNMBR       1 124Y
+0041 DHNME1     10 138Y
+0042 SZZ0104    16 9 YY
+0043 DSCRN       6 1 2Y  Y          Y     Y            CZZ0104
+0044 DPNME      10 121Y               Y
+0045 D          18 133Y                                CENTER YOUR BET NOW
+0046 D           6 311Y                                CAMOUNT
+0047 DAMT        3 318   YN   Z                 Y
+0048 D          12 331Y                                CHORSE NUMBER
+0049 DHOR        1 344   YN
+0050 D           6 351Y                                CWIN(W)
+0051 DWPS        1 361   YA        Y
+0052 D          10 431Y                                C(1 THRU 9)
+0053 D           8 451Y                                CPLACE(P)
+0054 D           7 551Y                                CSHOW(S)
+0055 D          21 716Y               Y                CPRESS ENTER AFTER ALL
+0056 D          19 738Y               Y                CVALUES ARE ENTERED.
+0057 DMSG       50 9 1Y
+0058 SZZ0105     124  N Y
+0059 DSCRN       6 1 2Y                                CZZ0105
+0060 D           6 473Y                                CFINISH
+0061 D           5 5 4Y                       Y        CHORSE
+0062 D           4 574Y                       Y        CLINE
+0063 SZZ0106    V 01  N
+0064 DHNME      10 1 2Y
+0065 DOUT       60 115Y
+0066 D           1 176Y                                C*
+0067 DPLACE      1 179Y
+0068 SZZ0107     124  Y Y
+0069 DSCRN       6 1 2Y  Y          Y                  CZZ0107
+0070 D          13 230Y                       Y        CPLAYERS TOTALS
+0071 D           4 4 6Y                       Y        CNAME
+0072 D           6 419Y                       Y        CAMOUNT
+0073 D           4 432Y                       Y        CNAME
+0074 D           6 445Y                       Y        CAMOUNT
+0075 D           4 458Y                       Y        CNAME
+0076 D           6 471Y                       Y        CAMOUNT
+0077 DPNME1     10 5 3Y
+0078 DPTOT1      6 519Y
+0079 DPNME2     10 529Y
+0080 DPTOT2      6 545Y
+0081 DPNME3     10 555Y
+0082 DPTOT3      6 571Y
+0083 DPNME4     10 6 3Y
+0084 DPTOT4      6 619Y
+0085 DPNME5     10 629Y
+0086 DPTOT5      6 645Y
+0087 DPNME6     10 655Y
+0088 DPTOT6      6 671Y
+0089 DPNME7     10 7 3Y
+0090 DPTOT7      6 719Y
+0091 DPNME8     10 729Y
+0092 DPTOT8      6 745Y
+0093 DPNME9     10 755Y
+0094 DPTOT9      6 771Y
+0095 D          2011 2Y                                CPRESS ENTER FOR NEXT
+0096 D           41123Y                                CRACE
+0097 D          2312 2Y                                CCMD KEY 7  TO END RACES

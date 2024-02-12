@@ -1,0 +1,565 @@
+0001 H     024                                                            WICLEN
+0002 F******************************************************************* WICLEN
+0003 F* PROGRAM NAME - AVA20                                            * WICLEN
+0004 F*                                                                 * WICLEN
+0005 F* DESCRIPTIVE NAME -  INDEX CREATE PROGRAM                        * WICLEN
+0006 F*                                                                 * WICLEN
+0007 F* 5726-XR1 COPYRIGHT IBM CORP 1978                                * WICLEN
+0008 F* LICENSED MATERIAL - PROGRAM PROPERTY OF IBM                     * WICLEN
+0009 F* REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083.          * WICLEN
+0010 F*                                                                 * WICLEN
+0011 F* VERSION 01/MODIFICATION 01      PTF 0006                        * WICLEN
+0012 F* DATE 07/11/78                                                   * WICLEN
+0013 F* APARS APPLIED - AT5011                                          * WICLEN
+0014 F*                                                                 * WICLEN
+0015 F*                                                                 * WICLEN
+0016 F* PROGRAM PURPOSE                                                 * WICLEN
+0017 F* THIS PROGRAM CREATES 1 TO 13 INDEX FILES FOR USE BY THE         * WICLEN
+0018 F* WORK STATION SEARCH PROGRAM.                                    * WICLEN
+0019 F*                                                                 * WICLEN
+0020 F******************************************************************* WICLEN
+0021 F*                                                                 * WICLEN
+0022 F* ID F  C  H  L    FUNCTION OF INDICATORS                         * WICLEN
+0023 F*                                                                 * WICLEN
+0024 F* 01            MASTER RECORD                                     * WICLEN
+0025 F*       20      LOKUP RESULTING INDICATOR                         * WICLEN
+0026 F*       21      USED TO TEST FILE EXTENTS                         * WICLEN
+0027 F*       22      ONE OR MORE INDEX FILES WILL EXCEED EXTENTS       * WICLEN
+0028 F*       23      NOT FIRST CYCLE                                   * WICLEN
+0029 F*       30      COMP RESULTING INDICATOR                          * WICLEN
+0030 F*       35      TESTB RESULTING INDICATOR                         * WICLEN
+0031 F*       36      USED IN TRIMMING KEY                              * WICLEN
+0032 F*       37      8 CHARACTERS HAVE BEEN EXAMINED                   * WICLEN
+0033 F*       41      INDEX01 FILE PROCESSING                           * WICLEN
+0034 F*       42      INDEX02 FILE PROCESSING                           * WICLEN
+0035 F*       61      INDEX NOT CREATED FOR SINGLE CHARACTERS           * WICLEN
+0036 F*       62      INDICATES CHARACTER IS ALPHABETIC OR NUMERIC      * WICLEN
+0037 F*       63      INDICATES A BLANK OR SINGLE CHARACTER INDEX       * WICLEN
+0038 F*       64      INDICATES THAT KEY IS IN EXCLUDE ARRAY            * WICLEN
+0039 F*       65      DATA FIELD FORMAT - PACKED, LEFT JUSTIFIED        * WICLEN
+0040 F*       66      DATA FIELD FORMAT - ALPHABETIC                    * WICLEN
+0041 F*       67      DATA FIELD FORMAT - ZONED DECIMAL, RIGHT JUSTIFIED* WICLEN
+0042 F*       68      DATA FIELD FORMAT - PACKED, RIGHT JUSTIFIED       * WICLEN
+0043 F*       69      DATA FIELD FORMAT - RIGHT JUSTIFY                 * WICLEN
+0044 F*       70      USED AS RESULT INDICATOR IN LOKUP AND COMP        * WICLEN
+0045 F*       99      NOT IN CURRENT USE-RESERVE                        * WICLEN
+0046 F*          LR   LAST RECORD                                       * WICLEN
+0047 F*                                                                 * WICLEN
+0048 F******************************************************************* WICLEN
+0049 FINPUT   IPE F  64  64    2       DISK                               WICLEN
+0050 FINDEX01 O   F 256   8    2       DISK                               WICLEN
+0051 FINDEX02 O   F 256   8    2       DISK                               WICLEN
+0052 FOCL     O   F  96  96            DISK                               WICLEN
+0053 FPRINTER O   F 132 132            PRINTER                            WICLEN
+0054 E*                   ARA     1   4 16   AR1     2
+0055 E                    ARC     1   4 16   ARD     2   DATA DICTIONARY  WICLEN
+0056 E                    ARE     1   1  8               EXCLUDE TABLE    WICLEN
+0057 E                    ARF        64  1  D            MASTER FILE REC. WICLEN
+0058 E                    ARG         8  1               SEARCH WORK AREA WICLEN
+0059 E*                   ARH     1  11 16   AR2     2
+0060 E                    ARO     1  13 96               OCL FOR OUTPUT   WICLEN
+0061 E                    LIB         9  1               LIBRARY NAME     WICLEN
+00625E                    COIBM   1   2 76                                WICLEN
+0063 L*RINTER  66FL 60OL ****                                             WICLEN
+0064 IINPUT   NS  01                                                      WICLEN
+0065 I                                        1  64 ARF                   WICLEN
+0066 I        NS  99                                                      WICLEN
+0067 I                                        1   1 DUMMY                 WICLEN
+0068 C   23                GOTO DET010                                    WICLEN
+0069 C*     FIRST RECORD PROCESSING                                       WICLEN
+0070 C                     MOVE DUMMY     DUMMY                           WICLEN
+0071 C                     SETON                     61                   WICLEN
+0072 C                     MOVE 'WICLEN'  IPROG   6                       WICLEN
+0073 C                     MOVE 'WKLABOR' FLENM   8                       WICLEN
+0074 C*  U8                MOVE 'APPLIMST'FLENM
+0075 C*  U7                MOVE 'CLENTH80'FLENM
+0076 C                     MOVEL'GAMES'   LIBNM   8                       WICLEN
+0077 C                     MOVE 'D'       DELCD   1                       WICLEN
+0078 C                     EXSR SETARC
+0079 C                     Z-ADD0017      DP      40                      WICLEN
+0080 C                     EXSR LIBNAM                                    WICLEN
+0081 C                     TIME           TIMEP   60                      WICLEN
+0082 C                     SETON                     23                   WICLEN
+0083 C           DET010    TAG                                            WICLEN
+0084 C   99                GOTO DETEND                                    WICLEN
+0085 C*     COUNT ALL MASTER FILE RECORDS                                 WICLEN
+0086 C   01      1         ADD  RECNO     RECNO   70                      WICLEN
+0087 C*     CHECK FOR DELETED RECORD                                      WICLEN
+0088 C           DELCD     COMP ' '                  7070                 WICLEN
+0089 C   70      ARF,DP    COMP DELCD                    70               WICLEN
+0090 C   70                GOTO DETEND                                    WICLEN
+0091 C*     COUNT ALL ACTIVE MASTER FILE RECORDS                          WICLEN
+0092 C   01      1         ADD  TOTREC    TOTREC  60                      WICLEN
+0093 C                     Z-ADD1         I       20                      WICLEN
+0094 C           '01'      LOKUPARD,I                    41               WICLEN
+0095 C   41                MOVELARC,I     FLD01   6                       WICLEN
+0096 C   41                EXSR FORMAT                                    WICLEN
+0097 C   41                Z-ADD005000    MAX     60                      WICLEN
+0098 C   41                Z-ADDCNT01     TOTAL   60                      WICLEN
+0099 C   41                EXSR CONSTK                                    WICLEN
+0100 C   41      CNT01     ADD  COUNT     CNT01   60                      WICLEN
+0101 C   41                Z-ADD0         COUNT                           WICLEN
+0102 C   41                SETOF                     41                   WICLEN
+0103 C                     Z-ADD1         I       20                      WICLEN
+0104 C           '02'      LOKUPARD,I                    42               WICLEN
+0105 C   42                MOVELARC,I     FLD02   6                       WICLEN
+0106 C   42                EXSR FORMAT                                    WICLEN
+0107 C   42                Z-ADD035000    MAX     60                      WICLEN
+0108 C   42                Z-ADDCNT02     TOTAL   60                      WICLEN
+0109 C   42                EXSR CONSTK                                    WICLEN
+0110 C   42      CNT02     ADD  COUNT     CNT02   60                      WICLEN
+0111 C   42                Z-ADD0         COUNT                           WICLEN
+0112 C   42                SETOF                     42                   WICLEN
+0113 C           DETEND    TAG                                            WICLEN
+0114 C*     IF FILE EXTENTS EXCEEDED GO TO END                            WICLEN
+0115 CLR 22                GOTO END                                       WICLEN
+0116 CLR                   BITOF'01234567'HEX0    1                       WICLEN
+0117 CLR         CNT01     ADD  1         CNT01                           WICLEN
+0118 CLR                   Z-ADDCNT01     RCD     60 60                   WICLEN
+0119 CLR                   Z-ADD1         I                               WICLEN
+0120 CLR 60      '01'      LOKUPARD,I                    60               WICLEN
+0121 CLR 60                EXSR FORMAT                                    WICLEN
+0122 CLR                   MOVE '01'      FIL     2                       WICLEN
+0123 C*R*U8                MOVE '03'      FIL
+0124 C*R*U7                MOVE '05'      FIL
+0125 CLRN22                EXCPT                                          WICLEN
+0126 CLR         CNT02     ADD  1         CNT02                           WICLEN
+0127 CLR                   Z-ADDCNT02     RCD     60 60                   WICLEN
+0128 CLR                   Z-ADD1         I                               WICLEN
+0129 CLR 60      '02'      LOKUPARD,I                    60               WICLEN
+0130 CLR 60                EXSR FORMAT                                    WICLEN
+0131 CLR                   MOVE '02'      FIL     2                       WICLEN
+0132 C*R*U8                MOVE '04'      FIL
+0133 C*R U7                MOVE '06'      FIL
+0134 CLRN22                EXCPT                                          WICLEN
+0135 CLR         END       TAG                                            WICLEN
+0136 C********************************************************************WICLEN
+0137 C*                                                                   WICLEN
+0138 C*    ANCHK - RETURNS WITH INDICATOR ON IF CHARACTER IS ALPHABETIC   WICLEN
+0139 C*            OR NUMERIC                                             WICLEN
+0140 C*                                                                   WICLEN
+0141 C********************************************************************WICLEN
+0142 CSR         ANCHK     BEGSR                                          WICLEN
+0143 CSR         CHAR      COMP 'A'                  62  62               WICLEN
+0144 CSR 62      CHAR      COMP 'I'                    6262               WICLEN
+0145 CSR 62                GOTO ALPHAE                                    WICLEN
+0146 CSR         CHAR      COMP 'J'                  62  62               WICLEN
+0147 CSR 62      CHAR      COMP 'R'                    6262               WICLEN
+0148 CSR 62                GOTO ALPHAE                                    WICLEN
+0149 CSR         CHAR      COMP 'S'                  62  62               WICLEN
+0150 CSR 62      CHAR      COMP 'Z'                    6262               WICLEN
+0151 CSR 62                GOTO ALPHAE                                    WICLEN
+0152 CSR         CHAR      COMP '0'                  62  62               WICLEN
+0153 CSR 62      CHAR      COMP '9'                    6262               WICLEN
+0154 CSR         ALPHAE    TAG                                            WICLEN
+0155 CSR                   ENDSR                                          WICLEN
+0156 C********************************************************************WICLEN
+0157 C*                                                                   WICLEN
+0158 C*   BLANK - BLANKS THE END OF A FIELD BEING CONSIDERED FOR A MATCH. WICLEN
+0159 C*           EVERYTHING AFTER THE FIRST BLANK AND ANY SPECIAL        WICLEN
+0160 C*           CHARACTERS IMMEDIATELY PRECEEDING THE FIRST BLANK       WICLEN
+0161 C*           ARE BLANKED OUT                                         WICLEN
+0162 C*                                                                   WICLEN
+0163 C********************************************************************WICLEN
+0164 CSR         BLANK     BEGSR                                          WICLEN
+0165 CSR                   Z-ADD1         K                               WICLEN
+0166 CSR         ' '       LOKUPARG,K                    70               WICLEN
+0167 CSRN70                Z-ADD9         K                               WICLEN
+0168 CSR         BLANKA    TAG                                            WICLEN
+0169 CSR         K         SUB  1         K              70               WICLEN
+0170 CSR 70                GOTO BLANKB                                    WICLEN
+0171 CSR                   MOVE ARG,K     CHAR                            WICLEN
+0172 CSR                   EXSR ANCHK                                     WICLEN
+0173 CSRN62                GOTO BLANKA                                    WICLEN
+0174 CSR         BLANKB    TAG                                            WICLEN
+0175 CSR         K         ADD  1         K                               WICLEN
+0176 CSR         K         COMP 9                      70                 WICLEN
+0177 CSR 70                MOVEA'        'ARG,K                           WICLEN
+0178 CSR                   ENDSR                                          WICLEN
+0179 C********************************************************************WICLEN
+0180 C*                                                                   WICLEN
+0181 C*   CONSTK - CONSTRUCT INDEX KEYS                                   WICLEN
+0182 C*                                                                   WICLEN
+0183 C********************************************************************WICLEN
+0184 CSR         CONSTK    BEGSR                                          WICLEN
+0185 C*     GET START AND END POSITIONS                                   WICLEN
+0186 CSR                   MOVE ARC,I     WK10   10                       WICLEN
+0187 CSR                   MOVELWK10      WK08    8                       WICLEN
+0188 CSR                   MOVELWK10      WK04    4                       WICLEN
+0189 CSR                   MOVE WK08      END     40                      WICLEN
+0190 CSR                   MOVE WK04      START   40                      WICLEN
+0191 C*     REMOVE TRAILING BLANKS ETC FROM END OF SEARCH FIELD           WICLEN
+0192 CSR         CON001    TAG                                            WICLEN
+0193 CSR 66      ARF,END   COMP 'A'                    20                 WICLEN
+0194 CSR 66 20   END       SUB  1         END        20                   WICLEN
+0195 CSR 66 20             GOTO CON001                                    WICLEN
+0196 C*     LIMIT RIGHT ADJUST FIELDS TO A MAXIMUM OF 8 BYTES IF          WICLEN
+0197 C*     NOT PACKED DATA AND 5 BYTES IF PACKED DATA                    WICLEN
+0198 CSR         END       SUB  START     J                               WICLEN
+0199 CSR 67      J         COMP 7                    20                   WICLEN
+0200 CSR 67 20   END       SUB  7         START                           WICLEN
+0201 CSR 68      J         COMP 4                    20                   WICLEN
+0202 CSR 68 20   END       SUB  4         START                           WICLEN
+0203 C*     IF END LESS THAN START SET END EQUAL TO START                 WICLEN
+0204 CSR         END       COMP START                  20                 WICLEN
+0205 CSR 20                Z-ADDSTART     END                             WICLEN
+0206 CSR                   Z-ADDSTART     J       40                      WICLEN
+0207 C*                                                                   WICLEN
+0208 CSRN66                GOTO CON003                                    WICLEN
+0209 CSR                   MOVE ARF,J     CHAR                            WICLEN
+0210 CSR                   EXSR ANCHK                                     WICLEN
+0211 CSR 62                GOTO CON003                                    WICLEN
+0212 C*                                                                   WICLEN
+0213 CSR         CON002    TAG                                            WICLEN
+0214 C*     SKIP BLANKS AND SPECIAL CHARACTERS TO FIND NEXT KEY IN FIELD  WICLEN
+0215 CSR         'A'       LOKUPARF,J                  20                 WICLEN
+0216 CSR 20      1         ADD  J         J                               WICLEN
+0217 CSR 20      J         COMP END                    2020               WICLEN
+0218 CSRN20                GOTO CONEND                                    WICLEN
+0219 C*     NO SPECIAL CHARACTER AS FIRST CHAR.                           WICLEN
+0220 CSR                   MOVE ARF,J     CHAR    1                       WICLEN
+0221 CSR                   EXSR ANCHK                                     WICLEN
+0222 CSRN62                GOTO CON002                                    WICLEN
+0223 C*                                                                   WICLEN
+0224 CSR         CON003    TAG                                            WICLEN
+0225 C*     ISOLATE 8 CHARACTERS FOR COMPARE                              WICLEN
+0226 CSRN65N68             MOVEAARF,J     ARG                             WICLEN
+0227 CSR         END       SUB  J         K       40                      WICLEN
+0228 C*     IF NEEDED UNPACK FIELD                                        WICLEN
+0229 CSR 65                                                               WICLEN
+0230 COR 68                EXSR UNPACK                                    WICLEN
+0231 C*     FILL FIELD WITH TRAILING BLANKS IF NOT FULL                   WICLEN
+0232 CSR         2         ADD  K         K                               WICLEN
+0233 CSR         K         COMP 9                      20                 WICLEN
+0234 CSRN68 20             MOVEA'        'ARG,K                           WICLEN
+0235 CSR                   MOVEAARG       WK08    8                       WICLEN
+0236 C*     RIGHT ADJUST FIELD IF NEEDED                                  WICLEN
+0237 CSR 69                EXSR JSTFY                                     WICLEN
+0238 CSR                   MOVEAWK08      ARG                             WICLEN
+0239 C*     BLANK END OF FIELD IF NOT FULL                                WICLEN
+0240 CSRN69                EXSR BLANK                                     WICLEN
+0241 CSR                   MOVEAARG       WK08                            WICLEN
+0242 CSR                   MOVELWK08      KEY     4                       WICLEN
+0243 CSR 69                MOVE WK08      KEY                             WICLEN
+0244 C*     LOOK UP KEY IN EXCLUDE TABLE AND SKIP OUTPUT IF THERE         WICLEN
+0245 CSR                   Z-ADD1         L       40                      WICLEN
+0246 CSR         WK08      LOKUPARE,L                    64               WICLEN
+0247 CSR 64                GOTO CON004                                    WICLEN
+0248 C*     CHECK FOR BLANK INDEX KEY                                     WICLEN
+0249 CSR         ARG,1     COMP ' '                      63               WICLEN
+0250 CSR 63                GOTO CON004                                    WICLEN
+0251 C*     CHECK FOR SINGLE CHARACTER INDEX KEY                          WICLEN
+0252 CSR         ARG,2     COMP ' '                      63               WICLEN
+0253 CSR 61 63             GOTO CON004                                    WICLEN
+0254 CSR         1         ADD  COUNT     COUNT   60                      WICLEN
+0255 C*     CHECK FOR FILE EXTENTS OVER RUN                               WICLEN
+0256 CSRNU1      COUNT     ADD  TOTAL     TOTAL2  60                      WICLEN
+0257 CSRNU1      TOTAL2    ADD  1         TOTAL2                          WICLEN
+0258 CSRNU1      TOTAL2    COMP MAX                  21  21               WICLEN
+0259 CSRNU1 21             SETON                     22                   WICLEN
+0260 CSRN22                EXCPT                                          WICLEN
+0261 CSR         CON004    TAG                                            WICLEN
+0262 CSR 66                GOTO CON002                                    WICLEN
+0263 CSR         CONEND    ENDSR                                          WICLEN
+0264 C********************************************************************WICLEN
+0265 C*                                                                   WICLEN
+0266 C*   FORMAT - SETS INDICATORS TO SHOW FIELD TYPE PER DATA DICTIONARY WICLEN
+0267 C*                                                                   WICLEN
+0268 C********************************************************************WICLEN
+0269 CSR         FORMAT    BEGSR                                          WICLEN
+0270 CSR                   MOVE ARC,I     FMT     1                       WICLEN
+0271 CSR                   SETOF                     69                   WICLEN
+0272 CSR         FMT       COMP 'C'                      65               WICLEN
+0273 CSR         FMT       COMP 'B'                      66               WICLEN
+0274 CSRN66      FMT       COMP 'A'                      66               WICLEN
+0275 CSR         FMT       COMP 'N'                      67               WICLEN
+0276 CSR         FMT       COMP 'P'                      68               WICLEN
+0277 CSR 67                                                               WICLEN
+0278 COR 68                SETON                     69                   WICLEN
+0279 CSR                   ENDSR                                          WICLEN
+0280 C********************************************************************WICLEN
+0281 C*                                                                   WICLEN
+0282 C*   JSTFY - RIGHT JUSTIFY NUMERIC DATA                              WICLEN
+0283 C*                                                                  *WICLEN
+0284 C********************************************************************WICLEN
+0285 CSR         JSTFY     BEGSR                                          WICLEN
+0286 CSR         JST001    TAG                                            WICLEN
+0287 CSR                   MOVE WK08      WK01                            WICLEN
+0288 CSR         WK01      COMP ' '                      30               WICLEN
+0289 CSRN30                GOTO JSTEND                                    WICLEN
+0290 CSR                   MOVELWK08      WK07    7                       WICLEN
+0291 CSR                   MOVE WK07      WK08                            WICLEN
+0292 CSR                   MOVEL'0'       WK08                            WICLEN
+0293 CSR                   GOTO JST001                                    WICLEN
+0294 CSR         JSTEND    ENDSR                                          WICLEN
+0295 C********************************************************************WICLEN
+0296 C*                                                                   WICLEN
+0297 C*   LIBNAM - FORMAT LIBRARY NAME FOR USE IN OCL                     WICLEN
+0298 C*                                                                   WICLEN
+0299 C********************************************************************WICLEN
+0300 CSR         LIBNAM    BEGSR                                          WICLEN
+0301 C* FILL LIB ARRAY WITH LIBRARY NAME FOLLOWED BY AN APOSTROPHE        WICLEN
+0302 CSR                   MOVEALIBNM     LIB                             WICLEN
+0303 CSR                   Z-ADD9         X       10                      WICLEN
+0304 CSR         LIB01     TAG                                            WICLEN
+0305 CSR         X         SUB  1         X          20                   WICLEN
+0306 CSR 20      LIB,X     COMP ' '                      20               WICLEN
+0307 CSR 20                GOTO LIB01                                     WICLEN
+0308 CSR         X         ADD  1         X                               WICLEN
+0309 CSR                   MOVE ''''      LIB,X                           WICLEN
+0310 CSR                   ENDSR                                          WICLEN
+0311 C********************************************************************WICLEN
+0312 C*                                                                   WICLEN
+0313 C*   SETARC - SETS UP FIELDS TO BE PROCESSED DEPENDING UPON THE      WICLEN
+0314 C*            FILE USED. NO SWITCHES - CLIENT MASTER.                WICLEN
+0315 C*            SWITCH 8 - APPLICANT MASTER  SWITCH 7 -CLIENT HISTORY  WICLEN
+0316 C*                                                                   WICLEN
+0317 C********************************************************************WICLEN
+0318 CSR         SETARC    BEGSR
+0319 C*R U8                MOVEAARA       ARC
+0320 C*R U8                MOVEAAR1       ARD
+0321 C*R U7                MOVEAARH       ARC
+0322 C*R U7                MOVEAAR2       ARD
+0323 CSR                   ENDSR
+0324 C********************************************************************WICLEN
+0325 C*                                                                   WICLEN
+0326 C*   UNPACK - CALLED BY THE CONSTRUCT KEY WHEN THE TABEL SHOWS       WICLEN
+0327 C*            THAT THE MASTER FILE DATA NEEDS UNPACKING PRIOR TO     WICLEN
+0328 C*            COMPARISON                                             WICLEN
+0329 C*                                                                   WICLEN
+0330 C********************************************************************WICLEN
+0331 CSR         UNPACK    BEGSR                                          WICLEN
+0332 CSR                   MOVEA'00000000'ARG                             WICLEN
+0333 CSR                   Z-ADDEND       K1      40                      WICLEN
+0334 CSR                   Z-ADD9         K2      10                      WICLEN
+0335 CSR 65      J         SUB  1         K1                              WICLEN
+0336 CSR 65                Z-ADD0         K2                              WICLEN
+0337 CSR         UNP001    TAG                                            WICLEN
+0338 CSR 68      K2        SUB  1         K2                              WICLEN
+0339 CSR 65      1         ADD  K1        K1                              WICLEN
+0340 CSR 65      1         ADD  K2        K2                              WICLEN
+0341 CSR                   MOVE '0'       WK11    1                       WICLEN
+0342 CSR                   MOVE ARF,K1    WK01    1                       WICLEN
+0343 CSR                   TESTB'0'       WK01           35               WICLEN
+0344 CSR 35                BITON'4'       WK11                            WICLEN
+0345 CSR                   TESTB'1'       WK01           35               WICLEN
+0346 CSR 35                BITON'5'       WK11                            WICLEN
+0347 CSR                   TESTB'2'       WK01           35               WICLEN
+0348 CSR 35                BITON'6'       WK11                            WICLEN
+0349 CSR                   TESTB'3'       WK01           35               WICLEN
+0350 CSR 35                BITON'7'       WK11                            WICLEN
+0351 CSR         K1        COMP END                      30               WICLEN
+0352 CSRN30                GOTO UNP002                                    WICLEN
+0353 CSR                   TESTB'6'       WK01       35                   WICLEN
+0354 CSR 35                TESTB'4'       WK01           35               WICLEN
+0355 CSR 35                BITOF'2'       WK11                            WICLEN
+0356 CSR         UNP002    TAG                                            WICLEN
+0357 CSR                   MOVE WK11      ARG,K2                          WICLEN
+0358 CSR 68      K1        COMP START                  3030               WICLEN
+0359 CSR 30                GOTO UNP003                                    WICLEN
+0360 CSR 68      K1        SUB  1         K1                              WICLEN
+0361 CSR 68      K2        SUB  1         K2                              WICLEN
+0362 CSR 65      K2        ADD  1         K2                              WICLEN
+0363 CSR                   MOVE '0'       WK11                            WICLEN
+0364 CSR                   BITONARF,K1    WK11                            WICLEN
+0365 CSR                   MOVE WK11      ARG,K2                          WICLEN
+0366 CSR         K2        COMP 2                      30                 WICLEN
+0367 CSR 65      K2        COMP 7                    30                   WICLEN
+0368 CSRN30                GOTO UNP001                                    WICLEN
+0369 CSR         UNP003    TAG                                            WICLEN
+0370 CSR         K         ADD  K         K                               WICLEN
+0371 CSR                   ENDSR                                          WICLEN
+0372 OINDEX01 E        41                                                 WICLEN
+0373 O                         KEY        4                               WICLEN
+0374 O                         RECNO      8P                              WICLEN
+0375 O        T        LRN22                                              WICLEN
+0376 O                         HEX0       1                               WICLEN
+0377 O                         HEX0       2                               WICLEN
+0378 O                         HEX0       3                               WICLEN
+0379 O                         HEX0       4                               WICLEN
+0380 O                         CNT01      8P                              WICLEN
+0381 OINDEX02 E        42                                                 WICLEN
+0382 O                         KEY        4                               WICLEN
+0383 O                         RECNO      8P                              WICLEN
+0384 O        T        LRN22                                              WICLEN
+0385 O                         HEX0       1                               WICLEN
+0386 O                         HEX0       2                               WICLEN
+0387 O                         HEX0       3                               WICLEN
+0388 O                         HEX0       4                               WICLEN
+0389 O                         CNT02      8P                              WICLEN
+0390 O*                                                                  *WICLEN
+0391 O* WRITE OCL FOR SORTING INDEXES                                    *WICLEN
+0392 O*                                                                  *WICLEN
+0393 OOCL     E        LR 60                                              WICLEN
+0394 O                                   18 '// COPY LIBRARY-P,'          WICLEN
+0395 O                                   29 'NAME-AVAPIN'                 WICLEN
+0396 O                         FIL       31                               WICLEN
+0397 O                                   35 ',TO-'                        WICLEN
+0398 O                         LIBNM     43                               WICLEN
+0399 O        E        LR 60                                              WICLEN
+0400 O                                   14 '// LOAD #GSORT'              WICLEN
+0401 O        E        LR 60                                              WICLEN
+0402 O                                   19 '// FILE NAME-INPUT,'         WICLEN
+0403 O                                   39 'RETAIN-S,LABEL-V.IND'        WICLEN
+0404 O                         FIL       41                               WICLEN
+0405 O        E        LR 60                                              WICLEN
+0406 O                                   20 '// FILE NAME-OUTPUT,'        WICLEN
+0407 O                                   35 'RECORDS-      ,'             WICLEN
+0408 O                                   47 'LABEL-V.INDX'                WICLEN
+0409 O                         FIL       49                               WICLEN
+0410 O                         RCD       34                               WICLEN
+0411 O        E        LR 60                                              WICLEN
+0412 O                                    6 '// RUN'                      WICLEN
+0413 O        E        LR 60                                              WICLEN
+0414 O                                   24 '0000 HSORTRS    8A      '    WICLEN
+0415 O                                   32 '  3X   8'                    WICLEN
+0416 O        E        LR 60                                              WICLEN
+0417 O                                   16 '0007 FNC   1   4'            WICLEN
+0418 O        E        LR 60                                              WICLEN
+0419 O                                   16 '0008 FNP   5   8'            WICLEN
+0420 O        E        LR 60                                              WICLEN
+0421 O                                   16 '0009 FDC   1   8'            WICLEN
+0422 O        E        LR 60                                              WICLEN
+0423 O                                    6 '// END'                      WICLEN
+0424 O        E        LR 60                                              WICLEN
+0425 O                                    7 '// CEND'                     WICLEN
+0426 O        T        LRN22                                              WICLEN
+0427 O                                   18 '// COPY LIBRARY-P,'          WICLEN
+0428 O                                   33 'NAME-AVAPIN,TO-'             WICLEN
+0429 O                         LIBNM     41                               WICLEN
+0430 O*     OCL TO BE GENERATED IN CASE INDEX WORK FILES ARE NOT LARGE    WICLEN
+0431 O*     ENOUGH AND THE INDEX CREATE NEEDS TO BE RERUN                 WICLEN
+0432 O        T        LR 22                                              WICLEN
+0433 O                         ARO,1     96                               WICLEN
+0434 O                         LIBNM     41                               WICLEN
+0435 O        T        LR 22                                              WICLEN
+0436 O                         ARO,2     96                               WICLEN
+0437 O        T        LR 22                                              WICLEN
+0438 O                         ARO,3     96                               WICLEN
+0439 O                                   20 '01'                          WICLEN
+0440 O                                   35 '01'                          WICLEN
+0441 O*                U8                20 '03'
+0442 O*                U8                35 '03'
+0443 O*                U7                35 '05'
+0444 O*                U7                20 '05'
+0445 O        T        LR 22                                              WICLEN
+0446 O                         ARO,3     96                               WICLEN
+0447 O                                   20 '02'                          WICLEN
+0448 O                                   35 '02'                          WICLEN
+0449 O*                U8                20 '04'
+0450 O*                U8                35 '04'
+0451 O*                U7                20 '06'
+0452 O*                U7                35 '06'
+0453 O        T        LR 22                                              WICLEN
+0454 O                         ARO,4     96                               WICLEN
+0455 O                         LIB       28                               WICLEN
+0456 O                         LIBNM     60                               WICLEN
+0457 O        T        LR 22                                              WICLEN
+0458 O                         ARO,5     96                               WICLEN
+0459 O        T        LR 22                                              WICLEN
+0460 O                         ARO,6     96                               WICLEN
+0461 O                         IPROG     14                               WICLEN
+0462 O        T        LR 22                                              WICLEN
+0463 O                         ARO,7     96                               WICLEN
+0464 O                         FLENM     33                               WICLEN
+0465 O        T        LR 22                                              WICLEN
+0466 O                         ARO,8     96                               WICLEN
+0467 O                                   20 '01'                          WICLEN
+0468 O                                   34 '01'                          WICLEN
+0469 O*                      U8          20 '03'
+0470 O*                      U7          20 '05'
+0471 O*                U8                34 '03'
+0472 O*                U7                34 '05'
+0473 O                         CNT01     49                               WICLEN
+0474 O        T        LR 22                                              WICLEN
+0475 O                         ARO,8     96                               WICLEN
+0476 O                                   20 '02'                          WICLEN
+0477 O                                   34 '02'                          WICLEN
+0478 O*                      U8          20 '04'
+0479 O*                      U8          34 '04'
+0480 O*                      U7          34 '06'
+0481 O*                      U7          20 '06'
+0482 O                         CNT02     49                               WICLEN
+0483 O        T        LR 22                                              WICLEN
+0484 O                         ARO,9     96                               WICLEN
+0485 O        T        LR 22                                              WICLEN
+0486 O                         ARO,10    96                               WICLEN
+0487 O        T        LR 22                                              WICLEN
+0488 O                         ARO,11    96                               WICLEN
+0489 O                         LIBNM     26                               WICLEN
+0490 O        T        LR 22                                              WICLEN
+0491 O                         ARO,12    96                               WICLEN
+0492 O        T        LR 22                                              WICLEN
+0493 O                         ARO,13    96                               WICLEN
+0494 O                         LIBNM     27                               WICLEN
+0495 O        T        LR 22                                              WICLEN
+0496 O                                    7 '// CEND'                     WICLEN
+0497 O        T        LRN22                                              WICLEN
+0498 O                                    8 'AVAPIN01'                    WICLEN
+0499 O                       U8           8 'AVAPIN03'
+0500 O                       U7           8 'AVAPIN05'
+0501 O        T        LRN22                                              WICLEN
+0502 O                                    8 'AVAPIN02'                    WICLEN
+0503 O                       U8           8 'AVAPIN04'
+0504 O                       U7           8 'AVAPIN06'
+0505 O        T        LRN22                                              WICLEN
+0506 O                                   23 'REMOVE AVAPIN,ALL,PROC,'     WICLEN
+0507 O                         LIBNM     31                               WICLEN
+0508 O        T        LRN22                                              WICLEN
+0509 O                                    7 '// CEND'                     WICLEN
+0510 O*                                                                  *WICLEN
+0511 O* PRINT SUMMARY OF INDEX CREATION                                  *WICLEN
+0512 O*                                                                  *WICLEN
+0513 OPRINTER T  103   LRN22                                              WICLEN
+0514 O                                   48 'INDEX CREATE PROGRAM '       WICLEN
+0515 O                                   63 'SUMMARY  WSF/34'             WICLEN
+0516 O                                   89 'DATE'                        WICLEN
+0517 O                         UDATE Y   98                               WICLEN
+0518 O                                  104 'TIME'                        WICLEN
+0519 O                         TIMEP    113 '0 .  .  '                    WICLEN
+0520 O                                  119 'PAGE'                        WICLEN
+0521 O                         PAGE     124                               WICLEN
+0522 O                         IPROG    132                               WICLEN
+0523 O        T 12     LRN22                                              WICLEN
+0524 O                                   31 'INDEX FILES'                 WICLEN
+0525 O                                   46 'FIELD NAME'                  WICLEN
+0526 O                                   68 'NUMBER OF RECORDS'           WICLEN
+0527 O        T  1     LRN22                                              WICLEN
+0528 O                                   29 'V.INDX01'                    WICLEN
+0529 O                         FLD01     44                               WICLEN
+0530 O                         CNT01 3   62                               WICLEN
+0531 O        T  1     LRN22                                              WICLEN
+0532 O                                   29 'V.INDX02'                    WICLEN
+0533 O                         FLD02     44                               WICLEN
+0534 O                         CNT02 3   62                               WICLEN
+0535 O        T 12     LRN22                                              WICLEN
+0536 O                         FLENM     26                               WICLEN
+0537 O                                   45 '-TOTAL ACTIVE FILE '         WICLEN
+0538 O                                   55 'RECORDS---'                  WICLEN
+0539 O                         TOTRECZ   62                               WICLEN
+0540 O        T        LR U1                                              WICLEN
+0541 O                                   41 'W AV-0240  INDEX BUILD '     WICLEN
+0542 O                                   50 'RAN TWICE'                   WICLEN
+** ARA..........AR2
+EMPNO 000100040N01
+JOBNO 00120015 A02
+CODE  00160019 A
+DAYWRK005000550N
+** ARE
+** ARO
+// COPY LIBRARY-P,NAME-AVAPRT,TO-********
+// IF DATAF1-V.OCL DELETE V.OCL,F1
+// IF DATAF1-V.IND** DELETE V.IND**,F1
+// IF PROC-'AVAPIN,********* REMOVE AVAPIN,ALL,PROC,********
+// SWITCH 1XXXXXXX
+// LOAD ******
+// FILE NAME-INPUT,LABEL-********
+// FILE NAME-INDEX**,LABEL-V.IND**,RECORDS-******
+// FILE NAME-OCL,LABEL-V.OCL,RECORDS-500
+// RUN
+TOLIBR V.OCL,F1,,,********
+// SWITCH 0XXXXXXX
+REMOVE AVAPRT,PROC,********
+** COIBM
+5726-XR1 COPYRIGHT IBM CORP 1978 LICENSED MATERIAL - PROGRAM PROPERTY OF IBM
+VERSION 01/MODIFICATION 01      PTF 0006

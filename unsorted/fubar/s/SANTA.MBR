@@ -1,0 +1,7 @@
+0001 H                                                                    SANTA
+0002 FSANTA   IP  F1280 128            DISK                               SANTA
+0003 FLIST    O     132 132     OF     PRINTER                            SANTA
+0004 ISANTA   NS  01                                                      SANTA
+0005 I                                        6 128 DATA                  SANTA
+0006 OLIST    D        01                                                 SANTA
+0007 O                         DATA     130                               SANTA

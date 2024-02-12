@@ -1,0 +1,287 @@
+0001 H     010                      B              07                     ZZ01
+0002 F*      HORSE RACING GAME  -- FOR SYS/34                             ZZ01
+0003 F*                                                                   ZZ01
+0004 F*   ORIGINAL  02/23/78  BY G. LORENZ                                ZZ01
+0005 F*   CHANGED 08/18/78  BY G. LORENZ  RANDOM NUMBER GENERATOR ADDED   ZZ01
+0006 F*                                                                   ZZ01
+0007 FWK      CP  F     200            WORKSTN                            ZZ01
+0008 F                                              KSLN   LINENO         ZZ01
+0009 F                                              KIND       99         ZZ01
+0010 E                    HNME    3  36 10               HORSES NAMES     ZZ01
+0011 E                    PNME        9 10               PLAYERS NAMES    ZZ01
+0012 E                    PTOT        9  5 0             TOTAL CASH PLAYERZZ01
+0013 E                    PAMT        9  3 0             AMT OF BET       ZZ01
+0014 E                    PWPS        9  1               WIN/PLACE/SHOW   ZZ01
+0015 E                    HNBR        9  1 0             HORSE BET ON     ZZ01
+0016 E                    POS         9  2 0             RACE POSTION     ZZ01
+0017 E                    OUT        60  1               OUT PUT RACE LINEZZ01
+0018 E                    END         9  1 0             HORSE FINISH POS.ZZ01
+0019 IWK      XX  08   6 C                                                ZZ01
+0020 I       OR   01   6 C1                                               ZZ01
+0021 I       OR   02   6 C2                                               ZZ01
+0022 I       OR   03   6 C3                                               ZZ01
+0023 I       OR   04   6 C4                                               ZZ01
+0024 I       OR   05   6 C5                                               ZZ01
+0025 I       OR   07   6 C7                                               ZZ01
+0026 I       OR   06                                                      ZZ01
+0027 I                                        7  16 PNME,1    01    30    ZZ01
+0028 I                                       17  26 PNME,2    01    31    ZZ01
+0029 I                                       27  36 PNME,3    01    32    ZZ01
+0030 I                                       37  46 PNME,4    01    33    ZZ01
+0031 I                                       47  56 PNME,5    01    34    ZZ01
+0032 I                                       57  66 PNME,6    01    35    ZZ01
+0033 I                                       67  76 PNME,7    01    36    ZZ01
+0034 I                                       77  86 PNME,8    01    37    ZZ01
+0035 I                                       87  96 PNME,9    01    38    ZZ01
+0036 I*                                                                   ZZ01
+0037 I                                        7   90AMT                   ZZ01
+0038 I                                       10  100HOR             11    ZZ01
+0039 I                                       11  11 WPS                   ZZ01
+0040 C                     SETOF                     12                   ZZ01
+0041 C                     SETOF                     909192               ZZ01
+0042 C                     SETOF                     939495               ZZ01
+0043 C   KG                SETON                     LR                   ZZ01
+0044 C   KG                GOTO END                                       ZZ01
+0045 C*                                                                   ZZ01
+0046 C  N66                Z-ADD1.        R       10        R = RACE NBR  ZZ01
+0047 C  N66                Z-ADD250.      PTOT             $250 FOR PLAYERZZ01
+0048 C  N66                SETON                     66                   ZZ01
+0049 C   01                GOTO SCN1                                      ZZ01
+0050 C   02                GOTO END                                       ZZ01
+0051 C   03                GOTO SN03                                      ZZ01
+0052 C   04                GOTO SCN4                                      ZZ01
+0053 C   05                GOTO TOTAL                                     ZZ01
+0054 C   06                GOTO TOTAL                                     ZZ01
+0055 C   07                GOTO SCN7                                      ZZ01
+0056 C   08                GOTO END                                       ZZ01
+0057 C*                                                                   ZZ01
+0058 C           SCN1      TAG                             *** SCN1 ***   ZZ01
+0059 C*                                                                   ZZ01
+0060 C                     TIME           TME     60        GET THE TIME  ZZ01
+0061 C                     Z-ADDTME       IX      50        SET SEED      ZZ01
+0062 C           IX        DIV  2.        REM     44 13     13 = ODD NBR  ZZ01
+0063 C  N13      IX        ADD  1.        IX                MAKE SEED ODD ZZ01
+0064 C                     SETON                     67                   ZZ01
+0065 C                     Z-ADD0.        P       10        P = # OF PLAYRZZ01
+0066 C*-------------------------------------------------------------------ZZ01
+0067 C           SN01      TAG                             *** SN01 ***   ZZ01
+0068 C*-------------------------------------------------------------------ZZ01
+0069 C  N30      1.        ADD  P         P                ONE PLAYER     ZZ01
+0070 C  N31      1.        ADD  P         P                 TWO PLAYERS   ZZ01
+0071 C  N32      1.        ADD  P         P                 THREE PLAYERS ZZ01
+0072 C  N33      1.        ADD  P         P                 FOUR PLAYERS  ZZ01
+0073 C  N34      1.        ADD  P         P                 FIVE PLAYERS  ZZ01
+0074 C  N35      1.        ADD  P         P                 SIX PLAYERS   ZZ01
+0075 C  N36      1.        ADD  P         P                 SEVEN PLAYERS ZZ01
+0076 C  N37      1.        ADD  P         P                 EIGHT PLAYERS ZZ01
+0077 C  N38      1.        ADD  P         P                 NINE PLAYERS  ZZ01
+0078 C*-------------------------------------------------------------------ZZ01
+0079 C           SN02      TAG                             *** SN02 ***   ZZ01
+0080 C*-------------------------------------------------------------------ZZ01
+0081 C                     Z-ADD5.        LINENO  20        SET V LINENO  ZZ01
+0082 C                     SETON                     90      USED TO      ZZ01
+0083 C                     EXCPT                               OUTPUT     ZZ01
+0084 C                     SETOF                     90        SCREEN TWO ZZ01
+0085 C           R         MULT 9.        A       20         USED TO      ZZ01
+0086 C           A         SUB  9.        A                   GET HORSES  ZZ01
+0087 C           R         MULT 9.        LIMIT   20          NAMES FROM  ZZ01
+0088 C                     Z-ADD0.        B       10           ARRAY      ZZ01
+0089 C*-------------------------------------------------------------------ZZ01
+0090 C           SN03      TAG                             *** SN03 ***   ZZ01
+0091 C*-------------------------------------------------------------------ZZ01
+0092 C           1.        ADD  A         A                  USED TO      ZZ01
+0093 C           A         COMP LIMIT                09      OUTPUT       ZZ01
+0094 C  N09      1.        ADD  LINENO    LINENO              HORSES NAMESZZ01
+0095 C  N09      1.        ADD  B         B                   ON SCREEN   ZZ01
+0096 C  N09                SETON                     91       FOR THAT    ZZ01
+0097 C  N09 91             EXCPT                              RACE        ZZ01
+0098 C                     SETOF                     91                   ZZ01
+0099 C  N09                GOTO SN03                                      ZZ01
+0100 C                     Z-ADD1.        Z       10                      ZZ01
+0101 C                     SETON                     9212                 ZZ01
+0102 C                     GOTO END                                       ZZ01
+0103 C*-------------------------------------------------------------------ZZ01
+0104 C           SCN4      TAG                             *** SCN4 ***   ZZ01
+0105 C*-------------------------------------------------------------------ZZ01
+0106 C                     Z-ADDAMT       PAMT,Z           SAVE AMT OF BETZZ01
+0107 C                     Z-ADDHOR       HNBR,Z           HORSE BET ON   ZZ01
+0108 C                     MOVE WPS       PWPS,Z           SAVE PLACE     ZZ01
+0109 C           WPS       COMP 'W'                      12               ZZ01
+0110 C  N12      WPS       COMP 'P'                      12               ZZ01
+0111 C  N12      WPS       COMP 'S'                      12               ZZ01
+0112 C  N12                                                 ERRORS FROM   ZZ01
+0113 COR 11                SETON                     92     ENTERING BET  ZZ01
+0114 C  N12                                                               ZZ01
+0115 COR 11                GOTO END                                       ZZ01
+0116 C           Z         COMP P                        10               ZZ01
+0117 C  N10      1.        ADD  Z         Z                               ZZ01
+0118 C  N10                SETON                     92                   ZZ01
+0119 C  N10                GOTO END                                       ZZ01
+0120 C*-------------------------------------------------------------------ZZ01
+0121 C           RACE      TAG                             *** RACE ***   ZZ01
+0122 C*-------------------------------------------------------------------ZZ01
+0123 C                     Z-ADD0.        PLACE   10                      ZZ01
+0124 C                     SETOF                     909192               ZZ01
+0125 C                     SETON                     93    USED TO OUTPUT ZZ01
+0126 C                     EXCPT                              SCREEN 5    ZZ01
+0127 C                     SETOF                     93                   ZZ01
+0128 C                     Z-ADD1.        POS                             ZZ01
+0129 C                     Z-ADD0.        END                             ZZ01
+0130 C           R         MULT 9.        A                               ZZ01
+0131 C           A         SUB  9.        A                               ZZ01
+0132 C                     Z-ADDA         AA      20                      ZZ01
+0133 C           R         MULT 9.        LIMIT                           ZZ01
+0134 C                     Z-ADD0.        B                               ZZ01
+0135 C                     Z-ADD5.        LINENO                          ZZ01
+0136 C*-------------------------------------------------------------------ZZ01
+0137 C           RACE1     TAG                             *** RACE1 ***  ZZ01
+0138 C*-------------------------------------------------------------------ZZ01
+0139 C           1.        ADD  A         A                               ZZ01
+0140 C           A         COMP LIMIT                09                   ZZ01
+0141 C  N09      1.        ADD  LINENO    LINENO                          ZZ01
+0142 C  N09      1.        ADD  B         B                               ZZ01
+0143 C  N09                MOVE B         OUT,1                           ZZ01
+0144 C  N09                SETON                     94                   ZZ01
+0145 C  N09 94             EXCPT                                          ZZ01
+0146 C                     SETOF                     94                   ZZ01
+0147 C  N09                GOTO RACE1                                     ZZ01
+0148 C*-------------------------------------------------------------------ZZ01
+0149 C           RACE2     TAG                             *** RACE2 ***  ZZ01
+0150 C*-------------------------------------------------------------------ZZ01
+0151 C                     SETOF                     5051                 ZZ01
+0152 C                     TIME           TME     60                      ZZ01
+0153 C                     Z-ADDTME       L       10     20LENGTH OF MOVE ZZ01
+0154 C  N20      L         DIV  3.        L              20               ZZ01
+0155 C   20                Z-ADD1.        L                               ZZ01
+0156 C*-------------------------------------------------------------------ZZ01
+0157 C           RACE3     TAG                             *** RACE3 ***  ZZ01
+0158 C*-------------------------------------------------------------------ZZ01
+0159 C           IX        MULT 899.      IY      80 464546GENERATE       ZZ01
+0160 C   45      IY        ADD  32768.    IY               RANDOM NUMBER  ZZ01
+0161 C   46                Z-ADDIY        YFL    102       FOR HORSE      ZZ01
+0162 C           YFL       DIV  32767.    YFL              TO BE MOVED    ZZ01
+0163 C                     Z-ADDIY        IX                              ZZ01
+0164 C                     Z-ADDYFL       H       10     20               ZZ01
+0165 C   20                GOTO RACE3                                     ZZ01
+0166 C*                                                                   ZZ01
+0167 C                     MOVE ' '       OUT                             ZZ01
+0168 C           H         ADD  5.        LINENO                          ZZ01
+0169 C           END,H     COMP 0                        21               ZZ01
+0170 C  N21                GOTO RACE3                                     ZZ01
+0171 C           H         ADD  AA        A                               ZZ01
+0172 C           POS,H     ADD  L         LL      20                      ZZ01
+0173 C           POS,H     ADD  L         POS,H                           ZZ01
+0174 C           LL        COMP 59.                  50                   ZZ01
+0175 C  N50                MOVE H         OUT,LL                          ZZ01
+0176 C   50                MOVE H         OUT,60                          ZZ01
+0177 C   50      1.        ADD  PLACE     PLACE                           ZZ01
+0178 C   50                Z-ADDPLACE     END,H                           ZZ01
+0179 C                     SETON                     94                   ZZ01
+0180 C                     EXCPT                                          ZZ01
+0181 C                     SETOF                     94                   ZZ01
+0182 C   50      PLACE     COMP 9                    51  51               ZZ01
+0183 C  N51                GOTO RACE2                                     ZZ01
+0184 C                     GOTO END                                       ZZ01
+0185 C*-------------------------------------------------------------------ZZ01
+0186 C           TOTAL     TAG                             *** TOTAL ***  ZZ01
+0187 C*-------------------------------------------------------------------ZZ01
+0188 C                     SETOF                     08                   ZZ01
+0189 C                     Z-ADD0.        Z       10                      ZZ01
+0190 C*-------------------------------------------------------------------ZZ01
+0191 C           TOT1      TAG                             *** TOT1 ***   ZZ01
+0192 C*-------------------------------------------------------------------ZZ01
+0193 C           1.        ADD  Z         Z                               ZZ01
+0194 C           Z         COMP P                    25                   ZZ01
+0195 C   25                SETON                     95                   ZZ01
+0196 C   25                EXCPT                                          ZZ01
+0197 C   25                SETOF                     95                   ZZ01
+0198 C   25                GOTO END                                       ZZ01
+0199 C           PWPS,Z    COMP 'W'                      10               ZZ01
+0200 C   10                Z-ADD1.        TEST    10                      ZZ01
+0201 C           PWPS,Z    COMP 'P'                      10               ZZ01
+0202 C   10                Z-ADD2.        TEST                            ZZ01
+0203 C           PWPS,Z    COMP 'S'                      10               ZZ01
+0204 C   10                Z-ADD3.        TEST                            ZZ01
+0205 C*-------------------------------------------------------------------ZZ01
+0206 C           TOT2      TAG                             *** TOT2 ***   ZZ01
+0207 C*-------------------------------------------------------------------ZZ01
+0208 C                     Z-ADDHNBR,Z    Y       10                      ZZ01
+0209 C           TEST      COMP END,Y                15  15               ZZ01
+0210 C   15      TEST      COMP 2.                   161718               ZZ01
+0211 C   15 16   PAMT,Z    MULT 1.        TOT     40                      ZZ01
+0212 C   15 17   PAMT,Z    MULT 6.        TOT                             ZZ01
+0213 C   15 18   PAMT,Z    MULT 3.        TOT                             ZZ01
+0214 C   15      TOT       ADD  PTOT,Z    PTOT,Z                          ZZ01
+0215 C  N15      PTOT,Z    SUB  PAMT,Z    PTOT,Z                          ZZ01
+0216 C                     GOTO TOT1                                      ZZ01
+0217 C*-------------------------------------------------------------------ZZ01
+0218 C           SCN7      TAG                             *** SCN7 ***   ZZ01
+0219 C*-------------------------------------------------------------------ZZ01
+0220 C                     Z-ADD0.        PAMT                            ZZ01
+0221 C                     Z-ADD0.        END                             ZZ01
+0222 C                     Z-ADD0.        HNBR                            ZZ01
+0223 C                     Z-ADD0.        POS                             ZZ01
+0224 C                     Z-ADD0.        PLACE                           ZZ01
+0225 C                     MOVE ' '       OUT                             ZZ01
+0226 C           1.        ADD  R         R                               ZZ01
+0227 C           R         COMP 4.                   99                   ZZ01
+0228 C   99                SETON                     LR                   ZZ01
+0229 C  N99                GOTO SN02                                      ZZ01
+0230 C*-------------------------------------------------------------------ZZ01
+0231 C           END       TAG                             *** END ***    ZZ01
+0232 C*-------------------------------------------------------------------ZZ01
+0233 C   08 67             GOTO TOTAL                                     ZZ01
+0234 OWK      D        08NLR                                              ZZ01
+0235 O                                   K6 'ZZ0101'                      ZZ01
+0236 O        E        90                                                 ZZ01
+0237 O                                   K6 'ZZ0102'                      ZZ01
+0238 O                         R          1                               ZZ01
+0239 O        E        91                                                 ZZ01
+0240 O                                   K6 'ZZ0103'                      ZZ01
+0241 O                         B          1                               ZZ01
+0242 O                         HNME,A    11                               ZZ01
+0243 O        D        92                                                 ZZ01
+0244 O                                   K6 'ZZ0104'                      ZZ01
+0245 O                         PNME,Z    10                               ZZ01
+0246 O                 11                30 'INVALID HORSE NUMBER'        ZZ01
+0247 O                N12                57 'POSTION NOT- P,W, OR S'      ZZ01
+0248 O        E        93                                                 ZZ01
+0249 O                                   K6 'ZZ0105'                      ZZ01
+0250 O        E        94                                                 ZZ01
+0251 O                                   K6 'ZZ0106'                      ZZ01
+0252 O                         HNME,A    10                               ZZ01
+0253 O                         OUT       70                               ZZ01
+0254 O                 09 50   END,H Z   71                               ZZ01
+0255 O        E        95                                                 ZZ01
+0256 O                                   K6 'ZZ0107'                      ZZ01
+0257 O                N30      PNME,1    10                               ZZ01
+0258 O                N30      PTOT,1M   16                               ZZ01
+0259 O                N31      PNME,2    26                               ZZ01
+0260 O                N31      PTOT,2M   32                               ZZ01
+0261 O                N32      PNME,3    42                               ZZ01
+0262 O                N32      PTOT,3M   48                               ZZ01
+0263 O                N33      PNME,4    58                               ZZ01
+0264 O                N33      PTOT,4M   64                               ZZ01
+0265 O                N34      PNME,5    74                               ZZ01
+0266 O                N34      PTOT,5M   80                               ZZ01
+0267 O                N35      PNME,6    90                               ZZ01
+0268 O                N35      PTOT,6M   96                               ZZ01
+0269 O                N36      PNME,7   106                               ZZ01
+0270 O                N36      PTOT,7M  112                               ZZ01
+0271 O                N37      PNME,8   122                               ZZ01
+0272 O                N37      PTOT,8M  128                               ZZ01
+0273 O                N38      PNME,9   138                               ZZ01
+0274 O                N38      PTOT,9M  144                               ZZ01
+**
+GARY'S PETFAST RUN  POSSIBLE
+THE BITCH GOOD LOOK DREAM ON
+FAST STEPSDANNDY DONCANN'T WIN
+GO GET IT SURE FIRE THE LOSER
+WHY NOT   COULD WIN FAST RUN
+DEAD BEAT DREAMER   RUN DUSTY
+THE PITS  HORSE DUN FRED FIRE
+COW SHIT  THE DUDE  NO CHANCE
+GOOD LOSERCASH IN   SURE WIN
+MONEY BANKNO CONTESTJERRY JURY
+NO HOPE   FAST FILLYCHEATER
+PLEASE WINHELP ME   NO NAME

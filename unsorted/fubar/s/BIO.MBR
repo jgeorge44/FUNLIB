@@ -1,0 +1,559 @@
+0001 H     028                              1                             BIO               0001
+0002 F**************************************************************************            0002
+0003 F*                                                                                     0003
+0004 F*            BIORYTHMS GRAPH PROGRAM                                                  0004
+0005 F*                                                                                     0005
+0006 F*       ENHANCED FOR SYSTEM/32 BY CHUCK BRAMWELL                                      0006
+0007 F*                                 IBM                                                 0007
+0008 F*                                 500 CITY PARKWAY WEST                               0008
+0009 F*                                 ORANGE, CALIFORNIA    92668                         0009
+0010 F*                                 (714) 835-4412                                      0010
+0011 F*
+0012 F*       CAUTION--DO NOT SERIALIZE THIS PROGRAM IN 93--SERIALIZE IN 1 ONLY DUE TO ARRAYS
+0013 F*                                                                                     0011
+0014 F*       VERSION 2      APRIL 1976                                                     0012
+0015 F*                                                                                     0013
+0016 F**************************************************************************            0014
+0017 FKEYBORD IPE F  40  40            KEYBORD                                              0015
+0018 FSCREEN  O   F  40  40            CRT                                                  0016
+0019 FPRINTER O   F 132 132            PRINTER                                              0017
+0020 E                    ARA    13  13  3 0                                                0018
+0021 E                    ARB    12  12  3 0                                                0019
+0022 E                    SIN    32  90  3 2                                                0020
+0023 E                    PRN      2730  1                                                  0021
+0024 E                    OUT       130  1                                                  0022
+0025 E                    OUT2   96 130  1                                                  0023
+0026 E                    MON    36  36  1                                                  0024
+0027 E                    DAT       700  1                                                  0025
+0028 E                    PMT     1  31 40                                                  0026
+0029 E                    PRT     1  28 96                                                  0027
+0030 E                    WRK        40  1                                                  0028
+0031 C*                                                                                     0029
+0032 C*            MAIN PROGRAM DRIVER                                                      0030
+0033 C*                                                                                     0031
+0034 C   89                GOTO START                                                       0032
+0035 C                     SETON                     89                                     0033
+0036 C           1         DIV  23        I23     66H                                       0034
+0037 C           1         DIV  28        I28     66H                                       0035
+0038 C           1         DIV  33        I33     66H                                       0036
+0039 C           START     TAG                                                              0037
+0040 C                     SETOF                     01                                     0038
+0041 C*  GET NAME                                                                           0039
+0042 C                     Z-ADD1         SCREEN  20                                        0040
+0043 C                     EXSR CRT                                                         0041
+0044 C           PMT,X5    KEY            NAME   25                                         0042
+0045 C                     EXSR BORN                                                        0043
+0046 C                     EXSR DODA                                                        0045
+0047 C                     EXSR BUMPER                                                      0046
+0048 C                     SETON                     01                                     0047
+0049 C                     EXSR PRINT                                                       0048
+0050 C           END       TAG                                                              0049
+0051 C                     EXSR NOTES                                                       0050
+0052 C                     SETON                     LR                                     0051
+0053 **                                                                                     0052
+0054 CSR         BORN      BEGSR                                                            0053
+0055 C*  GET BIRTH DATE                                                                     0054
+0056 CSR                   MOVE ' '       WRK                                               0055
+0057 CSR                   MOVEANAME      WRK,11                                            0056
+0058 CSR                   MOVEAWRK       PMT,8                                             0057
+0059 CSR                   Z-ADD2         SCREEN                                            0058
+0060 CSR         L01       TAG                                                              0059
+0061 CSR                   SETOF                     31                                     0060
+0062 CSR                   EXSR CRT                                                         0061
+0063 CSR         PMT,X5    KEY            MMDDYY  60                                        0062
+0064 CSR                   MOVE MMDDYY    A5      6
+0065 CSR                   MOVELMMDDYY    A1      20                                        0063
+0066 CSR                   MOVE MMDDYY    A2      40                                        0064
+0067 CSR                   MOVELA2        A3      20                                        0065
+0068 CSR                   MOVE A2        A4      20                                        0066
+0069 CSR                   MOVE A4        BIRYR   20
+0070 CSR         A1        COMP 01                     31                                   0067
+0071 CSRN31      A1        COMP 12                   31                                     0068
+0072 CSRN31      A3        COMP 01                     31                                   0069
+0073 CSRN31      A3        COMP 31                   31                                     0070
+0074 CSRN31      A4        COMP 01                     31                                   0071
+0075 C*  INVALID DATE                                                                       0072
+0076 CSR 31                Z-ADD3         SCREEN                                            0073
+0077 CSR 31                MOVEAPMT,16    WRK                                               0074
+0078 CSR 31                MOVEAA5        WRK,19                                            0075
+0079 CSR 31                MOVEAWRK       PMT,16                                            0076
+0080 CSR 31                GOTO L01                                                         0077
+0081 C*  GET BIRTH DATE IN JULIAN INTO BIRJUL
+0082 CSR                   EXSR ENGDAT                                                      0078
+0083 CSR                   Z-ADDJDATE     BIRJUL  50
+0084 CSR                   MOVE MMDDYY    FDATE   60                                        0079
+0085 CSR                   Z-ADDYY        FYEAR   20                                        0080
+0086 CSRN81      365       SUB  DAY       DAYS    50                                        0081
+0087 CSR 81      366       SUB  DAY       DAYS                                              0082
+0088 C*  GET START DATE                                                                     0083
+0089 CSR                   Z-ADD4         SCREEN                                            0084
+0090 CSR         L02       TAG                                                              0085
+0091 CSR                   SETOF                     31                                     0086
+0092 CSR                   EXSR CRT                                                         0087
+0093 CSR         PMT,X5    KEY            MMDDYY                                            0088
+0094 CSR                   MOVE MMDDYY    A5
+0095 CSR                   MOVELMMDDYY    A1                                                0089
+0096 CSR                   MOVE MMDDYY    A2                                                0090
+0097 CSR                   MOVELA2        A3                                                0091
+0098 CSR                   MOVE A2        A4                                                0092
+0099 CSR                   MOVE A4        STYR    20
+0100 CSR         A1        COMP 01                     31                                   0093
+0101 CSRN31      A1        COMP 12                   31                                     0094
+0102 CSRN31      A3        COMP 01                     31                                   0095
+0103 CSRN31      A3        COMP 31                   31                                     0096
+0104 CSRN31      A4        COMP 01                     31                                   0097
+0105 C*  GET START DATE IN JULIAN INTO STJUL
+0106 CSR                   EXSR ENGDAT
+0107 CSR                   Z-ADDJDATE     STJUL   50
+0108 C*  START DATE CAN NOT BE BEFORE BIRTH DATE
+0109 CSRN31      STJUL     COMP BIRJUL                 31
+0110 C*  INVALID DATE                                                                       0098
+0111 CSR 31                Z-ADD3         SCREEN                                            0099
+0112 CSR 31                MOVEAPMT,16    WRK                                               0100
+0113 CSR 31                MOVEAA5        WRK,19                                            0101
+0114 CSR 31                MOVEAWRK       PMT,16                                            0102
+0115 CSR 31                GOTO L02                                                         0103
+0116 CSR         ENDB      TAG                                                              0104
+0117 CSR                   ENDSR                                                            0105
+0118 **                                                                                     0106
+0119 CSR         DODA      BEGSR                                                            0107
+0120 CSR         FYEAR     ADD  1         FYEAR                                             0108
+0121 CSR                   Z-SUB10        OFF     40                                        0109
+0122 C*  LOOP TO CALCULATE THE NUMBER OF DAYS OLD FROM BIRTH DATE TO START DATE
+0123 C*    INCLUDING LEAP YEAR
+0124 CSR         AGAIN     TAG                                                              0110
+0125 C*
+0126 C*  YY IS THE YEAR OF START
+0127 C*  FYEAR STARTS AT 1 MORE THAN YEAR OF BIRTH
+0128 C*
+0129 CSR         YY        COMP FYEAR                90                                     0111
+0130 CSR         FYEAR     DIV  4         RESULT  20                                        0112
+0131 CSR                   MVR            RESULT                                            0113
+0132 CSR         RESULT    COMP 00                       83                                 0114
+0133 CSR 90N83   DAYS      ADD  365       DAYS                                              0115
+0134 CSR 90 83   DAYS      ADD  366       DAYS                                              0116
+0135 CSR 90      FYEAR     ADD  1         FYEAR                                             0117
+0136 CSR 90                GOTO AGAIN                                                       0118
+0137 C*  DAYS IS THE NUMBER OF DAYS OLD BEFORE THIS YEAR
+0138 C*  DAY IS THE NUMBER OF DAYS BEFORE THE START DATE IN THIS YEAR
+0139 CSR         DAYS      ADD  DAY       DAYS                                              0119
+0140 C*
+0141 C*  IF YEAR OF START DATE IS THE YEAR OF BIRTH DATE,
+0142 C*    DAYS OLD IS 1 YEARS WORTH TOO MANY
+0143 C*
+0144 CSR         BIRYR     COMP STYR                     36
+0145 CSR 36N81   DAYS      SUB  365       DAYS
+0146 CSR 36 81   DAYS      SUB  366       DAYS
+0147 CSR         DAYS      DIV  23        RESULT                                            0120
+0148 CSR                   MVR            P       20                                        0121
+0149 CSR         DAYS      DIV  28        RESULT                                            0122
+0150 CSR                   MVR            E       20                                        0123
+0151 CSR         DAYS      DIV  33        RESULT                                            0124
+0152 CSR                   MVR            I       20                                        0125
+0153 CSR                   SETON                     50                                     0126
+0154 CSR                   EXCPT                                                            0127
+0155 CSR                   SETOF                     50                                     0128
+0156 CSR                   SETON                     01                                     0129
+0157 CSR                   EXSR DAYSC                                                       0130
+0158 CSR         ENDD      TAG                                                              0131
+0159 CSR                   SETOF                     01                                     0132
+0160 CSR                   ENDSR                                                            0133
+0161 **                                                                                     0134
+0162 CSR         BUMPER    BEGSR                                                            0135
+0163 CSR                   Z-SUB1         INC     30                                        0136
+0164 CSR                   SETOF                     95                                     0137
+0165 CSR         NEXT      TAG                                                              0138
+0166 CSR         INC       COMP 129                      90                                 0139
+0167 CSR         INC       ADD  1         INC                                               0140
+0168 CSRN90      DAYS      ADD  INC       DAYSS   50                                        0141
+0169 CSRN90                EXSR BIOL8                                                       0142
+0170 CSR                   SETON                     95                                     0143
+0171 CSRN90                GOTO NEXT                                                        0144
+0172 CSR                   ENDSR                                                            0145
+0173 ***************************************************************************************0146
+0174 CSR         PRINT     BEGSR                                                            0147
+0175 CSR                   MOVE ' '       OUT                                               0148
+0176 CSR                   EXCPT                                                            0149
+0177 CSR                   Z-ADD1         I2      40                                        0150
+0178 CSR         TAG2      TAG                                                              0151
+0179 CSR                   EXSR DO1                                                         0152
+0180 CSR         I2        COMP 11                       90                                 0153
+0181 CSR 90                SETOF                     01                                     0154
+0182 CSR 90                SETON                     05                                     0155
+0183 CSR 90                EXCPT                                                            0156
+0184 CSR 90                SETON                     01                                     0157
+0185 CSR 90                SETOF                     05                                     0158
+0186 CSR         I2        COMP 1                        41                                 0159
+0187 CSR         I2        COMP 2                        42                                 0160
+0188 CSR         I2        COMP 3                        43                                 0161
+0189 CSR         I2        COMP 4                        44                                 0162
+0190 CSR         I2        COMP 19                       47                                 0163
+0191 CSR         I2        COMP 20                       48                                 0164
+0192 CSR         I2        COMP 21                       49                                 0165
+0193 CSR                   EXCPT                                                            0166
+0194 CSR         I2        ADD  1         I2                                                0167
+0195 CSR         21        COMP I2                     90                                   0168
+0196 CSRN90                GOTO TAG2                                                        0169
+0197 CSR                   ENDSR                                                            0170
+0198****************************************************************************************0171
+0199 CSR         DO1       BEGSR                                                            0172
+0200 CSR                   Z-ADD1         I1      40                                        0173
+0201 CSR         TAG1      TAG                                                              0174
+0202 CSR         I1        SUB  1         CX1     40                                        0175
+0203 CSR         CX1       ADD  CX1       C       40                                        0176
+0204 CSR         C         ADD  C         CX4     40                                        0177
+0205 CSR         CX4       ADD  CX4       C                                                 0178
+0206 CSR         C         ADD  C         C                                                 0179
+0207 CSR         CX4       ADD  C         C                                                 0180
+0208 CSR         CX1       ADD  C         C                                                 0181
+0209 CSR         C         ADD  I2        C                                                 0182
+0210 CSR                   MOVE PRN,C     OUT,I1                                            0183
+0211 CSR         I1        ADD  1         I1                                                0184
+0212 CSR         130       COMP I1                     90                                   0185
+0213 CSRN90                GOTO TAG1                                                        0186
+0214 CSR                   ENDSR                                                            0187
+0215****************************************************************************************0188
+0216 CSR         DAYSC     BEGSR                                                            0189
+0217 CSR                   Z-ADDJDATE     FJDAY   50                                        0190
+0218 CSR         FJDAY     COMP SAVE                     92                                 0191
+0219 CSRN92                MOVE FJDAY     SAVE    50                                        0192
+0220 CSR 92                GOTO ENDSC                                                       0193
+0221 CSR                   Z-ADD99        SAVED                                             0194
+0222 CSR                   Z-ADD0         I1      40                                        0195
+0223 CSR         TAG3      TAG                                                              0196
+0224 CSR         FJDAY     ADD  I1        JDAY                                              0197
+0225 CSR         I1        ADD  1         C       40                                        0198
+0226 CSR         C         ADD  C         C                                                 0199
+0227 CSR         C         ADD  C         C                                                 0200
+0228 CSR         C         SUB  1         C                                                 0201
+0229 CSR         FJDAY     ADD  I1        JDATE                                             0202
+0230 CSR         SAVED     COMP 28                   94  94                                 0203
+0231 CSR 94                EXSR JULDAT                                                      0204
+0232 CSRN94      MMDD      ADD  1         MMDD                                              0209
+0233 CSR                   MOVE MMDD      SAVED   20                                        0210
+0234 CSR                   EXSR MONTH
+0235 CSR                   MOVE SAVED     XDATEX  2                                         0211
+0236 CSR                   MOVEAXDATEX    DAT,C                                             0212
+0237 C*R U6      'MMDD'    DEBUGPRINTER   MMDD                                              0213
+0238 C*R U6      'C'       DEBUGPRINTER   C                                                 0214
+0239 C*R U6      'DAT'     DEBUGPRINTER   DAT                                               0215
+0240 CSR         I1        ADD  1         I1                                                0216
+0241 CSR         129       COMP I1                     90                                   0217
+0242 CSRN90                GOTO TAG3                                                        0218
+0243 CSR         ENDSC     TAG                                                              0219
+0244 CSR                   EXSR DAYSP1                                                      0220
+0245 CSR                   ENDSR                                                            0221
+0246****************************************************************************************0222
+0247 C*
+0248 C*            SUBROUTINE MONTH
+0249 C*
+0250 C*  PURPOSE--
+0251 C*    TO PUT THE MONTH ABBREVIATION LETTERS INTO DAT ARRAY
+0252 C*
+0253 CSR         MONTH     BEGSR
+0254 C*  PUT FIRST LETTER OF MONTH ON 13--DAT,J1
+0255 CSR         SAVED     COMP 13                       51
+0256 CSR 51      C         SUB  2         J1      40
+0257 CSR 51                MOVELMMDD      MM      20
+0258 CSR 51      MM        MULT 3         M1      20
+0259 CSR 51      M1        SUB  2         M1
+0260 CSR 51                MOVE MON,M1    DAT,J1
+0261 CSR 51                GOTO ENDMON
+0262 C*  PUT SECOND LETTER OF MONTH ON 15--DAT,J1
+0263 CSR         SAVED     COMP 15                       51
+0264 CSR 51      C         SUB  2         J1
+0265 CSR 51                MOVELMMDD      MM
+0266 CSR 51      MM        MULT 3         M1
+0267 CSR 51      M1        SUB  1         M1
+0268 CSR 51                MOVE MON,M1    DAT,J1
+0269 CSR 51                GOTO ENDMON
+0270 C*  PUT THIRD LETTER OF MONTH ON 17--DAT,J1
+0271 CSR         SAVED     COMP 17                       51
+0272 CSR 51      C         SUB  2         J1
+0273 CSR 51                MOVELMMDD      MM
+0274 CSR 51      MM        MULT 3         M1
+0275 CSR 51                MOVE MON,M1    DAT,J1
+0276 CSR         ENDMON    ENDSR
+0277 C*                                                                                     0256
+0278 C*            SUBROUTINE DAYSP1                                                        0257
+0279 C*                                                                                     0258
+0280 C*  PURPOSE--                                                                          0259
+0281 C*    PRINT THE FOUR HEADING LINES                                                     0260
+0282 C*                                                                                     0261
+0283 CSR         DAYSP1    BEGSR                                                            0262
+0284 CSR                   Z-ADD1         I2      40                                        0263
+0285 CSR         TAG4      TAG                                                              0264
+0286 CSR                   EXSR DAYSP2                                                      0265
+0287 CSR                   SETON                     02                                     0266
+0288 CSR                   EXCPT                                                            0267
+0289 CSR         I2        ADD  1         I2                                                0268
+0290 CSR         4         COMP I2                     90                                   0269
+0291 CSRN90                GOTO TAG4                                                        0270
+0292 CSR                   SETOF                     02                                     0271
+0293 CSR                   ENDSR                                                            0272
+0294****************************************************************************************0273
+0295 C*                                                                                     0274
+0296 C*            SUBROUTINE DAYSP2                                                        0275
+0297 C*                                                                                     0276
+0298 C*  PURPOSE--                                                                          0277
+0299 C*    LOAD THE OUTPUT BUFFER WITH 130 CHARACTERS FROM DAT                              0278
+0300 C*                                                                                     0279
+0301 CSR         DAYSP2    BEGSR                                                            0280
+0302 CSR                   Z-ADD1         I1      40                                        0281
+0303 CSR         TAG5      TAG                                                              0282
+0304 CSR         I1        SUB  1         C       40                                        0283
+0305 CSR         C         MULT 4         C                                                 0284
+0306 CSR         C         ADD  I2        C                                                 0285
+0307 CSR                   MOVE DAT,C     OUT,I1                                            0286
+0308 CSR         I1        ADD  1         I1                                                0287
+0309 CSR         130       COMP I1                     90                                   0288
+0310 CSRN90                GOTO TAG5                                                        0289
+0311 CSR                   ENDSR                                                            0290
+0312 ***************************************************************************************0291
+0313 CSR         BIOL8     BEGSR                                                            0292
+0314 CSR         OFF       ADD  21        OFF                                               0293
+0315 CSR 95      PP        ADD  I23       PP                                                0294
+0316 CSR 95      EP        ADD  I28       EP                                                0295
+0317 CSR 95      IP        ADD  I33       IP                                                0296
+0318 CSRN95      DAYSS     DIV  23        PP      66                                        0297
+0319 CSRN95      DAYSS     DIV  28        EP      66                                        0298
+0320 CSRN95      DAYSS     DIV  33        IP      66                                        0299
+0321 CSR                   Z-ADDIP        PD                                                0300
+0322 CSR                   EXSR SINS                                                        0301
+0323 CSR                   MOVE 'I'       PRN,LO                                            0302
+0324 CSR                   Z-ADDEP        PD      66                                        0303
+0325 CSR                   EXSR SINS                                                        0304
+0326 CSR                   MOVE 'E'       PRN,LO                                            0305
+0327 CSR                   Z-ADDPP        PD                                                0306
+0328 CSR                   EXSR SINS                                                        0307
+0329 CSR                   MOVE 'P'       PRN,LO                                            0308
+0330 CSR                   ENDSR                                                            0309
+0331 ***************************************************************************************0310
+0332 CSR         JULDAT    BEGSR                                                            0311
+0333 CSR         OVER      TAG                                                              0312
+0334 CSR                   MOVELJDATE     YR      20                                        0313
+0335 CSR                   MOVE JDATE     JDAY    30                                        0314
+0336 CSR         YR        COMP SAVEYR                   93                                 0315
+0337 CSRN93                MOVE YR        SAVEYR  20                                        0316
+0338 CSRN93      YR        DIV  4         RESULT  20                                        0317
+0339 CSRN93                MVR            RESULT                                            0318
+0340 CSRN93      RESULT    COMP 00                       80LEAP YEAR                        0319
+0341 CSRN80      JDAY      COMP 365                  90                                     0320
+0342 CSR 80      JDAY      COMP 366                  90                                     0321
+0343 CSR 90N80   JDATE     ADD  635       JDATE                                             0322
+0344 CSR 90 80   JDATE     ADD  634       JDATE                                             0323
+0345 CSR 90                GOTO OVER                                                        0324
+0346 CSR 80      JDAY      COMP 060                  79  77                                 0325
+0347 CSR 80 77             Z-ADD0229      MMDD    40                                        0326
+0348 CSR 80 79   JDAY      SUB  001       JDAY                                              0327
+0349 CSRN77                Z-ADD1         X9      20                                        0328
+0350 CSRN77      JDAY      LOKUPARA,X9               90  90                                 0329
+0351 CSRN77      X9        SUB  1         X9                                                0330
+0352 CSRN77      JDAY      SUB  ARA,X9    MMDD                                              0331
+0353 CSRN77                MOVELX9        MMDD                                              0332
+0354 CSR                   ENDSR                                                            0333
+0355 **                                                                                     0334
+0356 CSR         ENGDAT    BEGSR                                                            0335
+0357 CSR                   MOVELMMDDYY    TEMP    40                                        0336
+0358 CSR                   MOVE MMDDYY    YY      20                                        0337
+0359 CSR                   MOVE TEMP      DD      20                                        0338
+0360 CSR                   MOVELTEMP      MM      20                                        0339
+0361 CSR         MM        COMP 12                   LR                                     0340
+0362 CSRNLR      DD        COMP 31                   LR                                     0341
+0363 CSR         YY        DIV  4         RESULT  20                                        0342
+0364 CSR                   MVR            RESULT                                            0343
+0365 CSR         RESULT    COMP 00                       81                                 0344
+0366 CSR 81      MM        COMP 02                   82                                     0345
+0367 CSR 81 82   DD        ADD  1         DD                                                0346
+0368 CSR         DD        ADD  ARB,MM    JDATE   50                                        0347
+0369 CSR                   MOVELYY        JDATE                                             0348
+0370 CSR                   MOVE JDATE     DAY     30                                        0349
+0371 CSR                   ENDSR                                                            0350
+0372 ***************************************************************************************0351
+0373 CSR         SINS      BEGSR                                                            0352
+0374 CSR                   SETOF                     6263                                   0353
+0375 CSR                   SETOF                     6566                                   0354
+0376 CSR         360       MULT PD        DT      30H                                       0355
+0377 CSR         DT        COMP 270                  61                                     0356
+0378 CSRN61      DT        COMP 180                  62                                     0357
+0379 CSRN61N62   DT        COMP 90                   63                                     0358
+0380 CSRN61N62N63DT        COMP 0                        65                                 0359
+0381 CSR 61      360       SUB  DT        DT             66                                 0360
+0382 CSR 62      DT        SUB  180       DT             66                                 0361
+0383 CSR 63      180       SUB  DT        DT             66                                 0362
+0384 CSRN65N66             Z-ADDSIN,DT    SINE    20H                                       0363
+0385 CSR 65                Z-ADD0         SINE                                              0364
+0386 CSR 61                Z-SUBSINE      SINE                                              0365
+0387 CSR 62                Z-SUBSINE      SINE                                              0366
+0388 CSR 66                Z-SUB0         SINE                                              0367
+0389 CSR         OFF       SUB  SINE      LO      40                                        0368
+0390 CSR                   ENDSR                                                            0369
+0391 C**************************************************************************************0370
+0392 C*                                                                                     0371
+0393 C*            SUBROUTINE NOTES                                                         0372
+0394 C*                                                                                     0373
+0395 C*  PURPOSE--                                                                          0374
+0396 C*    TO PRINT ADDITIONAL NOTES FROM THE PRT ARRAY                                     0375
+0397 C*                                                                                     0376
+0398 CSR         NOTES     BEGSR                                                            0377
+0399 CSR                   SETOF                     01                                     0378
+0400 CSR                   Z-ADD5         SCREEN                                            0379
+0401 CSR                   EXSR CRT02                                                       0380
+0402 CSR         ANS       COMP 'NO '                    31                                 0381
+0403 CSR 31                GOTO ENDNOT                                                      0382
+0404 CSR                   SETON                     32                                     0383
+0405 CSR                   EXCPT                                                            0384
+0406 CSR                   SETOF                     32                                     0385
+0407 CSR                   Z-ADD1         J       20                                        0386
+0408 CSR                   SETON                     33                                     0387
+0409 CSR         L03       TAG                                                              0388
+0410 CSR                   EXCPT                                                            0389
+0411 CSR         J         ADD  1         J                                                 0390
+0412 CSR         J         COMP 29                       35                                 0391
+0413 CSRN35                GOTO L03                                                         0392
+0414 CSR         ENDNOT    ENDSR                                                            0393
+0415 C*                                                                                     0394
+0416 C*            SUBROUTINE CRT02                                                         0395
+0417 C*                                                                                     0396
+0418 C*  PURPOSE--                                                                          0397
+0419 C*    TO DISPLAY A SCREEN & ACCEPT A 3 CHARACTER RESPONSE IN ANS                       0398
+0420 C*                                                                                     0399
+0421 CSR         CRT02     BEGSR                                                            0400
+0422 CSR                   EXSR CRT                                                         0401
+0423 CSR         PMT,X5    KEY            ANS     3                                         0402
+0424 CSR                   ENDSR                                                            0403
+0425 C*                                                                                     0404
+0426 C*            SUBROUTINE CRT                                                           0405
+0427 C*                                                                                     0406
+0428 C*  PURPOSE--                                                                          0407
+0429 C*    TO DISPLAY A SCREEN ON THE CRT                                                   0408
+0430 C*                                                                                     0409
+0431 CSR         CRT       BEGSR                                                            0410
+0432 CSR         SCREEN    MULT 5         Y1      30                                        0411
+0433 CSR         Y1        SUB  4         X1      30                                        0412
+0434 CSR         X1        ADD  SCREEN    X1                                                0413
+0435 CSR         X1        ADD  1         X2      30                                        0414
+0436 CSR         X2        ADD  1         X3      30                                        0415
+0437 CSR         X3        ADD  1         X4      30                                        0416
+0438 CSR         X4        ADD  1         X5      30                                        0417
+0439 CSR                   SETON                     99                                     0418
+0440 CSR                   EXCPT                                                            0419
+0441 CSR                   SETOF                     99                                     0420
+0442 CSR                   ENDSR                                                            0421
+0443 OPRINTER E  102   50                                                                   0422
+0444 O                                   66 'BIOLOGICAL RHYTHMS'                            0423
+0445 O                                   72 'GRAPH'                                         0424
+0446 O        E  2     50                                                                   0425
+0447 O                                   59 'PREPARED FOR'                                  0426
+0448 O                         NAME      85                                                 0427
+0449 O        E  1     50                                                                   0428
+0450 O                                   25 'DATE OF BIRTH--'                               0429
+0451 O                         FDATE Y   33                                                 0430
+0452 O        E  1     50                                                                   0431
+0453 O                                   23 'START DATE OF'                                 0432
+0454 O                                   36 'THIS GRAPH--'                                  0433
+0455 O                         MMDDYYY   44                                                 0434
+0456 O        E  3     50                                                                   0435
+0457 O                                   21 'DAYS OLD ON'                                   0436
+0458 O                         MMDDYYY   30                                                 0437
+0459 O                                   32 '--'                                            0438
+0460 O                         DAYS  J   39                                                 0439
+0461 O        E 00     05                                                                   0440
+0462 O                                    1 '0'                                             0441
+0463 O                         OUT2     132                                                 0442
+0464 O        E 00     01N02                                                                0443
+0465 O                       41           1 'H'                                             0444
+0466 O                       42           1 'I'                                             0445
+0467 O                       43           1 'G'                                             0446
+0468 O                       44           1 'H'                                             0447
+0469 O                       47           1 'L'                                             0448
+0470 O                       48           1 'O'                                             0449
+0471 O                       49           1 'W'                                             0450
+0472 O                         OUT      132                                                 0451
+0473 O        E 01     01                                                                   0452
+0474 O                         OUT      132                                                 0453
+0475 O        E  1     32                                                                   0454
+0476 O        E  1     33                                                                   0455
+0477 O                         PRT,J    108                                                 0456
+0478 OSCREEN  E  101   99                                                                   0457
+0479 O                         PMT,X1    40                                                 0458
+0480 O        E  1     99                                                                   0459
+0481 O                         PMT,X2    40                                                 0460
+0482 O        E  1     99                                                                   0461
+0483 O                         PMT,X3    40                                                 0462
+0484 O        E 00     99                                                                   0463
+0485 O                         PMT,X4    40                                                 0464
+**
+000031059090120151181212243273304334365
+**
+000031059090120151181212243273304334
+**
+017035052070087105122139156174191208225242259276292309326342358375391407423438454469485500515530
+545559574588602616629643656669682695707719731743755766777788799809819829839848857866875883891899
+906914921927934940946951956961966970974978982985988990993995996998999999999999
+**
+------------------------------------------------------------------------------------------------
+----------------------------------
+** MON ARRAY USED TO PRINT MONTH ABBREVIATIONS
+JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC
+** PMT ARRAY--EACH GROUP OF 5 LINES IS ONE CRT SCREEN
+1234567890123456789012345678901234567890
+                HOWDY!                  1
+THIS IS YOUR BIOLOGICAL RHYTHMS GRAPHER 2
+                                        3  SCREEN 1
+        WHAT'S YOUR FULL NAME?          4
+                                        5
+1234567890123456789012345678901234567890
+                                        1
+   I NEED YOUR DATE OF BIRTH TO START   2
+           THE CYCLE GENERATOR          3  SCREEN 2
+   LIKE, 010125 FOR JAN 1, 1925         4
+MMDDYY                                  5
+1234567890123456789012345678901234567890
+        YOU TURKEY!--WHAT A JERK!!      1
+                                        2
+        YOU KEYED MMDDYY--TRY AGAIN     3  SCREEN 3
+                                        4
+MMDDYY                                  5
+1234567890123456789012345678901234567890
+                                        1
+     THE GRAPH WILL BE FOR 4 MONTHES    2
+                                        3  SCREEN 4
+   ON WHAT DATE DO YOU WANT TO START?   4
+MMDDYY                                  5
+1234567890123456789012345678901234567890
+                                        1
+        HOW ABOUT AN EXPLANATION        2
+              OF THIS?                  3  SCREEN 5
+                                        4
+                                        5
+1234567890123456789012345678901234567890
+** PRT ARRAY--EACH LINE WILL BE PRINTED FOR INSTRUCTIONS
+    BIORYTHMIC THEORY HOLDS THAT FROM THE MOMENT OF BIRTH, OUR PHYSICAL-P, EMOTIONAL-E, AND
+INTELLECTUAL-I ENERGIES CAN BE CHARTED AS FIXED, REPETITIVE CYCLES.  THE PHYSICAL CYCLE IS THE
+SHORTEST, BEING 23 DAYS IN DURATION.  THE 11 1/2 DAYS WHEN THE P CURVE IS ABOVE THE ZERO LINE
+ARE DISCHARGE DAYS WHEN A PERSON FEELS VIGOROUS--WHEN ATHLETES PERFORM BEST--WHEN PHYSICAL WORK
+SEEMS EASIER.  THE OTHER 11 1/2 ARE RECHARGE DAYS--WHEN IT IS NOT ADVISABLE TO HAVE ANY ELECTIVE
+SURGERY.  THE EMOTIONAL CYCLE IS 28 DAYS--THE FIRST 14 DAYS REPRESENTING A PERIOD OF OPTIMISM
+AND CHEERFULNESS.  WHEN THE E CURVE IS BELOW THE ZERO LINE, PEOPLE TEND TO IRRITABLE AND
+NEGATIVE.  DURING THE FIRST HALF OF THE 33 DAY INTELLECTUAL CYCLE, STUDENTS WERE FOUND TO BE
+MORE CAPABLE OF ABSORBING NEW SUBJECTS AND CREATIVE THINKING IS AT A HIGH.
+     THE DAYS WHEN EACH CYCLE PASSES FROM HIGH TO LOW AND LOW TO HIGH ARE CRITICAL DAYS WHEN
+MOST ACCIDENTS OCCUR, WHEN PEOPLE TEND TO MAKE POOR DECISIONS, AND WHEN PEOPLE ARE MOST
+VULNERABLE TO ILLNESS.  INDUSTRIAL STUDIES HAVE SHOWN THAT 60% OF INDUSTRIAL ACCIDENTS OCCUR
+ON CRITICAL DAYS, ALTHOUGH CRITICAL DAYS REPRESENT ONLY 20% OF OUR DAYS.  THUS, IT IS THREE
+TIMES MORE LIKELY FOR AN ACCIDENT TO OCCUR ON A CRITICAL DAY AS A NON-CRITICAL DAY.  SOME FACTS-
+         --UNITED AIRLINES GROUND CREW IN WASHINGTON, D.C. CUT ACCIDENTS BY HALF IN ONE YEAR.
+         --A BUS COMPANY IN TOKYO, JAPAN HAS REPORTED A 50% REDUCTION IN ACCIDENTS AFTER
+           BIORYTHM CHARTING.
+         --THE FOUR WORST AIR DISASTERS IN THE HISTORY OF U.S. AVIATION OCCURRED WHEN THE
+           PILOT'S BIORYTHMS CLEARLY SHOWED THEY WERE IN CRITICAL PERIODS.
+         --BY EXAMINING THE GUINESS BOOK OF WORLD RECORDS, RESEARCH HAS PROVED THAT 84% OF ALL
+           WORLD RECORDS WERE CREATED WHEN THE PHYSICAL CURVE WAS HIGH.
+         --MUHAMMAD ALI LOST TO KEN NORTON ON A CRITICAL DAY FOR ALI.
+         --JIMMY CONNORS, WHO WAS CONSIDERED A SURE WINNER AT WIMBLEDON, LOST TO ARTHUR ASH IN
+           THE FINALS.  THE MATCH WAS ON A DAY WHEN CONNORS' BIORYTHMS WERE AT A DOUBLE LOW.
+         --GENERAL GEORGE CUSTER HAD HIS LAST STAND AT LITTLE BIG HORN WHEN HIS EMOTIONAL AND
+           INTELLECTUAL CURVES WERE AT LOW POINTS--WHEN HIS JUDGEMENT AND DECISION-MAKING POWERS
+           WERE BELOW PAR.
+                                  **** FOREWARNED IS FOREARMED ****

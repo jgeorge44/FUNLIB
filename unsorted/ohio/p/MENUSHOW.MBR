@@ -1,0 +1,17 @@
+// IF ?1?/ * 'NEED THE MENU NAME TO BE DISPLAYED'
+// IF ?1R?/ RETURN
+// IF ?2?/ * 'NEED THE LIBRARY CONTAINING THE MENU'
+// IF ?2?/ * 'HIT ENTER FOR SESSION LIBRARY'
+// IF ?2R?/ * ' '
+// IFF LOAD-'?1?##,?2'?SLIB?'?' * '** E R R O R **"
+// IFF LOAD-'?1?##,?2'?SLIB?'?' * ' ?1? - THIS MENU NOT IN'
+// IFF LOAD-'?1?##,?2'?SLIB?'?' * '  ?2? LIBRARY' "
+// IFF LOAD-'?1?##,?2'?SLIB?'?'   PAUSE
+// IFF LOAD-'?1?##,?2'?SLIB?'?'   RETURN
+// LIBRARY NAME-?2'?SLIB?'?
+// MEMBER USER1-?1?##
+// LOCAL OFFSET-1,DATA-'      '
+// LOCAL OFFSET-1,DATA-'?1?'
+// LIBRARY NAME-?SLIB?
+// LOAD MENSHW
+// RUN

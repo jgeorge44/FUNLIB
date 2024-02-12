@@ -1,0 +1,1011 @@
+00010H                                      1                             LPCALC
+0002 F**    PTF    002   APPLIED **
+0003 F**      PTF    001    APPLIED
+00040FDUMMY   IP  F   1   1            KEYBORD
+00050FWORK    UC  F 128 128R           DISK
+00060F* ID F  C  H  L    FUNCTION OF INDICATORS                           LPCALC
+00070F* 01            CONTROL RECORD                                      LPCALC
+00080F* 02            HEADING RECORD                                      LPCALC
+00090F* 03            TAXES RECORD                                        LPCALC
+00100F* 04            SYSTEM RECORD                                       LPCALC
+00110F* 05            OTHER CHARGES RECORD                                LPCALC
+00120F* 06            EXTRA SHIFT RENT RECORD                             LPCALC
+00130F* 07            MAINTENANCE RECORD                                  LPCALC
+00140F* 08            REPORT LINE RECORD                                  LPCALC
+00150F* 09            BLANK RECORD                                        LPCALC
+00160F*      21       NO FINANCING                                        LPCALC
+00170F*      22       NO TERM                                             LPCALC
+00180F*      23       NO INTEREST                                         LPCALC
+00190F*      25       CURRENT DATE IS LESS THAN LOAN DOWN PAY DATE        LPCALC
+00200F*      26       CURRENT DATE IS EQUAL TO LOAN DOWN PAY DATE         LPCALC
+00210F*      27       CURRENT DATE IS GREATER THAN LOAN DOWN PAY DATE     LPCALC
+00220F*      41       OUTPUT CONTROL RECORD TO DISK                       LPCALC
+00230F*      44       OUTPUT SYSTEM RECORD TO DISK                        LPCALC
+00240F*      48       OUTPUT REPORT LINE RECORD TO DISK                   LPCALC
+00250F*      91       SUM OF THE YEARS' DIGITS DEPRECIATION               LPCALC
+00260F*      92       STRAIGHT LINE DEPRECIATION                          LPCALC
+00270F*      93       1.5 DECLINING BALANCE DEPRECIATION                  LPCALC
+00280F*      94       DOUBLE DECLINING BALANCE DEPRECTION                 LPCALC
+00290F*      95       DOUBLE DECLINING BAL. TO STRAIGHT LINE DEPRECIATION LPCALC
+00300F*      96       LAST ANALYSIS YEAR IN PROCESS                       LPCALC
+00310F*      97       STATUS NOT EQUAL TO 1 - PREVIOUS ERRORS ENCOUNTERED LPCALC
+00320F*      98       GENERAL PURPOSE CALCULATION RESULT INDICATOR        LPCALC
+00330F* 99            RECORD FROM DUMMY FILE                              LPCALC
+00340F*         H1    TERMINATE PROCESSING - PREVIOUS ERRORS ENCOUNTERED  LPCALC
+00350E                    TOT        12  9 2                              LPCALC
+00360E                    AMO        12  9 2                              LPCALC
+00370E                    MRP        11  4 3                              LPCALC
+0038 E                    EXP        11  7 0
+00390IWORK    NS  01   1 CX                                               LPCALC
+00400I                                        2   2 STATUS                LPCALC
+00410I        NS  02   1 CH                                               LPCALC
+00420I                                        2   30BEGYR                 LPCALC
+00430I                                        4   50NOYRS                 LPCALC
+00440I        NS  03   1 CT                                               LPCALC
+00450I                                        2   54FIT                   LPCALC
+00460I                                        6   94SIT                   LPCALC
+00470I                                       10  134STPE                  LPCALC
+00480I                                       14  174STLE                  LPCALC
+00490I                                       18  214PPT                   LPCALC
+00500I                                       22  254INS                   LPCALC
+00510I                                       26  26 STCE                  LPCALC
+00520I                                       27  270PPDM
+00530I                                       28  290PPDL                  LPCALC
+00540I                                       30  334PPFBV                 LPCALC
+0055 I                                       34  374PTXCRP
+0056 I                                       38  414RTXCRP
+0057 I                                       42  442RESALE
+00580I        NS  04   1 CS                                               LPCALC
+00590I                                       10  110SHPMO                 LPCALC
+00600I                                       12  130SHPYR                 LPCALC
+00610I                                       15  232MAC                   LPCALC
+00620I                                       24  322PURCHP                LPCALC
+00630I                                       33  392MMMC                  LPCALC
+00640I                                       40  410WTYMOS                LPCALC
+00650I                                       42  453LDOWN                 LPCALC
+00660I                                       46  494LINT                  LPCALC
+00670I                                       50  520LTERM                 LPCALC
+00680I                                       53  530FITDM
+00690I                                       54  550FITDL                 LPCALC
+00700I                                       56  594FITFBV                LPCALC
+00710I                                       60  610FITDAD                LPCALC
+00720I        NS  06   1 CR                                               LPCALC
+00730I       OR   07   1 CM                                               LPCALC
+00740I                                        2  45 MRP
+00750I        NS  08   1 CL                                               LPCALC
+00760I                                       19  200ANALYR                LPCALC
+00770I                                       21 128 AMO
+0078 I        NS       1 CO
+0079 I                                       20  96 EXP
+00800I        NS  09   1 C                                                LPCALC
+0081 C   99                KEY01          TEST    1
+0082 C           'LPCALC'  SET01
+0083 C           ' '       SET01
+0084 C                     SETON                     99LR
+00850C                     EXSR INIT                                      LPCALC
+00860C   97                GOTO ENDDET                                    LPCALC
+00870C                     EXSR FINANC                                    LPCALC
+00880C                     EXSR PRNCPL                                    LPCALC
+00890C                     EXSR INTRST                                    LPCALC
+00900C                     EXSR TMOPAY                                    LPCALC
+00910C                     EXSR DWNPAY                                    LPCALC
+00920C                     EXSR MNTAMT                                    LPCALC
+00930C                     EXSR PPTAX                                     LPCALC
+00940C                     EXSR INSURE                                    LPCALC
+0095 C                     EXSR POCTX
+00960C                     EXSR TCASHO                                    LPCALC
+00970C                     EXSR TXDEPR                                    LPCALC
+00980C                     EXSR DEDEXP                                    LPCALC
+00990C                     EXSR SLSTAX                                    LPCALC
+0100 C                     EXSR TOTEXP
+01010C                     EXSR TAXBEN                                    LPCALC
+01020C                     EXSR PURTAX
+01030C                     EXSR PCSHAT                                    LPCALC
+01040C                     EXSR RNTAMT                                    LPCALC
+0105 C                     EXSR LOCTX
+01060C                     EXSR CSHEXP                                    LPCALC
+01070C                     EXSR EXPDED                                    LPCALC
+01080C                     EXSR BENFIT                                    LPCALC
+01090C                     EXSR RNTTAX
+01100C                     EXSR LCSHAT                                    LPCALC
+01110C                     EXSR DIFFBT                                    LPCALC
+01120C                     EXSR DIFFAT                                    LPCALC
+01130C                     EXSR FINISH                                    LPCALC
+01140C           ENDDET    TAG                                            LPCALC
+01150C*****************************************************               LPCALC
+01160CSR         LINOUT    BEGSR                                          LPCALC
+01170C*          ******                                                   LPCALC
+01180CSR         RRN       CHAINWORK                 90
+01190CSR                   SETON                     48                   LPCALC
+01200CSR                   EXCPT                                          LPCALC
+01210CSR                   SETOF                     48                   LPCALC
+01220CSR         Y         COMP NOYRS                96  96 96-FINAL YEAR LPCALC
+01230CSR 96                Z-ADD1         M                               LPCALC
+01240CSR 96                Z-ADD1         Y                               LPCALC
+01250CSR 96                Z-ADDBEGYR     ANALYR                          LPCALC
+01260CSR 96                GOTO ENDLO                                     LPCALC
+01270CSR         1         ADD  Y         Y                               LPCALC
+01280CSR         1         ADD  ANALYR    ANALYR                          LPCALC
+01290CSR         1         ADD  RRN       RRN                             LPCALC
+01300CSR         M         SUB  M         M                               LPCALC
+01310CSR         ENDLO     ENDSR                                          LPCALC
+01320C*****************************************************               LPCALC
+01330CSR         RRNCAL    BEGSR                                          LPCALC
+01340C*          ******                                                   LPCALC
+01350CSR                   Z-ADDLNO       RRN     30                      LPCALC
+01360CSR         RRN       SUB  1         RRN                             LPCALC
+01370CSR         RRN       MULT NOYRS     RRN                             LPCALC
+01380CSR         RRN       ADD  15        RRN
+01390CSR                   ENDSR                                          LPCALC
+01400C*****************************************************               LPCALC
+01410CSR         TOTAL     BEGSR                                          LPCALC
+01420C*          ******                                                   LPCALC
+01430CSR                   EXSR RRNCAL                                    LPCALC
+01440CSR         I         ADD  RRN       RRN                             LPCALC
+0145 CSR         AMO       SUB  AMO       AMO
+01460CSR         RRN       CHAINWORK                 90
+0147 CSR         AMO       ADD  TOT       TOT
+01480CSR                   ENDSR                                          LPCALC
+01490C*****************************************************               LPCALC
+01500CSR         DATECK    BEGSR                                          LPCALC
+01510C*          ******                                                   LPCALC
+01520CSR                   MOVELANALYR    CURDTE  40                      LPCALC
+01530CSR                   MOVE M         CURDTE                          LPCALC
+01540CSR         CURDTE    COMP LDPDTE               272526               LPCALC
+01550CSR                   ENDSR                                          LPCALC
+01560C*****************************************************               LPCALC
+01570CSR         DPRCHG    BEGSR                                          LPCALC
+01580C*          ******                                                   LPCALC
+01590CSR         I         DIV  12        DY      20                      LPCALC
+01600CSR                   MVR            N       30                      LPCALC
+01610CSR         1         ADD  DY        DY                              LPCALC
+01620CSR         1         ADD  I         I                               LPCALC
+01630CSR         N         SUB  1         N          9898                 LPCALC
+01640CSR 98                GOTO DECRBK                                    LPCALC
+01650CSR         DY        COMP DL                   98                   LPCALC
+01660CSR 98      WORK5     SUB  WORK5     WORK5  114        NO MORE DEPR  LPCALC
+01670CSR 98      WORK4     SUB  WORK4     WORK4             NO MORE DEPR  LPCALC
+01680CSR 98                GOTO ENDDC                                     LPCALC
+0169 CSR                   SETOF                     94  95PTF
+01700CSR         DM        COMP 2                    939192
+01710CSR 93      DM        COMP 4                    959394
+01720CSR 91                EXSR DSYD                                      LPCALC
+01730CSR 92                EXSR DSL                                       LPCALC
+01740CSR 93                EXSR D15DB                                     LPCALC
+01750CSR 94                EXSR DDDB                                      LPCALC
+01760CSR 95                EXSR DDDBSL                                    LPCALC
+01770CSR         DY        COMP DL                       98 FINAL DEPR YR LPCALC
+01780CSR 98N93N94WORK3     SUB  WORK2     WORK4  114                      LPCALC
+01790CSR         DECRBK    TAG                                            LPCALC
+01800CSR         WORK4     DIV  12        WORK5                           LPCALC
+01810CSR         WORK3     SUB  WORK5     WORK3  114        DECR CUR BK VLLPCALC
+01820CSR         WORK3     COMP WORK2                98  98               LPCALC
+01830CSR 98                GOTO ENDDC                                     LPCALC
+01840CSR         WORK5     ADD  WORK3     WORK3                           LPCALC
+01850CSR         WORK3     SUB  WORK2     WORK5                           LPCALC
+01860CSR                   Z-ADDWORK2     WORK3                           LPCALC
+01870CSR         ENDDC     ENDSR                                          LPCALC
+01880C*****************************************************               LPCALC
+01890CSR         DSYD      BEGSR                                          LPCALC
+01900C*          ******                                                   LPCALC
+01910CSR         DL        SUB  DY        WORK4                           LPCALC
+01920CSR         1         ADD  WORK4     WORK4                           LPCALC
+01930CSR         WORK4     DIV  DL        WORK4                           LPCALC
+01940CSR         WORK1     SUB  WORK2     WORK5  114                      LPCALC
+01950CSR         WORK5     MULT 2         WORK5                           LPCALC
+01960CSR         WORK4     MULT WORK5     WORK4                           LPCALC
+01970CSR         1         ADD  DL        WORK5                           LPCALC
+01980CSR         WORK4     DIV  WORK5     WORK4             CURR YR DEPRECLPCALC
+01990CSR                   ENDSR                                          LPCALC
+02000C*****************************************************               LPCALC
+02010CSR         DSL       BEGSR                                          LPCALC
+02020C*          ******                                                   LPCALC
+02030CSR         WORK1     SUB  WORK2     WORK4                           LPCALC
+02040CSR         WORK4     DIV  DL        WORK4                           LPCALC
+02050CSR                   ENDSR                                          LPCALC
+02060C*****************************************************               LPCALC
+02070CSR         D15DB     BEGSR                                          LPCALC
+02080C*          ******                                                   LPCALC
+02090CSR         DY        COMP 1                        98               LPCALC
+02100CSR 98      WORK1     MULT 1.5       WORK4                           LPCALC
+02110CSR 98      WORK4     DIV  DL        WORK4                           LPCALC
+02120CSR 98                GOTO ENDD15                                    LPCALC
+02130CSR         DL        SUB  1.5       WORK5                           LPCALC
+02140CSR         WORK5     DIV  DL        WORK5                           LPCALC
+02150CSR         WORK4     MULT WORK5     WORK4                           LPCALC
+02160CSR         ENDD15    ENDSR                                          LPCALC
+02170C*****************************************************               LPCALC
+02180CSR         DDDB      BEGSR                                          LPCALC
+02190C*          ******                                                   LPCALC
+02200CSR         DY        COMP 1                        98               LPCALC
+02210CSR 98      WORK1     MULT 2         WORK4                           LPCALC
+02220CSR 98      WORK4     DIV  DL        WORK4                           LPCALC
+02230CSR 98                GOTO ENDDDB                                    LPCALC
+02240CSR         DL        SUB  2         WORK5                           LPCALC
+02250CSR         WORK5     DIV  DL        WORK5                           LPCALC
+02260CSR         WORK4     MULT WORK5     WORK4                           LPCALC
+02270CSR         ENDDDB    ENDSR                                          LPCALC
+02280C*****************************************************               LPCALC
+02290CSR         DDDBSL    BEGSR                                          LPCALC
+02300C*          ******                                                   LPCALC
+02310CSR         DY        COMP 1                        98               LPCALC
+02320CSR 98      WORK1     MULT 2         WORK4                           LPCALC
+02330CSR 98      WORK4     DIV  DL        WORK4                           LPCALC
+02340CSR 98                GOTO ENDDBS                                    LPCALC
+02350CSR         1         ADD  DL        N       30        CALC TRANS YR LPCALC
+02360CSR         N         DIV  2         N                               LPCALC
+02370CSR         DY        COMP N                    98  98 CUR VS TRAN YRLPCALC
+02380CSR 98                GOTO SLTRAN                      CHANGE TO SL  LPCALC
+02390CSR         DL        SUB  2         WORK5                           LPCALC
+02400CSR         WORK5     DIV  DL        WORK5                           LPCALC
+02410CSR         WORK4     MULT WORK5     WORK4                           LPCALC
+02420CSR                   GOTO ENDDBS                                    LPCALC
+02430CSR         SLTRAN    TAG                                            LPCALC
+02440CSR         DY        COMP N                    98                   LPCALC
+02450CSR 98                GOTO ENDDBS                                    LPCALC
+02460CSR         WORK3     DIV  N         WORK4             SL DEPR CHG   LPCALC
+02470CSR         ENDDBS    ENDSR                                          LPCALC
+02480C*****************************************************               LPCALC
+02490CSR         INIT      BEGSR                                          LPCALC
+02500C*          ******                                                   LPCALC
+02510CSR         1         CHAINWORK                 90
+02520CSR         STATUS    COMP '1'                  9797                 LPCALC
+02530CSR 97                SETON                     H1                   LPCALC
+02540CSR 97                GOTO ENDI                                      LPCALC
+02550CSR         2         CHAINWORK                 90
+02560CSR         3         CHAINWORK                 90
+02570CSR         4         CHAINWORK                 90
+02580CSR                   Z-ADDBEGYR     ANALYR                          LPCALC
+02590CSR                   Z-ADD1         Y       20                      LPCALC
+02600CSR                   Z-ADD1         M       20                      LPCALC
+02610CSR         1         SUB  SIT       TAX     54
+02620CSR         FIT       MULT TAX       TAX                             LPCALC
+02630CSR         SIT       ADD  TAX       TAX                             LPCALC
+02640CSR         ENDI      ENDSR                                          LPCALC
+02650C*****************************************************               LPCALC
+02660CSR         FINANC    BEGSR                                          LPCALC
+02670C*          ******                                                   LPCALC
+02680CSR                   MOVE SHPMO     LDPMO   20                      LPCALC
+02690CSR                   MOVE SHPYR     LDPYR   20                      LPCALC
+02700CSR         1         ADD  LDPMO     LDPMO                           LPCALC
+02710CSR         LDPMO     COMP 13                       98               LPCALC
+02720CSR 98      LDPMO     SUB  12        LDPMO                           LPCALC
+02730CSR 98      1         ADD  LDPYR     LDPYR                           LPCALC
+02740CSR                   MOVELLDPYR     LDPDTE  40                      LPCALC
+02750CSR                   MOVE LDPMO     LDPDTE                          LPCALC
+02760CSR                   MOVE LDPMO     LMPMO   20                      LPCALC
+02770CSR                   MOVE LDPYR     LMPYR   20                      LPCALC
+02780CSR         PURCHP    MULT STPE      STPAMT  92                      LPCALC
+0279 CSR                   Z-ADDPURCHP    WORK8
+0280 CSR         STCE      COMP 'C'                      98
+0281 CSR       98STPAMT    ADD  WORK8     WORK8
+0282 CSR         WORK8     MULT PTXCRP    PRTXCR  92
+0283 CSR         PURCHP    MULT RTXCRP    RNTXCR  92
+02840CSR         LDOWN     COMP 1.000                    21 NO FINANCING
+02850CSR 21                GOTO NOLOAN                                    LPCALC
+02860CSR         LTERM     COMP 0                        22 NO TERM       LPCALC
+02870CSR 22                GOTO NOLOAN                                    LPCALC
+02880CSR         PURCHP    MULT LDOWN     LDPAMT  92                      LPCALC
+02890CSR         PURCHP    ADD  STPAMT    LAMT    92                      LPCALC
+02900CSR         LAMT      SUB  LDPAMT    LAMT                            LPCALC
+02910CSR         LINT      COMP 0                        23 NO INTEREST   LPCALC
+02920CSR 23      LAMT      DIV  LTERM     LMPAMT  92H                     LPCALC
+02930CSR 23                GOTO FINOUT                                    LPCALC
+02940CSR         LINT      DIV  12        LINTMO  55                      LPCALC
+02950CSR         LINTMO    ADD  1         WORK6  159                      LPCALC
+02960CSR                   Z-ADDWORK6     WORK7  159                      LPCALC
+02970CSR                   Z-ADDLTERM     I       30                      LPCALC
+02980CSR         MPLOOP    TAG                                            LPCALC
+02990CSR         I         SUB  1         I            9898               LPCALC
+03000CSR 98                GOTO MPCALC                                    LPCALC
+03010CSR         WORK6     MULT WORK7     WORK6                           LPCALC
+03020CSR                   GOTO MPLOOP                                    LPCALC
+03030CSR         MPCALC    TAG                                            LPCALC
+03040CSR         1         DIV  WORK6     WORK7                           LPCALC
+03050CSR         1         SUB  WORK7     WORK7                           LPCALC
+03060CSR         LAMT      MULT LINTMO    WORK1                           LPCALC
+03070CSR         WORK1     DIV  WORK7     LMPAMT    H                     LPCALC
+03080CSR                   GOTO FINOUT                                    LPCALC
+03090CSR         NOLOAN    TAG                                            LPCALC
+03100CSR         PURCHP    ADD  STPAMT    LDPAMT                          LPCALC
+03110CSR         LAMT      SUB  LAMT      LAMT                            LPCALC
+03120CSR         LMPAMT    SUB  LMPAMT    LMPAMT                          LPCALC
+03130CSR         LMPMO     SUB  LMPMO     LMPMO                           LPCALC
+03140CSR         LMPYR     SUB  LMPYR     LMPYR                           LPCALC
+03150CSR         FINOUT    TAG                                            LPCALC
+03160CSR         4         CHAINWORK                 90
+03170CSR                   SETON                     44                   LPCALC
+03180CSR                   EXCPT                                          LPCALC
+03190CSR                   SETOF                     44                   LPCALC
+03200CSR                   ENDSR                                          LPCALC
+03210C*****************************************************               LPCALC
+03220CSR         PRNCPL    BEGSR                                          LPCALC
+03230C*          ******                                                   LPCALC
+03240CSR                   MOVE 01        LNO     20
+0325 CSR                   EXSR RRNCAL                                    LPCALC
+03260CSR                   MOVEL'PRINCIPA'LDESC  15
+03270CSR                   MOVE 'L      ' LDESC                           LPCALC
+03280CSR                   Z-ADDLAMT      WORK1  114                      LPCALC
+03290CSR         PRLOOP    TAG                                            LPCALC
+03300CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+03310CSR                   EXSR DATECK                                    LPCALC
+03320CSR 25                GOTO PRBUMP                                    LPCALC
+03330CSR         WORK1     MULT LINTMO    WORK2  114        INTEREST PAYMTLPCALC
+03340CSR         LMPAMT    SUB  WORK2     AMO,M             PRINCIPL PAYMTLPCALC
+03350CSR         WORK1     SUB  AMO,M     WORK1        98   PRINCIPL BAL  LPCALC
+03360CSR 98      WORK1     ADD  AMO,M     AMO,M                           LPCALC
+03370CSR 98      WORK1     SUB  WORK1     WORK1                           LPCALC
+03380CSR         PRBUMP    TAG                                            LPCALC
+03390CSR         M         COMP 12                       98               LPCALC
+03400CSR 98                EXSR LINOUT                                    LPCALC
+03410CSR 96                GOTO ENDPR                                     LPCALC
+03420CSR         1         ADD  M         M                               LPCALC
+03430CSR                   GOTO PRLOOP                                    LPCALC
+03440CSR         ENDPR     TAG                                            LPCALC
+03450CSR                   SETOF                     96                   LPCALC
+03460CSR                   ENDSR                                          LPCALC
+03470C*****************************************************               LPCALC
+03480CSR         INTRST    BEGSR                                          LPCALC
+03490C*          ******                                                   LPCALC
+03500CSR                   MOVE 02        LNO
+03510CSR                   EXSR RRNCAL                                    LPCALC
+03520CSR                   MOVEL'INTEREST'LDESC                           LPCALC
+03530CSR                   MOVE '       ' LDESC                           LPCALC
+03540CSR                   Z-ADDLAMT      WORK1                           LPCALC
+03550CSR         INLOOP    TAG                                            LPCALC
+03560CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+03570CSR                   EXSR DATECK                                    LPCALC
+03580CSR 25                GOTO INBUMP                                    LPCALC
+03590CSR         WORK1     MULT LINTMO    AMO,M             INTEREST PAYMTLPCALC
+03600CSR         LMPAMT    SUB  AMO,M     WORK2             PRINCIPL PAYMTLPCALC
+03610CSR         WORK1     SUB  WORK2     WORK1        98   PRINCIPL BAL  LPCALC
+03620CSR 98      WORK1     SUB  WORK1     WORK1                           LPCALC
+03630CSR         INBUMP    TAG                                            LPCALC
+03640CSR         M         COMP 12                       98               LPCALC
+03650CSR 98                EXSR LINOUT                                    LPCALC
+03660CSR 96                GOTO ENDIN                                     LPCALC
+03670CSR         1         ADD  M         M                               LPCALC
+03680CSR                   GOTO INLOOP                                    LPCALC
+03690CSR         ENDIN     TAG                                            LPCALC
+03700CSR                   SETOF                     96                   LPCALC
+03710CSR                   ENDSR                                          LPCALC
+03720C*****************************************************               LPCALC
+03730CSR         TMOPAY    BEGSR                                          LPCALC
+03740C*          ******                                                   LPCALC
+03750CSR                   MOVE 03        LNO
+03760CSR                   EXSR RRNCAL                                    LPCALC
+03770CSR                   MOVEL'TOT INST'LDESC                           LPCALC
+03780CSR                   MOVE 'ALLMENT' LDESC                           LPCALC
+03790CSR         I         SUB  I         I                               LPCALC
+03800CSR         TMLOOP    TAG                                            LPCALC
+03810CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+03820CSR                   EXSR DATECK                                    LPCALC
+03830CSR 25                GOTO TMBUMP                                    LPCALC
+03840CSR         I         COMP LTERM                98  98               LPCALC
+03850CSR 98                GOTO TMBUMP                                    LPCALC
+03860CSR         1         ADD  I         I                               LPCALC
+03870CSR         LMPAMT    ADD  AMO,M     AMO,M                           LPCALC
+03880CSR         TMBUMP    TAG                                            LPCALC
+03890CSR         M         COMP 12                       98               LPCALC
+03900CSR 98                EXSR LINOUT                                    LPCALC
+03910CSR 96                GOTO ENDTM                                     LPCALC
+03920CSR         1         ADD  M         M                               LPCALC
+03930CSR                   GOTO TMLOOP                                    LPCALC
+03940CSR         ENDTM     TAG                                            LPCALC
+03950CSR                   SETOF                     96                   LPCALC
+03960CSR                   ENDSR                                          LPCALC
+03970C*****************************************************               LPCALC
+03980CSR         DWNPAY    BEGSR                                          LPCALC
+03990C*          ******                                                   LPCALC
+04000CSR                   MOVE 04        LNO
+04010CSR                   EXSR RRNCAL                                    LPCALC
+04020CSR                   MOVEL'DOWN PAY'LDESC                           LPCALC
+04030CSR                   MOVE 'MENT   ' LDESC                           LPCALC
+0404 CSR                   Z-ADDPURCHP    WORK8   92
+0405 CSR         STCE      COMP 'C'                      98
+0406 CSR       98STPAMT    ADD  WORK8     WORK8
+0407 CSR         RESALE    MULT WORK8     RVALUE  92H
+04080CSR         DPLOOP    TAG                                            LPCALC
+04090CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+04100CSR                   EXSR DATECK                                    LPCALC
+04110CSRN26                GOTO DPBUMP                                    LPCALC
+04120CSR         LDPAMT    ADD  AMO,M     AMO,M                           LPCALC
+04130CSR         DPBUMP    TAG                                            LPCALC
+04140CSR         M         COMP 12                       98               LPCALC
+0415 CSR       98Y         COMP NOYRS                    96
+0416 CSR       96AMO,12    SUB  RVALUE    AMO,12
+04170CSR 98                EXSR LINOUT                                    LPCALC
+04180CSR 96                GOTO ENDDP                                     LPCALC
+04190CSR         1         ADD  M         M                               LPCALC
+04200CSR                   GOTO DPLOOP                                    LPCALC
+04210CSR         ENDDP     TAG                                            LPCALC
+04220CSR                   SETOF                     96                   LPCALC
+04230CSR                   ENDSR                                          LPCALC
+04240C*****************************************************               LPCALC
+04250CSR         MNTAMT    BEGSR                                          LPCALC
+04260C*          ******                                                   LPCALC
+0427 CSR         14        CHAINWORK                 90
+04280CSR                   MOVE 05        LNO
+04290CSR                   EXSR RRNCAL                                    LPCALC
+04300CSR                   MOVEL'MAINTENA'LDESC                           LPCALC
+04310CSR                   MOVE 'NCE    ' LDESC                           LPCALC
+04320CSR                   Z-ADDWTYMOS    I                               LPCALC
+04330CSR         MALOOP    TAG                                            LPCALC
+04340CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+04350CSR                   EXSR DATECK                                    LPCALC
+04360CSR 25                GOTO MABUMP                                    LPCALC
+04370CSR         I         SUB  1         I          98  98               LPCALC
+04380CSR 98                GOTO MABUMP                                    LPCALC
+04390CSR         MRP,Y     MULT MMMC      AMO,M                           LPCALC
+04400CSR         MABUMP    TAG                                            LPCALC
+04410CSR         M         COMP 12                       98               LPCALC
+04420CSR 98                EXSR LINOUT                                    LPCALC
+04430CSR 96                GOTO ENDMA                                     LPCALC
+04440CSR         1         ADD  M         M                               LPCALC
+04450CSR                   GOTO MALOOP                                    LPCALC
+04460CSR         ENDMA     TAG                                            LPCALC
+04470CSR                   SETOF                     96                   LPCALC
+04480CSR                   ENDSR                                          LPCALC
+04490C*****************************************************               LPCALC
+04500CSR         PPTAX     BEGSR                                          LPCALC
+04510C*          ******                                                   LPCALC
+04520CSR                   MOVE 06        LNO
+04530CSR                   EXSR RRNCAL                                    LPCALC
+04540CSR                   MOVEL'PERS.PRO'LDESC                           LPCALC
+04550CSR                   MOVE 'P TAX  ' LDESC                           LPCALC
+04560CSR                   Z-ADDPURCHP    WORK1                           LPCALC
+04570CSR         PPFBV     MULT WORK1     WORK2                           LPCALC
+04580CSR                   Z-ADDPURCHP    WORK3                           LPCALC
+04590CSR                   Z-ADDPPDL      DL      20                      LPCALC
+04600CSR                   MOVE PPDM      DM      10
+04610CSR                   Z-ADD1         I                               LPCALC
+04620CSR         PPLOOP    TAG                                            LPCALC
+04630CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+04640CSR                   EXSR DATECK                                    LPCALC
+04650CSR 25                GOTO PPBUMP                                    LPCALC
+04660CSR                   EXSR DPRCHG                                    LPCALC
+04670CSR         WORK3     MULT PPT       WORK5                           LPCALC
+04680CSR         WORK5     DIV  12        AMO,M                           LPCALC
+04690CSR         PPBUMP    TAG                                            LPCALC
+04700CSR         M         COMP 12                       98               LPCALC
+04710CSR 98                EXSR LINOUT                                    LPCALC
+04720CSR 96                GOTO ENDPP                                     LPCALC
+04730CSR         1         ADD  M         M                               LPCALC
+04740CSR                   GOTO PPLOOP                                    LPCALC
+04750CSR         ENDPP     TAG                                            LPCALC
+04760CSR                   SETOF                     96                   LPCALC
+04770CSR                   ENDSR                                          LPCALC
+04780C*****************************************************               LPCALC
+04790CSR         INSURE    BEGSR                                          LPCALC
+04800C*          ******                                                   LPCALC
+04810CSR                   MOVE 07        LNO
+04820CSR                   EXSR RRNCAL                                    LPCALC
+04830CSR                   MOVEL'INSURANC'LDESC                           LPCALC
+04840CSR                   MOVE 'E      ' LDESC                           LPCALC
+04850CSR         ISLOOP    TAG                                            LPCALC
+04860CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+04870CSR                   EXSR DATECK                                    LPCALC
+04880CSR 25                GOTO ISBUMP                                    LPCALC
+04890CSR         INS       MULT PURCHP    WORK1                           LPCALC
+04900CSR         WORK1     DIV  12        AMO,M                           LPCALC
+04910CSR         ISBUMP    TAG                                            LPCALC
+04920CSR         M         COMP 12                       98               LPCALC
+04930CSR 98                EXSR LINOUT                                    LPCALC
+04940CSR 96                GOTO ENDIS                                     LPCALC
+04950CSR         1         ADD  M         M                               LPCALC
+04960CSR                   GOTO ISLOOP                                    LPCALC
+04970CSR         ENDIS     TAG                                            LPCALC
+04980CSR                   SETOF                     96                   LPCALC
+04990CSR                   ENDSR                                          LPCALC
+05000C*****************************************************               LPCALC
+0501 CSR         POCTX     BEGSR
+0502 C*          ******
+0503 CSR         5         CHAINWORK
+0504 CSR                   MOVE 26        LNO
+0505 CSR                   EXSR RRNCAL
+0506 CSR                   MOVEL'PURCHASE'LDESC
+0507 CSR                   MOVE ' EXP   ' LDESC
+0508 CSR         12        SUB  LDPMO     FSTMO   20
+0509 CSR         FSTMO     ADD  1         FSTMO
+0510 CSR         EXP,1     DIV  FSTMO     EAMT    70
+0511 CSR                   Z-ADDLDPMO     M
+0512 CSR                   Z-ADD0         AMO
+0513 CSR         POLOOP    TAG
+0514 CSR                   Z-ADDEAMT      AMO,M
+0515 CSR         M         COMP 12                       98
+0516 CSR 98                XFOOTAMO       WORK99  92
+0517 CSR 98      EXP,Y     SUB  WORK99    WORK99
+0518 CSR 98      AMO,12    ADD  WORK99    AMO,12
+0519 CSR       98          EXSR LINOUT
+0520 CSR       96          GOTO ENDPO
+0521 CSR       98EXP,Y     DIV  12        EAMT
+0522 CSR         M         ADD  1         M
+0523 CSR                   GOTO POLOOP
+0524 CSR         ENDPO     ENDSR
+0525 C*****************************************************
+05260CSR         TCASHO    BEGSR                                          LPCALC
+05270C*          ******                                                   LPCALC
+05280CSR         I         SUB  I         I                               LPCALC
+05290CSR         TCLOOP    TAG                                            LPCALC
+05300CSR         TOT       SUB  TOT       TOT                             LPCALC
+05310CSR                   MOVE 03        LNO               MONTHLY PAYMT
+05320CSR                   EXSR TOTAL                                     LPCALC
+05330CSR                   MOVE 04        LNO               DOWN PAYMENT
+05340CSR                   EXSR TOTAL                                     LPCALC
+05350CSR                   MOVE 05        LNO               MAINTENANCE
+05360CSR                   EXSR TOTAL                                     LPCALC
+05370CSR                   MOVE 06        LNO               PERS PROP TAX
+05380CSR                   EXSR TOTAL                                     LPCALC
+05390CSR                   MOVE 07        LNO               INSURANCE
+05400CSR                   EXSR TOTAL                                     LPCALC
+0541 CSR                   MOVE 26        LNO
+0542 CSR                   EXSR TOTAL                      OTHER EXP
+05430CSR                   MOVE 08        LNO
+05440CSR                   EXSR RRNCAL                                    LPCALC
+05450CSR                   MOVEL'TOT CASH'LDESC                           LPCALC
+05460CSR                   MOVE ' OUTFLO' LDESC                           LPCALC
+05470CSR                   Z-ADDTOT       AMO                             LPCALC
+05480CSR         I         ADD  RRN       RRN                             LPCALC
+05490CSR                   EXSR LINOUT                                    LPCALC
+05500CSR 96                GOTO ENDTC                                     LPCALC
+05510CSR         1         ADD  I         I                               LPCALC
+05520CSR                   GOTO TCLOOP                                    LPCALC
+05530CSR         ENDTC     TAG                                            LPCALC
+05540CSR                   SETOF                     96                   LPCALC
+05550CSR                   ENDSR                                          LPCALC
+05560C*****************************************************               LPCALC
+05570CSR         TXDEPR    BEGSR                                          LPCALC
+05580C*          ******                                                   LPCALC
+05590CSR                   MOVE 09        LNO
+05600CSR                   EXSR RRNCAL                                    LPCALC
+05610CSR                   MOVEL'TX DEPRE'LDESC                           LPCALC
+05620CSR                   MOVE 'CIATION' LDESC                           LPCALC
+05630CSR                   Z-ADDPURCHP    WORK1                           LPCALC
+05640CSR                   Z-ADDPURCHP    WORK3                           LPCALC
+05650CSR         STCE      COMP 'C'                      98               LPCALC
+05660CSR 98      STPAMT    ADD  WORK1     WORK1                           LPCALC
+05670CSR 98      STPAMT    ADD  WORK3     WORK3                           LPCALC
+05680CSR         FITFBV    MULT WORK1     WORK2                           LPCALC
+0569 CSR                   Z-ADDWORK1     FBOOKV  92
+05700CSR                   Z-ADDFITDL     DL                              LPCALC
+05710CSR                   MOVE FITDM     DM                              LPCALC
+05720CSR                   Z-ADD1         I                               LPCALC
+05730CSR         TDLOOP    TAG                                            LPCALC
+05740CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+05750CSR         ANALYR    SUB  LDPYR     N                               LPCALC
+05760CSR         N         MULT 12        N                               LPCALC
+05770CSR         M         ADD  N         N                               LPCALC
+05780CSR         N         SUB  LDPMO     N                               LPCALC
+05790CSR         FITDAD    ADD  N         N            98                 LPCALC
+05800CSR 98                GOTO TDBUMP                                    LPCALC
+05810CSR                   EXSR DPRCHG                                    LPCALC
+05820CSR                   Z-ADDWORK5     AMO,M                           LPCALC
+0583 CSR         FBOOKV    SUB  WORK5     FBOOKV
+05840CSR         TDBUMP    TAG                                            LPCALC
+05850CSR         M         COMP 12                       98               LPCALC
+05860CSR 98                EXSR LINOUT                                    LPCALC
+05870CSR 96                GOTO ENDTD                                     LPCALC
+05880CSR         1         ADD  M         M                               LPCALC
+05890CSR                   GOTO TDLOOP                                    LPCALC
+05900CSR         ENDTD     TAG                                            LPCALC
+05910CSR                   SETOF                     96                   LPCALC
+05920CSR                   ENDSR                                          LPCALC
+05930C*****************************************************               LPCALC
+05940CSR         DEDEXP    BEGSR                                          LPCALC
+05950C*          ******                                                   LPCALC
+05960CSR         I         SUB  I         I                               LPCALC
+05970CSR         DXLOOP    TAG                                            LPCALC
+05980CSR         TOT       SUB  TOT       TOT                             LPCALC
+05990CSR                   MOVE 02        LNO               INTEREST
+06000CSR                   EXSR TOTAL                                     LPCALC
+06010CSR                   MOVE 05        LNO               MAINTENANCE
+06020CSR                   EXSR TOTAL                                     LPCALC
+06030CSR                   MOVE 06        LNO               PERS PROP TAX
+06040CSR                   EXSR TOTAL                                     LPCALC
+06050CSR                   MOVE 07        LNO               INSURANCE
+06060CSR                   EXSR TOTAL                                     LPCALC
+0607 CSR                   MOVE 26        LNO
+0608 CSR                   EXSR TOTAL                      OTHER EXPENSE
+06090CSR                   MOVE 10        LNO
+06100CSR                   EXSR RRNCAL                                    LPCALC
+06110CSR                   MOVEL'TAX DED.'LDESC                           LPCALC
+06120CSR                   MOVE ' EXP.  ' LDESC                           LPCALC
+06130CSR                   Z-ADDTOT       AMO                             LPCALC
+06140CSR         I         ADD  RRN       RRN                             LPCALC
+06150CSR                   EXSR LINOUT                                    LPCALC
+06160CSR 96                GOTO ENDDX                                     LPCALC
+06170CSR         1         ADD  I         I                               LPCALC
+06180CSR                   GOTO DXLOOP                                    LPCALC
+06190CSR         ENDDX     TAG                                            LPCALC
+06200CSR                   SETOF                     96                   LPCALC
+06210CSR                   ENDSR                                          LPCALC
+06220C*****************************************************               LPCALC
+06230CSR         SLSTAX    BEGSR                                          LPCALC
+06240C*          ******                                                   LPCALC
+06250CSR         STCE      COMP 'C'                      98               LPCALC
+06260CSR 98                GOTO ENDST                                     LPCALC
+06270CSR                   MOVE 11        LNO
+06280CSR                   EXSR RRNCAL                                    LPCALC
+06290CSR                   MOVEL'SALES TA'LDESC                           LPCALC
+06300CSR                   MOVE 'X      ' LDESC                           LPCALC
+06310CSR         STLOOP    TAG                                            LPCALC
+06320CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+06330CSR                   EXSR DATECK                                    LPCALC
+06340CSRN26                GOTO STBUMP                                    LPCALC
+06350CSR         STPAMT    ADD  AMO,M     AMO,M                           LPCALC
+06360CSR         STBUMP    TAG                                            LPCALC
+06370CSR         M         COMP 12                       98               LPCALC
+06380CSR 98                EXSR LINOUT                                    LPCALC
+06390CSR 96                GOTO ENDST                                     LPCALC
+06400CSR         1         ADD  M         M                               LPCALC
+06410CSR                   GOTO STLOOP                                    LPCALC
+06420CSR         ENDST     TAG                                            LPCALC
+06430CSR                   SETOF                     96                   LPCALC
+06440CSR                   ENDSR                                          LPCALC
+06450C*****************************************************               LPCALC
+06460CSR         TOTEXP    BEGSR                                          LPCALC
+06470C*          ******                                                   LPCALC
+06480CSR         I         SUB  I         I                               LPCALC
+06490CSR         TELOOP    TAG                                            LPCALC
+06500CSR         TOT       SUB  TOT       TOT                             LPCALC
+06510CSR                   MOVE 09        LNO               DEPRECIATION
+06520CSR                   EXSR TOTAL                                     LPCALC
+06530CSR                   MOVE 10        LNO               DEDUCTIBLE EXP
+06540CSR                   EXSR TOTAL                                     LPCALC
+06550CSR                   MOVE 11        LNO               SALES TAX
+06560CSR                   EXSR TOTAL                                     LPCALC
+06570CSR                   MOVE 12        LNO
+06580CSR                   EXSR RRNCAL                                    LPCALC
+06590CSR                   MOVEL'TOTAL EX'LDESC                           LPCALC
+06600CSR                   MOVE 'PENSES ' LDESC                           LPCALC
+06610CSR                   Z-ADDTOT       AMO                             LPCALC
+06620CSR         I         ADD  RRN       RRN                             LPCALC
+06630CSR                   EXSR LINOUT                                    LPCALC
+06640CSR 96                GOTO ENDTE                                     LPCALC
+06650CSR         1         ADD  I         I                               LPCALC
+06660CSR                   GOTO TELOOP                                    LPCALC
+06670CSR         ENDTE     TAG                                            LPCALC
+06680CSR                   SETOF                     96                   LPCALC
+06690CSR                   ENDSR                                          LPCALC
+06700C*****************************************************               LPCALC
+06710CSR         TAXBEN    BEGSR                                          LPCALC
+06720C*          ******                                                   LPCALC
+06730CSR         I         SUB  I         I                               LPCALC
+06740CSR         TBLOOP    TAG                                            LPCALC
+06750CSR                   MOVE 12        LNO               TOTAL EXPENSES
+06760CSR                   EXSR RRNCAL                                    LPCALC
+06770CSR         I         ADD  RRN       RRN                             LPCALC
+06780CSR         RRN       CHAINWORK                 90
+06790CSR         TAX       MULT AMO       AMO                             LPCALC
+06800CSR                   MOVE 13        LNO
+06810CSR                   EXSR RRNCAL                                    LPCALC
+06820CSR                   MOVEL'TAX BENE'LDESC                           LPCALC
+06830CSR                   MOVE 'FIT    ' LDESC                           LPCALC
+06840CSR         I         ADD  RRN       RRN                             LPCALC
+06850CSR                   EXSR LINOUT                                    LPCALC
+06860CSR 96                GOTO ENDTB                                     LPCALC
+06870CSR         1         ADD  I         I                               LPCALC
+06880CSR                   GOTO TBLOOP                                    LPCALC
+06890CSR         ENDTB     TAG                                            LPCALC
+06900CSR                   SETOF                     96                   LPCALC
+06910CSR                   ENDSR                                          LPCALC
+06920C*****************************************************               LPCALC
+0693 CSR         PURTAX    BEGSR
+0694 C*          ******
+06950CSR                   MOVE 24        LNO
+06960CSR                   EXSR RRNCAL
+06970CSR                   MOVEL'PURCH.TA'LDESC
+06980CSR                   MOVE 'Z CRED.' LDESC
+0699 CSR         RVALUE    SUB  FBOOKV    INCOME  92     98 BREAKEVEN
+0700 CSR         RVALUE    COMP 0                        98 NO RESALE
+0701 CSR       98          GOTO PXLOOP
+0702 CSR       98          GOTO PXLOOP                     NO TAX
+0703 CSR         INCOME    MULT SIT       INCTAX  92       CALCULATE
+0704 CSR         INCOME    SUB  INCTAX    INCOME           TAX PMT OR
+0705 CSR         INCOME    MULT FIT       WORK8            WRITEOFF
+0706 CSR         WORK8     ADD  INCTAX    INCTAX           FOR RESALE
+0707 CSR         PXLOOP    TAG
+0708 CSR         AMO,M     SUB  AMO,M     AMO,M
+0709 CSR                   EXSR DATECK
+0710 CSRN26                GOTO PXBUMP
+0711 CSR         PRTXCR    ADD  AMO,M     AMO,M
+0712 CSR         PXBUMP    TAG
+0713 CSR         M         COMP 12                       98
+0714 CSR       98Y         COMP NOYRS                    96
+0715 CSR       96AMO,12    SUB  INCTAX    AMO,12
+0716 CSR 98                EXSR LINOUT
+0717 CSR 96                GOTO ENDPX
+0718 CSR         1         ADD  M         M
+0719 CSR                   GOTO PXLOOP
+0720 CSR         ENDPX     TAG
+0721 CSR                   SETOF                     96
+0722 CSR                   ENDSR
+07230C*****************************************************               LPCALC
+07240CSR         PCSHAT    BEGSR                                          LPCALC
+07250C*          ******                                                   LPCALC
+07260CSR         I         SUB  I         I                               LPCALC
+07270CSR         PCLOOP    TAG                                            LPCALC
+07280CSR         TOT       SUB  TOT       TOT                             LPCALC
+07290CSR                   MOVE 08        LNO               CASH OUT BEFORE TAX
+07300CSR                   EXSR RRNCAL                                    LPCALC
+07310CSR         I         ADD  RRN       RRN                             LPCALC
+07320CSR         RRN       CHAINWORK                 90
+07330CSR         AMO       ADD  TOT       TOT                             LPCALC
+07340CSR                   MOVE 13        LNO               TAX BENEFIT
+07350CSR                   EXSR RRNCAL                                    LPCALC
+07360CSR         I         ADD  RRN       RRN                             LPCALC
+07370CSR         RRN       CHAINWORK                 90
+07380CSR         TOT       SUB  AMO       TOT                             LPCALC
+0739 CSR                   MOVE 24        LNO              INCENTIVE TAX CREDIT
+0740 CSR                   EXSR RRNCAL
+0741 CSR         I         ADD  RRN       RRN
+0742 CSR         RRN       CHAINWORK                 90
+0743 CSR         TOT       SUB  AMO       TOT
+07440CSR                   MOVE 14        LNO
+07450CSR                   EXSR RRNCAL                                    LPCALC
+07460CSR                   MOVEL'CASH FLO'LDESC                           LPCALC
+07470CSR                   MOVE ' AFT TX' LDESC                           LPCALC
+07480CSR                   Z-ADDTOT       AMO                             LPCALC
+07490CSR         I         ADD  RRN       RRN                             LPCALC
+07500CSR                   EXSR LINOUT                                    LPCALC
+07510CSR 96                GOTO ENDPC                                     LPCALC
+07520CSR         1         ADD  I         I                               LPCALC
+07530CSR                   GOTO PCLOOP                                    LPCALC
+07540CSR         ENDPC     TAG                                            LPCALC
+07550CSR                   SETOF                     96                   LPCALC
+07560CSR                   ENDSR                                          LPCALC
+07570C*****************************************************               LPCALC
+07580CSR         RNTAMT    BEGSR                                          LPCALC
+07590C*          ******                                                   LPCALC
+0760 CSR         13        CHAINWORK                 90
+07610CSR                   MOVE 15        LNO
+0762 CSR                   EXSR RRNCAL                                    LPCALC
+07630CSR                   MOVEL'RENT & S'LDESC                           LPCALC
+07640CSR                   MOVE '. TX   ' LDESC                           LPCALC
+07650CSR         1         ADD  STLE      WORK1                           LPCALC
+07660CSR         RALOOP    TAG                                            LPCALC
+07670CSR         AMO,M     SUB  AMO,M     AMO,M                           LPCALC
+07680CSR                   EXSR DATECK                                    LPCALC
+07690CSR 25                GOTO RABUMP                                    LPCALC
+07700CSR         MRP,Y     MULT MAC       AMO,M                           LPCALC
+07710CSR         WORK1     MULT AMO,M     AMO,M                           LPCALC
+07720CSR         RABUMP    TAG                                            LPCALC
+07730CSR         M         COMP 12                       98               LPCALC
+07740CSR 98                EXSR LINOUT                                    LPCALC
+07750CSR 96                GOTO ENDRA                                     LPCALC
+07760CSR         1         ADD  M         M                               LPCALC
+07770CSR                   GOTO RALOOP                                    LPCALC
+07780CSR         ENDRA     TAG                                            LPCALC
+07790CSR                   SETOF                     96                   LPCALC
+07800CSR                   ENDSR                                          LPCALC
+07810C*****************************************************               LPCALC
+0782 CSR         LOCTX     BEGSR
+0783 C*          ******
+0784 CSR         9         CHAINWORK
+0785 CSR                   MOVE 27        LNO
+0786 CSR                   EXSR RRNCAL
+0787 CSR                   MOVEL'LEASE EX'LDESC
+0788 CSR                   MOVE 'PENSE  ' LDESC
+0789 CSR         EXP,1     DIV  FSTMO     EAMT
+0790 CSR                   Z-ADDLDPMO     M
+0791 CSR                   Z-ADD0         AMO
+0792 CSR         LOLOOP    TAG
+0793 CSR                   Z-ADDEAMT      AMO,M
+0794 CSR         M         COMP 12                       98
+0795 CSR 98                XFOOTAMO       WORK99
+0796 CSR 98      EXP,Y     SUB  WORK99    WORK99
+0797 CSR 98      AMO,12    ADD  WORK99    AMO,12
+0798 CSR       98          EXSR LINOUT
+0799 CSR       96          GOTO ENDL
+0800 CSR       98EXP,Y     DIV  12        EAMT
+0801 CSR         M         ADD  1         M
+0802 CSR                   GOTO LOLOOP
+0803 CSR         ENDL      ENDSR
+0804 C*****************************************************
+08050CSR         CSHEXP    BEGSR                                          LPCALC
+08060C*          ******                                                   LPCALC
+08070CSR         I         SUB  I         I                               LPCALC
+08080CSR         CELOOP    TAG                                            LPCALC
+08090CSR         TOT       SUB  TOT       TOT                             LPCALC
+08100CSR                   MOVE 15        LNO               RENT & S. TX
+08110CSR                   EXSR TOTAL                                     LPCALC
+0812 CSR                   MOVE 27        LNO              OTHER EXPENSES
+0813 CSR                   EXSR TOTAL
+08140CSR                   MOVE 16        LNO
+08150CSR                   EXSR RRNCAL                                    LPCALC
+08160CSR                   MOVEL'TOT CASH'LDESC                           LPCALC
+08170CSR                   MOVE ' EXP   ' LDESC                           LPCALC
+08180CSR                   Z-ADDTOT       AMO                             LPCALC
+08190CSR         I         ADD  RRN       RRN                             LPCALC
+08200CSR                   EXSR LINOUT                                    LPCALC
+08210CSR 96                GOTO ENDCE                                     LPCALC
+08220CSR         1         ADD  I         I                               LPCALC
+08230CSR                   GOTO CELOOP                                    LPCALC
+08240CSR         ENDCE     TAG                                            LPCALC
+08250CSR                   SETOF                     96                   LPCALC
+08260CSR                   ENDSR                                          LPCALC
+08270C*****************************************************               LPCALC
+08280CSR         EXPDED    BEGSR                                          LPCALC
+08290C*          ******                                                   LPCALC
+08300CSR         I         SUB  I         I                               LPCALC
+08310CSR         EDLOOP    TAG                                            LPCALC
+08320CSR         TOT       SUB  TOT       TOT                             LPCALC
+08330CSR                   MOVE 16        LNO              TOT CASH EXP
+08340CSR                   EXSR TOTAL                                     LPCALC
+08350CSR                   MOVE 17        LNO
+0836 CSR                   EXSR RRNCAL                                    LPCALC
+08370CSR                   MOVEL'TOT DED.'LDESC                           LPCALC
+08380CSR                   MOVE ' EXP   ' LDESC                           LPCALC
+08390CSR                   Z-ADDTOT       AMO                             LPCALC
+08400CSR         I         ADD  RRN       RRN                             LPCALC
+08410CSR                   EXSR LINOUT                                    LPCALC
+08420CSR 96                GOTO ENDED                                     LPCALC
+08430CSR         1         ADD  I         I                               LPCALC
+08440CSR                   GOTO EDLOOP                                    LPCALC
+08450CSR         ENDED     TAG                                            LPCALC
+08460CSR                   SETOF                     96                   LPCALC
+08470CSR                   ENDSR                                          LPCALC
+08480C*****************************************************               LPCALC
+08490CSR         BENFIT    BEGSR                                          LPCALC
+08500C*          ******                                                   LPCALC
+08510CSR         I         SUB  I         I                               LPCALC
+08520CSR         BFLOOP    TAG                                            LPCALC
+08530CSR                   MOVE 17        LNO               TOT TX DED EXP
+08540CSR                   EXSR RRNCAL                                    LPCALC
+08550CSR         I         ADD  RRN       RRN                             LPCALC
+08560CSR         RRN       CHAINWORK                 90
+08570CSR         TAX       MULT AMO       AMO                             LPCALC
+08580CSR                   MOVE 18        LNO
+08590CSR                   EXSR RRNCAL                                    LPCALC
+08600CSR                   MOVEL'TAX BENE'LDESC                           LPCALC
+08610CSR                   MOVE 'FIT    ' LDESC                           LPCALC
+08620CSR         I         ADD  RRN       RRN                             LPCALC
+08630CSR                   EXSR LINOUT                                    LPCALC
+08640CSR 96                GOTO ENDBF                                     LPCALC
+08650CSR         1         ADD  I         I                               LPCALC
+0866 CSR                   GOTO BFLOOP                                    LPCALC
+08670CSR         ENDBF     TAG                                            LPCALC
+08680CSR                   SETOF                     96                   LPCALC
+08690CSR                   ENDSR                                          LPCALC
+08700C*****************************************************               LPCALC
+08710CSR         RNTTAX    BEGSR
+08720C*          ******                                                   LPCALC
+08730CSR                   MOVE 25        LNO
+0874 CSR                   EXSR RRNCAL
+08750CSR                   MOVEL'RENTAL T'LDESC
+08760CSR                   MOVE 'AX CRED' LDESC
+0877 CSR         RXLOOP    TAG
+0878 CSR         AMO,M     SUB  AMO,M     AMO,M
+0879 CSR                   EXSR DATECK
+0880 CSRN26                GOTO RXBUMP
+0881 CSR         RNTXCR    ADD  AMO,M     AMO,M
+0882 CSR         RXBUMP    TAG
+0883 CSR         M         COMP 12                       98
+0884 CSR 98                EXSR LINOUT
+0885 CSR 96                GOTO ENDRX
+0886 CSR         1         ADD  M         M
+0887 CSR                   GOTO RXLOOP
+0888 CSR         ENDRX     TAG
+0889 CSR                   SETOF                     96
+0890 CSR                   ENDSR
+08910C*****************************************************               LPCALC
+08920CSR         LCSHAT    BEGSR                                          LPCALC
+08930C*          ******                                                   LPCALC
+08940CSR         I         SUB  I         I                               LPCALC
+08950CSR         LCLOOP    TAG                                            LPCALC
+08960CSR         TOT       SUB  TOT       TOT                             LPCALC
+08970CSR                   MOVE 16        LNO               CSH EXP B4 TX
+08980CSR                   EXSR RRNCAL                                    LPCALC
+08990CSR         I         ADD  RRN       RRN                             LPCALC
+09000CSR         RRN       CHAINWORK                 90
+09010CSR         AMO       ADD  TOT       TOT                             LPCALC
+09020CSR                   MOVE 18        LNO               TAX BENEFIT
+09030CSR                   EXSR RRNCAL                                    LPCALC
+09040CSR         I         ADD  RRN       RRN                             LPCALC
+09050CSR         RRN       CHAINWORK                 90
+09060CSR         TOT       SUB  AMO       TOT                             LPCALC
+09070CSR                   MOVE 25        LNO               INCENTIVE TAX CREDIT
+09080CSR                   EXSR RRNCAL
+09090CSR         I         ADD  RRN       RRN
+09100CSR         RRN       CHAINWORK                 90
+09110CSR         TOT       SUB  AMO       TOT
+09120CSR                   MOVE 19        LNO
+0913 CSR                   EXSR RRNCAL                                    LPCALC
+09140CSR                   MOVEL'CASH FLO'LDESC                           LPCALC
+09150CSR                   MOVE ' AFT TX' LDESC                           LPCALC
+09160CSR                   Z-ADDTOT       AMO                             LPCALC
+09170CSR         I         ADD  RRN       RRN                             LPCALC
+09180CSR                   EXSR LINOUT                                    LPCALC
+09190CSR 96                GOTO ENDLC                                     LPCALC
+09200CSR         1         ADD  I         I                               LPCALC
+09210CSR                   GOTO LCLOOP                                    LPCALC
+09220CSR         ENDLC     TAG                                            LPCALC
+09230CSR                   SETOF                     96                   LPCALC
+09240CSR                   ENDSR                                          LPCALC
+09250C*****************************************************               LPCALC
+09260CSR         DIFFBT    BEGSR                                          LPCALC
+09270C*          ******                                                   LPCALC
+09280CSR         I         SUB  I         I                               LPCALC
+09290CSR         DBLOOP    TAG                                            LPCALC
+09300CSR         TOT       SUB  TOT       TOT                             LPCALC
+09310CSR                   MOVE 08        LNO               P CSH OUT BT
+09320CSR                   EXSR RRNCAL                                    LPCALC
+09330CSR         I         ADD  RRN       RRN                             LPCALC
+09340CSR         RRN       CHAINWORK                 90
+09350CSR         AMO       ADD  TOT       TOT                             LPCALC
+09360CSR                   MOVE 16        LNO               L CSH EXP BT
+09370CSR                   EXSR RRNCAL                                    LPCALC
+09380CSR         I         ADD  RRN       RRN                             LPCALC
+09390CSR         RRN       CHAINWORK                 90
+09400CSR         TOT       SUB  AMO       TOT                             LPCALC
+09410CSR                   MOVE 20        LNO
+0942 CSR                   EXSR RRNCAL                                    LPCALC
+09430CSR                   MOVEL'BEFORE T'LDESC                           LPCALC
+09440CSR                   MOVE 'AXES   ' LDESC                           LPCALC
+09450CSR                   Z-ADDTOT       AMO                             LPCALC
+09460CSR         I         ADD  RRN       RRN                             LPCALC
+09470CSR                   EXSR LINOUT                                    LPCALC
+09480CSR 96                GOTO ENDDB                                     LPCALC
+09490CSR         1         ADD  I         I                               LPCALC
+09500CSR                   GOTO DBLOOP                                    LPCALC
+09510CSR         ENDDB     TAG                                            LPCALC
+09520CSR                   SETOF                     96                   LPCALC
+09530CSR                   ENDSR                                          LPCALC
+09540C*****************************************************               LPCALC
+09550CSR         DIFFAT    BEGSR                                          LPCALC
+09560C*          ******                                                   LPCALC
+09570CSR         I         SUB  I         I                               LPCALC
+09580CSR         DALOOP    TAG                                            LPCALC
+09590CSR         TOT       SUB  TOT       TOT                             LPCALC
+09600CSR                   MOVE 14        LNO               P CSH OUT AT
+09610CSR                   EXSR RRNCAL                                    LPCALC
+09620CSR         I         ADD  RRN       RRN                             LPCALC
+09630CSR         RRN       CHAINWORK                 90
+09640CSR         AMO       ADD  TOT       TOT                             LPCALC
+09650CSR                   MOVE 19        LNO               L CSH EXP AT
+09660CSR                   EXSR RRNCAL                                    LPCALC
+09670CSR         I         ADD  RRN       RRN                             LPCALC
+09680CSR         RRN       CHAINWORK                 90
+09690CSR         TOT       SUB  AMO       TOT                             LPCALC
+09700CSR                   MOVE 21        LNO
+0971 CSR                   EXSR RRNCAL                                    LPCALC
+09720CSR                   MOVEL'AFTER TA'LDESC                           LPCALC
+09730CSR                   MOVE 'XES    ' LDESC                           LPCALC
+09740CSR                   Z-ADDTOT       AMO                             LPCALC
+09750CSR         I         ADD  RRN       RRN                             LPCALC
+09760CSR                   EXSR LINOUT                                    LPCALC
+09770CSR 96                GOTO ENDDA                                     LPCALC
+09780CSR         1         ADD  I         I                               LPCALC
+09790CSR                   GOTO DALOOP                                    LPCALC
+09800CSR         ENDDA     TAG                                            LPCALC
+09810CSR                   SETOF                     96                   LPCALC
+09820CSR                   ENDSR                                          LPCALC
+09830C*****************************************************               LPCALC
+09840CSR         FINISH    BEGSR                                          LPCALC
+09850C*          ******                                                   LPCALC
+09860CSR         1         CHAINWORK                 90     CONTROL REC
+09870CSR                   MOVE 2         STATUS            OK CALC PHASE LPCALC
+09880CSR                   SETON                     41                   LPCALC
+09890CSR                   EXCPT                                          LPCALC
+09900CSR                   SETOF                     41                   LPCALC
+09910CSR                   ENDSR                                          LPCALC
+09920C*****************************************************               LPCALC
+09930OWORK    E        41                                                 LPCALC
+09940O                         STATUS     2                               LPCALC
+09950O        E        44                                                 LPCALC
+09960O                         LDPAMT    70                               LPCALC
+09970O                         LDPMO     72                               LPCALC
+09980O                         LDPYR     74                               LPCALC
+09990O                         LAMT      83                               LPCALC
+10000O                         LMPAMT    92                               LPCALC
+10010O                         LMPMO     94                               LPCALC
+10020O                         LMPYR     96                               LPCALC
+10030O                         STPAMT   105                               LPCALC
+1004 O                         PRTXCR   114
+1005 O                         RNTXCR   123
+10060O        E        48                                                 LPCALC
+10070O                                    1 'L'                           LPCALC
+10080O                         LNO        3                               LPCALC
+10090O                         LDESC     18                               LPCALC
+10100O                         ANALYR    20                               LPCALC
+10110O                         AMO      128                               LPCALC

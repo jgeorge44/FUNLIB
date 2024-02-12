@@ -1,0 +1,115 @@
+0001 H                                             03                     BATTLE            0001
+0002 FSCREEN  CP  F     300            WORKSTN                                              0002
+0003 F                                              KNUM        2                           0003
+0004 F                                              KID    TNO                              0004
+0005 E                    AR        144  1                                                  0005
+0006 E                    ARR       144  1                                                  0006
+0007 E                    M           2144                                                  0007
+0008 E                    H           2144                                                  0008
+0009 E                    T       2   2  2                                                  0009
+0010 E                    TP          2  3 0                                                0010
+0011 E                    L      12  12  1                                                  0011
+0012 ISCREEN  NS  01   1 C1                                                                 0012
+0013 I                                        2 145 AR                                      0013
+0014 ISCREEN  NS  02   1 C2                                                                 0014
+0015 I                                        2   2 MISS                                    0015
+0016 I                                        3   3 HIT                                     0016
+0017 I                                        4   4 HS                                      0017
+0018 I                                        5   5 ALL                                     0018
+0019 I                                        6   6 HOR                                     0019
+0020 I                                        7   80VER                                     0020
+0021 ISCREEN  NS  03                                                                        0021
+0022 ILDA        UDS
+0023 I                                        1   2 FIRST1
+0024 I                                        3   4 SECOND
+0025 C   03                MOVE FIRST1    T,1
+0026 C   03                MOVE SECOND    T,2
+0027 C   03      FIRST1    ACQ  SCREEN
+0028 C   03      SECOND    ACQ  SCREEN
+0029 C   03                GOTO END                                                         0022
+0030 C                     Z-ADD1         Y       10                                        0023
+0031 C           TNO       LOKUPT,Y                      91                                 0024
+0032 C           Y         COMP 1                        91                                 0025
+0033 C   02                GOTO ON02                                                        0026
+0034 C   91      T,2       NEXT SCREEN                                                      0027
+0035 C  N91      T,1       NEXT SCREEN                                                      0028
+0036 C  N91                MOVEAAR        M,2                                               0029
+0037 C   91                MOVEAAR        M,1                                               0030
+0038 C   91N96             SETON                     96                                     0031
+0039 C  N91N95             SETON                     95                                     0032
+0040 C                     SETON                     11                                     0033
+0041 C                     EXCPT                                                            0034
+0042 C                     SETOF                     11                                     0035
+0043 C   95 96             SETOF                     01                                     0036
+0044 C   01                SETON                     94                                     0037
+0045 C                     GOTO END                                                         0038
+0046 C*                                                                                     0039
+0047 C           ON02      TAG                                                              0040
+0048 C   94                GOTO BYPASS                                                      0041
+0049 C           MISS      COMP ' '                  60                                     0042
+0050 C           HIT       COMP ' '                  61                                     0043
+0051 C           HS        COMP ' '                  62                                     0044
+0052 C           ALL       COMP ' '                  63                                     0045
+0053 C   63                SETON                     LR                                     0046
+0054 C                     MOVEAM,Y       ARR                                               0047
+0055 C   91                Z-ADDTP,2      PX      30                                        0048
+0056 C  N91                Z-ADDTP,1      PX                                                0049
+0057 C   61                                                                                 0050
+0058 COR 62                                                                                 0051
+0059 COR 63                MOVE 'X'       ARR,PX                                            0052
+0060 C                     MOVEAARR       M,Y                                               0053
+0061 C   91                MOVEAH,2       ARR                                               0054
+0062 C  N91                MOVEAH,1       ARR                                               0055
+0063 C   61                                                                                 0056
+0064 COR 62                                                                                 0057
+0065 COR 63                MOVEA'X'       ARR,PX                                            0058
+0066 C   91                MOVEAARR       H,2                                               0059
+0067 C  N91                MOVEAARR       H,1                                               0060
+0068 C*                                                                                     0061
+0069 C           BYPASS    TAG                                                              0062
+0070 C                     SETOF                     94                                     0063
+0071 C   LR                GOTO PAST                                                        0064
+0072 C                     Z-ADD1         X       20                                        0065
+0073 C           HOR       LOKUPL,X                      70                                 0066
+0074 C           VER       MULT 12        P       30                                        0067
+0075 C           P         SUB  12        P                                                 0068
+0076 C           P         ADD  X         P                                                 0069
+0077 C                     MOVEAH,Y       ARR                                               0070
+0078 C                     MOVE '.'       ARR,P                                             0071
+0079 C                     MOVEAARR       H,Y                                               0072
+0080 C                     Z-ADDP         TP,Y                                              0073
+0081 C           PAST      TAG                                                              0074
+0082 C                     SETON                     10                                     0075
+0083 C                     EXCPT                                                            0076
+0084 C                     SETOF                     10                                     0077
+0085 C   91                MOVE T,2       TNO                                               0078
+0086 C  N91                MOVE T,1       TNO                                               0079
+0087 C                     SETON                     11                                     0080
+0088 C                     EXCPT                                                            0081
+0089 C                     SETOF                     11                                     0082
+0090 C           END       TAG                                                              0083
+0091 OSCREEN  D        03                                                                   0084
+0092 O                                   K8 'BATTLE01'                                      0085
+0093 OSCREEN  E        11                                                                   0086
+0094 O                                   K8 'BATTLE02'                                      0087
+0095 O                      N91M,1      144                                                 0088
+0096 O                      N91H,1      288                                                 0089
+0097 O                       91M,2      144                                                 0090
+0098 O                       91H,2      288                                                 0091
+0099 OSCREEN  D        02                                                                   0092
+0100 O       OR        01                                                                   0093
+0101 O                                   K8 'BATTLE03'                                      0094
+0102 O                       60           4 'MISS'                                          0095
+0103 O                       61           3 'HIT'                                           0096
+0104 O                       62          10 'HIT & SUNK'                                    0097
+0105 O                       63           8 'ALL SUNK'                                      0098
+0106 O                         HOR       11                                                 0099
+0107 O                         VER       13                                                 0100
+0108 OSCREEN  E        10                                                                   0101
+0109 O                                   K8 'BATTLE02'                                      0102
+0110 O                         M,Y      144                                                 0103
+0111 O                         H,Y      288                                                 0104
+**                                                                                          0105
+WSWS                                                                                        0106
+**                                                                                          0107
+ABCDEFGHIJKL                                                                                0108

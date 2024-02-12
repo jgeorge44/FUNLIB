@@ -1,0 +1,284 @@
+0001 H                                             07                     RACE
+0002 F*      HORSE RACING GAME  -- FOR SYS/34                             RACE
+0003 F*                                                                   RACE
+0004 F*   ORIGINAL  02/23/78  BY G. LORENZ                                RACE
+0005 F*                                                                   RACE
+0006 FWK      CP  F     200            WORKSTN                            RACE
+0007 F                                              KSLN   LINENO         RACE
+0008 F                                              KIND       99         RACE
+0009 E                    HNME    3  36 10               HORSES NAMES     RACE
+0010 E                    PNME        9 10               PLAYERS NAMES    RACE
+0011 E                    PTOT        9  5 0             TOTAL CASH PLAYERRACE
+0012 E                    PAMT        9  3 0             AMT OF BET       RACE
+0013 E                    PWPS        9  1               WIN/PLACE/SHOW   RACE
+0014 E                    HNBR        9  1 0             HORSE BET ON     RACE
+0015 E                    POS         9  2 0             RACE POSTION     RACE
+0016 E                    OUT        60  1               OUT PUT RACE LINERACE
+0017 E                    END         9  1 0             HORSE FINISH POS.RACE
+0018 E                    RND    80 320  1 0                              RACE
+0019 IWK      XX  08   6 C                                                RACE
+0020 I       OR   01   6 C1                                               RACE
+0021 I       OR   02   6 C2                                               RACE
+0022 I       OR   03   6 C3                                               RACE
+0023 I       OR   04   6 C4                                               RACE
+0024 I       OR   05   6 C5                                               RACE
+0025 I       OR   07   6 C7                                               RACE
+0026 I       OR   06                                                      RACE
+0027 I                                        7  16 PNME,1    01    30    RACE
+0028 I                                       17  26 PNME,2    01    31    RACE
+0029 I                                       27  36 PNME,3    01    32    RACE
+0030 I                                       37  46 PNME,4    01    33    RACE
+0031 I                                       47  56 PNME,5    01    34    RACE
+0032 I                                       57  66 PNME,6    01    35    RACE
+0033 I                                       67  76 PNME,7    01    36    RACE
+0034 I                                       77  86 PNME,8    01    37    RACE
+0035 I                                       87  96 PNME,9    01    38    RACE
+0036 I*                                                                   RACE
+0037 I                                        7   90AMT                   RACE
+0038 I                                       10  100HOR             11    RACE
+0039 I                                       11  11 WPS                   RACE
+0040 C                     SETOF                     12                   RACE
+0041 C                     SETOF                     909192               RACE
+0042 C                     SETOF                     939495               RACE
+0043 C   KG                SETON                     LR                   RACE
+0044 C   KG                GOTO END                                       RACE
+0045 C*                                                                   RACE
+0046 C  N66                Z-ADD1.        R       10                      RACE
+0047 C  N66                Z-ADD250.      PTOT                            RACE
+0048 C  N66                SETON                     66                   RACE
+0049 C   01                GOTO SCN1                                      RACE
+0050 C   02                GOTO END                                       RACE
+0051 C   03                GOTO SN03                                      RACE
+0052 C   04                GOTO SCN4                                      RACE
+0053 C   05                GOTO TOTAL                                     RACE
+0054 C   06                GOTO TOTAL                                     RACE
+0055 C   07                GOTO SCN7                                      RACE
+0056 C   08                GOTO END                                       RACE
+0057 C*                                                                   RACE
+0058 C           SCN1      TAG                             *** SCN1 ***   RACE
+0059 C*                                                                   RACE
+0060 C                     TIME           TME     60                      RACE
+0061 C                     Z-ADDTME       FLD2    20                      RACE
+0062 C                     Z-ADDFLD2      TT      20                      RACE
+0063 C                     SETON                     67                   RACE
+0064 C                     Z-ADD0.        P       10                      RACE
+0065 C*                                                                   RACE
+0066 C           SN01      TAG                             *** SN01 ***   RACE
+0067 C*                                                                   RACE
+0068 C  N30      1.        ADD  P         P                NBR OF PLAYERS RACE
+0069 C  N31      1.        ADD  P         P                               RACE
+0070 C  N32      1.        ADD  P         P                               RACE
+0071 C  N33      1.        ADD  P         P                               RACE
+0072 C  N34      1.        ADD  P         P                               RACE
+0073 C  N35      1.        ADD  P         P                               RACE
+0074 C  N36      1.        ADD  P         P                               RACE
+0075 C  N37      1.        ADD  P         P                               RACE
+0076 C  N38      1.        ADD  P         P                               RACE
+0077 C*                                                                   RACE
+0078 C           SN02      TAG                             *** SN02 ***   RACE
+0079 C*                                                                   RACE
+0080 C                     Z-ADD5.        LINENO  20                      RACE
+0081 C                     SETON                     90                   RACE
+0082 C                     EXCPT                                          RACE
+0083 C                     SETOF                     90                   RACE
+0084 C           R         MULT 9.        A       20                      RACE
+0085 C           A         SUB  9.        A                               RACE
+0086 C           R         MULT 9.        LIMIT   20                      RACE
+0087 C                     Z-ADD0.        B       10                      RACE
+0088 C*                                                                   RACE
+0089 C           SN03      TAG                             *** SN03 ***   RACE
+0090 C*                                                                   RACE
+0091 C           1.        ADD  A         A                               RACE
+0092 C           A         COMP LIMIT                09                   RACE
+0093 C  N09      1.        ADD  LINENO    LINENO                          RACE
+0094 C  N09      1.        ADD  B         B                               RACE
+0095 C  N09                SETON                     91                   RACE
+0096 C  N09 91             EXCPT                                          RACE
+0097 C                     SETOF                     91                   RACE
+0098 C  N09                GOTO SN03                                      RACE
+0099 C                     Z-ADD1.        Z       10                      RACE
+0100 C                     SETON                     9212                 RACE
+0101 C                     GOTO END                                       RACE
+0102 C*                                                                   RACE
+0103 C           SCN4      TAG                             *** SCN4 ***   RACE
+0104 C*                                                                   RACE
+0105 C                     Z-ADDAMT       PAMT,Z                          RACE
+0106 C                     Z-ADDHOR       HNBR,Z                          RACE
+0107 C                     MOVE WPS       PWPS,Z                          RACE
+0108 C           WPS       COMP 'W'                      12               RACE
+0109 C  N12      WPS       COMP 'P'                      12               RACE
+0110 C  N12      WPS       COMP 'S'                      12               RACE
+0111 C  N12                                                               RACE
+0112 COR 11                SETON                     92                   RACE
+0113 C  N12                                                               RACE
+0114 COR 11                GOTO END                                       RACE
+0115 C           Z         COMP P                        10               RACE
+0116 C  N10      1.        ADD  Z         Z                               RACE
+0117 C  N10                SETON                     92                   RACE
+0118 C  N10                GOTO END                                       RACE
+0119 C*                                                                   RACE
+0120 C           RACE      TAG                             *** RACE ***   RACE
+0121 C*                                                                   RACE
+0122 C                     Z-ADD0.        PLACE   10                      RACE
+0123 C                     SETOF                     909192               RACE
+0124 C                     SETON                     93                   RACE
+0125 C                     EXCPT                                          RACE
+0126 C                     SETOF                     93                   RACE
+0127 C                     Z-ADD1.        POS                             RACE
+0128 C                     Z-ADD0.        END                             RACE
+0129 C           R         MULT 9.        A                               RACE
+0130 C           A         SUB  9.        A                               RACE
+0131 C                     Z-ADDA         AA      20                      RACE
+0132 C           R         MULT 9.        LIMIT                           RACE
+0133 C                     Z-ADD0.        B                               RACE
+0134 C                     Z-ADD5.        LINENO                          RACE
+0135 C*                                                                   RACE
+0136 C           RACE1     TAG                             *** RACE1 ***  RACE
+0137 C*                                                                   RACE
+0138 C           1.        ADD  A         A                               RACE
+0139 C           A         COMP LIMIT                09                   RACE
+0140 C  N09      1.        ADD  LINENO    LINENO                          RACE
+0141 C  N09      1.        ADD  B         B                               RACE
+0142 C  N09                MOVE B         OUT,1                           RACE
+0143 C  N09                SETON                     94                   RACE
+0144 C  N09 94             EXCPT                                          RACE
+0145 C                     SETOF                     94                   RACE
+0146 C  N09                GOTO RACE1                                     RACE
+0147 C           RACE2     TAG                             *** RACE2 ***  RACE
+0148 C*                                                                   RACE
+0149 C                     SETOF                     5051                 RACE
+0150 C                     TIME           TME     60                      RACE
+0151 C                     Z-ADDTME       L       10     20               RACE
+0152 C  N20      L         DIV  3.        L              20               RACE
+0153 C*  20                GOTO RACE2                                     RACE
+0154 C  N20      L         ADD  1         L                               RACE
+0155 C           RACE3     TAG                             *** RACE3 ***  RACE
+0156 C           1.        ADD  TT        TT             20               RACE
+0157 C   20                GOTO RACE3                                     RACE
+0158 C           TT        COMP 320.                 20                   RACE
+0159 C   20                Z-ADD1.        TT                              RACE
+0160 C                     Z-ADDRND,TT    H       10     20               RACE
+0161 C   20                GOTO RACE3                                     RACE
+0162 C*                                                                   RACE
+0163 C                     MOVE ' '       OUT                             RACE
+0164 C           H         ADD  5.        LINENO                          RACE
+0165 C           END,H     COMP 0                        21               RACE
+0166 C  N21                GOTO RACE3                                     RACE
+0167 C           H         ADD  AA        A                               RACE
+0168 C           POS,H     ADD  L         LL      20                      RACE
+0169 C           POS,H     ADD  L         POS,H                           RACE
+0170 C           LL        COMP 59.                  50                   RACE
+0171 C  N50                MOVE H         OUT,LL                          RACE
+0172 C   50                MOVE H         OUT,60                          RACE
+0173 C   50      1.        ADD  PLACE     PLACE                           RACE
+0174 C   50                Z-ADDPLACE     END,H                           RACE
+0175 C                     SETON                     94                   RACE
+0176 C                     EXCPT                                          RACE
+0177 C                     SETOF                     94                   RACE
+0178 C   50      PLACE     COMP 9                    51  51               RACE
+0179 C  N51                GOTO RACE2                                     RACE
+0180 C                     GOTO END                                       RACE
+0181 C*                                                                   RACE
+0182 C           TOTAL     TAG                             *** TOTAL ***  RACE
+0183 C*                                                                   RACE
+0184 C                     SETOF                     08                   RACE
+0185 C                     Z-ADD0.        Z       10                      RACE
+0186 C*                                                                   RACE
+0187 C           TOT1      TAG                             *** TOT1 ***   RACE
+0188 C*                                                                   RACE
+0189 C           1.        ADD  Z         Z                               RACE
+0190 C           Z         COMP P                    25                   RACE
+0191 C   25                SETON                     95                   RACE
+0192 C   25                EXCPT                                          RACE
+0193 C   25                SETOF                     95                   RACE
+0194 C   25                GOTO END                                       RACE
+0195 C           PWPS,Z    COMP 'W'                      10               RACE
+0196 C   10                Z-ADD1.        TEST    10                      RACE
+0197 C           PWPS,Z    COMP 'P'                      10               RACE
+0198 C   10                Z-ADD2.        TEST                            RACE
+0199 C           PWPS,Z    COMP 'S'                      10               RACE
+0200 C   10                Z-ADD3.        TEST                            RACE
+0201 C*                                                                   RACE
+0202 C           TOT2      TAG                             *** TOT2 ***   RACE
+0203 C*                                                                   RACE
+0204 C                     Z-ADDHNBR,Z    Y       10                      RACE
+0205 C           TEST      COMP END,Y                15  15               RACE
+0206 C   15      PAMT,Z    ADD  PTOT,Z    PTOT,Z                          RACE
+0207 C  N15      PTOT,Z    SUB  PAMT,Z    PTOT,Z                          RACE
+0208 C                     GOTO TOT1                                      RACE
+0209 C*                                                                   RACE
+0210 C           SCN7      TAG                             *** SCN7 ***   RACE
+0211 C*                                                                   RACE
+0212 C                     Z-ADD0.        PAMT                            RACE
+0213 C                     Z-ADD0.        END                             RACE
+0214 C                     Z-ADD0.        HNBR                            RACE
+0215 C                     Z-ADD0.        POS                             RACE
+0216 C                     Z-ADD0.        PLACE                           RACE
+0217 C                     MOVE ' '       OUT                             RACE
+0218 C           1.        ADD  R         R                               RACE
+0219 C           R         COMP 4.                   99                   RACE
+0220 C   99                SETON                     LR                   RACE
+0221 C  N99                GOTO SN02                                      RACE
+0222 C*                                                                   RACE
+0223 C           END       TAG                             *** END ***    RACE
+0224 C*                                                                   RACE
+0225 C   08 67             GOTO TOTAL                                     RACE
+0226 OWK      D        08NLR                                              RACE
+0227 O                                   K6 'ZZ0101'                      RACE
+0228 O        E        90                                                 RACE
+0229 O                                   K6 'ZZ0102'                      RACE
+0230 O                         R          1                               RACE
+0231 O        E        91                                                 RACE
+0232 O                                   K6 'ZZ0103'                      RACE
+0233 O                         B          1                               RACE
+0234 O                         HNME,A    11                               RACE
+0235 O        D        92                                                 RACE
+0236 O                                   K6 'ZZ0104'                      RACE
+0237 O                         PNME,Z    10                               RACE
+0238 O                 11                30 'INVALID HORSE NUMBER'        RACE
+0239 O                N12                57 'POSTION NOT- P,W, OR S'      RACE
+0240 O        E        93                                                 RACE
+0241 O                                   K6 'ZZ0105'                      RACE
+0242 O        E        94                                                 RACE
+0243 O                                   K6 'ZZ0106'                      RACE
+0244 O                         HNME,A    10                               RACE
+0245 O                         OUT       70                               RACE
+0246 O                 09 50   END,H Z   71                               RACE
+0247 O        E        95                                                 RACE
+0248 O                                   K6 'ZZ0107'                      RACE
+0249 O                N30      PNME,1    10                               RACE
+0250 O                N30      PTOT,1M   16                               RACE
+0251 O                N31      PNME,2    26                               RACE
+0252 O                N31      PTOT,2M   32                               RACE
+0253 O                N32      PNME,3    42                               RACE
+0254 O                N32      PTOT,3M   48                               RACE
+0255 O                N33      PNME,4    58                               RACE
+0256 O                N33      PTOT,4M   64                               RACE
+0257 O                N34      PNME,5    74                               RACE
+0258 O                N34      PTOT,5M   80                               RACE
+0259 O                N35      PNME,6    90                               RACE
+0260 O                N35      PTOT,6M   96                               RACE
+0261 O                N36      PNME,7   106                               RACE
+0262 O                N36      PTOT,7M  112                               RACE
+0263 O                N37      PNME,8   122                               RACE
+0264 O                N37      PTOT,8M  128                               RACE
+0265 O                N38      PNME,9   138                               RACE
+0266 O                N38      PTOT,9M  144                               RACE
+**
+GARY'S PETFAST RUN  POSSIBLE
+THE BITCH GOOD LOOK DREAM ON
+FAST STEPSDANNDY DONCANN'T WIN
+GO GET IT SURE FIRE THE LOSER
+WHY NOT   COULD WIN FAST RUN
+DEAD BEAT DREAMER   RUN DUSTY
+THE PITS  HORSE DUN FRED FIRE
+COW SHIT  THE DUDE  NO CHANCE
+GOOD LOSERCASH IN   SURE WIN
+MONEY BANKNO CONTESTJERRY JURY
+NO HOPE   FAST FILLYCHEATER
+PLEASE WINHELP ME   NO NAME
+**
+58939929632368684422571131273518494176434561748336865475258837791499592817126675
+95618413968324752838377934995838161264756543168472172321549471867596273598182969
+34959153967415496957987356831242326431977612756848428524187598735688125232643197
+82134746373949298611378699417387256564366316589277241831935942528655781871242413

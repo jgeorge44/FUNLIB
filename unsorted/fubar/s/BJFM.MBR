@@ -1,0 +1,27 @@
+0001 SBANK      0124
+0002 D          260228Y               Y     Y          CBENTLEY'S BLACKJACK CASX
+0003 DINO
+0004 DID         106 2Y  Y          Y     Y            C1
+0005 D          200715Y               Y                CENTER YOUR BANKROLL:
+0006 DBANK       50737   YN Y B    Y            Y
+0007 SBET       0520
+0008 DID         101 2Y  Y          Y     Y            C2
+0009 D          210115Y               Y                CYOUR BANKROLL IS NOW:
+0010 DBANK       90137Y               Y
+0011 D          290310Y               Y                CENTER YOUR BET (WHOLE UX
+0012 DNITS):
+0013 DBET        50341   YN   B    Y  Y         Y
+0014 D          271415Y               Y                CPRESS CMD KEY 7 TO END X
+0015 DGAME
+0016 DMSG       802001Y               Y
+0017 SHANDS     1114
+0018 DID         101 2Y  Y          Y     Y            C3
+0019 D          100110Y               Y                CYOUR HAND:
+0020 DPCDS      200122Y               Y
+0021 D          100310Y               Y                CMY HAND:
+0022 DDCDS      200322Y               Y
+0023 DMSG1     1200501Y               Y
+0024 DREPLY      10642   YA        Y  Y         Y
+0025 DMSG2      801401Y               Y
+0026 SMSG       2401
+0027 DMSG3      800101Y               Y

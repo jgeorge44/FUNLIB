@@ -1,0 +1,16 @@
+0001 H     014                      B       1                             PICX
+0002 F*
+0003 F*  CTG - CALLED BY PROC-FILEX  IN GAMES LIBRARY-FUBAR
+0004 F*
+0005 F*        FILE RECORD LENGTH MUST BE IN LINES 7, 10, & 12  BELOW.
+0006 F*
+0007 FPICTURE IPE F  10  10            DISK                               PICS
+0008 FPRINT   O   F 132 132            PRINTER                            PICS
+0009 IPICTURE AA  01   1 C                                                PICS
+0010 I                                        1  10 REPETE                PICS
+0011 I        BB  02
+0012 I                                        1  10 RECORD
+0013 OPRINT   D  1     01                                                 PICS
+0014 O                         REPETE   132                               PICS
+0015 O        D  1     02
+0016 O                         RECORD   132

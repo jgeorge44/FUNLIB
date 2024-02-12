@@ -1,0 +1,423 @@
+0001 H    P014                      B       1                             BJSUB
+0002 FINPUT   CP         79            WORKSTN                            BJSUB
+0003 FDECK    UC     18  18R           DISK                               BJSUB
+0004 FPRINT   O     132 132            PRINTER                            BJSUB
+0005 IINPUT   NS  01   1 CA                                               BJSUB
+0006 I                                        1   1 CODA                  BJSUB
+0007 I                                        2   30BET                   BJSUB
+0008 I        NS  02   1 CB                                               BJSUB
+0009 I                                        1   1 CODB                  BJSUB
+0010 I                                        2   6 WORD                  BJSUB
+0011 I        NS  04   1 C                                                BJSUB
+0012 I                                        1   1 CODC                  BJSUB
+     I        NS  05   1 CX
+     I                                        1   1 CODX
+0013 IDECK    NS  03   1 CD                                               BJSUB
+0014 I                                        2   6 VALUE                 BJSUB
+0015 I                                        7  14 SUIT                  BJSUB
+0016 I                                       15  150ACE                   BJSUB
+0017 I                                       16  160FLAG                  BJSUB
+0018 I                                       17  180AMT                   BJSUB
+0019 C   KG                                                               BJSUB
+0020 COR 05
+0021 COR 65                SETON                     LR
+0022 C   KG                                                               BJSUB
+0023 COR 05
+0024 COR 65                GOTO END1
+0025 C                     SETOF                     707172               BJSUB
+0026 C                     SETOF                     606133               BJSUB
+0027 C                     SETOF                     505131               BJSUB
+0028 C                     SETOF                     404135               BJSUB
+0029 C   01 78             EXSR SUB8
+0030 C   01                SETOF                     050724               BJSUB
+0031 C   01                SETOF                     342742               BJSUB
+0032 C   01                SETOF                     937330               BJSUB
+0033 C   01                SETOF                     747592               BJSUB
+0034 C   01                SETOF                     525354               BJSUB
+0035 C   01                SETOF                     778778               BJSUB
+0036 C   01                SETOF                     808182               BJSUB
+0037 C   01                SETOF                     9189                 BJSUB
+0038 C   01                SETOF                     998384               BJSUB
+0039 C   01                MOVE '     '   PVAL1                           BJSUB
+0040 C   01                MOVE '     '   PVAL2                           BJSUB
+0041 C   01                MOVE '     '   PVAL3                           BJSUB
+0042 C   01                MOVE '     '   PVAL4                           BJSUB
+0043 C   01                MOVE '     '   PVAL5                           BJSUB
+0044 C   01                MOVE '        'PSUIT1                          BJSUB
+0045 C   01                MOVE '        'PSUIT2                          BJSUB
+0046 C   01                MOVE '        'PSUIT3                          BJSUB
+0047 C   01                MOVE '        'PSUIT4                          BJSUB
+0048 C   01                MOVE '        'PSUIT5                          BJSUB
+0049 C   01                MOVE '     '   DVAL1                           BJSUB
+0050 C   01                MOVE '     '   DVAL2                           BJSUB
+0051 C   01                MOVE '     '   DVAL3                           BJSUB
+0052 C   01                MOVE '     '   DVAL4                           BJSUB
+0053 C   01                MOVE '     '   DVAL5                           BJSUB
+0054 C   01                MOVE '        'DSUIT1                          BJSUB
+0055 C   01                MOVE '        'DSUIT2                          BJSUB
+0056 C   01                MOVE '        'DSUIT3                          BJSUB
+0057 C   01                MOVE '        'DSUIT4                          BJSUB
+0058 C   01                MOVE '        'DSUIT5                          BJSUB
+0059 C   01                Z-ADD0         PACE                            BJSUB
+0060 C   01                Z-ADD0         DACE                            BJSUB
+0061 C   01                Z-ADD0         PAMT                            BJSUB
+0062 C   01                Z-ADD0         DAMT                            BJSUB
+0063 C   01      43        COMP COUNT                  9191               BJSUB
+0064 C   01      BETTOT    ADD  BET       BETTOT  52
+0065 C   01 91             EXSR SUB8                                      BJSUB
+0066 C   07                EXSR SUB7                                      BJSUB
+0067 C   07                GOTO CARD35                                    BJSUB
+0068 C  N90                GOTO END                                       BJSUB
+0069 C  N09                SETON                     09                   BJSUB
+0070 C           AGAIN     TAG                                            BJSUB
+0071 C  N84                EXSR SUB2                                      BJSUB
+0072 C   84                GOTO CARD3                                     BJSUB
+0073 C  N80                MOVE VALUE     PVAL1   5                       BJSUB
+0074 C  N80                MOVE SUIT      PSUIT1  8                       BJSUB
+0075 C  N80                Z-ADDAMT       PAMT    20                      BJSUB
+0076 C  N80                Z-ADDACE       PACE    10                      BJSUB
+0077 C   80N81             MOVELVALUE     DVAL1   7                       BJSUB
+0078 C   80N81             MOVE SUIT      DSUIT1  8                       BJSUB
+0079 C   80N81             Z-ADDAMT       DAMT    20                      BJSUB
+0080 C   80N81             Z-ADDACE       DACE    10                      BJSUB
+0081 C   81N82             MOVE VALUE     PVAL2   5                       BJSUB
+0082 C   81N82             MOVE SUIT      PSUIT2  8                       BJSUB
+0083 C   81N82   AMT       ADD  PAMT      PAMT                            BJSUB
+0084 C   81N82   ACE       ADD  PACE      PACE                            BJSUB
+0085 C   82N83             MOVE VALUE     DVAL2   5                       BJSUB
+0086 C   82N83             MOVE SUIT      DSUIT2  8                       BJSUB
+0087 C   82N83   AMT       ADD  DAMT      DAMT                            BJSUB
+0088 C   82N83   ACE       ADD  DACE      DACE                            BJSUB
+0089 C   82                SETON                     83                   BJSUB
+0090 C   81                SETON                     82                   BJSUB
+0091 C   80                SETON                     81                   BJSUB
+0092 C  N80                SETON                     80                   BJSUB
+0093 C   81 82 83          SETON                     84                   BJSUB
+0094 C                     EXCPT                                          BJSUB
+0095 C                     GOTO AGAIN                                     BJSUB
+0096 C           CARD3     TAG                                            BJSUB
+0097 C   84N31             EXSR SUB3                                      BJSUB
+0098 C   84N73             SETON                     07                   BJSUB
+0099 C   84N73             GOTO END1                                      BJSUB
+0100 C           CARD35    TAG                                            BJSUB
+0101 C   72                EXSR SUB4
+0102 C   72N42             SETON                     7965
+0103 C   79                GOTO END2
+0104 C   02 71             EXSR SUB5                                      BJSUB
+0105 C   02 71 50          EXSR SUB6                                      BJSUB
+0106 C   02 71 50                                                         BJSUB
+0107 CAN 60                GOTO END1                                      BJSUB
+0108 C   02 71 52          EXSR SUB2                                      BJSUB
+0109 C   02 71 52          MOVE VALUE     DVAL3   5                       BJSUB
+0110 C   02 71 52          MOVE SUIT      DSUIT3  8                       BJSUB
+0111 C   02 71 52AMT       ADD  DAMT      DAMT                            BJSUB
+0112 C   02 71 52ACE       ADD  DACE      DACE                            BJSUB
+0113 C   02 71 52          EXSR SUB3                                      BJSUB
+0114 C   02 71 52          EXCPT                                          BJSUB
+0115 C   02 71 52                                                         BJSUB
+0116 CANN34                EXSR SUB5                                      BJSUB
+0117 C   02 50N34          EXSR SUB6                                      BJSUB
+0118 C   60                                                               BJSUB
+0119 COR 61                                                               BJSUB
+0120 COR 34                GOTO END1                                      BJSUB
+0121 C   02 53N54          EXSR SUB2                                      BJSUB
+0122 C   02 53N54          MOVE VALUE     DVAL4   5                       BJSUB
+0123 C   02 53N54          MOVE SUIT      DSUIT4  8                       BJSUB
+0124 C   02 53N54AMT       ADD  DAMT      DAMT                            BJSUB
+0125 C   02 53N54ACE       ADD  DACE      DACE                            BJSUB
+0126 C   02 53N54          EXSR SUB3                                      BJSUB
+0127 C   02 53N54          EXCPT                                          BJSUB
+0128 C   02 53N54                                                         BJSUB
+0129 CANN34                EXSR SUB5                                      BJSUB
+0130 C   02 50N34          EXSR SUB6                                      BJSUB
+0131 C   60                                                               BJSUB
+0132 COR 34                                                               BJSUB
+0133 COR 61                GOTO END1                                      BJSUB
+0134 C   02 53 54          EXSR SUB2                                      BJSUB
+0135 C   02 53 54          MOVE VALUE     DVAL5   5                       BJSUB
+0136 C   02 53 54          MOVE SUIT      DSUIT5  8                       BJSUB
+0137 C   02 53 54ACE       ADD  DACE      DACE                            BJSUB
+0138 C   02 53 54AMT       ADD  DAMT      DAMT                            BJSUB
+0139 C   02 53 54          EXSR SUB3                                      BJSUB
+0140 C   02 53 54          EXCPT                                          BJSUB
+0141 C   35                GOTO END1                                      BJSUB
+0142 C*
+0143 C   02 53 54                                                         BJSUB
+0144 CANN34                EXSR SUB6                                      BJSUB
+0145 C   60                                                               BJSUB
+0146 COR 34                                                               BJSUB
+0147 COR 61                GOTO END1                                      BJSUB
+0148 C   52 53 54          GOTO END1                                      BJSUB
+0149 C   02 73N74                                                         BJSUB
+0150 CANN75                EXSR SUB2                                      BJSUB
+0151 C   02 73N74                                                         BJSUB
+0152 CANN75      AMT       ADD  PAMT      PAMT                            BJSUB
+0153 C   02 73N74                                                         BJSUB
+0154 CANN75      ACE       ADD  PACE      PACE                            BJSUB
+0155 C   02 73N74                                                         BJSUB
+0156 CANN75                MOVE VALUE     PVAL3   5                       BJSUB
+0157 C   07 73N74                                                         BJSUB
+0158 CANN75                MOVE SUIT      PSUIT3  8                       BJSUB
+0159 C   02 73N74                                                         BJSUB
+0160 CANN75                EXSR SUB4                                      BJSUB
+0161 C   02 73N74                                                         BJSUB
+0162 CANN75                GOTO END1                                      BJSUB
+0163 C   02 73 74                                                         BJSUB
+0164 CANN75                EXSR SUB2                                      BJSUB
+0165 C   02 73 74                                                         BJSUB
+0166 CANN75      AMT       ADD  PAMT      PAMT                            BJSUB
+0167 C   02 73 74                                                         BJSUB
+0168 CANN75      ACE       ADD  PACE      PACE                            BJSUB
+0169 C   02 73 74                                                         BJSUB
+0170 CANN75                MOVE VALUE     PVAL4   5                       BJSUB
+0171 C   02 73 74                                                         BJSUB
+0172 CANN75                MOVE SUIT      PSUIT4  8                       BJSUB
+0173 C   02 73 74                                                         BJSUB
+0174 CANN75                EXSR SUB4                                      BJSUB
+0175 C   02 73 74                                                         BJSUB
+0176 CANN75                GOTO END1                                      BJSUB
+0177 C   02 73 74                                                         BJSUB
+0178 CAN 75                EXSR SUB2                                      BJSUB
+0179 C   02 73 74                                                         BJSUB
+0180 CAN 75      AMT       ADD  PAMT      PAMT                            BJSUB
+0181 C   02 73 74                                                         BJSUB
+0182 CAN 75                MOVE VALUE     PVAL5   5                       BJSUB
+0183 C   02 73 74                                                         BJSUB
+0184 CAN 75                MOVE SUIT      PSUIT5  8                       BJSUB
+0185 C   02 73 74                                                         BJSUB
+0186 CAN 75      ACE       ADD  PACE      PACE                            BJSUB
+0187 C   02 73 74                                                         BJSUB
+0188 CAN 75                EXSR SUB4                                      BJSUB
+0189 C   02 73 74                                                         BJSUB
+0190 CAN 75                SETON                     77                   BJSUB
+0191 C   02 73 74                                                         BJSUB
+0192 CAN 75                GOTO END1                                      BJSUB
+0193 C           END       TAG                                            BJSUB
+0194 C                     SETON                     90                   BJSUB
+0195 C           END1      TAG                                            BJSUB
+0196 C   35                                                               BJSUB
+0197 COR 72                                                               BJSUB
+0198 COR 77                                                               BJSUB
+0199 COR 61      BET1      ADD  BET       BET1    52 999897               BJSUB
+0200 C   30                                                               BJSUB
+0201 COR 40                                                               BJSUB
+0202 COR 54N35                                                            BJSUB
+0203 COR 60      BET1      SUB  BET       BET1       999897               BJSUB
+0204 C           END2      TAG
+0205 C******************************************                          BJSUB
+0206 C*          SUBR2          2 2 2 2 2      DEAL A CARD                BJSUB
+0207 C******************************************                          BJSUB
+0208 CSR         SUB2      BEGSR                                          BJSUB
+0209 CSR                   SETON                     27                   BJSUB
+0210 CSRN20                TIME           SEED    60                      BJSUB
+0211 CSRN20                Z-ADD0         COUNT   20                      BJSUB
+0212 CSRN20                SETON                     20                   BJSUB
+0213 CSR         AGAI2     TAG                                            BJSUB
+0214 CSR         SEED      MULT 3.415     SEED1  100                      BJSUB
+0215 CSR                   MOVE SEED1     SEED                            BJSUB
+0216 CSR                   MOVE SEED1     CODE    20                      BJSUB
+0217 CSR         CODE      CHAINDECK                 24                   BJSUB
+0218 CSR 24                GOTO AGAI2                                     BJSUB
+0219 CSR         FLAG      COMP 1                        25               BJSUB
+0220 CSR 25                GOTO AGAI2                                     BJSUB
+0221 CSR         FLAG      ADD  1         FLAG                            BJSUB
+0222 CSR                   EXCPT                                          BJSUB
+0223 CSR         1         ADD  COUNT     COUNT                           BJSUB
+0224 CSRN71                MOVE 2400      NUM    100                      BJSUB
+0225 CSR 71                MOVE 4800      NUM                             BJSUB
+0226 CSR         AGA20     TAG                                            BJSUB
+0227 CSR         NUM       SUB  1         NUM                             BJSUB
+0228 CSR         0         COMP NUM                    93                 BJSUB
+0229 CSR 93                GOTO AGA20                                     BJSUB
+0230 CSR                   SETOF                     27                   BJSUB
+0231 CSR                   ENDSR                                          BJSUB
+0232 C******************************************                          BJSUB
+0233 C*          SUBR3           3 3 3 3 3 3      CHECK FOR BJACK OR BUST BJSUB
+0234 C******************************************                          BJSUB
+0235 CSR         SUB3      BEGSR                                          BJSUB
+0236 CSR         AGAI3     TAG                                            BJSUB
+0237 CSR         DAMT      COMP 21                   323130               BJSUB
+0238 CSR 30                                                               BJSUB
+0239 COR 31                GOTO END3                                      BJSUB
+0240 CSR 32      DACE      COMP 1                    333433               BJSUB
+0241 CSR 33      DACE      SUB  10        DACE                            BJSUB
+0242 CSR 33      DAMT      SUB  10        DAMT                            BJSUB
+0243 CSR 33                GOTO AGAI3
+0244 CSR                   SETOF                     32
+0245 CSR         END3      TAG
+0246 CSR 34 32             SETON                     35
+0247 CSR                   ENDSR                                          BJSUB
+0248 C******************************************                          BJSUB
+0249 C*          SUBR4          4 4 4 4 4     CHECK PLAYER FOR BUST       BJSUB
+0250 C******************************************                          BJSUB
+0251 CSR         SUB4      BEGSR                                          BJSUB
+0252 CSR         AGAI4     TAG                                            BJSUB
+0253 CSR         PAMT      COMP 21                   404142               BJSUB
+0254 CSR 41                                                               BJSUB
+0255 COR 42                GOTO END4                                      BJSUB
+0256 CSR 40      PACE      COMP 1                    43  43               BJSUB
+0257 CSR 43      PACE      SUB  1         PACE                            BJSUB
+0258 CSR 43      PAMT      SUB  10        PAMT                            BJSUB
+0259 CSR 43                GOTO AGAI4                                     BJSUB
+0260 CSR         END4      TAG                                            BJSUB
+0261 CSR                   SETOF                     43                   BJSUB
+0262 CSR                   ENDSR                                          BJSUB
+0263 C******************************************                          BJSUB
+0264 C*          SUBR5          5 5 5 5 5    CHECK DEALER FOR LESS THAN 16BJSUB
+0265 C******************************************                          BJSUB
+0266 CSR         SUB5      BEGSR                                          BJSUB
+0267 CSR         DAMT      COMP 17                   505150               BJSUB
+0268 CSR 51 52 53          SETON                     54                   BJSUB
+0269 CSR 51 52             SETON                     53                   BJSUB
+0270 CSR 51                SETON                     52                   BJSUB
+0271 CSR                   ENDSR                                          BJSUB
+0272 C******************************************                          BJSUB
+0273 C*          SUBR6          6 6 6 6 6      CHECK FOR WINNER           BJSUB
+0274 C******************************************                          BJSUB
+0275 CSR         SUB6      BEGSR                                          BJSUB
+0276 CSR         DAMT      COMP PAMT                 606160               BJSUB
+0277 CSR                   ENDSR                                          BJSUB
+0278 C******************************************                          BJSUB
+0279 C*          SUBR7          7 7 7 7 7       CHECK FOR HIT, STAY,OR BJABJSUB
+0280 C******************************************                          BJSUB
+0281 CSR         SUB7      BEGSR                                          BJSUB
+0282 CSR         AGAI7     TAG                                            BJSUB
+0283 CSR 02      WORD      COMP 'HIT'                    70               BJSUB
+0284 CSR 02N70   WORD      COMP 'STAY'                   71               BJSUB
+0285 CSR 02N70N71WORD      COMP 'BJACK'                  72               BJSUB
+0286 CSR 02N71N72WORD      COMP 'DECK'                   78               BJSUB
+0287 CSR 70 73 74          SETON                     75                   BJSUB
+0288 CSR 70 73             SETON                     74                   BJSUB
+0289 CSR 70                SETON                     73                   BJSUB
+0290 CSR                   ENDSR                                          BJSUB
+0291 C******************************************                          BJSUB
+0292 C*          SUBR8          8 8 8 8 8 8     CLEAR FLAGS IN DECK FILE  BJSUB
+0293 C******************************************                          BJSUB
+0294 CSR         SUB8      BEGSR                                          BJSUB
+0295 CSR                   SETON                     89                   BJSUB
+0296 CSR                   Z-ADD0         COUNT                           BJSUB
+0297 CSR                   Z-ADD0         CNT     20                      BJSUB
+0298 CSR         AGAI8     TAG                                            BJSUB
+0299 CSR         1         ADD  CNT       CNT                             BJSUB
+0300 CSR         CNT       CHAINDECK                 87                   BJSUB
+0301 CSR 87                GOTO AGAI82                                    BJSUB
+0302 CSR                   Z-ADD0         FLAG                            BJSUB
+0303 CSR                   EXCPT                                          BJSUB
+0304 CSR         AGAI82    TAG
+0305 CSR         52        COMP CNT                      92               BJSUB
+0306 CSR 92                GOTO END8                                      BJSUB
+0307 CSR                   GOTO AGAI8                                     BJSUB
+0308 CSR         END8      TAG                                            BJSUB
+0309 CSR                   SETOF                     89                   BJSUB
+0310 CSR                   ENDSR                                          BJSUB
+0311 OINPUT   D        90N09                                              BJSUB
+0312 O                                   K8 'FORMAT12'                    BJSUB
+0313 ODECK    E        27 03                                              BJSUB
+0314 O       OR        89 03                                              BJSUB
+0315 O                         FLAG      16                               BJSUB
+0316 OINPUT   E        81N89N27                                           BJSUB
+0317 O       AND      N71N72N79
+0318 O                                   K7 'FORMAT1'                     BJSUB
+0319 O        E        80N89N81                                           BJSUB
+0320 O       AND      N27N79                                              BJSUB
+0321 O                                   K7 'FORMAT2'                     BJSUB
+0322 O                         PVAL1      5                               BJSUB
+0323 O                         PSUIT1    13                               BJSUB
+0324 O        E        83N89N27                                           BJSUB
+0325 O       AND      N79
+0326 O                                   K7 'FORMAT3'                     BJSUB
+0327 O                         DVAL2      5                               BJSUB
+0328 O                         DSUIT2    13                               BJSUB
+0329 O        E        82N89N27                                           BJSUB
+0330 O       AND      N79
+0331 O                                   K7 'FORMAT4'                     BJSUB
+0332 O                         PVAL2      5                               BJSUB
+0333 O                         PSUIT2    13                               BJSUB
+0334 O        D        34N60                                              BJSUB
+0335 O       OR        72N60N79                                           BJSUB
+0336 O       OR        77N60                                              BJSUB
+0337 O       OR        61N60                                              BJSUB
+0338 O       OR        35
+0339 O                                   K8 'FORMAT13'                    BJSUB
+0340 O        D        79
+0341 O                                   K8 'FORMAT17'
+0342 O        D        60                                                 BJSUB
+0343 O       OR        30                                                 BJSUB
+0344 O       OR        54N35N79                                           BJSUB
+0345 O                                   K8 'FORMAT14'                    BJSUB
+0346 O        D        40N79                                              BJSUB
+0347 O                                   K8 'FORMAT15'                    BJSUB
+0348 O        D        31N72N60                                           BJSUB
+0349 O       AND      N61N79                                              BJSUB
+0350 O                                   K8 'FORMAT11'                    BJSUB
+0351 O        D        73N74N75                                           BJSUB
+0352 O       AND      N77N79                                              BJSUB
+0353 O                                   K7 'FORMAT6'                     BJSUB
+0354 O                         PVAL3      5                               BJSUB
+0355 O                         PSUIT3    13                               BJSUB
+0356 O        D        73 74N75                                           BJSUB
+0357 O       AND      N77N79                                              BJSUB
+0358 O                                   K7 'FORMAT8'                     BJSUB
+0359 O                         PVAL4      5                               BJSUB
+0360 O                         PSUIT4    13                               BJSUB
+0361 O        D        73 74 75                                           BJSUB
+0362 O       AND       77N79                                              BJSUB
+0363 O                                   K8 'FORMAT10'                    BJSUB
+0364 O                         PVAL5      5                               BJSUB
+0365 O                         PSUIT5    13                               BJSUB
+0366 O        E        71 52N53                                           BJSUB
+0367 O       AND      N54N32N27                                           BJSUB
+0368 O       AND      N89N79                                              BJSUB
+0369 O                                   K7 'FORMAT5'                     BJSUB
+0370 O                         DVAL3      5                               BJSUB
+0371 O                         DSUIT3    13                               BJSUB
+0372 O        E        71 52 53                                           BJSUB
+0373 O       AND      N54N32N27                                           BJSUB
+0374 O       AND      N89N79                                              BJSUB
+0375 O                                   K7 'FORMAT7'                     BJSUB
+0376 O                         DVAL4      5                               BJSUB
+0377 O                         DSUIT4    13                               BJSUB
+0378 O        E        71 52 53                                           BJSUB
+0379 O       AND       54N32N27                                           BJSUB
+0380 O       AND      N89N79                                              BJSUB
+0381 O                                   K7 'FORMAT9'                     BJSUB
+0382 O                         DVAL5      5                               BJSUB
+0383 O                         DSUIT5    13                               BJSUB
+0384 O        D        71N89N27                                           BJSUB
+0385 O       OR        40N89N27                                           BJSUB
+0386 O       OR        30N89N27                                           BJSUB
+0387 O       OR        72N89N27                                           BJSUB
+0388 O       AND      N79
+0389 O       OR        77N89N27                                           BJSUB
+0390 O       OR        53N89N27                                           BJSUB
+0391 O       OR        54N89N27                                           BJSUB
+0392 O       OR        75N89N27                                           BJSUB
+0393 O                                   K8 'FORMAT16'                    BJSUB
+0394 O                         DVAL1      7                               BJSUB
+0395 O                         DSUIT1    15                               BJSUB
+0396 O        E        71N89N27                                           BJSUB
+0397 O       OR        40N89N27                                           BJSUB
+0398 O       OR        30N89N27                                           BJSUB
+0399 O       OR        72N89N27                                           BJSUB
+0400 O       AND      N79
+0401 O       OR        77N89N27                                           BJSUB
+0402 O       OR        53N89N27                                           BJSUB
+0403 O       OR        54N89N27                                           BJSUB
+0404 O       OR        75N89N27                                           BJSUB
+0405 O                                   K8 'FORMAT16'                    BJSUB
+0406 O                         DVAL1      7                               BJSUB
+0407 O                         DSUIT1    15                               BJSUB
+0408 OPRINT   D  3     LR                                                 BJSUB
+0409 O                                   38 'I O U    I O U    I O U '    BJSUB
+0410 O        D  2     LR                                                 BJSUB
+0411 O                                   30 'YOU HAVE BET A TOTAL OF '    BJSUB
+0412 O                         BETTOT1B  38                               BJSUB
+0413 O        D  2     LR                                                 BJSUB
+0414 O                                   14 'AND HAVE '                   BJSUB
+0415 O                 98                30 'LOST A TOTAL OF '            BJSUB
+0416 O                 99                29 'WON A TOTAL OF '             BJSUB
+0417 O                 97                29 'WON A TOTAL OF '             BJSUB
+0418 O                         BET1  1B  38                               BJSUB
+0419 O        D     01 LR                                                 BJSUB
+0420 O                 99                38 'SIGNED  "THE COMPUTER"'      BJSUB
+0421 O                 98                38 'SIGN HERE ______________'    BJSUB

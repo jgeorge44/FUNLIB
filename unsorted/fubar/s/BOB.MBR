@@ -1,0 +1,72 @@
+0001 H      14                                     03                     BOB
+0002 FWORKSTN CP  F     300            WORKSTN                            BOB
+0003 F                                              KSLN   SLNNUM         BOB
+0004 E                    ARY        24  3                                BOB
+0005 E                    DD         24  2                                BOB
+0006 E                    FF         24  6 0                              BOB
+0007 IWORKSTN NS  01   6NC                                                BOB
+0008 I                                        1   60UPPER                 BOB
+0009 I                                        7  120LOWER                 BOB
+0010 I                                       13  60 DD                    BOB
+0011 I                                       61 131 DESCR                 BOB
+0012 I                                      132 275 FF                    BOB
+0013 I        NS  08   6 C                                                BOB
+0014 C   08                GOTO THEEND                                    BOB
+0015 C                     Z-ADD22        SLNNUM  20                      BOB
+0016 C           UPPER     SUB  LOWER     DELTA  104                      BOB
+0017 C           DELTA     ADD  1         DELTA                           BOB
+0018 C           DELTA     DIV  20        DELTA                           BOB
+0019 C                     Z-ADD1         I       20                      BOB
+0020 C           LOOP1     TAG                                            BOB
+0021 C                     MOVELDD,I      ARY,I   3                       BOB
+0022 C           I         ADD  1         I                               BOB
+0023 C           I         COMP 25                   0505                 BOB
+0024 C   05                GOTO LOOP1                                     BOB
+0025 C                     SETON                     0203                 BOB
+0026 C                     EXCPT                                          BOB
+0027 C                     SETOF                     02                   BOB
+0028 C                     Z-ADDLOWER     AMOUNT 104                      BOB
+0029 C           TAG1      TAG                                            BOB
+0030 C           AMOUNT    COMP FF,1                 581111               BOB
+0031 C           AMOUNT    COMP FF,2                 591313               BOB
+0032 C           AMOUNT    COMP FF,3                 601515               BOB
+0033 C           AMOUNT    COMP FF,4                 611717               BOB
+0034 C           AMOUNT    COMP FF,5                 621919               BOB
+0035 C           AMOUNT    COMP FF,6                 632121               BOB
+0036 C           AMOUNT    COMP FF,7                 642323               BOB
+0037 C           AMOUNT    COMP FF,8                 822525               BOB
+0038 C           AMOUNT    COMP FF,9                 652727               BOB
+0039 C           AMOUNT    COMP FF,10                662929               BOB
+0040 C           AMOUNT    COMP FF,11                673131               BOB
+0041 C           AMOUNT    COMP FF,12                683333               BOB
+0042 C           AMOUNT    COMP FF,13                693535               BOB
+0043 C           AMOUNT    COMP FF,14                703737               BOB
+0044 C           AMOUNT    COMP FF,15                713939               BOB
+0045 C           AMOUNT    COMP FF,16                724141               BOB
+0046 C           AMOUNT    COMP FF,17                734343               BOB
+0047 C           AMOUNT    COMP FF,18                744545               BOB
+0048 C           AMOUNT    COMP FF,19                754747               BOB
+0049 C           AMOUNT    COMP FF,20                764949               BOB
+0050 C           AMOUNT    COMP FF,21                775151               BOB
+0051 C           AMOUNT    COMP FF,22                785353               BOB
+0052 C           AMOUNT    COMP FF,23                795555               BOB
+0053 C           AMOUNT    COMP FF,24                805757               BOB
+0054 C                     Z-ADDAMOUNT    SCALE   60                      BOB
+0055 C                     SETON                     04                   BOB
+0056 C                     EXCPT                                          BOB
+0057 C           SLNNUM    SUB  1         SLNNUM                          BOB
+0058 C           SLNNUM    COMP 1                        05               BOB
+0059 C           AMOUNT    ADD  DELTA     AMOUNT                          BOB
+0060 C  N05                GOTO TAG1                                      BOB
+0061 C           STOP      TAG                                            BOB
+0062 C                     SETON                     LR                   BOB
+0063 C           THEEND    TAG                                            BOB
+0064 OWORKSTN E        02                                                 BOB
+0065 O                                   K6 'GEORG8'                      BOB
+0066 O                         ARY       95                               BOB
+0067 O                         DESCR    165                               BOB
+0068 O        E        04                                                 BOB
+0069 O                                   K6 'GEORG9'                      BOB
+0070 O                         SCALE Z    6                               BOB
+0071 O        D        08                                                 BOB
+0072 O                                   K5 'START'                       BOB

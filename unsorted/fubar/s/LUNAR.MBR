@@ -1,0 +1,77 @@
+     H                                                                    LUNAR
+     FWTOR    IP  F      50            KEYBORD
+     E                    MSG     1  20 40
+     C           START     TAG
+     C           MSG,8     SET
+     C           MSG,10    SET
+     C           MSG,11    SET
+     C           MSG,12    SET
+     C           MSG,13    SET
+     C           MSG,14    SET
+     C           MSG,15    SET
+     C           MSG,16    SET
+     C           MSG,17    SET
+     C           MSG,18    SET
+     C           MSG,19    SET
+     C           MSG,20    SET
+     C                     SETOF                     111318CLR CRASH PEND
+     C                     MOVE 120       FUEL    30
+     C                     MOVE 050       VEL     30
+     C                     MOVE 500       DIST    30
+     C                     MOVE 000       TIME    30
+     C                     GOTO OUT
+     C           LOOP      TAG
+     C           TIME      ADD  1         TIME
+     C        N18MSG,1     KEY            BURN    30       ENTER BURN
+     C           BURN      COMP 999                      19
+     C         19          GOTO END
+     C           BURN      COMP 30                   16
+     C         16          MOVE 30        BURN
+     C           BURN      COMP FUEL                 17
+     C         17          MOVE FUEL      BURN
+     C           FUEL      SUB  BURN      FUEL         1415REMAINING FUEL
+     C   14
+     COR 15                SETON                         18
+     C           BURN      SUB  5         ACC     30       ACCELERATION
+     C           ACC       DIV  2         HACC    30
+     C           DIST      SUB  VEL       DIST
+     C           DIST      ADD  HACC      DIST         1112REMAINING DIST
+     C           VEL       SUB  ACC       VEL            13NEW VELOCITY
+     C           OUT       TAG
+     C                     MOVE TIME      MSG,9
+     C           MSG,9     SET
+     C                     MOVE FUEL      MSG,5
+     C           MSG,5     SET
+     C                     MOVE VEL       MSG,6
+     C           MSG,6     SET
+     C                     MOVE DIST      MSG,7
+     C           MSG,7     SET
+     C         11MSG,2     SET                             CRASH
+     C         11          GOTO START
+     C      13 12MSG,3     SET                             OK LANDING
+     C      13 12          GOTO START
+     C         18MSG,4     SET                             GOING TO CRASH
+     C         18          GOTO START
+     C                     GOTO LOOP
+     C           END       TAG
+**
+ENTER YOUR BURN
+YOU HAVE CRASHED - NICE GOING!
+CONGRADULATIONS - PERFECT LANDING!
+ITS ALL OVER BUT THE SHOUTING!
+FUEL ...............................
+VELOCITY ...........................
+DISTANCE ...........................
+*****  LUNAR LANDING  *****
+TIME ...............................
+     YOU ARE INITIALLY 500 FEET ABOVE
+THE LUNAR SURFACE TRAVELING 50
+FEET/SEC WITH 120 UNITS OF FUEL ABOARD.
+     EACH SECOND YOU MAY SELECT THE
+AMOUNT OF FUEL TO BURN. EACH UNIT WILL
+SLOW YOUR DESCENT BY ONE FOOT/SEC. YOUR
+ENGINE CANNOT BURN MORE THAN 30
+UNITS/SEC.
+     LUNAR GRAVITY WILL INCREASE YOUR
+DESCENT EACH SECOND BY 5 FEET/SEC.
+*****  G O O D  L U C K  *****

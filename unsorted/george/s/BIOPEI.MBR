@@ -1,0 +1,312 @@
+0001 H                                      1                             BIORID
+0002 FPRINTER O   F 132 132            PRINTER                            BIORID
+0003 FCONSOLE IP  F 128  26            CONSOLE                            BIORID
+0004 E                    ARA    13  13  3 0                              BIORID
+0005 E                    ARB    12  12  3 0                              BIORID
+0006 E                    SIN    32  90  3 2                              BIORID
+0007 E                    PRN      2730  1                                BIORID
+0008 E                    CLR      2730  1                                BIORID
+0009 E                    OUT       130  1                                BIORID
+0010 E                    OUT2   96 130  1                                BIORID
+0011 E                    DAT       520  1                                BIORID
+0012 ICONSOLE NS  10   1 C0   2 C1                                        BIORID
+0013 I                                        1   2 RCDCD                 BIORID
+0014 I                                        3  14 NAME                  BIORID
+0015 I                                       15  200BORN                  BIORID
+0016 I                                       21  260START                 BIORID
+0017 C   99                GOTO START                                     BIORID
+0018 C                     SETON                     99                   BIORID
+0019 C           1         DIV  23        I23     66H                     BIORID
+0020 C           1         DIV  28        I28     66H                     BIORID
+0021 C           1         DIV  33        I33     66H                     BIORID
+0022 C           START     TAG                                            BIORID
+0023 C                     SETOF                     01                   BIORID
+0024 C                     EXSR BORN                                      BIORID
+0025 C   96                GOTO END                                       BIORID
+0026 C           START     COMP 0                        90               BIORID
+0027 C   90                MOVE SSAVE     START                           BIORID
+0028 C  N90                MOVE START     SSAVE   60                      BIORID
+0029 C                     MOVE START     MMDDYY  60                      BIORID
+0030 C           MMDDYY    COMP 0                        90               BIORID
+0031 C   90                SETOF                     0105                 BIORID
+0032 C   90                EXCPT                                          BIORID
+0033 C   90                GOTO END                                       BIORID
+0034 C                     EXSR ENGDAT                                    BIORID
+0035 C   96                GOTO END                                       BIORID
+0036 C                     EXSR DODA                                      BIORID
+0037 C                     EXSR BUMPER                                    BIORID
+0038 C                     SETON                     01                   BIORID
+0039 C                     EXSR PRINT                                     BIORID
+0040 C                     EXSR DAYSP1                                    BIORID
+0041 C           END       TAG                                            BIORID
+0042 C                     MOVEACLR       PRN                             BIORID
+0043 **                                                                   BIORID
+0044 CSR         BORN      BEGSR                                          BIORID
+0045 CSR                   MOVE BORN      MMDDYY                          BIORID
+0046 CSR         MMDDYY    COMP 0                        90               BIORID
+0047 CSR 90                SETOF                     0105                 BIORID
+0048 CSR 90                EXCPT                                          BIORID
+0049 CSR 90                GOTO ENDB                                      BIORID
+0050 C                     EXSR ENGDAT                                    BIORID
+0051 CSR                   MOVE MMDDYY    FDATE   60                      BIORID
+0052 CSR                   Z-ADDYY        FYEAR   20                      BIORID
+0053 CSRN81      365       SUB  DAY       DAYS    50                      BIORID
+0054 CSR 81      366       SUB  DAY       DAYS                            BIORID
+0055 CSR         ENDB      TAG                                            BIORID
+0056 CSR                   ENDSR                                          BIORID
+0057 **                                                                   BIORID
+0058 CSR         DODA      BEGSR                                          BIORID
+0059 CSR         FYEAR     ADD  1         FYEAR                           BIORID
+0060 CSR                   Z-SUB10        OFF     40                      BIORID
+0061 CSR         AGAIN     TAG                                            BIORID
+0062 CSR         YY        COMP FYEAR                90                   BIORID
+0063 CSR         FYEAR     DIV  4         RESULT  20                      BIORID
+0064 CSR                   MVR            RESULT                          BIORID
+0065 CSR         RESULT    COMP 00                       81               BIORID
+0066 CSR 90N81   DAYS      ADD  365       DAYS                            BIORID
+0067 CSR 90 81   DAYS      ADD  366       DAYS                            BIORID
+0068 CSR 90      FYEAR     ADD  1         FYEAR                           BIORID
+0069 CSR 90                GOTO AGAIN                                     BIORID
+0070 CSR         DAYS      ADD  DAY       DAYS                            BIORID
+0071 CSR         DAYS      DIV  23        RESULT                          BIORID
+0072 CSR                   MVR            P       20                      BIORID
+0073 CSR         DAYS      DIV  28        RESULT                          BIORID
+0074 CSR                   MVR            E       20                      BIORID
+0075 CSR         DAYS      DIV  33        RESULT                          BIORID
+0076 CSR                   MVR            I       20                      BIORID
+0077 CSR                   EXCPT                                          BIORID
+0078 CSR                   SETON                     01                   BIORID
+0079 CSR                   EXSR DAYSC                                     BIORID
+0080 CSR         ENDD      TAG                                            BIORID
+0081 CSR                   SETOF                     01                   BIORID
+0082 CSR                   ENDSR                                          BIORID
+0083 **                                                                   BIORID
+0084 CSR         BUMPER    BEGSR                                          BIORID
+0085 CSR                   Z-SUB1         INC     30                      BIORID
+0086 CSR                   SETOF                     95                   BIORID
+0087 CSR         NEXT      TAG                                            BIORID
+0088 CSR         INC       COMP 129                      90               BIORID
+0089 CSR         INC       ADD  1         INC                             BIORID
+0090 CSRN90      DAYS      ADD  INC       DAYSS   50                      BIORID
+0091 CSRN90                EXSR BIOL8                                     BIORID
+0092 CSR                   SETON                     95                   BIORID
+0093 CSRN90                GOTO NEXT                                      BIORID
+0094 CSR                   ENDSR                                          BIORID
+0095 *********************************************************************BIORID****************
+0096 CSR         PRINT     BEGSR                                          BIORID
+0097 CSR                   MOVE ' '       OUT                             BIORID
+0098 CSR                   EXCPT                                          BIORID
+0099 CSR                   Z-ADD1         I2      40                      BIORID
+0100 CSR         TAG2      TAG                                            BIORID
+0101 CSR                   EXSR DO1                                       BIORID
+0102 CSR         I2        COMP 11                       90               BIORID
+0103 CSR 90                SETOF                     01                   BIORID
+0104 CSR 90                SETON                     05                   BIORID
+0105 CSR 90                EXCPT                                          BIORID
+0106 CSR 90                SETON                     01                   BIORID
+0107 CSR 90                SETOF                     05                   BIORID
+0108 CSR                   EXCPT                                          BIORID
+0109 CSR         I2        ADD  1         I2                              BIORID
+0110 CSR         21        COMP I2                     90                 BIORID
+0111 CSRN90                GOTO TAG2                                      BIORID
+0112 CSR                   MOVE ' '       OUT                             BIORID
+0113 CSR                   EXCPT                                          BIORID
+0114 CSR                   ENDSR                                          BIORID
+0115 *********************************************************************BIORID****************
+0116 CSR         DO1       BEGSR                                          BIORID
+0117 CSR                   Z-ADD1         I1      40                      BIORID
+0118 CSR         TAG1      TAG                                            BIORID
+0119 CSR         I1        SUB  1         CX1     40                      BIORID
+0120 CSR         CX1       ADD  CX1       C       40                      BIORID
+0121 CSR         C         ADD  C         CX4     40                      BIORID
+0122 CSR         CX4       ADD  CX4       C                               BIORID
+0123 CSR         C         ADD  C         C                               BIORID
+0124 CSR         CX4       ADD  C         C                               BIORID
+0125 CSR         CX1       ADD  C         C                               BIORID
+0126 CSR         C         ADD  I2        C                               BIORID
+0127 CSR                   MOVE PRN,C     OUT,I1                          BIORID
+0128 CSR         I1        ADD  1         I1                              BIORID
+0129 CSR         130       COMP I1                     90                 BIORID
+0130 CSRN90                GOTO TAG1                                      BIORID
+0131 CSR                   ENDSR                                          BIORID
+0132 *********************************************************************BIORID****************
+0133 CSR         DAYSC     BEGSR                                          BIORID
+0134 CSR                   Z-ADDJDATE     FJDAY   50                      BIORID
+0135 CSR         FJDAY     COMP SAVE                     92               BIORID
+0136 CSRN92                MOVE FJDAY     SAVE    50                      BIORID
+0137 CSR 92                GOTO ENDSC                                     BIORID
+0138 CSR                   Z-ADD99        SAVED                           BIORID
+0139 CSR                   Z-ADD0         I1      40                      BIORID
+0140 CSR         TAG3      TAG                                            BIORID
+0141 CSR         FJDAY     ADD  I1        JDAY                            BIORID
+0142 CSR         I1        ADD  1         C       40                      BIORID
+0143 CSR         C         ADD  C         C                               BIORID
+0144 CSR         C         ADD  C         C                               BIORID
+0145 CSR         C         SUB  3         C                               BIORID
+0146 CSR         FJDAY     ADD  I1        JDATE                           BIORID
+0147 CSR         SAVED     COMP 28                   94  94               BIORID
+0148 CSR 94                EXSR JULDAT                                    BIORID
+0149 CSRN94      MMDD      ADD  1         MMDD                            BIORID
+0150 CSR                   MOVE MMDD      SAVED   20                      BIORID
+0151 CSR                   MOVE MMDD      XDATEX  4                       BIORID
+0152 CSR                   MOVEAXDATEX    DAT,C                           BIORID
+0153 CSR         I1        ADD  1         I1                              BIORID
+0154 CSR         129       COMP I1                     90                 BIORID
+0155 CSRN90                GOTO TAG3                                      BIORID
+0156 CSR         ENDSC     TAG                                            BIORID
+0157 CSR                   EXSR DAYSP1                                    BIORID
+0158 CSR                   ENDSR                                          BIORID
+0159 *********************************************************************BIORID****************
+0160 CSR         DAYSP1    BEGSR                                          BIORID
+0161 CSR                   Z-ADD1         I2      40                      BIORID
+0162 CSR         TAG4      TAG                                            BIORID
+0163 CSR                   EXSR DAYSP2                                    BIORID
+0164 CSR                   EXCPT                                          BIORID
+0165 CSR         I2        ADD  1         I2                              BIORID
+0166 CSR         4         COMP I2                     90                 BIORID
+0167 CSRN90                GOTO TAG4                                      BIORID
+0168 CSR                   ENDSR                                          BIORID
+0169 *********************************************************************BIORID****************
+0170 CSR         DAYSP2    BEGSR                                          BIORID
+0171 CSR                   Z-ADD1         I1      40                      BIORID
+0172 CSR         TAG5      TAG                                            BIORID
+0173 CSR         I1        SUB  1         C       40                      BIORID
+0174 CSR         C         MULT 4         C                               BIORID
+0175 CSR         C         ADD  I2        C                               BIORID
+0176 CSR                   MOVE DAT,C     OUT,I1                          BIORID
+0177 CSR         I1        ADD  1         I1                              BIORID
+0178 CSR         130       COMP I1                     90                 BIORID
+0179 CSRN90                GOTO TAG5                                      BIORID
+0180 CSR                   ENDSR                                          BIORID
+0181 *********************************************************************BIORID****************
+0182 CSR         BIOL8     BEGSR                                          BIORID
+0183 CSR         OFF       ADD  21        OFF                             BIORID
+0184 CSR 95      PP        ADD  I23       PP                              BIORID
+0185 CSR 95      EP        ADD  I28       EP                              BIORID
+0186 CSR 95      IP        ADD  I33       IP                              BIORID
+0187 CSRN95      DAYSS     DIV  23        PP      66                      BIORID
+0188 CSRN95      DAYSS     DIV  28        EP      66                      BIORID
+0189 CSRN95      DAYSS     DIV  33        IP      66                      BIORID
+0190 CSR                   Z-ADDIP        PD                              BIORID
+0191 CSR                   EXSR SINS                                      BIORID
+0192 CSR                   MOVE 'I'       PRN,LO                          BIORID
+0193 CSR U2                EXCPT                                          BIORID
+0194 CSR                   Z-ADDEP        PD      66                      BIORID
+0195 CSR                   EXSR SINS                                      BIORID
+0196 CSR                   MOVE 'E'       PRN,LO                          BIORID
+0197 CSR U2                EXCPT                                          BIORID
+0198 CSR                   Z-ADDPP        PD                              BIORID
+0199 CSR                   EXSR SINS                                      BIORID
+0200 CSR                   MOVE 'P'       PRN,LO                          BIORID
+0201 CSR U1                EXCPT                                          BIORID
+0202 CSR                   ENDSR                                          BIORID
+0203 *********************************************************************BIORID***************
+0204 CSR         JULDAT    BEGSR                                          BIORID
+0205 CSR         OVER      TAG                                            BIORID
+0206 CSR                   MOVELJDATE     YR      20                      BIORID
+0207 CSR                   MOVE JDATE     JDAY    30                      BIORID
+0208 CSR         YR        COMP SAVEYR                   93               BIORID
+0209 CSRN93                MOVE YR        SAVEYR  20                      BIORID
+0210 CSRN93      YR        DIV  4         RESULT  20                      BIORID
+0211 CSRN93                MVR            RESULT                          BIORID
+0212 CSRN93      RESULT    COMP 00                       80LEAP YEAR      BIORID
+0213 CSRN80      JDAY      COMP 365                  90                   BIORID
+0214 CSR 80      JDAY      COMP 366                  90                   BIORID
+0215 CSR 90N80   JDATE     ADD  635       JDATE                           BIORID
+0216 CSR 90 80   JDATE     ADD  634       JDATE                           BIORID
+0217 CSR 90                GOTO OVER                                      BIORID
+0218 CSR 80      JDAY      COMP 060                  79  77               BIORID
+0219 CSR 80 77             Z-ADD0229      MMDD    40                      BIORID
+0220 CSR 80 79   JDAY      SUB  001       JDAY                            BIORID
+0221 CSRN77                Z-ADD1         X1      20                      BIORID
+0222 CSRN77      JDAY      LOKUPARA,X1               90  90               BIORID
+0223 CSRN77      X1        SUB  1         X1                              BIORID
+0224 CSRN77      JDAY      SUB  ARA,X1    MMDD                            BIORID
+0225 CSRN77                MOVELX1        MMDD                            BIORID
+0226 CSR                   ENDSR                                          BIORID
+0227 **                                                                   BIORID
+0228 CSR         ENGDAT    BEGSR                                          BIORID
+0229 CSR                   MOVELMMDDYY    TEMP    40                      BIORID
+0230 CSR                   MOVE MMDDYY    YY      20                      BIORID
+0231 CSR                   MOVE TEMP      DD      20                      BIORID
+0232 CSR                   MOVELTEMP      MM      20                      BIORID
+0233 CSR         MM        COMP 12                   96                   BIORID
+02340CSRN96      DD        COMP 31                   96                   BIORID
+0235 CSR 96                SETOF                     0105                 BIORID
+0236 CSR 96                EXCPT                                          BIORID
+02370CSR 96                GOTO ENDENG                                    BIORID
+02380CSR         YY        DIV  4         RESULT  20                      BIORID
+0239 CSR                   MVR            RESULT                          BIORID
+0240 CSR         RESULT    COMP 00                       81               BIORID
+0241 CSR 81      MM        COMP 02                   82                   BIORID
+0242 CSR 81 82   DD        ADD  1         DD                              BIORID
+0243 CSR         DD        ADD  ARB,MM    JDATE   50                      BIORID
+0244 CSR                   MOVELYY        JDATE                           BIORID
+0245 CSR                   MOVE JDATE     DAY     30                      BIORID
+0246 CSR         ENDENG    ENDSR                                          BIORID
+0247 *********************************************************************BIORID***************
+0248 CSR         SINS      BEGSR                                          BIORID
+0249 CSR                   SETOF                     6263                 BIORID
+0250 CSR                   SETOF                     6566                 BIORID
+0251 CSR         360       MULT PD        DT      30H                     BIORID
+0252 CSR         DT        COMP 270                  61                   BIORID
+0253 CSRN61      DT        COMP 180                  62                   BIORID
+0254 CSRN61N62   DT        COMP 90                   63                   BIORID
+0255 CSRN61N62N63DT        COMP 0                        65               BIORID
+0256 CSR 61      360       SUB  DT        DT             66               BIORID
+0257 CSR 62      DT        SUB  180       DT             66               BIORID
+0258 CSR 63      180       SUB  DT        DT             66               BIORID
+0259 CSRN65N66             Z-ADDSIN,DT    SINE    20H                     BIORID
+0260 CSR 65                Z-ADD0         SINE                            BIORID
+0261 CSR 61                Z-SUBSINE      SINE                            BIORID
+0262 CSR 62                Z-SUBSINE      SINE                            BIORID
+0263 CSR 66                Z-SUB0         SINE                            BIORID
+0264 CSR         OFF       SUB  SINE      LO      40                      BIORID
+0265 CSR                   ENDSR                                          BIORID
+0266 C******************************************************************* BIORID***************
+0267 OPRINTER D 21     01                                                 BIORID
+0268 O                                   20 ' P = PHYSICAL'               BIORID
+0269 O        D        01                                                 BIORID
+0270 O                                   21 ' E = EMOTIONAL'              BIORID
+0271 O        D        01                                                 BIORID
+0272 O                                   24 ' I = INTELLECTUAL'           BIORID
+0273 OPRINTER D 0001   01                                                 BIORID
+0274 OPRINTER E 00     05                                                 BIORID
+0275 O                         OUT2     132                               BIORID
+0276 OPRINTER E        01                                                 BIORID
+0277 O                                    2 '-'                           BIORID
+0278 O                         OUT      132                               BIORID
+0279 OPRINTER E       N01N05 U1                                           BIORID
+0280 O                         MMDDYY     6                               BIORID
+0281 O                         INC   L   13                               BIORID
+0282 O                         DAYSS L   23                               BIORID
+0283 O                         PD    L   33                               BIORID
+0284 O                         DT    L   43                               BIORID
+0285 O                         SINE  L   53                               BIORID
+0286 O                         OFF   L   73                               BIORID
+0287 O                         LO    L   83                               BIORID
+0288 OPRINTER E  2    N01N05NU1                                           BIORID
+0289 O                                   10 'BORN'                        BIORID
+0290 O                         FDATE Y   20                               BIORID
+0291 O                                   40 'DAYS OLD'                    BIORID
+0292 O                         DAYS  L   50                               BIORID
+0293 O                                   67 'P ='                         BIORID
+0294 O                         P     L   70                               BIORID
+0295 O                                   77 'E ='                         BIORID
+0296 O                         E     L   80                               BIORID
+0297 O                                   87 'I ='                         BIORID
+0298 O                         I     L   90                               BIORID
+0299 O                                  105 'START DATE'                  BIORID
+0300 O                         MMDDYYY  115                               BIORID
+0301 O                         NAME     132                               BIORID
+**
+000031059090120151181212243273304334365
+**
+000031059090120151181212243273304334
+**
+017035052070087105122139156174191208225242259276292309326342358375391407423438454469485500515530
+545559574588602616629643656669682695707719731743755766777788799809819829839848857866875883891899
+906914921927934940946951956961966970974978982985988990993995996998999999999999
+**
+------------------------------------------------------------------------------------------------
+----------------------------------

@@ -1,0 +1,233 @@
+     H                                             02                     XANDOS            0001
+     FSCREEN  CP  F     100            WORKSTN                                              0002
+     F                                              KNUM        4                           0003
+     F                                              KIND       99                           0004
+     F                                              KSAVDS SAVE                             0005
+     E                    EXR        49  1                                                  0006
+     E                    HIS        49  1                                                  0007
+     E                    MYN        49  1                                                  0008
+     E                    RW2        27  2 0                                                0009
+     E                    AR         27  1                                                  0010
+     E                    OAR        27  1                                                  0011
+     E                    EXP         7  3                                                  0012
+     E                    REF     1  28 21                                                  0013
+     E                    OUT    27  27  2                                                  0014
+     ISCREEN  NS  01   1 C1                                                                 0015
+     I                                        2   4 YESNO                                   0016
+     I        NS  02   1 C2                                                                 0017
+     I                                        2  55 OUT                                     0018
+     I        NS  03                                                                        0019
+     ISAVE        DS                                                                        0020
+     I                                        1  49 HIS                                     0021
+     I                                       50  98 MYN                                     0022
+     I                                       99 125 OAR                                     0023
+     I                                      126 1270Z                                       0024
+     I                                      128 1330TIME                                    0025
+     I                                      128 1290HR                                      0026
+     I                                      130 1310MN                                      0027
+     I                                      132 1330SC                                      0028
+     C   03                GOTO END                                                         0029
+     C  N01                GOTO ON01                                                        0030
+     C           YESNO     COMP 'YES'                    10                                 0031
+     C                     BITOF'01234567'TEST7   1                                         0032
+     C                     BITON'567'     TEST7                                             0033
+     C                     BITOF'01234567'NULL    1                                         0034
+     C                     MOVE ' '       AR                                                0035
+     C                     MOVE NULL      HIS                                               0036
+     C                     MOVE NULL      MYN                                               0037
+     C                     MOVEAAR        OAR                                               0038
+     C  N10                GOTO MYGO                                                        0039
+     C                     GOTO END                                                         0040
+     C           ON01      TAG                                                              0041
+     C                     MOVELOUT       AR                                                0042
+     C                     Z-ADD27        X       20     98                                 0043
+     C                     SETOF                     9796                                   0044
+     C           LOOP1     TAG                                                              0045
+     C           AR,X      COMP OAR,X                9999                                   0046
+     C   99      OAR,X     COMP '0'                      98                                 0047
+     C   99 98             GOTO END                                                         0048
+     C  N99      X         SUB  1         X              97                                 0049
+     C  N99N97             GOTO LOOP1                                                       0050
+     C  N99                SETON                     96                                     0051
+     C  N99                GOTO END                                                         0052
+     C                     MOVE AR        OAR                                               0053
+     C           1         ADD  Z         Z       20                                        0054
+     C                     MOVE HIS       EXR                                               0055
+     C                     EXSR BITUPD                                                      0056
+     C                     MOVE EXR       HIS                                               0057
+     C           TEST7     LOKUPHIS                      89                                 0058
+     C   89                GOTO END                                                         0059
+     C           Z         COMP 27                       60                                 0060
+     C   60                GOTO END                                                         0061
+     C           MYGO      TAG                                                              0062
+     C                     Z-ADD1         X                                                 0063
+     C                     Z-ADD0         RW2                                               0064
+     C                     BITOF'01234567'T5      1                                         0065
+     C           MOVEA     TAG                                                              0066
+     C           OAR,X     COMP ' '                      73                                 0067
+     C  N73                GOTO MOVEI                                                       0068
+     C                     MOVE MYN       EXR                                               0069
+     C                     EXSR BITUPD                                                      0070
+     C           TEST7     LOKUPEXR                      88                                 0071
+     C   88                GOTO MOVED                                                       0072
+     C                     BITON'57'      T5                                                0073
+     C           MOVEB     TAG                                                              0074
+     C                     Z-ADD1         Y       20                                        0075
+     C           MOVEC     TAG                                                              0076
+     C           T5        LOKUPEXR,Y                    87                                 0077
+     C   87N86             TESTB'6'       HIS,Y      87                                     0078
+     C   87N85 86          TESTB'7'       HIS,Y      87                                     0079
+     C   87 85 86          TESTB'5'       HIS,Y      87                                     0080
+     C   87      Y         ADD  1         Y                                                 0081
+     C   87                MOVE 'X'       FLAG    1                                         0082
+     C   87      1         ADD  RW2,X     RW2,X                                             0083
+     C   87      Y         COMP 49                     87                                   0084
+     C   87                GOTO MOVEC                                                       0085
+     C   85                SETON                     84                                     0086
+     C  N86                BITOF'7'       T5                                                0087
+     C  N86                BITON'6'       T5                                                0088
+     C   86                BITOF'5'       T5                                                0089
+     C   86                BITON'7'       T5                                                0090
+     C   86                SETON                     85                                     0091
+     C                     SETON                     86                                     0092
+     C  N84                GOTO MOVEB                                                       0093
+     C                     SETOF                     848586                                 0094
+     C           MOVEI     TAG                                                              0095
+     C           X         ADD  1         X                                                 0096
+     C           X         COMP 27                   80                                     0097
+     C  N80                GOTO MOVEA                                                       0098
+     C           MOVEE     TAG                                                              0099
+     C                     Z-ADD1         X                                                 0100
+     C           MOVEF     TAG                                                              0101
+     C           OAR,X     COMP ' '                      73                                 0102
+     C  N73                GOTO MOVEJ                                                       0103
+     C                     MOVE HIS       EXR                                               0104
+     C                     EXSR BITUPD                                                      0105
+     C           TEST7     LOKUPEXR                      79                                 0106
+     C   79                GOTO MOVED                                                       0107
+     C           MOVEJ     TAG                                                              0108
+     C           X         ADD  1         X                                                 0109
+     C           X         COMP 27                   80                                     0110
+     C  N80                GOTO MOVEF                                                       0111
+     C           FLAG      COMP 'X'                      78                                 0112
+     C  N78                GOTO MOVEG                                                       0113
+     C                     Z-ADD1         X                                                 0114
+     C                     Z-ADD2         Y                                                 0115
+     C           MOVEH     TAG                                                              0116
+     C           RW2,Y     COMP RW2,X                77                                     0117
+     C   77                Z-ADDY         X                                                 0118
+     C           1         ADD  Y         Y                                                 0119
+     C           Y         COMP 27                   80                                     0120
+     C  N80                GOTO MOVEH                                                       0121
+     C                     GOTO MOVED                                                       0122
+     C           MOVEG     TAG                                                              0123
+     C                     MOVE ' '       FLAG                                              0124
+     C                     EXSR TIME                                                        0125
+     C           RND       TAG                                                              0126
+     C                     EXSR RANDOM                                                      0127
+     C           FRED      MULT 27        X                                                 0128
+     C           X         ADD  1         X                                                 0129
+     C           OAR,X     COMP ' '                      81                                 0130
+     C  N81                GOTO RND                                                         0131
+     C           MOVED     TAG                                                              0132
+     C                     MOVE MYN       EXR                                               0133
+     C                     EXSR BITUPD                                                      0134
+     C                     MOVE EXR       MYN                                               0135
+     C                     MOVE '0'       OAR,X                                             0136
+     C           Z         ADD  1         Z                                                 0137
+     C  N88      Z         COMP 27                       60                                 0138
+     C           END       TAG                                                              0139
+     C                     MOVELOAR       OUT                                               0140
+     CSR         BITUPD    BEGSR                                                            0141
+     CSR                   MOVEAREF,X     EXP                                               0142
+     C           UPA       TAG                                                              0143
+     C                     Z-ADD7         Y          95                                     0144
+     C           UPB       TAG                                                              0145
+     C                     MOVELEXP,Y     POS     1                                         0146
+     C                     MOVE EXP,Y     NO      20                                        0147
+     C   95      POS       COMP 'X'                      82                                 0148
+     C   95 82             Z-ADDNO        NOX     20                                        0149
+     C   95 82             GOTO UPC                                                         0150
+     C           POS       COMP '2'                  929493                                 0151
+     C           POS       COMP ' '                      91                                 0152
+     C   91                GOTO UPC                                                         0153
+     C   94                BITON'5'       EXR,NO                                            0154
+     C   93                BITON'6'       EXR,NO                                            0155
+     C   92                BITON'7'       EXR,NO                                            0156
+     C           UPC       TAG                                                              0157
+     C                     SETOF                     95                                     0158
+     C           Y         SUB  1         Y              90                                 0159
+     C  N90                GOTO UPB                                                         0160
+     C   82                MOVEAREF,NOX   EXP                                               0161
+     C   82                GOTO UPA                                                         0162
+     CSR                   ENDSR                                                            0163
+     CSR         RANDOM    BEGSR                                                            0164
+     CSR         RNDNO     MULT XUPRE     XUPRE   70                                        0165
+     CSR                   MOVE XUPRE     RNDFLD  5                                         0166
+     CSR                   Z-ADD0         XUPRE                                             0167
+     CSR                   MOVE RNDFLD    XUPRE                                             0168
+     CSR                   MOVE RNDFLD    FRED    55                                        0169
+     CSR                   ENDSR                                                            0170
+     C*                                                                                     0171
+     CSR         TIME      BEGSR                                                            0172
+     CSR                   TIME           TIME                                              0173
+     CSR         HR        ADD  MN        RND     30                                        0174
+     CSR         RND       ADD  SC        RND                                               0175
+     CSR         RND       MULT 99        RNDNO   50                                        0176
+     CSR         RNDNO     DIV  144       RNDNO                                             0177
+     CSR         RNDNO     ADD  300       RNDNO                                             0178
+     CSR         RNDNO     DIV  2         RND                                               0179
+     CSR                   MVR            RND                                               0180
+     CSR         RND       COMP 0                        97                                 0181
+     CSR 97      1         ADD  RNDNO     RNDNO                                             0182
+     C                     Z-ADD1000      XUPRE                                             0183
+     CSR                   ENDSR                                                            0184
+     OSCREEN  D        03                                                                   0185
+     O                                   K6 'XAND01'                                        0186
+     OSCREEN  D       N03N60N89                                                             0187
+     O       AND      N88                                                                   0188
+     O       ORR       60                                                                   0189
+     O       ORR       89                                                                   0190
+     O       ORR       88                                                                   0191
+     O                                   K6 'XAND02'                                        0192
+     O                         OUT       54                                                 0193
+     O                       98          78 'YOU OVERWROTE MY NOUGHT.'                      0194
+     O                       98          89 '  RE-ENTER.'                                   0195
+     O                       96          78 'PLEASE MAKE A VALID ENTR'                      0196
+     O                       96          80 'Y.'                                            0197
+     O                       89          78 'CONGRATULATIONS ON VICTO'                      0198
+     O                       89          81 'RY.'                                           0199
+     O                       88          71 'MY GAME, I THINK?'                             0200
+     O                       60          78 'GAME ENDS, ALAS, IN A DR'                      0201
+     O                       60          81 'AW.'                                           0202
+**                                                                                          0203
+101104107125134137146                                                                       0204
+201105126138                                                                                0205
+301106108127139143148                                                                       0206
+102204128135                                                                                0207
+202205207208129                                                                             0208
+302206130144                                                                                0209
+103304308131136140149                                                                       0210
+203305132141                                                                                0211
+303306307133142145147                                                                       0212
+109112115225                                                                                0213
+209113226234243                                                                             0214
+309114116227                                                                                0215
+110212228237240                                                                             0216
+210213215216229235X28                                                                       0217
+310214230239242                                                                             0218
+111312316231                                                                                0219
+211313232236245                                                                             0220
+311314318233                                                                                0221
+117120123325340343347                                                                       0222
+217121326341                                                                                0223
+317122124327334342349                                                                       0224
+118220328344                                                                                0225
+218221223224329                                                                             0226
+318222330335                                                                                0227
+119320324331337345348                                                                       0228
+219321332338                                                                                0229
+319322323333336339346                                                                       0230
+238241244246247248249                                                                       0231
+**                                                                                          0232
+ | |   | |   | |   | |   | |   | |   | |   | |   | |                                        0233

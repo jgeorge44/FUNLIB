@@ -1,0 +1,31 @@
+0001 H    B014                                                            PFFNGR
+0002 FWORKSTN CP  F     256            WORKSTN
+0003 F                                              KID    WSID
+0004 IWORKSTN NS  01   1 C
+0005 ILDA        UDS
+0006 I                                        1  78 MSG
+0007 C                     SETON                     60
+0008 C           LOOP      TAG
+0009 C           1         ADD  ENOUGH    ENOUGH  40
+0010 C  N60      ENOUGH    COMP 50                   LR  60
+0011 C  N60      ENOUGH    COMP 20                       60
+0012 C  N60      ENOUGH    COMP 30                       60
+0013 C  N60      ENOUGH    COMP 40                       60
+0014 C   LR      WSID      REL  WORKSTN
+0015 C   LR                GOTO END
+0016 C           ENOUGH    COMP 10                   626161
+0017 C                     EXCPT
+0018 C                     SETOF                     60
+0019 C                     GOTO LOOP
+0020 C           END       TAG
+0021 OWORKSTN E        61
+0022 O                                   K8 'SCREEN1 '
+0023 O                         MSG       78
+0024 O        E        62
+0025 O                                   K8 'SCREEN2 '
+0026 O        E        62
+0027 O                                   K8 'SCREEN4 '
+0028 O        E        62
+0029 O                                   K8 'SCREEN3 '
+0030 O        E        62
+0031 O                                   K8 'SCREEN4 '

@@ -1,0 +1,456 @@
+0001 H      14                              1                             CALEND
+0002 FYEAR    CP        172            WORKSTN                            CALEND
+0003 FPRINT   O     132 132            PRINTER                            CALEND
+0004 E                    DAYS   12  12  2 0             #DAYS / MONTH    CALEND
+0005 E                    MON     1  12 22               LETTER-CODES @MONCALEND
+0006 E                    MWK        11  2               MON-IMAGE WORK   CALEND
+0007 E                    LET     1  37 81               LETTER IMAGES    CALEND
+0008 E                    LWK        11  9               LETTER WORK AREA CALEND
+0009 E                    LIN        14  9               LINE BUILD AREA  CALEND 0020
+0010 E                    CAL        84  2 0             CALENDER IMAGE   CALEND
+0011 E                    VAC        30  4                                CALEND
+0012 E                    TST        99  1                                CALEND
+0013 IYEAR    NS  01   1 CY                                               CALEND
+0014 I                                        2  26 NAME            12    CALEND
+0015 I                                       27  300YEAR1                 CALEND
+0016 I                                       27  280YR1                   CALEND
+0017 I                                       29  300YR2             19    CALEND
+0018 I                                       31  31 GUAR                  CALEND
+0019 I                                       32  32 THFRI                 CALEND
+0020 I                                       33  340M1                    CALEND
+0021 I                                       35  360D1                    CALEND
+0022 I                                       37  380M2                    CALEND
+0023 I                                       39  400D2                    CALEND
+0024 I                                       41  420M3                    CALEND
+0025 I                                       43  440D3                    CALEND
+0026 I                                       45  460M4                    CALEND
+0027 I                                       47  480D4                    CALEND
+0028 I                                       49  500M5                    CALEND
+0029 I                                       51  520D5                    CALEND
+0030 I                                       53 172 VAC                   CALEND
+0031 I        NS  02                                                      CALEND
+0032 C   02                GOTO END                                       CALEND
+0033 C                     MOVE ' '       BLNK    9                       CALEND
+0034 C           GUAR      COMP 'Y'                      07               CALEND
+0035 C           THFRI     COMP 'Y'                      08               CALEND
+0036 C*                                                                   CALEND
+0037 C*- FIX FEBRUARY IF LEAP YEAR ---------------------------------------CALEND
+0038 C*                                                                   CALEND
+0039 C           YR2       DIV  4         YR3     20                      CALEND
+0040 C                     MVR            YR3                             CALEND
+0041 C   19      YR1       DIV  4         YR3                             CALEND
+0042 C   19                MVR            YR3                             CALEND
+0043 C           YR3       COMP 0                        19               CALEND
+0044 C   19                Z-ADD29        DAYS,2                          CALEND
+0045 C           YEAR1     SUB  YR1       IA      40                      CALEND
+0046 C           YEAR1     DIV  4         YEAR1                           CALEND
+0047 C           YR1       DIV  4         YR3                             CALEND
+0048 C           YEAR1     ADD  IA        IA                              CALEND
+0049 C           YR3       ADD  IA        IA                              CALEND
+0050 C           IA        DIV  7         IA                              CALEND
+0051 C                     MVR            YR3                             CALEND
+0052 C  N19      YR3       ADD  1         YR3                             CALEND
+0053 C           YR3       COMP 6                      19                 CALEND
+0054 C   19      YR3       ADD  7         YR3                             CALEND
+0055 C           YR3       ADD  YR3       SDAY    20                      CALEND
+0056 C********************************************************************CALEND
+0057 C*                                                                   CALEND 0060
+0058 C** PRINT CALENDER FOR EACH MONTH                                    CALEND
+0059 C*                                                                   CALEND
+0060 C*                                                                   CALEND
+0061 C********************************************************************CALEND
+0062 C*- HOUSEKEEPING FOR EACH MONTH -------------------------------------CALEND
+0063 C                     Z-ADD1         M       20                      CALEND
+0064 C                     Z-ADD60        CNT     20                      CALEND
+0065 C                     Z-ADD18        RD1     20                      CALEND
+0066 C                     SETON                     81                   CALEND
+0067 C           MLOOP     TAG                                            CALEND
+0068 C*                                                                   CALEND
+0069 C*- BLANK OUT CALENDAR IMAGE ----------------------------------------CALEND
+0070 C*                                                                   CALEND
+0071 C                     Z-ADD1         X       20                      CALEND 0070
+0072 C           CLOOP     TAG                                            CALEND
+0073 C                     Z-ADD37        CAL,X                           CALEND
+0074 C           X         ADD  1         X                               CALEND
+0075 C           X         COMP 84                     1111               CALEND
+0076 C   11                GOTO CLOOP                                     CALEND
+0077 C*- DETERMINE THE MONTH TO BE PROCESSED -----------------------------CALEND
+0078 C           M         COMP 5                        82               CALEND
+0079 C           M         COMP 7                        83               CALEND
+0080 C           M         COMP 9                        84               CALEND
+0081 C           M         COMP 11                       85               CALEND
+0082 C           M         COMP M1                       91               CALEND
+0083 C           M         COMP M2                       92               CALEND
+0084 C           M         COMP M3                       93               CALEND
+0085 C           M         COMP M4                       94               CALEND
+0086 C           M         COMP M5                       95               CALEND
+0087 C*- COMPUTE START AND END DAYS FOR EACH MONTH -----------------------CALEND
+0088 C  N81      EDAY      SUB  56        SDAY                            CALEND
+0089 C  N81      SDAY      COMP 26                   19  19               CALEND
+0090 C   19N81   SDAY      SUB  14        SDAY                            CALEND
+0091 C                     SETOF                     19                   CALEND
+0092 C           SDAY      ADD  DAYS,M    EDAY    20                      CALEND
+0093 C           EDAY      ADD  DAYS,M    EDAY                            CALEND
+0094 C                     SETON                     797475               CALEND
+0095 C                     SETON                     767778               CALEND
+0096 C           EDAY      COMP 84                     8079               CALEND
+0097 C   80      EDAY      COMP 82                     8078               CALEND
+0098 C   80      EDAY      COMP 80                     8077               CALEND
+0099 C   80      EDAY      COMP 78                     8076               CALEND
+0100 C   80      EDAY      COMP 76                     8075               CALEND
+0101 C   80      EDAY      COMP 74                       74               CALEND
+0102 C           SDAY      COMP 14                     1717               CALEND
+0103 C                     Z-ADD11        N       20                      CALEND
+0104 C   17                Z-ADD81        N                               CALEND
+0105 C   17      SDAY      COMP 12                       18               CALEND
+0106 C   84      SDAY      COMP RD1                  88                   CALEND
+0107 C   84 88   RD1       ADD  14        RD1                             CALEND
+0108 C*                                                                   CALEND
+0109 C*- FILL CALENDAR IMAGE WITH LETTER-CODES FOR EACH DAY --------------CALEND 0100
+0110 C*                                                                   CALEND
+0111 C                     Z-ADD1         DAY     20                      CALEND
+0112 C           PUTDAY    TAG                                            CALEND
+0113 C           SDAY      SUB  1         LD      20                      CALEND
+0114 C                     Z-ADDSDAY      RD      20                      CALEND
+0115 C                     MOVE DAY       RDIGIT  10                      CALEND
+0116 C                     MOVELDAY       LDIGIT  10                      CALEND
+0117 C           RDIGIT    ADD  27        CAL,RD                          CALEND
+0118 C           LDIGIT    ADD  27        CAL,LD                          CALEND 0110
+0119 C           LDIGIT    COMP 0                        11 . LEFT-Z SUPPRCALEND
+0120 C   11                Z-ADD37        CAL,LD                          CALEND
+0121 C                     SETOF                     0304                 CALEND
+0122 C*                                                                   CALEND
+0123 C*- REVERSE FIXED AND OPTIONAL HOLIDAYS, SATURDAYS AND SUNDAYS ------CALEND
+0124 C*                                                                   CALEND
+0125 C*- NEW YEARS DAY ---------------------------------------------------CALEND
+0126 C*                                                                   CALEND
+0127 C   81      DAY       COMP 2                      8188               CALEND
+0128 C   81      DAY       COMP 1                        05               CALEND
+0129 C   88 07   RD        COMP 18                       05               CALEND
+0130 C                     SETOF                     88                   CALEND
+0131 C*                                                                   CALEND
+0132 C*- MEMORIAL DAY ----------------------------------------------------CALEND
+0133 C*                                                                   CALEND
+0134 C   82      RD        COMP CNT                      05               CALEND
+0135 C   05 82             Z-ADD74        CNT                             CALEND
+0136 C   05 82   DAY       COMP 25                   058205               CALEND
+0137 C*                                                                   CALEND
+0138 C*- JULY FOURTH -----------------------------------------------------CALEND
+0139 C*                                                                   CALEND
+0140 C   83      DAY       COMP 4                    878805               CALEND
+0141 C   83 87   DAY       COMP 5                      8305               CALEND
+0142 C   83 88   DAY       COMP 3                        05               CALEND
+0143 C   05 88 07RD        COMP 26                       05               CALEND
+0144 C   05 87 07RD        COMP 32                       05               CALEND
+0145 C                     SETOF                     8887                 CALEND
+0146 C*                                                                   CALEND
+0147 C*- LABOR DAY -------------------------------------------------------CALEND
+0148 C*                                                                   CALEND
+0149 C   84      RD        COMP RD1                    8405               CALEND
+0150 C*                                                                   CALEND
+0151 C*- THANKSGIVING ----------------------------------------------------CALEND
+0152 C*                                                                   CALEND
+0153 C   85 08   RD        COMP 68                     8505               CALEND
+0154 C   85      RD        COMP 66                       05               CALEND
+0155 C*                                                                   CALEND
+0156 C*- CHRISTMAS AND THE DAY BEFORE NEW YEARS --------------------------CALEND
+0157 C*                                                                   CALEND
+0158 C   89      DAY       COMP 31                       05               CALEND
+0159 C   86      DAY       COMP 25                   878805               CALEND
+0160 C   86 87   DAY       COMP 26                     8605               CALEND
+0161 C   86 88   DAY       COMP 24                       05               CALEND
+0162 C   05 88 07RD        COMP 68                       05               CALEND
+0163 C   05 88 07          SETON                         89               CALEND
+0164 C   05 87 07RD        COMP 74                       05               CALEND
+0165 C                     SETOF                     8887                 CALEND
+0166 C*                                                                   CALEND
+0167 C*- OPTIONAL HOLIDAYS -----------------------------------------------CALEND
+0168 C*                                                                   CALEND
+0169 C   91N05   DAY       COMP D1                     9105               CALEND
+0170 C   92N05   DAY       COMP D2                     9205               CALEND
+0171 C   93N05   DAY       COMP D3                     9305               CALEND
+0172 C   94N05   DAY       COMP D4                     9405               CALEND
+0173 C   95N05   DAY       COMP D5                     9505               CALEND
+0174 C   05                SETON                     03                   CALEND
+0175 C*                                                                   CALEND
+0176 C*    VACATION DAYS UPTO 30                                          CALEND
+0177 C*                                                                   CALEND
+0178 C                     Z-ADD1         I                               CALEND
+0179 C                     MOVELM         MMDD    4                       CALEND
+0180 C                     MOVE DAY       MMDD                            CALEND
+0181 C           VACTAG    TAG                                            CALEND
+0182 C  N05      MMDD      COMP VAC,I                    05               CALEND
+0183 C  N05      I         ADD  1         I                               CALEND
+0184 C  N05      I         COMP 31                   09  09               CALEND
+0185 C  N05N09             GOTO VACTAG                                    CALEND
+0186 C*    IF DAY IS A VACATION DAY SET ON 04                             CALEND
+0187 C                     SETOF                     04                   CALEND
+0188 C   05N03             SETON                     04                   CALEND
+0189 C*                                                                   CALEND
+0190 C*- SATURDAY AND SUNDAY ---------------------------------------------CALEND
+0191 C*                                                                   CALEND
+0192 C           RD        COMP 14                       05               CALEND
+0193 C  N05      RD        COMP 16                       05               CALEND
+0194 C  N05      RD        COMP 28                       05               CALEND
+0195 C  N05      RD        COMP 30                       05               CALEND
+0196 C  N05      RD        COMP 42                       05               CALEND
+0197 C  N05      RD        COMP 44                       05               CALEND
+0198 C  N05      RD        COMP 56                       05               CALEND
+0199 C  N05      RD        COMP 58                       05               CALEND
+0200 C  N05      RD        COMP 70                       05               CALEND
+0201 C  N05      RD        COMP 72                       05               CALEND
+0202 C  N05      RD        COMP 84                       05               CALEND
+0203 C   03N05   CAL,RD    ADD  22        CAL,RD                          CALEND
+0204 C   03N05   CAL,LD    ADD  22        CAL,LD                          CALEND
+0205 C   04N05   CAL,RD    ADD  33        CAL,RD                          CALEND
+0206 C   04N05   CAL,LD    ADD  33        CAL,LD                          CALEND
+0207 C   05      CAL,RD    ADD  11        CAL,RD                          CALEND
+0208 C   05      CAL,LD    ADD  11        CAL,LD                          CALEND
+0209 C                     SETOF                     05                   CALEND
+0210 C           SDAY      ADD  2         SDAY                            CALEND
+0211 C           DAY       ADD  1         DAY                             CALEND
+0212 C           SDAY      COMP EDAY                   11   . ARE WE DONE?CALEND
+0213 C   11                GOTO PUTDAY                      . NO          CALEND
+0214 C*                                                                   CALEND
+0215 C** PUT MONTH IN CALENDER IMAGE -------------------------------------CALEND 0120
+0216 C*                                                                   CALEND
+0217 C                     MOVEAMON,M     MWK                             CALEND
+0218 C                     Z-ADD1         X                               CALEND
+0219 C           VLOOP     TAG                                            CALEND
+0220 C                     MOVE MWK,X     CAL,X                           CALEND
+0221 C           X         ADD  1         X                               CALEND
+0222 C           X         COMP 10                     1111               CALEND
+0223 C   11                GOTO VLOOP                                     CALEND
+0224 C                     MOVELYR1       DIGIT   10                      CALEND
+0225 C           DIGIT     ADD  27        CAL,N                           CALEND
+0226 C           N         ADD  1         N                               CALEND 0140
+0227 C                     MOVE YR1       DIGIT                           CALEND
+0228 C           DIGIT     ADD  27        CAL,N                           CALEND
+0229 C           N         ADD  1         N                               CALEND
+0230 C                     MOVELYR2       DIGIT                           CALEND
+0231 C           DIGIT     ADD  27        CAL,N                           CALEND
+0232 C           N         ADD  1         N                               CALEND
+0233 C                     MOVE YR2       DIGIT                           CALEND
+0234 C           DIGIT     ADD  27        CAL,N                           CALEND
+0235 C*                                                                   CALEND
+0236 C** PRINT CALANDER PAGE FOR ONE MONTH -------------------------------CALEND 0150
+0237 C*                                                                   CALEND
+0238 C                     Z-ADD1         C       20        . SET CHAR PTRCALEND
+0239 C*                                                                   CALEND
+0240 C                     SETON                     2023                 CALEND
+0241 C                     EXCPT                                          CALEND
+0242 C                     SETOF                     20                   CALEND
+0243 C                     EXCPT                                          CALEND
+0244 C                     SETOF                     23                   CALEND
+0245 C*                                                                   CALEND
+0246 C                     SETON                     2119                 CALEND
+0247 C                     EXSR DOLINE                                    CALEND
+0248 C                     SETOF                     21                   CALEND 0160
+0249 C                     EXSR DOLINE                                    CALEND
+0250 C                     EXSR DOLINE                                    CALEND
+0251 C                     EXSR DOLINE                                    CALEND
+0252 C                     EXSR DOLINE                                    CALEND
+0253 C                     SETON                     22                   CALEND
+0254 C                     EXSR DOLINE                                    CALEND
+0255 C                     SETOF                     2219                 CALEND
+0256 C*                                                                   CALEND
+0257 C                     SETON                     2306                 CALEND 0170
+0258 C                     EXCPT                                          CALEND
+0259 C                     SETOF                     2306                 CALEND
+0260 C*                                                                   CALEND
+0261 C*- DO ANOTHER MONTH ------------------------------------------------CALEND
+0262 C*                                                                   CALEND
+0263 C           M         ADD  1         M                               CALEND
+0264 C           M         COMP 12                   LR  86               CALEND
+0265 C  NLR                GOTO MLOOP                                     CALEND
+0266 C           END       TAG                                            CALEND
+0267 C*                                                                   CALEND 0180
+0268 C*- SUBROUTINE TO BUILD AND PRINT CALENDER LINES --------------------CALEND
+0269 C*                                                                   CALEND
+0270 CSR         DOLINE    BEGSR                                          CALEND
+0271 CSR                   Z-ADD1         #L      20        . LINE CNT 1-9CALEND
+0272 CSR                   Z-ADD1         #P      20        . POS CNT 1-14CALEND
+0273 CSR                   Z-ADDC         #C      20        . SAVE CHAR PTCALEND 0190
+0274 C*                                                                   CALEND
+0275 C** BUILD A LINE, PRINT IT, REPEAT 11 TIMES -------------------------CALEND
+0276 C** LEAVE C POINTING TO NEXT LINE TO PRINT --------------------------CALEND
+0277 C*                                                                   CALEND
+0278 CSR         MAKELN    TAG                                            CALEND
+0279 CSR                   MOVE CAL,#C    #W      20        . GET LETR CODCALEND
+0280 C                     SETOF                     0304                 CALEND
+0281 C           38        COMP #W                     1010               CALEND
+0282 C   10      49        COMP #W                     0303               CALEND
+0283 C   03      60        COMP #W                   030404               CALEND
+0284 C   04      #W        SUB  22        #W                              CALEND
+0285 C   03      #W        SUB  11        #W                              CALEND
+0286 C   10      #W        SUB  11        #W                              CALEND
+0287 CSR                   MOVEALET,#W    LWK,2                           CALEND
+0288 C                     MOVE BLNK      LWK,11                          CALEND
+0289 C                     MOVE BLNK      LWK,1                           CALEND
+0290 C   10                EXSR CHANGE                                    CALEND
+0291 CSR                   MOVE LWK,#L    LIN,#P                          CALEND
+0292 CSR         #C        ADD  1         #C                              CALEND
+0293 CSR         #P        ADD  1         #P                              CALEND 0200
+0294 CSR         #P        COMP 14                     1111               CALEND
+0295 CSR 11                GOTO MAKELN                                    CALEND
+0296 C*                                                                   CALEND
+0297 C*- LINE BUILT, PRINT IT USING ANY ENABLED OUTPUT LINE --------------CALEND
+0298 C*                                                                   CALEND
+0299 CSR                   EXCPT                                          CALEND
+0300 C*                                                                   CALEND
+0301 C** RESET POS & CHAR POINTERS, DO NEXT LINE -------------------------CALEND
+0302 C*                                                                   CALEND
+0303 CSR                   Z-ADDC         #C                              CALEND 0210
+0304 CSR                   Z-ADD1         #P                              CALEND
+0305 CSR         #L        ADD  1         #L                              CALEND
+0306 CSR         #L        COMP 11                     1111               CALEND
+0307 CSR 11                GOTO MAKELN                                    CALEND
+0308 C*                                                                   CALEND
+0309 C** SET CHAR POINTER TO NEXT LINE TO OUTPUT, THEN GO HOME -----------CALEND
+0310 C*                                                                   CALEND
+0311 CSR         C         ADD  14        C                               CALEND
+0312 C*                                                                   CALEND
+0313 CSR                   SETON                     23                   CALEND 0220
+0314 CSR                   EXCPT                                          CALEND
+0315 CSR                   SETOF                     23                   CALEND
+0316 CSR                   ENDSR                                          CALEND
+0317 C           CHANGE    BEGSR                                          CALEND
+0318 C                     MOVEALWK       TST                             CALEND
+0319 C                     Z-ADD1         I                               CALEND
+0320 C           CHGTAG    TAG                                            CALEND
+0321 C           ' '       COMP TST,I                    10               CALEND
+0322 C   10N03N04          MOVE '*'       TST,I                           CALEND
+0323 C   10 03             MOVE 'H'       TST,I                           CALEND
+0324 C   10 04             MOVE 'V'       TST,I                           CALEND
+0325 C  N10                MOVE ' '       TST,I                           CALEND
+0326 C           99        COMP I                    10                   CALEND
+0327 C   10      1         ADD  I         I       20                      CALEND
+0328 C   10                GOTO CHGTAG                                    CALEND
+0329 C                     MOVEATST       LWK                             CALEND
+0330 C                     ENDSR                                          CALEND
+0331 OYEAR    D        02                                                 CALEND
+0332 O                                   K4 'YEAR'                        CALEND
+0333 OPRINT   E  101   20                                                 CALEND
+0334 O        E  1     06                                                 CALEND
+0335 O                                    2 '**'                          CALEND
+03361O                                   45 'PRINTED BY THE I B M'        CALEND
+0337 O                                   55 'SYSTEM/34'                   CALEND
+0338 O                      N12          70 'ESPECIALLY FOR'              CALEND
+0339 O                      N12NAME      96                               CALEND
+0340 O                                  129 '**'                          CALEND
+0341 O        E  1     23                                                 CALEND
+0342 O                                   24 '************************'    CALEND
+0343 O                                   48 '************************'    CALEND
+0344 O                                   72 '************************'    CALEND
+0345 O                                   96 '************************'    CALEND
+0346 O                                  120 '************************'    CALEND
+0347 O                                  129 '*********'                   CALEND
+0348 O        E  1     20                                                 CALEND
+0349 O                                    9 '** SUNDAY'                   CALEND
+0350 O                                   27 '* MONDAY'                    CALEND
+0351 O                                   46 '* TUESDAY'                   CALEND
+0352 O                                   66 '* WEDNESDAY'                 CALEND
+0353 O                                   83 '* THURSDAY'                  CALEND
+0354 O                                   99 '* FRIDAY'                    CALEND 0230
+0355 O                                  119 '* SATURDAY'                  CALEND
+0356 O                                  129 '**'                          CALEND
+0357 O        E  1     19N23                                              CALEND
+0358 O                                    2 '**'                          CALEND 0280
+0359 O                         LIN,1     11                               CALEND
+0360 O                         LIN,2     19                               CALEND
+0361 O                         LIN,3     29                               CALEND
+0362 O                         LIN,4     37                               CALEND
+0363 O                         LIN,5     47                               CALEND
+0364 O                         LIN,6     55                               CALEND
+0365 O                         LIN,7     65                               CALEND 0290
+0366 O                         LIN,8     73                               CALEND
+0367 O                      N21LIN,9     83                               CALEND
+0368 O                         LIN,10    91                               CALEND
+0369 O                         LIN,11   101                               CALEND
+0370 O                         LIN,12   109                               CALEND
+0371 O                         LIN,13   119                               CALEND
+0372 O                         LIN,14   127                               CALEND 0300
+0373 O                                  129 '**'                          CALEND
+0374 O                                   20 '*'                           CALEND
+0375 O                                   38 '*'                           CALEND
+0376 O                                   56 '*'                           CALEND
+0377 O                                   74 '*'                           CALEND
+0378 O                                   92 '*'                           CALEND
+0379 O                                  110 '*'                           CALEND
+0380 O                       21LIN,3     27                               CALEND
+0381 O                       21LIN,4     35                               CALEND
+0382 O                       21LIN,5     43                               CALEND
+0383 O                       21LIN,6     51                               CALEND
+0384 O                       21LIN,7     59                               CALEND
+0385 O                       21LIN,8     67                               CALEND 0270
+0386 O                       21LIN,9     75                               CALEND
+0387 O                   N17 21LIN,11   102                               CALEND
+0388 O                   N17 21LIN,12   110                               CALEND
+0389 O                   N17 21LIN,13   118                               CALEND
+0390 O                   N17 21LIN,14   126                               CALEND
+0391 O                   N18 21          92 ' '                           CALEND
+0392 O                    17 21          92 ' '                           CALEND
+0393 O                    22N74          20 ' '                           CALEND
+0394 O                    22N75          38 ' '                           CALEND
+0395 O                    22N76          56 ' '                           CALEND
+0396 O                    22N77          74 ' '                           CALEND
+0397 O                    22N78          92 ' '                           CALEND
+0398 O                    22N79         110 ' '                           CALEND
+0399 O                    22 17LIN,11   102                               CALEND
+0400 O                    22 17LIN,12   110                               CALEND
+0401 O                    22 17LIN,13   118                               CALEND
+0402 O                    22 17LIN,14   126                               CALEND
+0403 O                    22 17          92 ' '                           CALEND
+** # OF DAYS IN EACH MONTH
+312831303130313130313031
+** CHARACTER CODES FOR EACH MONTH-- 37 IS CODE FOR BLANK
+1001142101182537373737     . JANUARY
+0605021821011825373737     . FEBRUARY
+1301180308373737373737     . MARCH
+0116180912373737373737     . APRIL
+1301253737373737373737     . MAY
+1021140537373737373737     . JUNE                                                0310
+1021122537373737373737     . JULY
+0121072119203737373737     . AUGUST
+1905162005130205183737     . SEPTEMBER
+1503201502051837373737     . OCTOBER
+1415220513020518373737     . NOVEMBER
+0405030513020518373737     . DECEMBER
+** CHARACTER IMAGES FOR EACH CHARACTER CODE ----------------------------CC
+   AAA     AAAAA   AA   AA  AA   AA  AAAAAAA  AAAAAAA  AA   AA  AA   AA  AA   AA 01
+ BBBBBB   BBBBBBB  BB   BB  BB   BB  BBBBBB   BB   BB  BB   BB  BBBBBBB  BBBBBB  02
+  CCCCC   CCCCCCC  CC   CC  CC       CC       CC       CC   CC  CCCCCCC   CCCCC  03
+ DDDDDD   DDDDDDD  DD   DD  DD   DD  DD   DD  DD   DD  DD   DD  DDDDDDD  DDDDDD  04
+ EEEEEEE  EEEEEEE  EE       EE       EEEEE    EE       EE       EEEEEEE  EEEEEEE 05
+ FFFFFFF  FFFFFFF  FF       FF       FFFFF    FF       FF       FF       FF      06
+  GGGGG   GGGGGGG  GG   GG  GG       GG GGGG  GG   GG  GG   GG  GGGGGGG   GGGGG  07
+ HH   HH  HH   HH  HH   HH  HH   HH  HHHHHHH  HH   HH  HH   HH  HH   HH  HH   HH 08
+  IIIII    IIIII     III      III      III      III      III     IIIII    IIIII  09
+      JJ       JJ       JJ       JJ       JJ  JJ   JJ  JJ   JJ  JJJJJJJ   JJJJJ  10
+ KK   KK  KK  KKK  KK KKK   KKKKK    KKKK     KKKKK    KK KKK   KK  KKK  KK   KK 11
+ LL       LL       LL       LL       LL       LL       LL       LLLLLLL  LLLLLLL 12
+ MM   MM  MMM MMM  MMMMMMM  MMMMMMM  M MMM M  M  M  M  M     M  MM   MM  MM   MM 13
+ NN   NN  NNN  NN  NNN  NN  NNNN NN  NN N NN  NN NNNN  NN  NNN  NN  NNN  NN   NN 14
+  OOOOO   OOOOOOO  OO   OO  OO   OO  OO   OO  OO   OO  OO   OO  OOOOOOO   OOOOO  15
+ PPPPP    PPPPPPP  PP   PP  PP   PP  PPPPPP   PP       PP       PP       PP      16
+  QQQQQ   QQQQQQQ  QQ   QQ  QQ   QQ  QQ   QQ  QQ Q QQ  QQ QQQQ  QQQQQQQ   QQQQ Q 17
+ RRRRRR   RRRRRRR  RR   RR  RR   RR  RRRRRR   RR   RR  RR   RR  RR   RR  RR   RR 18
+  SSSSS   SSSSSSS  SS   SS  SS        SSSSS        SS  SS   SS  SSSSSSS   SSSSS  19
+ TTTTTTT  TTTTTTT    TTT      TTT      TTT      TTT      TTT      TTT      TTT   20
+ UU   UU  UU   UU  UU   UU  UU   UU  UU   UU  UU   UU  UU   UU  UUUUUUU   UUUUU  21
+ VV   VV  VV   VV  VVV VVV   VV VV    VV VV    VVVVV     VVV      VVV       V    22
+ WW   WW  WW   WW  W     W  W  W  W  W WWW W  WWWWWWW  WWWWWWW  WWW WWW  WW   WW 23
+ XX   XX  XX   XX  XXX XXX   XXXXX     XXX     XXXXX   XXX XXX  XX   XX  XX   XX 24
+ YY   YY  YY   YY  YY   YY  YYY YYY   YYYYY     YYY      YYY      YYY      YYY   25
+ ZZZZZZZ  ZZZZZZZ      ZZZ     ZZZ     ZZZ     ZZZ     ZZZ      ZZZZZZZ  ZZZZZZZ 26
+  00000   0000000  00   00  00   00  00   00  00   00  00   00  0000000   00000  27
+   111     1111    11111      111      111      111      111    1111111  1111111 28
+  22222   2222222  22  222     2222    2222    2222    2222     2222222  2222222 29
+  33333   3333333  33   33       33    3333        33  33   33  3333333   33333  30
+     44      444     4444    44 44   44  44   4444444  4444444      44       44  31
+ 5555555  5555555  55       555555   5555555       55  55   55  5555555   55555  32
+  66666   6666666  66   66  66       666666   66   66  66   66  6666666   66666  33
+ 7777777  7777777      777     777      777     777      777     777      777    34
+  88888   8888888  88   88  88   88   88888   88   88  88   88  8888888   88888  35
+  99999   9999999  99   99  99   99   999999       99  99   99  9999999   99999  36
+                                                                                          37

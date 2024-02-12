@@ -1,0 +1,86 @@
+0001 SMAMI01    1015  N
+0002 S****************************************************************
+0003 S*  MAMI01:   LOESCHEN ZEILE 10-24
+0004 S*            ANZEIGEN DER BEFEHLSTASTEN
+0005 S****************************************************************
+0006 D          1715 6Y               Y                 NEUES SPIEL = FT1
+0007 D          101527Y               Y                 ENDE = FT7
+0008 SMAMI02    0107  Y 26
+0009 S****************************************************************
+0010 S*  MAMI02:   KOPF MIT EINGABE DES VERSUCHES
+0011 S*            U1 = N18   GENERIERTE ZAHL AUF CRT
+0012 S****************************************************************
+0013 DRA         1 110Y  Y          Y     Y             1
+0014 D          23 230Y                     Y          C M A S T E R   M I N D
+0015 D          69 4 6Y                                CES SIND 4 VERSCHIEDENE X
+0016 DZAHLEN IN DER RICHTIGEN REIHENFOLGE ZU ERRATEN
+0017 D          71 5 6Y                                CDIE 0 KANN NICHT AN DERX
+0018 D 1.STELLE STEHEN. KEINE ZAHL DOPPELT. 7 VERSUCHE
+0019 DZ          1 722Y               Y
+0020 D          11 724Y               Y                C. VERSUCH :
+0021 DZE1        1 737Y  YN    Y      Y                CX
+0022 DZE2        1 739Y  YN           Y                CX
+0023 DZE3        1 741Y  YN           Y                CX
+0024 DZE4        1 743Y  YN           Y                CX
+0025 DGEN        4 7 618              Y
+0026 D           6 753Y               Y Y 25           CFEHLER
+0027 SMAMI03    1000  N
+0028 S****************************************************************
+0029 S*  MAMI03:   INTERPRETATION DER ANTWORT
+0030 S****************************************************************
+0031 D          21 152Y                                CX=ZAHL+STELLE RICHTIG
+0032 D          28 252Y                                CO=ZAHL RICHTIG/STELLE FX
+0033 DALSCH
+0034 SMAMI04    V 00  N
+0035 S****************************************************************
+0036 S*  MAMI04:   ANZEIGEN DER ANTWORTEN
+0037 S*            BLINKEN BEI RICHTIGER ANTWORT
+0038 S****************************************************************
+0039 DZ          1 115Y                 30
+0040 D           8 117Y                 30              .VERSUCH
+0041 DV         10 130Y                 30
+0042 DE          4 146Y                 30
+0043 DGEN        4 1 617                30
+0044 SMAMI05    1015  N
+0045 S****************************************************************
+0046 S*  MAMI05:   LOESCHEN ZEILE 10-24
+0047 S*            ANZEIGEN DER BEFEHLSTASTEN
+0048 S****************************************************************
+0049 D          1515 6Y               Y                 NEW GAME = CMD1
+0050 D          211527Y               Y                 END OF SESSION = CMD7
+0051 SMAMI06    0107  Y 26
+0052 S****************************************************************
+0053 S*  MAMI06:   KOPF MIT EINGABE DES VERSUCHES
+0054 S*            U1 = N18   GENERIERTE ZAHL AUF CRT
+0055 S****************************************************************
+0056 DRA         1 110Y  Y          Y     Y             1
+0057 D          23 230Y                     Y          C M A S T E R   M I N D
+0058 D          47 418Y                                CGUESS 4 DIFFERENT NUMBEX
+0059 DRS IN THE RIGHT SEQUENCE
+0060 D          47 518Y                                C0 NOT IN 1.POSITION. NOX
+0061 D DOUBLE NUMBERS. 7 TRIES
+0062 DZ          1 722Y               Y
+0063 D           7 724Y               Y                C. TRY :
+0064 DZE1        1 737Y  YN    Y      Y                CX
+0065 DZE2        1 739Y  YN           Y                CX
+0066 DZE3        1 741Y  YN           Y                CX
+0067 DZE4        1 743Y  YN           Y                CX
+0068 DGEN        4 7 618              Y
+0069 D           6 753Y               Y Y 25           CERROR
+0070 SMAMI07    1000  N
+0071 S****************************************************************
+0072 S*  MAMI07:   INTERPRETATION DER ANTWORT
+0073 S****************************************************************
+0074 D          26 152Y                                CX=NUMBER+POSITION RIGHT
+0075 D          29 252Y                                CO=NUMBER RIGHT/POSITIONX
+0076 D WRONG
+0077 SMAMI08    V 00  N
+0078 S****************************************************************
+0079 S*  MAMI08:   ANZEIGEN DER ANTWORTEN
+0080 S*            BLINKEN BEI RICHTIGER ANTWORT
+0081 S****************************************************************
+0082 DZ          1 115Y                 30
+0083 D           8 117Y                 30              .TRY
+0084 DV         10 130Y                 30
+0085 DE          4 146Y                 30
+0086 DGEN        4 1 617                30

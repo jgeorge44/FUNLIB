@@ -1,0 +1,340 @@
+0001 H012                                                                 BCHART
+0002 FDATACARDIP     96  96            KEYBORD                            BCHART
+0003 FREPORT  O   F  96  96    2       PRINTER                            BCHART
+0004 E                    MON    12  12  4                                BCHART
+0005 E                    MCNT   12  12  2 0                              BCHART
+0006 E                    PT     20  23  4                                BCHART
+0007 E                    ET     20  28  4                                BCHART
+0008 E                    IT     20  33  4                                BCHART
+0009 E                    LIN        62  1                                BCHART
+0010 E                    PHY        31  4                                BCHART
+0011 E                    EMT        31  4                                BCHART
+0012 E                    INT        31  4                                BCHART
+0013 E                    CD          8  2 0                              BCHART
+0014 E                    TYPE        8  3                                BCHART
+0015 E                    MSG     1   7 40
+0016 C                     Z-ADD0         TMONTH  40                      BCHART
+0017 C                     Z-ADD0         WORK    50                      BCHART
+0018 C                     SETOF                     070809               BCHART
+0019 C                     SETOF                     109294               BCHART
+0020 C           MSG,1     KEY            NAME   32      LR
+     C   LR                GOTO TAG23
+0021 C           MSG,2     KEY            BMONTH  20
+0022 C           MSG,3     KEY            BDAY    20
+0023 C           MSG,4     KEY            BYEAR   40
+0024 C           MSG,5     KEY            CMONTH  20
+0025 C           MSG,6     KEY            CYEAR   40
+0026 C           MSG,7     KEY            XMONTH  40
+0027 C                     Z-ADDBMONTH    B       20
+0028 C                     Z-ADDCMONTH    C       20
+0029 C                     MOVE BYEAR     BLY     20
+0030 C                     MOVE CYEAR     CLY     20
+0031 C           BLY       COMP 0                        88
+0032 C           CLY       COMP 0                        89
+0033 C  N88      BLY       DIV  4         TEST    40                      BCHART
+0034 C  N88                MVR            LEAP    40     94               BCHART
+0035 C   88      BYEAR     DIV  400       TEST                            BCHART
+0036 C   88                MVR            LEAP           94               BCHART
+0037 C   94      BMONTH    COMP 2                        92               BCHART
+0038 C           BYEAR     COMP CYEAR                090710               BCHART
+0039 C   10      BMONTH    COMP CMONTH               090810               BCHART
+0040 C   07                GOTO TAG01                                     BCHART
+0041 C   08                GOTO TAG01                                     BCHART
+0042 C   09                GOTO TAG23                                     BCHART
+0043 C   10                GOTO TAG08                                     BCHART
+0044 C           TAG01     TAG                                            BCHART
+0045 C                     MOVE BMONTH    M       20                      BCHART
+0046 C           MCNT,M    SUB  BDAY      WORK                            BCHART
+0047 C           WORK      ADD  1         WORK                            BCHART
+0048 C   92      WORK      ADD  1         WORK                            BCHART
+0049 C           TAG02     TAG                                            BCHART
+0050 C           M         COMP 12                       81               BCHART
+0051 C   81                GOTO TAG03                                     BCHART
+0052 C           M         ADD  1         M                               BCHART
+0053 C   94      M         COMP 2                        92               BCHART
+0054 C   08      M         COMP CMONTH                   85               BCHART
+0055 C   08 85   WORK      ADD  1         WORK                            BCHART
+0056 C   08 85             GOTO TAG08                                     BCHART
+0057 C           WORK      ADD  MCNT,M    WORK                            BCHART
+0058 C   92      WORK      ADD  1         WORK                            BCHART
+0059 C                     GOTO TAG02                                     BCHART
+0060 C           TAG03     TAG                                            BCHART
+0061 C                     Z-ADDBYEAR     TYEAR   40                      BCHART
+0062 C                     SETOF                       9294               BCHART
+0063 C           TAG04     TAG                                            BCHART
+0064 C           TYEAR     ADD  1         TYEAR                           BCHART
+0065 C                     MOVE TYEAR     TLY     20                      BCHART
+0066 C           TLY       COMP 00                       96               BCHART
+0067 C  N96      TYEAR     DIV  4         TEST                            BCHART
+0068 C  N96                MVR            LEAP           94               BCHART
+0069 C   96      TYEAR     DIV  400       TEST                            BCHART
+0070 C   96                MVR            LEAP           94               BCHART
+0071 C           TYEAR     COMP CYEAR                    95               BCHART
+0072 C   95                GOTO TAG05                                     BCHART
+0073 C           WORK      ADD  365       WORK                            BCHART
+0074 C   94      WORK      ADD  1         WORK                            BCHART
+0075 C                     GOTO TAG04                                     BCHART
+0076 C           TAG05     TAG                                            BCHART
+0077 C                     Z-ADD0         M                               BCHART
+0078 C           TAG06     TAG                                            BCHART
+0079 C           M         ADD  1         M                               BCHART
+0080 C   94      M         COMP 2                        92               BCHART
+0081 C           M         COMP CMONTH                   82               BCHART
+0082 C   82                GOTO TAG07                                     BCHART
+0083 C           WORK      ADD  MCNT,M    WORK                            BCHART
+0084 C   92 94   WORK      ADD  1         WORK                            BCHART
+0085 C                     GOTO TAG06                                     BCHART
+0086 C           TAG07     TAG                                            BCHART
+0087 C           WORK      ADD  1         WORK                            BCHART
+0088 C           TAG08     TAG                                            BCHART
+0089 C  N92                MOVE MCNT,C    METEST  20                      BCHART
+0090 C   92                MOVE 29        METEST                          BCHART
+0091 C                     MOVE '    '    PHY                             BCHART
+0092 C                     MOVE '    '    EMT                             BCHART
+0093 C                     MOVE '    '    INT                             BCHART
+0094 C  N10      WORK      DIV  23        HASH    50                      BCHART
+0095 C  N10                MVR            P       20     23               BCHART
+0096 C  N10 23             Z-ADD23        P              23               BCHART
+0097 C  N10                Z-ADD0         D       20                      BCHART
+0098 C   10                Z-ADD1         P                               BCHART
+0099 C   10      BDAY      SUB  1         D                               BCHART
+0100 C           TAG09     TAG                                            BCHART
+0101 C           D         ADD  1         D                               BCHART
+0102 C                     MOVE PT,P      PHY,D                           BCHART
+0103 C           D         COMP METEST                   71               BCHART
+0104 C   71                GOTO TAG10                                     BCHART
+0105 C           P         ADD  1         P                               BCHART
+0106 C           P         COMP 23                   24                   BCHART
+0107 C   24      P         SUB  23        P                               BCHART
+0108 C                     GOTO TAG09                                     BCHART
+0109 C           TAG10     TAG                                            BCHART
+0110 C  N10      WORK      DIV  28        HASH                            BCHART
+0111 C  N10                MVR            E       20     28               BCHART
+0112 C  N10 28             Z-ADD28        E              28               BCHART
+0113 C  N10                Z-ADD0         D                               BCHART
+0114 C   10                Z-ADD1         E                               BCHART
+0115 C   10      BDAY      SUB  1         D                               BCHART
+0116 C           TAG11     TAG                                            BCHART
+0117 C           D         ADD  1         D                               BCHART
+0118 C                     MOVE ET,E      EMT,D                           BCHART
+0119 C           D         COMP METEST                   71               BCHART
+0120 C   71                GOTO TAG12                                     BCHART
+0121 C           E         ADD  1         E                               BCHART
+0122 C           E         COMP 28                   29                   BCHART
+0123 C   29      E         SUB  28        E                               BCHART
+0124 C                     GOTO TAG11                                     BCHART
+0125 C           TAG12     TAG                                            BCHART
+0126 C  N10      WORK      DIV  33        HASH                            BCHART
+0127 C  N10                MVR            I       20     33               BCHART
+0128 C  N10 33             Z-ADD33        I              33               BCHART
+0129 C  N10                Z-ADD0         D                               BCHART
+0130 C   10                Z-ADD1         I                               BCHART
+0131 C   10      BDAY      SUB  1         D                               BCHART
+0132 C           TAG13     TAG                                            BCHART
+0133 C           D         ADD  1         D                               BCHART
+0134 C                     MOVE IT,I      INT,D                           BCHART
+0135 C           D         COMP METEST                   71               BCHART
+0136 C   71                GOTO TAG14                                     BCHART
+0137 C           I         ADD  1         I                               BCHART
+0138 C           I         COMP 33                   34                   BCHART
+0139 C   34      I         SUB  33        I                               BCHART
+0140 C                     GOTO TAG13                                     BCHART
+0141 C           TAG14     TAG                                            BCHART
+0142 C                     Z-ADD1         X       20     78               BCHART
+0143 C                     Z-ADD0         D                               BCHART
+0144 C           TAG15     TAG                                            BCHART
+0145 C           D         ADD  1         D                               BCHART
+0146 C                     MOVELPHY,D     TL      20                      BCHART
+0147 C                     MOVE PHY,D     TR      20                      BCHART
+0148 C           TL        COMP 17                       77               BCHART
+0149 C  N77      TR        COMP 17                       77               BCHART
+0150 C   77                MOVE D         CD,X                            BCHART
+0151 C   77                MOVE 'P  '     TYPE,X                          BCHART
+0152 C   77                SETON                     78                   BCHART
+0153 C                     MOVELEMT,D     TL                              BCHART
+0154 C                     MOVE EMT,D     TR                              BCHART
+0155 C           TL        COMP 17                       77               BCHART
+0156 C  N77      TR        COMP 17                       77               BCHART
+0157 C   77N78             MOVE D         CD,X                            BCHART
+0158 C   77                MOVE 'E '      TYPE,X                          BCHART
+0159 C   77N78             SETON                     78                   BCHART
+0160 C                     MOVELINT,D     TL                              BCHART
+0161 C                     MOVE INT,D     TR                              BCHART
+0162 C           TL        COMP 17                       77               BCHART
+0163 C  N77      TR        COMP 17                       77               BCHART
+0164 C   77N78             MOVE D         CD,X                            BCHART
+0165 C   77                MOVE 'I'       TYPE,X                          BCHART
+0166 C   77N78             SETON                     78                   BCHART
+0167 C   78      X         ADD  1         X              78               BCHART
+0168 C           D         COMP METEST                   72               BCHART
+0169 C  N72                GOTO TAG15                                     BCHART
+0170 C                     SETON                         50               BCHART
+0171 C                     Z-ADD0         LN      20                      BCHART
+0172 C           TAG16     TAG                                            BCHART
+0173 C           LN        ADD  1         LN                              BCHART
+0174 C                     Z-ADD0         P                               BCHART
+0175 C                     Z-ADD0         E                               BCHART
+0176 C                     Z-ADD0         I                               BCHART
+0177 C           TAG17     TAG                                            BCHART
+0178 C           P         ADD  1         P                               BCHART
+0179 C           P         MULT 2         R       20                      BCHART
+0180 C           R         SUB  1         L       20                      BCHART
+0181 C                     MOVELPHY,P     PL      20                      BCHART
+0182 C                     MOVE PHY,P     PR      20                      BCHART
+0183 C           PL        COMP LN                       11               BCHART
+0184 C           PR        COMP LN                       12               BCHART
+0185 C   11                MOVE 'P'       LIN,L                           BCHART
+0186 C   12                MOVE 'P'       LIN,R                           BCHART
+0187 C           P         COMP METEST                   72               BCHART
+0188 C  N72                GOTO TAG17                                     BCHART
+0189 C           TAG18     TAG                                            BCHART
+0190 C           E         ADD  1         E                               BCHART
+0191 C           E         MULT 2         R                               BCHART
+0192 C           R         SUB  1         L                               BCHART
+0193 C                     MOVELEMT,E     EL      20                      BCHART
+0194 C                     MOVE EMT,E     ER      20                      BCHART
+0195 C           EL        COMP LN                       11               BCHART
+0196 C           ER        COMP LN                       12               BCHART
+0197 C   11      LIN,L     COMP ' '                      99               BCHART
+0198 C   11 99             MOVE 'E'       LIN,L                           BCHART
+0199 C   11N99             MOVE '+'       LIN,L                           BCHART
+0200 C   12      LIN,R     COMP ' '                      98               BCHART
+0201 C   12 98             MOVE 'E'       LIN,R                           BCHART
+0202 C   12N98             MOVE '+'       LIN,R                           BCHART
+0203 C           E         COMP METEST                   72               BCHART
+0204 C  N72                GOTO TAG18                                     BCHART
+0205 C           TAG19     TAG                                            BCHART
+0206 C           I         ADD  1         I                               BCHART
+0207 C           I         MULT 2         R                               BCHART
+0208 C           R         SUB  1         L                               BCHART
+0209 C                     MOVELINT,I     IL      20                      BCHART
+0210 C                     MOVE INT,I     IR      20                      BCHART
+0211 C           IL        COMP LN                       11               BCHART
+0212 C           IR        COMP LN                       12               BCHART
+0213 C   11      LIN,L     COMP ' '                      99               BCHART
+0214 C   11 99             MOVE 'I'       LIN,L                           BCHART
+0215 C   11N99   LIN,L     COMP '+'                      87               BCHART
+0216 C   11N99N87          MOVE '+'       LIN,L                           BCHART
+0217 C   11N99 87          MOVE '*'       LIN,L                           BCHART
+0218 C   12      LIN,R     COMP ' '                      98               BCHART
+0219 C   12 98             MOVE 'I'       LIN,R                           BCHART
+0220 C   12N98   LIN,R     COMP '+'                      83               BCHART
+0221 C   12N98N83          MOVE '+'       LIN,R                           BCHART
+0222 C   12N98 83          MOVE '*'       LIN,R                           BCHART
+0223 C           I         COMP METEST                   72               BCHART
+0224 C  N72                GOTO TAG19                                     BCHART
+0225 C           LN        COMP 17                       17               BCHART
+0226 C  N17                GOTO TAG21                                     BCHART
+0227 C                     Z-ADD0         Y       20                      BCHART
+0228 C           TAG20     TAG                                            BCHART
+0229 C           Y         ADD  1         Y                               BCHART
+0230 C           LIN,Y     COMP ' '                      18               BCHART
+0231 C   18                MOVE '-'       LIN,Y                           BCHART
+0232 C           Y         COMP 62                       62               BCHART
+0233 C  N62                GOTO TAG20                                     BCHART
+0234 C           TAG21     TAG                                            BCHART
+0235 C   17                GOTO TAG21B                                    BCHART
+0236 C                     Z-ADD0         Y                               BCHART
+0237 C           TAG21A    TAG                                            BCHART
+0238 C           Y         ADD  10        Y                               BCHART
+0239 C           LIN,Y     COMP ' '                      18               BCHART
+0240 C   18                MOVE '.'       LIN,Y                           BCHART
+0241 C           Y         COMP 60                       60               BCHART
+0242 C  N60                GOTO TAG21A                                    BCHART
+0243 C           TAG21B    TAG                                            BCHART
+0244 C                     SETON                         51               BCHART
+0245 C           LN        COMP 33                       30               BCHART
+0246 C           LN        COMP 02                       41               BCHART
+0247 C           LN        COMP 04                       42               BCHART
+0248 C           LN        COMP 06                       43               BCHART
+0249 C           LN        COMP 08                       44               BCHART
+0250 C           LN        COMP 10                       45               BCHART
+0251 C           LN        COMP 18                       58               BCHART
+0252 C   19      X         ADD  1         X                               BCHART
+0253 C   19      X         COMP 9                      19                 BCHART
+0254 C                     EXCPT                                          BCHART
+0255 C   58                SETON                     19                   BCHART
+0256 C   58                Z-ADD0         X                               BCHART
+0257 C                     SETOF                     5051                 BCHART
+0258 C  N30                GOTO TAG16                                     BCHART
+0259 C           TMONTH    ADD  1         TMONTH                          BCHART
+0260 C           TMONTH    COMP XMONTH                   97               BCHART
+0261 C   97                GOTO TAG23                                     BCHART
+0262 C   10      2         SUB  BDAY      WORK                            BCHART
+0263 C   10                SETOF                     10                   BCHART
+0264 C           WORK      ADD  METEST    WORK                            BCHART
+0265 C           C         ADD  1         C                               BCHART
+0266 C           C         COMP 12                   13                   BCHART
+0267 C  N13                GOTO TAG22                                     BCHART
+0268 C           C         SUB  12        C                               BCHART
+0269 C           CYEAR     ADD  1         CYEAR                           BCHART
+0270 C           CLY       ADD  1         CLY            89               BCHART
+0271 C  N89      CYEAR     DIV  4         TEST                            BCHART
+0272 C  N89                MVR            LEAP           94               BCHART
+0273 C   89      CYEAR     DIV  400       TEST                            BCHART
+0274 C   89                MVR            LEAP           94               BCHART
+0275 C           TAG22     TAG                                            BCHART
+0276 C                     MOVE C         CMONTH                          BCHART
+0277 C   94      CMONTH    COMP 2                        92               BCHART
+0278 C                     GOTO TAG08                                     BCHART
+0279 C           TAG23     TAG                                            BCHART
+0280 OREPORT  E  205   50                                                 BCHART
+0281 O                         MON,C      4                               BCHART
+0282 O                         CYEAR      9                               BCHART
+0283 O                                   35 'BIORHYTHM CHART FOR '        BCHART
+0284 O                         NAME      67                               BCHART
+0285 O                                   73 ' BORN '                      BCHART
+0286 O                         MON,B     77                               BCHART
+0287 O                         BDAY      80                               BCHART
+0288 O                                   82 ', '                          BCHART
+0289 O                         BYEAR     86                               BCHART
+0290 O        E  1     50                                                 BCHART
+0291 O                                   34 '01  03  05  07  09  11  '    BCHART
+0292 O                                   58 '13  15  17  19  21  23  '    BCHART
+0293 O                                   72 '25  27  29  31'              BCHART
+0294 O        E  1     50                                                 BCHART
+0295 O                                   34 '  02  04  06  08  10  12'    BCHART
+0296 O                                   58 '  14  16  18  20  22  24'    BCHART
+0297 O                                   72 '  26  28  30  '              BCHART
+0298 O        E  1     50                                                 BCHART
+0299 O                                   33 '************************'    BCHART
+0300 O                                   57 '************************'    BCHART
+0301 O                                   73 '****************'            BCHART
+0302 O        E  1     51                                                 BCHART
+0303 O                                   10 '*'                           BCHART
+0304 O                         LIN    B  72                               BCHART
+0305 O                                   73 '*'                           BCHART
+0306 O                 41                96 'PPPP - PHYSICAL CYCLE'       BCHART
+0307 O                 42                91 'EEEE - EMOTIONAL'            BCHART
+0308 O                 43                94 'IIII - INTELLECTUAL'         BCHART
+0309 O                 44                96 '++++ - 2 CYCLES CROSS'       BCHART
+0310 O                 45                96 '**** - 3 CYCLES CROSS'       BCHART
+0311 O                 17                88 'CRITICAL DAYS'               BCHART
+0312 O                 58                86 'DATE CYCLE'                  BCHART
+0313 O                 19      CD,X  ZB  79                               BCHART
+0314 O                 19      TYPE,X B  85                               BCHART
+0315 O        E     01 30                                                 BCHART
+0316 O                                   33 '************************'    BCHART
+0317 O                                   57 '************************'    BCHART
+0318 O                                   73 '****************'            BCHART
+**
+JAN.FEB.MAR.APR.MAY JUNEJULYAUG.SEP.OCT.NOV.DEC.
+**
+312831303130313130313031
+**
+17161514131211100908070606070809101112131415161718192021222324252627282827262524
+232221201918
+**
+17161514131211100908070605040304050607080910111213141516171819202122232425262728
+29303130292827262524232221201918
+**
+17161514131211100908070605040302010102030405060708091011121314151617181920212223
+2425262728293031323333323130292827262524232221201918
+**
+KEY IN YOUR NAME
+KEY IN THE MONTH OF BIRTH (2 DIGITS)
+KEY DAY OF BIRTH (2 DIGITS)
+KEY YEAR OF BIRTH (4 DIGITS)
+KEY IN START MONTH OF BIORHYTHM CHART(2)
+KEY IN START YEAR OF CHART (4 DIGITS)
+KEY NUMBER OF MONTHS TO CHART

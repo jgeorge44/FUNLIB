@@ -1,0 +1,25 @@
+0001 H     014                                     02                     ZZ04
+0002 FWORKSTN CP  F     140            WORKSTN                            ZZ04
+0003 E                    L          24  2 0                              ZZ04
+0004 E                    A          24  2 0                              ZZ04
+0005 E                    B          24  2 0                              ZZ04
+0006 IWORKSTN XX  01                                                      ZZ04
+0007 I                                        1   2 POS1                  ZZ04
+0008 I                                        3   4 POS2                  ZZ04
+     C                     SETON                     6650
+     C                     SETOF                     6650
+0009 C  N66                Z-ADD2.        A,1                             ZZ04
+0010 C  N66                Z-ADD5.        A,12                            ZZ04
+0011 C  N66                Z-ADD3.        A,17                            ZZ04
+0012 C  N66                Z-ADD5.        A,19                            ZZ04
+0013 C  N66                Z-ADD-2.       B,1                             ZZ04
+0014 C  N66                Z-ADD-5.       B,12                            ZZ04
+0015 C  N66                Z-ADD-3.       B,17                            ZZ04
+0016 C  N66                Z-ADD-5.       B,19                            ZZ04
+0017 C  N66                EXCPT                                          ZZ04
+0018 C  N66                SETON                     66                   ZZ04
+0019 OWORKSTN D       N66                                                 ZZ04
+0020 O                                   K6 'ZZ0401'                      ZZ04
+0021 O        D       N66                                                 ZZ04
+0022 O       OR        50                                                 ZZ04
+0023 O                                   K6 'ZZ0401'                      ZZ04

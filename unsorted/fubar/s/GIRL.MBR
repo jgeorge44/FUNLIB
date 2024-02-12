@@ -1,0 +1,7 @@
+0001 H     014                      B       1                             GIRL
+0002 FGIRL    IPE F 240  80            DISK
+0003 FPRINT   O   F 106 106     OF     PRINTER
+0004 IGIRL    NS  01
+0005 I                                        1  80 DATA
+0006 OPRINT   D  1     01
+0007 O                         DATA     106

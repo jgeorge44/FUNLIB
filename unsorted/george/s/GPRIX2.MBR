@@ -1,0 +1,76 @@
+0101 H   C  10                                     03                     GPRIX2
+0102 FVIDEO   CP         22            WORKSTN                            GPRIX2
+     FPRINTER O         132            PRINTER
+0106 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPRIX2
+0107 F*                                                                 * GPRIX2
+0108 F*  IN  PR  OUT  INDICATOR USED.                                   * GPRIX2
+0109 F*  03  --  03   'PF3' KEY PRESSED.                                * GPRIX2
+0110 F*  10  --  10   'CMD1 ' KEY PRESSED.                              * GPRIX2
+0111 F*  --  21  21   VEHICLE HAS NOT MOVED YET.                        * GPRIX2
+0112 F*  --  40  --   VEHICLE STARTED. ALL FACTORS VALID.               * GPRIX2
+0113 F*  50  --  50   'ACCEL' FACTOR INVALID.                           * GPRIX2
+0114 F*  --  60  --   'ACCEL' FACTOR VALID.                             * GPRIX2
+0115 F*  51  --  51   'GEARS' FACTOR INVALID.                           * GPRIX2
+0116 F*  --  61  --   'GEARS' FACTOR VALID.                             * GPRIX2
+0117 F*  52  --  52   'DECEL' FACTOR INVALID.                           * GPRIX2
+0118 F*  --  62  --   'DECEL' FACTOR VALID.                             * GPRIX2
+0119 F*  --  --  66   INVALID FACTOR SCREEN GENERATOR.                  * GPRIX2
+0120 F*  77  --  77   # INVALID KEY PRESSED.                            * GPRIX2
+0121 F*                                                                 * GPRIX2
+0122 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPRIX2
+0124 IVIDEO   NS                                                          GPRIX2
+0125 I                                        1   10ACCEL                 GPRIX2
+0126 I                                        2   20GEAR                  GPRIX2
+0127 I                                        3   30DECEL                 GPRIX2
+0128 C                     SETON                     10                   GPRIX2
+D\   C                     SETOF                     77    IN77 NOT USED.
+0130 C   10                Z-ADD1         CTR     20                      GPRIX2
+0131 C   10                Z-ADD0         SPEED   30                      GPRIX2
+0132 C   10      ACCEL     COMP 5                    506060               GPRIX2
+0133 C   10      GEAR      COMP 4                    516161               GPRIX2
+0134 C   10      DECEL     COMP 5                    526262               GPRIX2
+0135 C   60 61 62ACCEL     MULT GEAR      AXEL    90                      GPRIX2
+0136 C   60 61 62AXEL      MULT 400       AXEL                            GPRIX2
+0137 C   60 61 62DECEL     MULT 1600      BRAKE   90                      GPRIX2
+0138 C   60 61 62AXEL      SUB  BRAKE     DIFF    90 402121               GPRIX2
+0139 C   21                Z-ADD0         CTR                             GPRIX2
+0140 C   21                Z-ADD0         SPEED                           GPRIX2
+0141 C   40                SQRT DIFF      SPEED                           GPRIX2
+0142 C   10      CTR       ADD  0         COUNTY  20                      GPRIX2
+0143 C   10      SPEED     ADD  0         SPEEDY  30                      GPRIX2
+0144 C   10      SPEED     ADD  0         FSPD    90                      GPRIX2
+0145 C   21                SETOF                         10               GPRIX2
+0146 C   50                SETOF                         10               GPRIX2
+0147 C   51                SETOF                         10               GPRIX2
+0148 C   52                SETOF                         10               GPRIX2
+0149 C   50                SETON                         66               GPRIX2
+0150 C   51                SETON                         66               GPRIX2
+0151 C   52                SETON                         66               GPRIX2
+0152 C                     SETON                       94LR               GPRIX2
+     C  N50                SETON                     90
+     C  N51                SETON                     91
+     C  N52                SETON                     92
+     C  N21                SETON                     95
+     C   21                SETON                     96
+     C  N96                SETON                     97
+     C   10                SETOF                     U2
+     C   10                SETON                     U3
+0153 OVIDEO   D        21                                                 GPRIX2
+0156 O       OR        66                                                 GPRIX2
+0157 O       OR        77                                                 GPRIX2
+0158 O                                   K6 'ZZTRAC'                      GPRIX2
+0159 O                         ACCEL      1                               GPRIX2
+0160 O                         GEAR       2                               GPRIX2
+0161 O                         DECEL      3                               GPRIX2
+0162 O*
+0163 O        D        10
+0164 O                                   K6 'ZZTRAK'                      GPRIX2
+0165 O                         ACCEL Z    1                               GPRIX2
+0166 O                         GEAR  Z    2                               GPRIX2
+0167 O                         DECEL Z    3                               GPRIX2
+0168 O                         COUNTYZ    5                               GPRIX2
+0169 O                         CTR        7                               GPRIX2
+0170 O                         SPEEDYZ   10                               GPRIX2
+0171 O                         SPEED     13                               GPRIX2
+0172 O                         FSPD      22                               GPRIX2
+/*

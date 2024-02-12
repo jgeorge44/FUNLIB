@@ -1,0 +1,76 @@
+0001 SSTART     0124 YY
+0002 DCODE    00010104Y  Y          Y     Y            CA
+0003 DFL0001  00210230Y               Y     Y          C B A T T L E S H I P
+0004 DFL0002  00590411Y                                CThe object of this gameX
+0005 D is to fire your "cannon" at various
+0006 DFL0003  00590511Y                                Cships the computer has X
+0007 Dgenerated on a 15 x 15 element grid.
+0008 DFL0004  00690706Y               Y                CA "HIT" is noted with "X
+0009 DH"; a "MISS" with "*"; you only get  50 shots.
+0010 DFL0005  12980845Y               Y                C1  1  1  1  1  1       X
+0011 D                              1  2  3  4  5  6  7  8  9  0  1  2  3  4  5X
+0012 D                                   A .  .  .  .  .  .  .  .  .  .  .  .  X
+0013 D.  .  . A                                 B .                            X
+0014 D             . B                                 C .                     X
+0015 D                    . C                                 D .              X
+0016 D                           . D                                 E .       X
+0017 D                                  . E                                 F .X
+0018 D                                         . F                             X
+0019 D    G .                                         . G                      X
+0020 D           H .                                         . H               X
+0021 D                  I .                                         . I        X
+0022 D                         J .                                         . J X
+0023 D                                K .                                      X
+0024 D   . K                                 L .                               X
+0025 D          . L                                 M .                        X
+0026 D                 . M                                 N .                 X
+0027 D                        . N                                 O .  .  .  . X
+0028 D .  .  .  .  .  .  .  .  .  .  . O
+0029 DTEST    00012467   Y                Y
+0030 SDSPLAY    0124 YY 09  Y
+0031 DCODE    00010104Y  Y          Y     Y            CB
+0032 DFL0001  00210230Y               Y     Y          C B A T T L E S H I P
+0033 DFL0002  00150504Y               Y                CENTER YOUR SHOT
+0034 DSHOT    00030522   Y                  Y   Y
+0035 DFL0004  00120527Y                                CSHOTS LEFT -
+0036 D#SHOTL  00030540Y               Y
+0037 DFL0006  00110545Y                                C# OF HITS -
+0038 D#HITS   00030557Y               Y
+0039 DFL0008  00130562Y                                C# OF MISSES -
+0040 D#MISS   00030576Y               Y
+0041 DFL0010  01760647Y               Y                C1  1  1  1  1  1       X
+0042 D                              1  2  3  4  5  6  7  8  9  0  1  2  3  4  5X
+0043 D                                     .  .  .  .  .  .  .  .  .  .  .  .  X
+0044 D.  .  .
+0045 DFL0011  00030916Y               Y                CA .
+0046 DAR1     00450920Y
+0047 DFL0013  00031016Y               Y                CB .
+0048 DAR2     00451020Y
+0049 DFL0015  00031116Y               Y                CC .
+0050 DAR3     00451120Y
+0051 DFL0017  00031216Y               Y                CD .
+0052 DAR4     00451220Y
+0053 DFL0019  00031316Y               Y                CE .
+0054 DAR5     00451320Y
+0055 DFL0021  00031416Y               Y                CF .
+0056 DAR6     00451420Y
+0057 DFL0023  00031516Y               Y                CG .
+0058 DAR7     00451520Y
+0059 DFL0025  00031616Y               Y                CH .
+0060 DAR8     00451620Y
+0061 DFL0027  00031716Y               Y                CI .
+0062 DAR9     00451720Y
+0063 DFL0029  00031816Y               Y                CJ .
+0064 DAR10    00451820Y
+0065 DFL0031  00031916Y               Y                CK .
+0066 DAR11    00451920Y
+0067 DFL0033  00032016Y               Y                CL .
+0068 DAR12    00452020Y
+0069 DFL0035  00032116Y               Y                CM .
+0070 DAR13    00452120Y
+0071 DFL0037  00032216Y               Y                CN .
+0072 DAR14    00452220Y
+0073 DFL0039  00032316Y               Y                CO .
+0074 DAR15    00452320Y
+0075 DFLOOOO  00092402Y                                CCMD 7-EOJ
+0076 DMSG     00402415Y               0909

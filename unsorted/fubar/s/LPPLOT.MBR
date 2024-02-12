@@ -1,0 +1,189 @@
+0001 H                                                                    LPPLOT
+0002 F****************************************************************
+0003 F*                                                              *
+0004 F*  THIS PROGRAM PLOTS TWO GRAPHS...                            *
+0005 F*       THE FIRST SHOWS CUMULATIVE CASH FLOWS FOR BEFORE TAX   *
+0006 F*       THE SECOND SHOWS THE AFTER TAX CASH FLOWS              *
+0007 F*                                                              *
+0008 F*  THE INPUT CODES ARE...                                      *
+0009 F*       PB... BEFORE TAX PURCHASE CASH FLOW                    *
+0010 F*       LB... BEFORE TAX LEASE CASH FLOW                       *
+0011 F*       PA... AFTER TAX PURCHASE CASH FLOW     AND...          *
+0012 F*       LA... AFTER TAX LEASE CASH FLOW                        *
+0013 F*                                                              *
+0014 F****************************************************************
+0015 FPLOTDATAIP        128    2       DISK
+0016 FGRAPH   O         132    2       PRINTER
+0017 E                    CUM        11  7 0
+0018 E                    AMT        11  7 0
+0019 E                    AFT        11  7 0
+0020 E                    TAX        11  7 0
+0021 E                    PTS        41  7 0
+0022 E                    OUT        11  1
+0023 E                    YRS        11  4 0
+0024 E                    TEMP       11  5 0
+0025 IPLOTDATANS  01  79 CX  80 CX
+0026 I                                        2   30BEGYR
+0027 I                                        4   50NOYRS
+0028 I        NS  02  79 CP  80 CB
+0029 I                                        2  78 CUM
+0030 I        NS  03  79 CL  80 CB
+0031 I                                        2  78 AMT
+0032 I        NS  03  79 CP  80 CA
+0033 I                                        2  78 AFT
+0034 I        NS  05  79 CL  80 CA
+0035 I                                        2  78 TAX
+0036 CLR         START     TAG
+0037 C***********************************************************
+0038 C***                                                     ***
+0039 C***  ROUND ALL AMOUNTS TO THE NEAREST 100 DOLLAR AMOUNT ***
+0040 C***                                                     ***
+0041 C***********************************************************
+0042 CLR         AMT       DIV  100       TEMP      H
+0043 CLR         TEMP      MULT 100       AMT
+0044 CLR         CUM       DIV  100       TEMP      H
+0045 CLR         TEMP      MULT 100       CUM
+0046 C*****************************************************************
+0047 C***                                                           ***
+0048 C***  FIND THE HIGHEST AND LOWEST AMOUNTS FOR THE GRAPH POINTS ***
+0049 C***                                                           ***
+0050 C*****************************************************************
+0051 CLR                   Z-ADD1         X       20
+0052 CLR                   Z-ADDCUM,1     MAX     70
+0053 CLR                   Z-ADDCUM,1     MIN     70
+0054 CLR         RANGE     TAG
+0055 CLR         CUM,X     COMP MAX                  70
+0056 CLR       70          Z-ADDCUM,X     MAX
+0057 CLR         AMT,X     COMP MAX                  70
+0058 CLR       70          Z-ADDAMT,X     MAX
+0059 CLR         CUM,X     COMP MIN                    70
+0060 CLR       70          Z-ADDCUM,X     MIN
+0061 CLR         AMT,X     COMP MIN                    70
+0062 CLR       70          Z-ADDAMT,X     MIN
+0063 CLR         X         COMP NOYRS                  70
+0064 CLR         X         ADD  1         X
+0065 CLR       70          GOTO RANGE
+0066 CLR         MIN       COMP 0                    70
+0067 CLR       70          Z-ADD0         MIN
+0068 C*************************************
+0069 C***                               ***
+0070 C***  FIND THE RANGE OF THE GRAPH  ***
+0071 C***                               ***
+0072 C*************************************
+0073 CLR         MAX       SUB  MIN       RANGE   70
+0074 CLR         RANGE     DIV  1000      JUNK    40H
+0075 CLR         JUNK      MULT 1000      RANGE
+0076 CLR         RANGE     DIV  40        INCR    60H
+0077 CLR         INCR      DIV  2         HALF    60
+0078 CLR                   Z-ADD1         X
+0079 CLR                   Z-ADD2         Y       20
+0080 CLR                   Z-ADDMIN       PTS,1
+0081 C*********************************************
+0082 C***                                       ***
+0083 C***  CALCULATE THE VERTICAL GRAPH POINTS  ***
+0084 C***                                       ***
+0085 C*********************************************
+0086 CLR         VERT      TAG
+0087 CLR         PTS,X     ADD  INCR      PTS,Y
+0088 CLR         Y         COMP 41                     70
+0089 CLR         X         ADD  1         X
+0090 CLR         Y         ADD  1         Y
+0091 CLR       70          GOTO VERT
+0092 C**************************************************
+0093 C***                                            ***
+0094 C***  ACTUAL PLOTTING OF THE GRAPH BEGINS HERE  ***
+0095 C***                                            ***
+0096 C**************************************************
+0097 CLR                   Z-ADD41        Y
+0098 CLR         LPVERT    TAG
+0099 CLR                   Z-ADD1         X
+0100 CLR         LPHOR     TAG
+0101 CLR         AMT,X     SUB  PTS,Y     TEST    80   70
+0102 CLR       70          Z-SUBTEST      TEST             FORCE PLUS
+0103 CLR         HALF      COMP TEST                 30  30
+0104 CLR         CUM,X     SUB  PTS,Y     TEST         70
+0105 CLR       70          Z-SUBTEST      TEST
+0106 CLR         HALF      COMP TEST                 40  40
+0107 CLR    30N40          MOVE 'L'       OUT,X
+0108 CLR   N30 40          MOVE 'P'       OUT,X
+0109 CLR   N30N40          MOVE ' '       OUT,X
+0110 CLR    30 40          MOVE 'O'       OUT,X
+0111 CLR    30             Z-ADD-9999999  AMT,X
+0112 CLR    40             Z-ADD-9999999  CUM,X
+0113 CLR         X         COMP NOYRS                515051
+0114 CLR         X         ADD  1         X
+0115 CLR       50          GOTO LPHOR
+0116 CLR       51          EXCPT
+0117 CLR                   SETOF                     51
+0118 CLR         Y         SUB  1         Y          52  53
+0119 CLR       52          GOTO LPVERT
+0120 CLR       53          EXCPT
+0121 CLR                   SETOF                     53
+0122 C*******************************************************
+0123 C***                                                 ***
+0124 C***  CALCULATE THE YEARS THAT THE GRAPH REPRESENTS  ***
+0125 C***                                                 ***
+0126 C*******************************************************
+0127 CLR         1900      ADD  BEGYR     YRS,1
+0128 CLR                   Z-ADD1         X
+0129 CLR                   Z-ADD2         Y
+0130 CLR         YRS       TAG
+0131 CLR         X         COMP NOYRS                    70
+0132 CLR       70          GOTO END
+0133 CLR         YRS,X     ADD  1         YRS,Y
+0134 CLR         X         ADD  1         X
+0135 CLR         Y         ADD  1         Y
+0136 CLR                   GOTO YRS
+0137 CLR         END       TAG
+0138 CLR                   SETON                     62
+0139 CLR                   EXCPT
+0140 CLR       10          GOTO STOP
+0141 CLR                   SETOF                     62
+0142 CLR                   Z-ADDAFT       CUM
+0143 CLR                   Z-ADDTAX       AMT
+0144 CLR                   SETON                     1011
+0145 CLR                   EXCPT
+0146 CLR                   SETOF                     11
+0147 CLR                   GOTO START
+0148 CLR         STOP      TAG
+0149 OGRAPH   H  103   1P
+0150 O                                   62 'LEASE VS PURCHASE'
+0151 O        H  2     1P
+0152 O                                   61 'ACCUMULATED CASH FLOW BE'
+0153 O                                   69 'FORE TAX'
+0154 O        E  1     51
+0155 O                         PTS,Y L   10
+0156 O                         OUT,1     19
+0157 O                         OUT,2     28
+0158 O                         OUT,3     37
+0159 O                         OUT,4     46
+0160 O                         OUT,5     55
+0161 O                         OUT,6     64
+0162 O                         OUT,7     73
+0163 O                         OUT,8     82
+0164 O                         OUT,9     91
+0165 O                         OUT,10   100
+0166 O                         OUT,11   109
+0167 O        E 12     53
+0168 O                                   28 '------------------------'
+0169 O                                   52 '------------------------'
+0170 O                                   76 '------------------------'
+0171 O                                  100 '------------------------'
+0172 O                                  109 '---------'
+0173 O        E        62
+0174 O                         YRS,1 Z   19
+0175 O                         YRS,2 Z   28
+0176 O                         YRS,3 Z   37
+0177 O                         YRS,4 Z   46
+0178 O                         YRS,5 Z   55
+0179 O                         YRS,6 Z   64
+0180 O                         YRS,7 Z   73
+0181 O                         YRS,8 Z   82
+0182 O                         YRS,9 Z   91
+0183 O                         YRS,10Z  100
+0184 O                         YRS,11Z  109
+0185 O        E  103   11
+0186 O                                   62 'LEASE VS PURCHASE'
+0187 O        E  2     11
+0188 O                                   62 'ACCUMULATED CASH FLOW AF'
+0189 O                                   69 'TER TAX'

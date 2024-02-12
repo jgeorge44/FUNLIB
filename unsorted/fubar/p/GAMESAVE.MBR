@@ -1,0 +1,5 @@
+// * '                            PROCEDURE TO SAVE ALL GAME FILES:'
+// * ' '
+// * '                            INSERT DISKETTE VOLID-GMFILS'
+// PAUSE
+SAVE ALL,999,#SAVE,GMFILS,GM,S1,NOAUTO

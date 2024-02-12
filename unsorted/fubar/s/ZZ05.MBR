@@ -1,0 +1,299 @@
+0001 H     0161                     B               5                     ZZ05
+0002 FWORKSTN CP  F    1000            WORKSTN                            ZZ05
+0003 FPRINTER O   F 132 132    2       PRINTER                            ZZ05
+0004 E*   10 DIM A(3),B(3),C(3),E(4),N(2)                                 ZZ05
+0005 E                    A           3  3 0                              ZZ05
+0006 E                    B           3  3 0                              ZZ05
+0007 E                    C           3  3 0                              ZZ05
+0008 E                    E           4  3 0                              ZZ05
+0009 E                    N           2  3 0                              ZZ05
+0010 E                    Q         256  3 0                              ZZ05
+0011 E                    G         256  3 0                              ZZ05
+0012 E                    MAZE       12 78                                ZZ05
+0013 E                    LINE       19  2                                ZZ05
+0014 IWORKSTN NS  01   6 C                                                ZZ05
+0015 I       OR   02   6 C1                                               ZZ05
+0016 I*                                                                   ZZ05
+0017 I            DS                                                      ZZ05
+0018 I                                        1  39 TOP                   ZZ05
+0019 I                                        1  39 BOTTOM                ZZ05
+0020 I                                       40  78 SIDES                 ZZ05
+0021 C*                                                                   ZZ05
+0022 C   01                TIME           UTIME  120                      ZZ05
+0023 C   01      UTIME     DIV  UDATE     SEED   109                      ZZ05
+0024 C*                                                                   ZZ05
+0025 C*                                                                   ZZ05
+0026 C*    20 E(1)+1: E(2)=2: E(3)=4: E(4)=8                              ZZ05
+0027 C                     Z-ADD1.        E,1                             ZZ05
+0028 C                     Z-ADD2.        E,2                             ZZ05
+0029 C                     Z-ADD4.        E,3                             ZZ05
+0030 C                     Z-ADD8.        E,4                             ZZ05
+0031 C*   100 Q=768: G=1024: R=-1: F=-1: M=0: L=2                         ZZ05
+0032 C           S100      TAG                             **** S100      ZZ05
+0033 C                     Z-ADD-1.       R       30                      ZZ05
+0034 C                     Z-ADD-1.       F                               ZZ05
+0035 C                     Z-ADD0.        M       30                      ZZ05
+0036 C                     Z-ADD2.        L       30                      ZZ05
+0037 C*   120 FOR K=1 TO 209: POKE G+K-1,0: NEXT K                        ZZ05
+0038 C                     Z-ADD0.        G                               ZZ05
+0039 C*   140 N(1)=3+RND(7): N(2)=205-RND(7)                              ZZ05
+0040 C                     Z-ADD7.        LIMIT   20                      ZZ05
+0041 C                     EXSR RANDU                                     ZZ05
+0042 C           3.        ADD  RAND#     N,1                             ZZ05
+0043 C                     EXSR RANDU                                     ZZ05
+0044 C           205.      SUB  RAND#     N,2                             ZZ05
+0045 C*   160 POKE G+N(1),2: POKE G+N(2),24                               ZZ05
+0046 C                     Z-ADDN,1       W1      30                      ZZ05
+0047 C           1.        ADD  W1        W1                              ZZ05
+0048 C                     Z-ADD2.        G,W1                            ZZ05
+0049 C                     Z-ADDN,2       W1                              ZZ05
+0050 C           1.        ADD  W1        W1                              ZZ05
+0051 C                     Z-ADD24.       G,W1                            ZZ05
+0052 C*   180 P=N(1): GOSUB 1000: P=N(2): GOSUB 1000                      ZZ05
+0053 C                     Z-ADDN,1       P       30                      ZZ05
+0054 C                     EXSR S1000                                     ZZ05
+0055 C                     Z-ADDN,2       P                               ZZ05
+0056 C                     EXSR S1000                                     ZZ05
+0057 C*   200 L=3-L: P=N(L)                                               ZZ05
+0058 C           S200      TAG                             **** S200      ZZ05
+0059 C           3.        SUB  L         L                               ZZ05
+0060 C                     Z-ADDN,L       P                               ZZ05
+0061 C*   250 GOSUB 3000: IF P<0 THEN 350                                 ZZ05
+0062 C                     EXSR S3000                                     ZZ05
+0063 C           P         COMP 0.                     10                 ZZ05
+0064 C   10                GOTO S350                                      ZZ05
+0065 C*   300 GOSUB 1000: GOTO 400                                        ZZ05
+0066 C                     EXSR S1000                                     ZZ05
+0067 C                     GOTO S400                                      ZZ05
+0068 C*   350 GOSUB 2000: IF P<0 THEN 500                                 ZZ05
+0069 C           S350      TAG                             **** S350      ZZ05
+0070 C                     EXSR S2000                                     ZZ05
+0071 C           P         COMP 0.                     10                 ZZ05
+0072 C   10                GOTO S500                                      ZZ05
+0073 C*   400 N(L)=P: GOTO 200                                            ZZ05
+0074 C           S400      TAG                             **** S400      ZZ05
+0075 C                     Z-ADDP         N,L                             ZZ05
+0076 C                     GOTO S200                                      ZZ05
+0077 C*   500 FOR K=1 TO 24: PRINT: NEXT K                                ZZ05
+0078 C           S500      TAG                             **** S500      ZZ05
+0079 C*                    MOVE BLANKS    MAZE                            ZZ05
+0080 C*   510 FOR K=1 TO 11                                               ZZ05
+0081 C           K         SUB  K         K                               ZZ05
+0082 C           L510      TAG                             **** L510      ZZ05
+0083 C           K         ADD  1.        K                               ZZ05
+0084 C*   520 FOR L=1 TO 19                                               ZZ05
+0085 C           L         SUB  L         L                               ZZ05
+0086 C           L520      TAG                             **** L520      ZZ05
+0087 C           L         ADD  1.        L                               ZZ05
+0088 C*   540 T=PEEK (G+19*(K-1)+L-1)/2                                   ZZ05
+0089 C           K         SUB  1.        W1                              ZZ05
+0090 C           19.       MULT W1        W1                              ZZ05
+0091 C           W1        ADD  L         W1                              ZZ05
+0092 C           W1        SUB  1.        W1                              ZZ05
+0093 C           1.        ADD  W1        W1                              ZZ05
+0094 C           G,W1      DIV  2.        T                               ZZ05
+0095 C*   560 0$=" ": IF T=2*(T/2) THEN O$="-"                            ZZ05
+0096 C                     MOVE ' '       O$      1                       ZZ05
+0097 C           T         DIV  2.        W1                              ZZ05
+0098 C           W1        MULT 2.        W1                              ZZ05
+0099 C           T         COMP W1                       10               ZZ05
+0100 C   10                MOVE '-'       O$                              ZZ05
+0101 C*   580 PRINT "+";O$;                                               ZZ05
+0102 C                     MOVEL'+'       LINE,L                          ZZ05
+0103 C                     MOVE O$        LINE,L                          ZZ05
+0104 C*   600 NEXT L: PRINT "+"                                           ZZ05
+0105 C           L         COMP 19.                      10               ZZ05
+0106 C  N10                GOTO L520                                      ZZ05
+0107 C                     MOVEALINE      TOP    39                       ZZ05
+0108 C                     MOVE '+'       TOP                             ZZ05
+0109 C*   620 FOR L=1 TO 19                                               ZZ05
+0110 C           L         SUB  L         L                               ZZ05
+0111 C           L620      TAG                             **** L620      ZZ05
+0112 C           L         ADD  1.        L                               ZZ05
+0113 C*   640 T=PEEK(G+19*(K-1)+L-1)/4                                    ZZ05
+0114 C           K         SUB  1.        W1                              ZZ05
+0115 C           19.       MULT W1        W1                              ZZ05
+0116 C           W1        ADD  L         W1                              ZZ05
+0117 C           G,W1      DIV  4.        T                               ZZ05
+0118 C*   660 O$=" ": IF T=2*(T/2) THEN O$="!"                            ZZ05
+0119 C                     MOVE ' '       O$                              ZZ05
+0120 C           T         DIV  2.        W1                              ZZ05
+0121 C           2.        MULT W1        W1                              ZZ05
+0122 C           T         COMP W1                       10               ZZ05
+0123 C   10                MOVE 'I'       O$                              ZZ05
+0124 C*   680 PRINT O$; " ";                                              ZZ05
+0125 C                     MOVELO$        LINE,L                          ZZ05
+0126 C                     MOVE ' '       LINE,L                          ZZ05
+0127 C*   700 NEXT L: PRINT "!"                                           ZZ05
+0128 C           L         COMP 19.                      10               ZZ05
+0129 C  N10                GOTO L620                                      ZZ05
+0130 C                     MOVEALINE      SIDES  39                       ZZ05
+0131 C                     MOVE 'I'       SIDES                           ZZ05
+0132 C                     MOVELTOP       MAZE,K                          ZZ05
+0133 C                     MOVE SIDES     MAZE,K                          ZZ05
+0134 C                     EXCPT                                          ZZ05
+0135 C*   720 NEXT K                                                      ZZ05
+0136 C           K         COMP 11.                      10               ZZ05
+0137 C  N10                GOTO L510                                      ZZ05
+0138 C*   740 P=PEEK(Q+1): T=P-19*(P/19)                                  ZZ05
+0139 C                     Z-ADDQ,2       P                               ZZ05
+0140 C           P         DIV  19.       W1                              ZZ05
+0141 C           19.       MULT W1        W1                              ZZ05
+0142 C           P         SUB  W1        T                               ZZ05
+0143 C*   760 FOR K=1 TO T: PRINT "+-";: NEXT K: PRINT "+ ";              ZZ05
+0144 C           K         SUB  K         K                               ZZ05
+0145 C           L760      TAG                             **** L760      ZZ05
+0146 C           K         ADD  1.        K                               ZZ05
+0147 C                     MOVE '+-'      LINE,K                          ZZ05
+0148 C           K         COMP T                        10               ZZ05
+0149 C  N10                GOTO L760                                      ZZ05
+0150 C           K         ADD  1.        K                               ZZ05
+0151 C                     MOVE '+ '      LINE,K                          ZZ05
+0152 C*   780 FOR K=T+2 TO 19: PRINT "+-";: NEXT K: PRINT "+"             ZZ05
+0153 C           L780      TAG                             **** L780      ZZ05
+0154 C           K         ADD  1.        K                               ZZ05
+0155 C                     MOVE '+-'      LINE,K                          ZZ05
+0156 C           K         COMP 19                       10               ZZ05
+0157 C  N10                GOTO L780                                      ZZ05
+0158 C                     MOVEALINE      BOTTOM 39                       ZZ05
+0159 C                     MOVE '+'       BOTTOM                          ZZ05
+0160 C                     Z-ADD12.       Z       20                      ZZ05
+0161 C                     MOVELBOTTOM    MAZE,Z                          ZZ05
+0162 C                     EXCPT                                          ZZ05
+0163 C*   800 GOTO 100                                                    ZZ05
+0164 C*  1000 R=R+1: POKE Q+R,P: RETURN                                   ZZ05
+0165 CSR         S1000     BEGSR                           ****S1000      ZZ05
+0166 CSR         R         ADD  1.        R                               ZZ05
+0167 C           R         ADD  1.        W1                              ZZ05
+0168 CSR                   Z-ADDP         Q,W1                            ZZ05
+0169 CSR                   ENDSR                                          ZZ05
+0170 C*                                                                   ZZ05
+0171 C*  2000 F=F+1: P=-1: IF F<=R THEN P=PEEK (Q+F): RETURN              ZZ05
+0172 CSR         S2000     BEGSR                           **** S2000     ZZ05
+0173 CSR         F         ADD  1.        F       30                      ZZ05
+0174 CSR                   Z-ADD-1.       P                               ZZ05
+0175 CSR         F         COMP R                      1010               ZZ05
+0176 C           F         ADD  1.        W1                              ZZ05
+0177 CSR 10                Z-ADDQ,W1      P                               ZZ05
+0178 C                     ENDSR                                          ZZ05
+0179 C*                                                                   ZZ05
+0180 C*  3000 K=0                                                         ZZ05
+0181 CSR         S3000     BEGSR                           **** S3000     ZZ05
+0182 CSR                   Z-ADD0.        K       30                      ZZ05
+0183 C*  3100 T=P+1: IF T/19#P/19 THEN 3200                               ZZ05
+0184 CSR         P         ADD  1.        T                               ZZ05
+0185 CSR         T         DIV  19.       W1                              ZZ05
+0186 CSR         P         DIV  19.       W2      30                      ZZ05
+0187 CSR         W1        COMP W2                       10               ZZ05
+0188 CSRN10                GOTO S3200                                     ZZ05
+0189 C*  3150 S=1: GOSUB 4000                                             ZZ05
+0190 CSR                   Z-ADD1.        S       30                      ZZ05
+0191 CSR                   EXSR S4000                                     ZZ05
+0192 C*  3200 T=P-19: IF T<0 THEN 3300                                    ZZ05
+0193 C           S3200     TAG                             **** S3200     ZZ05
+0194 CSR         P         SUB  19.       T       30                      ZZ05
+0195 CSR         T         COMP 0.                     10                 ZZ05
+0196 CSR 10                GOTO S3300                                     ZZ05
+0197 C*  3250 S=2: GOSUB 4000                                             ZZ05
+0198 CSR                   Z-ADD2.        S                               ZZ05
+0199 CSR                   EXSR S4000                                     ZZ05
+0200 C*  3300 T=P-1: IF T/19#P/19 THEN 3400                               ZZ05
+0201 CSR         S3300     TAG                             **** S3300     ZZ05
+0202 CSR         P         SUB  1.        T                               ZZ05
+0203 CSR         T         DIV  19.       W1                              ZZ05
+0204 CSR         P         DIV  19.       W2                              ZZ05
+0205 CSR         W1        COMP W2                       10               ZZ05
+0206 CSRN10                GOTO S3400                                     ZZ05
+0207 C*  3325 IF T<0 THEN 3400                                            ZZ05
+0208 CSR         T         COMP 0.                     10                 ZZ05
+0209 CSR 10                GOTO S3400                                     ZZ05
+0210 C*  3350 S=3: GOSUB 4000                                             ZZ05
+0211 CSR                   Z-ADD3.        S                               ZZ05
+0212 CSR                   EXSR S4000                                     ZZ05
+0213 C*  3400 T=P+19 IF T>=209 THEN 3500                                  ZZ05
+0214 CSR         S3400     TAG                             **** S3400     ZZ05
+0215 CSR         P         ADD  19.       T                               ZZ05
+0216 CSR         T         COMP 209                  10  10               ZZ05
+0217 CSR 10                GOTO S3500                                     ZZ05
+0218 C*  3450 S=4: GOSUB 4000                                             ZZ05
+0219 CSR                   Z-ADD4.        S                               ZZ05
+0220 CSR                   EXSR S4000                                     ZZ05
+0221 C*  3500 IF K#0 THEN 3600: P=-1: RETURN                              ZZ05
+0222 CSR         S3500     TAG                             **** S3500     ZZ05
+0223 C           K         COMP 0.                       10               ZZ05
+0224 CSR   N10             GOTO S3600                                     ZZ05
+0225 C                     Z-ADD-1.       P                               ZZ05
+0226 CSR                   GOTO S3650X                                    ZZ05
+0227 C*  3600 K=1+RND(K): T=C(K)                                          ZZ05
+0228 C           S3600     TAG                             **** S3600     ZZ05
+0229 CSR                   Z-ADDK         LIMIT                           ZZ05
+0230 CSR                   EXSR RANDU                                     ZZ05
+0231 C           1.        ADD  RAND#     K                               ZZ05
+0232 CSR                   Z-ADDC,K       T                               ZZ05
+0233 C*  3610 IF PEEK (G+T)#0 THEN M=1                                    ZZ05
+0234 C           1.        ADD  T         W1                              ZZ05
+0235 CSR         G,W1      COMP 0.                       10               ZZ05
+0236 CSRN10                Z-ADD1.        M                               ZZ05
+0237 C*  3620 IF M=0 THEN B(K)=B(K)+16*(PEEK(G+P)/16)                     ZZ05
+0238 CSR         M         COMP 0.                       10               ZZ05
+0239 C           1.        ADD  P         W1                              ZZ05
+0240 CSR 10      G,W1      DIV  16        W1                              ZZ05
+0241 CSR 10      W1        MULT 16.       W1                              ZZ05
+0242 CSR 10      B,K       ADD  W1        B,K                             ZZ05
+0243 C*  3630 POKE G+P, PEEK (G+P)+A(K)                                   ZZ05
+0244 C           1.        ADD  P         W1                              ZZ05
+0245 CSR         G,W1      ADD  A,K       G,W1                            ZZ05
+0246 C*  3640 POKE G+T, PEEK(G+T)+B(K)                                    ZZ05
+0247 C           1.        ADD  T         W1                              ZZ05
+0248 CSR         G,W1      ADD  B,K       G,W1                            ZZ05
+0249 C*  3650 P=T: RETURN                                                 ZZ05
+0250 CSR                   Z-ADDT         P                               ZZ05
+0251 CSR         S3650X    TAG                             **** S3650X    ZZ05
+0252 CSR                   ENDSR                                          ZZ05
+0253 C*                                                                   ZZ05
+0254 C*  4000 IF PEEK(G+T)=0 THEN 4300                                    ZZ05
+0255 C           S4000     BEGSR                           **** S4000     ZZ05
+0256 C           1.        ADD  T         W1                              ZZ05
+0257 C           G,W1      COMP 0.                       10               ZZ05
+0258 CSR 10                GOTO S4300                                     ZZ05
+0259 C*  4050 IF M#0 THEN RETURN                                          ZZ05
+0260 CSR         M         COMP 0.                       10               ZZ05
+0261 CSRN10                GOTO S4500                                     ZZ05
+0262 C*  4100 IF PEEK(G+P)/16=PEEK(G+T)/16 THEN RETURN                    ZZ05
+0263 C           1.        ADD  P         W1                              ZZ05
+0264 CSR         G,W1      DIV  16.       W1                              ZZ05
+0265 C           1.        ADD  T         W2                              ZZ05
+0266 CSR         G,W2      DIV  16.       W2                              ZZ05
+0267 CSR         W1        COMP W2                       10               ZZ05
+0268 CSR 10                GOTO S4500                                     ZZ05
+0269 C*  4300 K=K+1: C(K)=T: A(K)=E(S)                                    ZZ05
+0270 C           S4300     TAG                             **** S4300     ZZ05
+0271 CSR         K         ADD  1.        K                               ZZ05
+0272 CSR                   Z-ADDT         C,K                             ZZ05
+0273 CSR                   Z-ADDE,S       A,K                             ZZ05
+0274 C*  4400 S=S+2-4*((S+1)/4): B(K)=E(S)                                ZZ05
+0275 CSR         S         ADD  1.        W1                              ZZ05
+0276 CSR         W1        DIV  4.        W1                              ZZ05
+0277 CSR         W1        MULT 4.        W1                              ZZ05
+0278 CSR         2.        SUB  W1        W1                              ZZ05
+0279 CSR         S         ADD  W1        S                               ZZ05
+0280 CSR                   Z-ADDE,S       B,K                             ZZ05
+0281 C*  4500 RETURN                                                      ZZ05
+0282 CSR         S4500     ENDSR                                          ZZ05
+0283 C*                                                                   ZZ05
+0284 C*                                                                   ZZ05
+0285 CSR         RANDU     BEGSR                           **** RANDU     ZZ05
+0286 CSR         SEED      MULT 98.7654321SEED                            ZZ05
+0287 CSR         SEED      MULT SEED      FRAC    99                      ZZ05
+0288 CSR         LIMIT     MULT FRAC      RAND#   50                      ZZ05
+0289 CSR                   ENDSR                                          ZZ05
+0290 C*                                                                   ZZ05
+0291 OWORKSTN D        01                                                 ZZ05
+0292 O       OR        02                                                 ZZ05
+0293 O                                   K6 'ZZ0501'                      ZZ05
+0294 O                         MAZE     936                               ZZ05
+0295 OPRINTER D  3                                                        ZZ05
+0296 O        E  1                                                        ZZ05
+0297 O                         TOP    B  50                               ZZ05
+0298 O        E  1                                                        ZZ05
+0299 O                         SIDES  B  50                               ZZ05

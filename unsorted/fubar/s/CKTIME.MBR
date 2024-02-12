@@ -1,0 +1,14 @@
+0001 H     016                                                            CKTIME
+0002 C                     SETOF                     U1                   CKTIME
+0003 C                     TIME           TIMEX   60                      CKTIME
+0004 C           TIMEX     COMP 113000               20                   CKTIME
+0005 C           TIMEX     COMP 123000                 21                 CKTIME
+0006 C   20 21             SETON                     U1LR                 CKTIME
+0007 C   20 21             GOTO END                                       CKTIME
+0008 C           TIMEX     COMP 070000                 20                 CKTIME
+0009 C   20                SETON                     U1LR                 CKTIME
+0010 C   20                GOTO END                                       CKTIME
+0011 C           TIMEX     COMP 160000               20                   CKTIME
+0012 C   20                SETON                     U1LR                 CKTIME
+0013 C           END       TAG                                            CKTIME
+0014 C                     SETON                     LR                   CKTIME

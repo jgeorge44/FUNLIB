@@ -1,0 +1,111 @@
+0001 H     014                                      5                     BATLE2
+0002 FWK1     CP        250            WORKSTN
+0003 E                    ARY       225  1
+0004 E                    ARZ       225  1 0
+0005 E                    AR1        15  1
+0006 E                    TABLTR 25  25  1   TABNUM  2 0
+0007 C           '# SHIPS' KEY            SHIP#   20
+0008 C                     MOVE '1'       SHIP1   1
+0009 C                     MOVE '11'      SHIP2   2
+0010 C                     MOVE '111'     SHIP3   3
+0011 C                     MOVE '1111'    SHIP4   4
+0012 C                     SETON                     01
+0013 C                     EXCPT
+0014 C                     SETOF                     01
+0015 C           START     TAG
+0016 C           1         ADD  SH1       SH1     20
+0017 C           SH1       COMP SHIP#                60
+0018 C   60                GOTO SHOT
+0019 C                     EXIT SUBRGO
+0020 C                     RLABL          SHIP    40
+0021 C                     MOVELSHIP      LTR1    20
+0022 C                     MOVE SHIP      NUM1    20
+0023 C           LTR1      DIV  25        LWK1    20
+0024 C                     MVR            LWK1
+0025 C           LWK1      MULT 50        Z       40
+0026 C           Z         ADD  NUM1      Z
+0027 C           LTR1      DIV  4         LWK1
+0028 C                     MVR            LWK3    20     61
+0029 C           LWK3      COMP 2                    646263
+0030 C   61                MOVEASHIP1     ARY,Z
+0031 C  N61 62             MOVEASHIP2     ARY,Z
+0032 C  N61 63             MOVEASHIP3     ARY,Z
+0033 C  N61 64             MOVEASHIP4     ARY,Z
+0034 C                     GOTO START
+0035 C           SHOT      TAG
+0036 C  N96 U1             EXSR PRINT
+0037 C  N96                MOVE ARY       ARZ
+0038 C  N96                XFOOTARZ       POINTS  40
+0039 C  N96                SETON                     03
+0040 C  N96                EXCPT
+0041 C  N96                SETOF                     03
+0042 C                     SETON                     0296
+0043 C           'SHOT'    KEY            SHOT    3
+0044 C           SHOT      COMP '   '                    LR
+0045 C   LR                GOTO END
+0046 C                     MOVELSHOT      LTR     1
+0047 C                     MOVE SHOT      NUM     20
+0048 C           LTR       LOKUPTABLTR    TABNUM         40
+0049 C           TABNUM    MULT 50        Z       40
+0050 C           Z         ADD  NUM       Z
+0051 C           ARY,Z     COMP '*'                    5050
+0052 C           1         ADD  C1        C1      30
+0053 C   50      1         ADD  C2        C2      30
+0054 C  N50      1         ADD  C3        C3      30
+0055 C  N50      ARZ,Z     ADD  HITS      HITS    40
+0056 C                     EXCPT
+0057 C  N50                MOVE 0         ARZ,Z
+0058 C  N50                MOVE '#'       ARY,Z
+0059 C   50                MOVE '*'       ARY,Z
+0060 C                     GOTO SHOT
+0061 C           END       TAG
+0062 CLR                   Z-ADD0001      X       40
+0063 CLR         LOOPLR    TAG
+0064 CLR                   MOVEAARY,X     AR1
+0065 CLR                   EXCPT
+0066 CLR         X         COMP 1201                 90  90
+0067 CLR 90                GOTO LREND
+0068 CLR         X         ADD  50        X
+0069 CLR                   GOTO LOOPLR
+0070 CLR         LREND     TAG
+0071 CLR                   XFOOTARZ       TOTSCR  40
+0072 CLR                   SETON                     99
+0073 CLR                   EXCPT
+0074 CSR         PRINT     BEGSR
+0075 CSR                   Z-ADD0001      X
+0076 CSR                   SETON                     98
+0077 CSR         LOOPSR    TAG
+0078 CSR                   MOVEAARY,X     AR1
+0079 CSR         X         COMP 1201                 97  97
+0080 CSR                   EXCPT
+0081 CSR 97                GOTO SREND
+0082 CSR         X         ADD  50        X
+0083 CSR                   GOTO LOOPSR
+0084 CSR         SREND     ENDSR
+0085 OPRNTOUT E  301   01
+0086 O                                   19 'PLEASE PRESS ENTER'
+0087 O                         SHIP#     22
+0088 O                                   28 'TIMES'
+0089 O        E  1     02N50NLR
+0090 O                         C1         5
+0091 O                                   11 'HIT'
+0092 O                         SHOT      15
+0093 O                         ARY,Z     20
+0094 O                         HITS      30
+0095 O        E  1     02 50NLR
+0096 O                                   11 'MISS'
+0097 O                         C1         5
+0098 O                         SHOT      15
+0099 O        E  1     LRN99
+0100 O       OR  1     98N02
+0101 O                         AR1    B  60
+0102 O                 U1 02   X         75
+0103 O        E 3   01 03
+0104 O                         POINTS    20 '    &TOTAL&STRENGTH'
+0105 O        E 31     LR 99
+0106 O                         C1        10 '   &SHOTS'
+0107 O                         C3        30 '   &HITS'
+0108 O                         C2        50 '   &MISSES'
+0109 O                         TOTSCR    65 '    &REMAIN'
+** TABLTR/TABNUM
+A00B01C02D03E04F05G06H07I08J09K10L11M12N13O14P15Q16R17S18T19U20V21W22X23Y24

@@ -1,0 +1,218 @@
+00010H     014                              1                             LPGRAF
+00020FDUMMY   IP  F   1   1            KEYBORD
+00030FWORK    IC  F 128 128R           DISK
+00040FREPORT  O   F 132 132    2OF    LPRINTER
+00050F* ID F  C  H  L    FUNCTION OF INDICATORS                           LPGRAF
+00060F* 01            CONTROL RECORD                                      LPGRAF
+00070F* 02            HEADING RECORD                                      LPGRAF
+00080F* 08            REPORT LINE RECORD                                  LPGRAF
+00090F* 09            BLANK RECORD                                        LPGRAF
+00100F*      51       CUM LEASE LESS THAN CUM PURCHASE THRU PRIOR MONTH   LPGRAF
+00110F*      52       BREAKEVEN MONTH                                     LPGRAF
+00120F*      71       OUTPUT REPORT HEADING LINES                         LPGRAF
+00130F*      72       OUTPUT REPORT LEASE DETAIL LINES                    LPGRAF
+00140F*      73       OUTPUT REPORT PURCHASE DETAIL LINES                 LPGRAF
+00150F*      97       STATUS NOT EQUAL TO 2 - PREVIOUS ERRORS ENCOUNTERED LPGRAF
+00160F*      98       GENERAL PURPOSE CALCULATION RESULT INDICATOR        LPGRAF
+00170F*         H1    TERMINATE PROCESSING - PREVIOUS ERRORS ENCOUNTERED  LPGRAF
+00180E                    AMO        12  9 2                              LPGRAF
+00190E                    PUR        12  9 2                              LPGRAF
+00200E                    LSE        12  9 2                              LPGRAF
+00210E                    MON        12  7 0                              LPGRAF
+00220E                    CUM        12  7 0                              LPGRAF
+00230E                    BE         12  8                                LPGRAF
+0024 LREPORT   66FL 57OL
+00250IWORK    NS  01   1 CX                                               LPGRAF
+00260I                                        2   2 STATUS                LPGRAF
+00270I        NS  02   1 CH                                               LPGRAF
+00280I*                                       2   30BEGYR
+00290I                                        4   50NOYRS                 LPGRAF
+00300I                                        6  35 TITLE                 LPGRAF
+00310I                                       36  65 CUSNAM                LPGRAF
+00320I        NS  08   1 CL                                               LPGRAF
+00330I                                        2   30LNO                   LPGRAF
+00340I*                                       4  18 LDESC
+00350I                                       19  20 ANALYR                LPGRAF
+00360I                                       21 128 AMO                   LPGRAF
+00370I        NS  09   1 C                                                LPGRAF
+00380I*
+0039 C   99                KEY01          TEST    1
+0040 C                     SETON                     99LR
+00410C                     EXSR INIT                                      LPGRAF
+00420C   97                GOTO ENDDET                                    LPGRAF
+00430C                     EXSR CASHBT                                    LPGRAF
+00440C                     EXSR CASHAT                                    LPGRAF
+00450C           ENDDET    TAG                                            LPGRAF
+00460C*****************************************************               LPGRAF
+00470CSR         RRNCAL    BEGSR                                          LPGRAF
+00480C*          ******                                                   LPGRAF
+00490CSR                   Z-ADDLNO       RRN     30                      LPGRAF
+00500CSR         RRN       SUB  1         RRN                             LPGRAF
+00510CSR         RRN       MULT NOYRS     RRN                             LPGRAF
+00520CSR         RRN       ADD  LINE1     RRN                             LPGRAF
+00530CSR                   ENDSR                                          LPGRAF
+00540C*****************************************************               LPGRAF
+00550CSR         PRINT     BEGSR                                          LPGRAF
+00560C*          ******                                                   LPGRAF
+00570CSR         LSE       SUB  LSE       LSE                             LPGRAF
+00580CSR         PUR       SUB  PUR       PUR                             LPGRAF
+00590CSR                   Z-ADDNOYRS     Y       20                      LPGRAF
+00600CSR         PRLOOP    TAG                                            LPGRAF
+00610CSR         LRRN      CHAINWORK                 90
+00620CSR                   EXSR LCUM                                      LPGRAF
+00630CSR                   Z-ADDAMO       MON       H                     LPGRAF
+00640CSR                   Z-ADDLSE       CUM       H                     LPGRAF
+00650CSR                   SETON                     72                   LPGRAF
+00660CSR                   EXCPT                                          LPGRAF
+00670CSR                   SETOF                     72                   LPGRAF
+00680CSR         PRRN      CHAINWORK                 90
+00690CSR                   EXSR PCUM                                      LPGRAF
+00700CSR                   EXSR BKEVEN                                    LPGRAF
+00710CSR                   Z-ADDAMO       MON       H                     LPGRAF
+00720CSR                   Z-ADDPUR       CUM       H                     LPGRAF
+00730CSR                   SETON                     73                   LPGRAF
+00740CSR                   EXCPT                                          LPGRAF
+00750CSR                   SETOF                     73                   LPGRAF
+00760CSR         1         ADD  LRRN      LRRN                            LPGRAF
+00770CSR         1         ADD  PRRN      PRRN                            LPGRAF
+00780CSR         Y         SUB  1         Y          98                   LPGRAF
+00790CSR 98                GOTO PRLOOP                                    LPGRAF
+00800CSR                   SETOF                     51                   LPGRAF
+00810CSR                   ENDSR                                          LPGRAF
+00820C*****************************************************               LPGRAF
+00830CSR         LCUM      BEGSR                                          LPGRAF
+00840C*          ******                                                   LPGRAF
+00850CSR         AMO,1     ADD  LSE,12    LSE,1                           LPGRAF
+00860CSR                   Z-ADD1         I       20                      LPGRAF
+00870CSR                   Z-ADD2         J       20                      LPGRAF
+00880CSR         LCLOOP    TAG                                            LPGRAF
+00890CSR         LSE,I     ADD  AMO,J     LSE,J                           LPGRAF
+00900CSR         1         ADD  I         I                               LPGRAF
+00910CSR         1         ADD  J         J                               LPGRAF
+00920CSR         J         COMP 12                     9898               LPGRAF
+00930CSR 98                GOTO LCLOOP                                    LPGRAF
+00940CSR                   ENDSR                                          LPGRAF
+00950C*****************************************************               LPGRAF
+00960CSR         BKEVEN    BEGSR                                          LPGRAF
+00970C*          ******                                                   LPGRAF
+00980CSR         I         SUB  I         I                               LPGRAF
+00990CSR         BELOOP    TAG                                            LPGRAF
+01000CSR         1         ADD  I         I                               LPGRAF
+01010CSR         I         COMP 12                   98                   LPGRAF
+01020CSR 98                GOTO ENDBE                                     LPGRAF
+01030CSR                   MOVE '        'BE,I                            LPGRAF
+01040CSR 51                GOTO BETEST                                    LPGRAF
+01050CSR         LSE,I     COMP PUR,I                  51                 LPGRAF
+01060CSR                   GOTO BELOOP                                    LPGRAF
+01070CSR         BETEST    TAG                                            LPGRAF
+01080CSR         LSE,I     COMP PUR,I                52  52               LPGRAF
+01090CSR 52                MOVE '********'BE,I                            LPGRAF
+01100CSR 52                SETOF                     51                   LPGRAF
+01110CSR                   GOTO BELOOP                                    LPGRAF
+01120CSR         ENDBE     ENDSR                                          LPGRAF
+01130C*****************************************************               LPGRAF
+01140CSR         PCUM      BEGSR                                          LPGRAF
+01150C*          ******                                                   LPGRAF
+01160CSR         AMO,1     ADD  PUR,12    PUR,1                           LPGRAF
+01170CSR                   Z-ADD1         I                               LPGRAF
+01180CSR                   Z-ADD2         J                               LPGRAF
+01190CSR         PCLOOP    TAG                                            LPGRAF
+01200CSR         PUR,I     ADD  AMO,J     PUR,J                           LPGRAF
+01210CSR         1         ADD  I         I                               LPGRAF
+01220CSR         1         ADD  J         J                               LPGRAF
+01230CSR         J         COMP 12                     9898               LPGRAF
+01240CSR 98                GOTO PCLOOP                                    LPGRAF
+01250CSR                   ENDSR                                          LPGRAF
+01260C*****************************************************               LPGRAF
+01270CSR         INIT      BEGSR                                          LPGRAF
+01280C*          ******                                                   LPGRAF
+01290CSR         1         CHAINWORK                 90
+01300CSR         STATUS    COMP '2'                  9797                 LPGRAF
+01310CSR 97                SETON                     H1                   LPGRAF
+01320CSR 97                GOTO ENDI                                      LPGRAF
+01330CSR         2         CHAINWORK                 90
+01340CSR                   Z-ADD15        LINE1   20                      LPGRAF
+01350CSR         ENDI      ENDSR                                          LPGRAF
+01360C*****************************************************               LPGRAF
+01370CSR         CASHBT    BEGSR                                          LPGRAF
+01380C*          ******                                                   LPGRAF
+01390CSR                   MOVEL'BEFORE ' HEADNG 10                       LPGRAF
+01400CSR                   MOVE 'TAX'     HEADNG                          LPGRAF
+01410CSR                   SETON                     71                   LPGRAF
+01420CSR                   EXCPT                                          LPGRAF
+01430CSR                   SETOF                     71                   LPGRAF
+01440CSR                   Z-ADD8         LNO                             LPGRAF
+01450CSR                   EXSR RRNCAL                                    LPGRAF
+01460CSR                   Z-ADDRRN       PRRN    30                      LPGRAF
+01470CSR                   Z-ADD16        LNO                             LPGRAF
+01480CSR                   EXSR RRNCAL                                    LPGRAF
+01490CSR                   Z-ADDRRN       LRRN    30                      LPGRAF
+01500CSR                   EXSR PRINT                                     LPGRAF
+01510CSR                   ENDSR                                          LPGRAF
+01520C*****************************************************               LPGRAF
+01530CSR         CASHAT    BEGSR                                          LPGRAF
+01540C*          ******                                                   LPGRAF
+01550CSR                   MOVEL'AFTER '  HEADNG                          LPGRAF
+01560CSR                   MOVE 'TAX '    HEADNG                          LPGRAF
+01570CSR                   SETON                     71                   LPGRAF
+01580CSR                   EXCPT                                          LPGRAF
+01590CSR                   SETOF                     71                   LPGRAF
+01600CSR                   Z-ADD14        LNO                             LPGRAF
+01610CSR                   EXSR RRNCAL                                    LPGRAF
+01620CSR                   Z-ADDRRN       PRRN                            LPGRAF
+01630CSR                   Z-ADD19        LNO                             LPGRAF
+01640CSR                   EXSR RRNCAL                                    LPGRAF
+01650CSR                   Z-ADDRRN       LRRN                            LPGRAF
+01660CSR                   EXSR PRINT                                     LPGRAF
+01670CSR                   ENDSR                                          LPGRAF
+01680C*****************************************************               LPGRAF
+0169 OREPORT  H  101   OF
+0170 O                                   45 'ESTIMATED MONTHLY '
+0171 O                                   62 'CASH FLOW TOALS '
+0172 O                         HEADNG    72
+0173 O                         UDATE Y   98
+0174 O        H  3     OF
+0175 O                         TITLE     30
+0176 O                         CUSNAM   100
+0177 O        H  2     OF
+0178 O                                    4 'YEAR'
+0179 O                                   38 'JAN       FEB       MAR'
+0180 O                                   68 'APR       MAY       JUN'
+0181 O                                   98 'JUL       AUG       SEP'
+0182 O                                  128 'OCT       NOV       DEC'
+01830OREPORT  E  101   71                                                 LPGRAF
+01840O                                   45 'ESTIMATED MONTHLY '          LPGRAF
+01850O                                   62 'CASH FLOW TOTALS '           LPGRAF
+01860O                         HEADNG    72                               LPGRAF
+01870O                         UDATE Y   98                               LPGRAF
+01880O        E  3     71                                                 LPGRAF
+01890O                         TITLE     30                               LPGRAF
+01900O                         CUSNAM   100                               LPGRAF
+01910O        E  2     71                                                 LPGRAF
+01920O                                    4 'YEAR'                        LPGRAF
+01930O                                   38 'JAN       FEB       MAR'     LPGRAF
+01940O                                   68 'APR       MAY       JUN'     LPGRAF
+01950O                                   98 'JUL       AUG       SEP'     LPGRAF
+01960O                                  128 'OCT       NOV       DEC'     LPGRAF
+01970O        E  1     73                                                 LPGRAF
+01980O                         BE,1      20
+0199 O                         BE,2      30
+0200 O                         BE,3      40
+0201 O                         BE,4      50
+0202 O                         BE,5      60
+0203 O                         BE,6      70
+0204 O                         BE,7      80
+0205 O                         BE,9      90
+0206 O                         BE,10    100
+0207 O                         BE,11    110
+0208 O                         BE,12    120
+02090O        EF 1     72                                                 LPGRAF
+02100O       OR  1     73                                                 LPGRAF
+02110O                 72      ANALYR     3                               LPGRAF
+02120O                 72                10 'LEASE'                       LPGRAF
+02130O                 73                10 'PURCH'                       LPGRAF
+02140O                         MON   L  130
+0215 O        E  1     72
+0216 O       OR  2     73
+0217 O                                   10 'CUM'
+0218 O                         CUM   L  130

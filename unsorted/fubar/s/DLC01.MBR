@@ -1,0 +1,89 @@
+     H                                      1                             DLC01
+     FWORKSTA CP         44            WORKSTN
+     F                                              KNUM        1
+     FWHICH   ID        128            DISK
+     FWORK    UC        128R           DISK
+     FOUTPUT  O         132           LPRINTER
+     E                    CHAR      128  1
+     E                    DATA      128  1
+     E                    NEW        40  1
+     LOUTPUT   66FL 66OL
+     IWHICH   NS  01
+     I                                        1 128 CHAR
+     IWORK    NS  04
+     I                                        1 128 DATA
+     IWORKSTA NS  02   1 C1
+     I                                        2   2 YORN
+     I                                        3   3 CHANGE
+     I                                        4  43 NEW
+     I                                       44  44 RESET
+     I        NS  03
+     C   03                EXSR RFILE
+     C   02      YORN      COMP 'N'                  111110
+     C   10      RESET     COMP 'R'                      34
+     C   10                EXSR CNVRT
+     C   11                EXSR PRINT
+     CSR         RFILE     BEGSR
+     CSR         LOOP1     TAG
+     CSR                   READ WHICH                    31
+     CSR 31                GOTO END
+     CSR         N         ADD  1         N       30
+     CSR         N         CHAINWORK                 30
+     CSR                   SETON                     20
+     CSR                   EXCPT
+     CSR                   SETOF                     20
+     CSR                   GOTO LOOP1
+     CSR         END       ENDSR
+     CSR         CNVRT     BEGSR
+     CSR                   EXSR SETUP
+     CSR                   Z-ADD1         I       30
+     CSR         LOOP2     TAG
+     CSR                   Z-ADD1         J       30
+     CSR                   Z-ADD1         K       20
+     CSR         I         CHAINWORK                 30
+     CSR                   MOVEADATA      CHAR
+     CSR         LOOP3     TAG
+     CSR         CHAR,J    COMP CHANGE               323231
+     CSR 32 34             Z-ADD1         K
+     CSR 31                MOVE NEW,K     CHAR,J
+     CSR 31      K         ADD  1         K
+     CSR         K         COMP S                    32
+     CSR 32                Z-ADD1         K
+     CSR         J         ADD  1         J
+     CSR         J         COMP 128                    3232
+     CSR 32                GOTO LOOP3
+     CSR         I         ADD  1         I
+     CSR         I         COMP N                      3232
+     CSR                   SETON                     20
+     CSR                   EXCPT
+     CSR                   SETOF                     20
+     CSR 32                GOTO LOOP2
+     CSR                   ENDSR
+     CSR         SETUP     BEGSR
+     CSR                   Z-ADD41        S       20
+     CSR         LOOP4     TAG
+     CSR         S         COMP 1                        32
+     CSR 32                GOTO PASS
+     CSR         S         SUB  1         S
+     CSR         NEW,S     COMP ' '                      32
+     CSR 32                GOTO LOOP4
+     CSR         PASS      ENDSR
+     CSR         PRINT     BEGSR
+     CSR                   Z-ADD1         I
+     CSR         LOOP5     TAG
+     CSR         I         CHAINWORK                 30
+     CSR                   MOVEADATA      CHAR
+     CSR                   SETON                     21
+     CSR                   EXCPT
+     CSR                   SETOF                     21
+     CSR         I         ADD  1         I
+     CSR         I         COMP N                      3232
+     CSR 32                GOTO LOOP5
+     CSR                   ENDSR
+     OWORK    E        20
+     O                         CHAR     128
+     OOUTPUT  E        21
+     O                         CHAR     130
+     OWORKSTA D        03
+     O       OR        10
+     O                                   K6 'SCRN01'

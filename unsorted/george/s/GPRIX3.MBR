@@ -1,0 +1,127 @@
+0101 H   C  10                                     04                     GPRIX3
+0102 FVIDEO   CP         22            WORKSTN                            GPRIX3
+0106 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPRIX3
+0107 F*                                                                 * GPRIX3
+0108 F*  IN  PR  OUT  INDICATOR USED.                                   * GPRIX3
+0109 F*  ----------------------------                                   * GPRIX3
+0110 F*  02  --  02   'PF2' KEY PRESSED.                                * GPRIX3
+0111 F*  03  --  03   'PF3' KEY PRESSED.                                * GPRIX3
+0112 F*  10  --  10   'CMD1 ' KEY PRESSED.                              * GPRIX3
+0113 F*  --  21  21   VEHICLE HAS STOPPED.                              * GPRIX3
+0114 F*  --  22  22   VEHICLE HAS NOT STOPPED.                          * GPRIX3
+0115 F*  --  31  31   VEHICLE SPEED DECREASING.                         * GPRIX3
+0116 F*  --  32  32   VEHICLE SPEED STEADY.                             * GPRIX3
+0117 F*  --  33  33   VEHICLE SPEED INCREASING.                         * GPRIX3
+0118 F*  --  40  --   VEHICLE STARTED. ALL FACTORS VALID.               * GPRIX3
+0119 F*  50  --  50   'ACCEL' FACTOR INVALID.                           * GPRIX3
+0120 F*  --  60  --   'ACCEL' FACTOR VALID.                             * GPRIX3
+0121 F*  51  --  51   'GEARS' FACTOR INVALID.                           * GPRIX3
+0122 F*  --  61  --   'GEARS' FACTOR VALID.                             * GPRIX3
+0123 F*  52  --  52   'DECEL' FACTOR INVALID.                           * GPRIX3
+0124 F*  --  62  --   'DECEL' FACTOR VALID.                             * GPRIX3
+0125 F*  --  --  66   INVALID FACTOR SCREEN GENERATOR.                  * GPRIX3
+0126 F*  77  --  77   # INVALID KEY PRESSED.                            * GPRIX3
+0127 F*  --  80  80   ENTRY FOUND IN 'ARA'.                             * GPRIX3
+0128 F*  --  81  81   VEHICLE SPEED EXCESSIVE. VEHICLE HAS CRASHED.     * GPRIX3
+0129 F*  --  88  88   VEHICLE SPEED ACCEPTABLE. CONTINUE.               * GPRIX3
+0130 F*  --  99  99   LAST TIME AROUND.                                 * GPRIX3
+0131 F*                                                                 * GPRIX3
+0132 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPRIX3
+0133 E                    ARA    11  11  2 0             COUNTER          GPRIX3
+0134 E                    ARB    11  11  3 0             SPEED            GPRIX3
+0136 IVIDEO   NS                                                          GPRIX3
+0137 I                                        1   10ACCEL                 GPRIX3
+0138 I                                        2   20GEAR                  GPRIX3
+0139 I                                        3   30DECEL                 GPRIX3
+0140 I                                        4   50CTR                   GPRIX3
+0141 I                                        6   80SPEED                 GPRIX3
+0142 I                                        9  170FSPD                  GPRIX3
+0143 C  NKB                SETON                     10                   GPRIX3
+0144 C   KB                SETON                     02                   GPRIX3
+0145 C** KC                SETON                     03                   GPRIX3
+D\   C                     SETOF                     77
+0146 C           CTR       SUB  0         CTR     20                      GPRIX3
+0147 C           SPEED     SUB  0         SPEED   30                      GPRIX3
+0148 C           FSPD      SUB  0         FSPD    90                      GPRIX3
+0149 C   10      CTR       COMP 30                   998899               GPRIX3
+0150 C   10 88   CTR       ADD  1         CTR     20                      GPRIX3
+0151 C   10      ACCEL     COMP 5                    506060               GPRIX3
+0152 C   10      GEAR      COMP 4                    516161               GPRIX3
+0153 C   10      DECEL     COMP 5                    526262               GPRIX3
+0154 C   60 61 62ACCEL     MULT GEAR      AXEL    90                      GPRIX3
+0155 C   60 61 62AXEL      MULT 400       AXEL                            GPRIX3
+0156 C   60 61 62DECEL     MULT 1600      BRAKE   90                      GPRIX3
+0157 C   60 61 62AXEL      SUB  BRAKE     DIFF    90                      GPRIX3
+0158 C   60 61 62SPEED     MULT SPEED     SQUARE  90                      GPRIX3
+0159 C   60 61 62SQUARE    ADD  DIFF      SUM     90                      GPRIX3
+0160 C   60 61 62SUM       COMP 0                    222121               GPRIX3
+0161 C   21      CTR       SUB  1         CTR                             GPRIX3
+0162 C   21                Z-ADD0         SPEED                           GPRIX3
+0163 C   22                SQRT SUM       SPEED                           GPRIX3
+0164 C   10      FSPD      ADD  SPEED     FSPD                            GPRIX3
+0165 C   60 61 62          Z-ADD1         IN      20                      GPRIX3
+0166 C   60 61 62CTR       LOKUPARA,IN                   80               GPRIX3
+0167 C   80      SPEED     COMP ARB,IN               81                   GPRIX3
+0168 C   99      FSPD      DIV  31        AVSPD   30                      GPRIX3
+0169 C   99      3600      DIV  AVSPD     TOTIME  30                      GPRIX3
+0170 C  N10N77             Z-ADD0         ACCEL   10                      GPRIX3
+0171 C  N10N77             Z-ADD0         GEAR    10                      GPRIX3
+0172 C  N10N77             Z-ADD0         DECEL   10                      GPRIX3
+0173 C   81                Z-ADD0         CTR                             GPRIX3
+     C   50
+     COR 51
+     COR 52      CTR       SUB  1         CTR
+0174 C           CTR       ADD  0         COUNTY  20                      GPRIX3
+0175 C           SPEED     ADD  0         SPEEDY  30                      GPRIX3
+0176 C   21                SETOF                         10               GPRIX3
+0177 C   50                SETOF                         10               GPRIX3
+0178 C   51                SETOF                         10               GPRIX3
+0179 C   52                SETOF                         10               GPRIX3
+0180 C   99                SETOF                         10               GPRIX3
+0181 C   50                SETON                         66               GPRIX3
+0182 C   51                SETON                         66               GPRIX3
+0183 C   52                SETON                         66               GPRIX3
+0184 C                     SETON                         LR               GPRIX3
+     C  N50                SETON                     90
+     C  N51                SETON                     91
+     C  N52                SETON                     92
+     C  N81                SETON                     94
+     C  N21                SETON                     95
+     C   21
+     COR 81                SETON                     96
+     C  N96                SETON                     97
+     C                     SETOF                     U3
+     C   02                SETON                     U2
+     C   99                SETON                     U4
+     C  N99N02             SETON                     U3
+0185 OVIDEO   D        10                                                 GPRIX3
+0188 O       OR        21                                                 GPRIX3
+0189 O       OR        66                                                 GPRIX3
+0190 O       OR        77                                                 GPRIX3
+0192 O                                   K6 'ZZTRAK'                      GPRIX3
+0193 O                         ACCEL Z    1                               GPRIX3
+0194 O                         GEAR  Z    2                               GPRIX3
+0195 O                         DECEL Z    3                               GPRIX3
+0196 O                         COUNTYZ    5                               GPRIX3
+0197 O                         CTR        7                               GPRIX3
+0198 O                         SPEEDYZ   10                               GPRIX3
+0199 O                         SPEED     13                               GPRIX3
+0200 O                         FSPD      22                               GPRIX3
+0201 O*                                                                   GPRIX3
+0202 O        D        02                                                 GPRIX3
+0203 O                                   K6 'ZZTRAC'                      GPRIX3
+0204 O                         GEAR       2                               GPRIX3
+0205 O                         DECEL      3                               GPRIX3
+0206 O*                                                                   GPRIX3
+0207 O*       D        03                                                 GPRIX3
+0208 O*                                  K6 'ZZENDZ'                      GPRIX3
+0209 O*                                                                   GPRIX3
+0210 O        D        99                                                 GPRIX3
+0211 O                                   K6 'ZZENDG'                      GPRIX3
+0212 O                         TOTIMEZ    3                               GPRIX3
+0213 O                         AVSPD      6                               GPRIX3
+**  ARA
+0408101113151921242529
+**  ARB
+125050100090085045040110140115130
+/*

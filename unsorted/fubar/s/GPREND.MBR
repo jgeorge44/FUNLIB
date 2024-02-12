@@ -1,0 +1,34 @@
+0101 H   C                                                                GPREND
+0102 FVIDEO   CP          3            WORKSTN                            GPREND
+0106 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPREND
+0107 F*                                                                 * GPREND
+0108 F*  IN  PR  OUT  INDICATOR USED.                                   * GPREND
+0109 F*  ----------------------------                                   * GPREND
+0110 F*  01  --  01   'PF1' KEY PRESSED.                                * GPREND
+0111 F*  02  --  02   'PF2' KEY PRESSED.                                * GPREND
+0112 F*  03  --  03   'PF3' KEY PRESSED.                                * GPREND
+0113 F*  77  --  77   # INVALID KEY PRESSED.                            * GPREND
+0114 F*                                                                 * GPREND
+0115 F* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * GPREND
+0117 IVIDEO   NS                                                          GPREND
+     I                                        1   1 DUMMY
+     C                     SETOF                     U4
+0118 C   KB                SETON                     01U1                 GPREND
+0120 C   KC                SETON                     03U5                 GPREND
+     C  NKANKBNKC          SETON                     77U4
+0121 C                     Z-ADD0         ACCEL   10                      GPREND
+0122 C                     Z-ADD0         GEAR    10                      GPREND
+0123 C                     Z-ADD0         DECEL   10                      GPREND
+0124 C                     SETON                         LR               GPREND
+0125 OVIDEO   D        01                                                 GPREND
+0126 O                                   K6 'ZZFROG'                      GPREND
+0127 O        D        02                                                 GPREND
+0128 O                                   K6 'ZZTRAC'                      GPREND
+0129 O                         ACCEL      1                               GPREND
+0130 O                         GEAR       2                               GPREND
+0131 O                         DECEL      3                               GPREND
+0132 O        D        03
+0133 O                                   K6 'ZZENDZ'                      GPREND
+0134 O        D        77                                                 GPREND
+0135 O                                   K6 'ZZENDG'                      GPREND
+/*

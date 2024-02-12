@@ -1,0 +1,38 @@
+     H                                                                    MAZE
+     FWORKSTN CP        210            WORKSTN
+     E                    GATE       93  1
+     IWORKSTN NS  01   1 C-
+     I                                        1  93 GATE
+     I            05
+     IL0CAL      UDS
+     I                                        1  93 GATE
+     C  N01                GOTO END
+     C                     Z-ADD0         X       20
+     C                     Z-ADD9         G       20
+     C                     SETOF                     9899
+     C           COUNT     TAG
+     C           1         ADD  G         G
+     C           85        COMP G                        02
+     C   02      20        COMP X                    9998LR
+     C  N02      ' '       COMP GATE,G                   03
+     C  N03                MOVE 'X'       GATE,G
+     C  N02N03   1         ADD  X         X
+     C  N02                GOTO COUNT
+     C           END       TAG
+     C           X         SUB  8         X
+     OWORKSTN D       NLR
+     O                                   K5 'FIRST'
+     O                N01                 8 '--------'
+     O                N01                17 '|       |'
+     O                N01                34 '|       |'
+     O                N01                51 '|       |'
+     O                N01                68 '|       |'
+     O                N01                85 '|       |'
+     O                N01                93 '--------'
+     O                 01      GATE      93
+     O                       99         194 'TOO FEW GATES LOCKED  ('
+     O                       98         194 'TOO MANY GATES LOCKED ('
+     O                       98X        196
+     O                       99X        196
+     O                       99         210 ') -- TRY AGAIN'
+     O                       98         210 ') -- TRY AGAIN'

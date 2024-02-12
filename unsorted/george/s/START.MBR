@@ -1,0 +1,7 @@
+0001 H    P010                      B       1                             START
+0002 FDECK    IP     18  18            DISK
+0003 FDECK1   O      18  18            DISK
+0004 IDECK    NS  01
+0005 I                                        1  18 REC
+0006 ODECK1   D        01
+0007 O                         REC       18

@@ -1,0 +1,26 @@
+0101 H   C                                         03                     GPRIX1
+0102 FVIDEO   CP          3            WORKSTN                            GPRIX1
+     FPRINTER O         132            PRINTER
+0106 F******************************************************************* GPRIX1
+0107 F*                                                                 * GPRIX1
+0108 F* 10            'CMD1 ' KEY PRESSED.                              * GPRIX1
+0109 F* 03            'PF3' KEY PRESSED.                                * GPRIX1
+0110 F* 77            # INVALID KEY HAS BEEN PRESSED.                   * GPRIX1
+0111 F*                                                                 * GPRIX1
+0112 F******************************************************************* GPRIX1
+0114 IVIDEO   NS                                                          GPRIX1
+     I                                        1   1 DUMMY
+0117 C                     Z-ADD0         ACCEL   10                      GPRIX1
+0118 C                     Z-ADD0         GEAR    10                      GPRIX1
+0119 C                     Z-ADD0         DECEL   10                      GPRIX1
+0120 C                     SETON                         LR               GPRIX1
+     C                     SETON                     909192
+     C                     SETON                     949597
+     C                     SETON                     U2
+     C                     SETOF                     U1
+0121 OVIDEO   D                                                           GPRIX1
+0122 O                                   K6 'ZZTRAC'                      GPRIX1
+0123 O                         ACCEL      1                               GPRIX1
+0124 O                         GEAR       2                               GPRIX1
+0125 O                         DECEL      3                               GPRIX1
+/*

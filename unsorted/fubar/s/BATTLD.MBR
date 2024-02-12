@@ -1,0 +1,20 @@
+0001 FBATTLE  IC    228 228R 2AI     1 DISK
+0002 IBATTLE  NS  05
+0003 I                                        1   2 BTLKEY
+0004 I                                        3   3 ACTION
+0005 I                                        4 228 ARI
+0006 I                                        4  18 FLD1
+0007 I                                       19  33 FLD2
+0008 I                                       34  48 FLD3
+0009 I                                       49  63 FLD4
+0010 I                                       64  78 FLD5
+0011 I                                       79  93 FLD6
+0012 I                                       94 108 FLD7
+0013 I                                      109 123 FLD8
+0014 I                                      124 138 FLD9
+0015 I                                      139 153 FLD10
+0016 I                                      154 168 FLD11
+0017 I                                      169 183 FLD12
+0018 I                                      184 198 FLD13
+0019 I                                      199 213 FLD14
+0020 I                                      214 228 FLD15

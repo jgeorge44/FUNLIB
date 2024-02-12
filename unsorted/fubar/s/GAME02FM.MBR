@@ -1,0 +1,28 @@
+0001 SGAME0201       Y10
+0002 DFL0001  00190230Y               Y                CSYSTEM/34 BLACKJACK
+0003 DFL0002  00170530Y                                CDEALER: DOWN CARD
+0004 DFL0003  00030548Y               Y
+0005 DFL0004  00090638Y                                CUP CARDS
+0006 DFL0005  00030648Y               Y
+0007 DFL0006  00030748Y               Y
+0008 DFL0007  00030848Y               Y
+0009 DFL0008  00030948Y               Y
+0010 DFL0009  00101230Y                                CYOUR HAND:
+0011 DFL0010  00031248Y               Y
+0012 DFL0011  00031348Y               Y
+0013 DFL0012  00031448Y               Y
+0014 DFL0013  00031548Y               Y
+0015 DFL0014  00031648Y               Y
+0016 DFL0015  00121930Y               Y                CYOUR ACTION?
+0017 DACTION  00011948   YAY   Y   Y        Y
+0018 DFL0017  00191951Y                                C(H = HIT, S = STAY)
+0019 DFL0018    252330Y
+0020 SGAME0202       YY     Y
+0021 DFL0001  00190230Y               Y                CSYSTEM/34 BLACKJACK
+0022 DFL0002  00080618Y                                CYOU HAVE
+0023 DFL0003     60627Y               Y
+0024 DFL0004    320634Y                                CCHIPS LEFT. YOU MAY BETX
+0025 D 1 TO 999
+0026 DFL0005  00150833Y                                CCHIPS PER HAND.
+0027 DFL0006  00101233Y               Y                CYOUR BET?
+0028 DACTION     31244   YN Y BY   Y        Y

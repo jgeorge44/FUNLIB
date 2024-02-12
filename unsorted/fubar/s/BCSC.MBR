@@ -1,0 +1,377 @@
+00010H     014                              1      02                     BCSC
+00020F* THIS PROGRAM CALCULATES AND DISPLAYSBIORHYTHM CHARTS
+00030FSCREEN  CP       1919            WORKSTN
+0004 F                                              KNUM        2
+00050FBIOCHARTO     132 132            PRINTER
+00060E                    MON    12  12  4
+00070E                    MCNT   12  12  2 0
+00080E                    PT     10  23  4                WBS
+00090E                    ET     10  28  4                WBS
+00100E                    IT     10  33  4                WBS
+00110E                    LIN        62  1
+00120E                    BLN        62  1
+00130E                    PHY        31  4
+00140E                    EMT        31  4
+00150E                    INT        31  4
+00160E                    CD          8  2 0
+00170E                    CDE         8  2 0              WBS
+00180E                    TYPE        8  3
+00190E                    TYP         8  3                WBS
+00200E                    SCR        33 62
+0021 ISCREEN  NS  01   1 CX
+0022 I                                        3   40BMONTH
+0023 I                                        5   60BDAY
+0024 I                                        7  100BYEAR
+0025 I                                       11  120CMONTH
+0026 I                                       13  160CYEAR
+0027 I        NS  02   1 C
+00280C   KA                GOTO END
+0029 C                     MOVE ' '       LIN
+0030 C                     MOVE ' '       BLN
+0031 C                     MOVE '    '    PHY
+0032 C                     MOVE '    '    EMT
+0033 C                     MOVE '    '    INT
+0034 C                     Z-ADD0         CD
+0035 C                     Z-ADD0         CDE
+0036 C                     MOVE '   '     TYPE
+0037 C                     MOVE '   '     TYP
+0038 C                     Z-ADD0         IR
+0039 C                     Z-ADD0         IL
+0040 C                     Z-ADD0         L
+0041 C                     Z-ADD0         R
+0042 C                     Z-ADD0         P
+0043 C                     Z-ADD0         D
+0044 C                     Z-ADD0         E
+0045 C                     Z-ADD0         I
+0046 C                     Z-ADD0         TL
+0047 C                     Z-ADD0         TR
+0048 C                     Z-ADD0         LN
+0049 C                     Z-ADD0         PL
+0050 C                     Z-ADD0         PR
+0051 C                     Z-ADD0         EL
+0052 C                     Z-ADD0         ER
+0053 C                     Z-ADD0         Y
+0054 C                     Z-ADD0         K
+0055 C                     Z-ADD0         J
+0056 C                     Z-ADD0         Q
+0057 C                     Z-ADD0         X
+0058 C                     Z-ADD0         C
+0059 C                     SETOF                     070809
+0060 C                     SETOF                     101112
+0061 C                     SETOF                     131718
+0062 C                     SETOF                     192324
+0063 C                     SETOF                     282930
+0064 C                     SETOF                     333450
+0065 C                     SETOF                     515562
+0066 C                     SETOF                     677172
+0067 C                     SETOF                     777881
+0068 C                     SETOF                     828587
+0069 C                     SETOF                     888991
+0070 C                     SETOF                     929495
+0071 C                     SETOF                     969799
+0072 C  N01                GOTO END
+0073 C  NKA                SETOF                     KA
+00740C                     MOVE BMONTH    B       20
+00750C                     MOVE BYEAR     BLY     20
+00760C           BLY       COMP 0                        88
+00770C                     MOVE CMONTH    C       20
+00780C                     MOVE CYEAR     CLY     20
+00790C           CLY       COMP 0                        89
+00800C                     Z-ADD1         XMONTH  40
+00810C                     Z-ADD0         TMONTH  40
+00820C                     Z-ADD0         WORK    50
+00830C  N88      BLY       DIV  4         TEST    40
+00840C  N88                MVR            LEAP    40     94
+00850C   88      BYEAR     DIV  400       TEST
+00860C   88                MVR            LEAP           94
+00870C   94      BMONTH    COMP 2                        92
+00880C           BYEAR     COMP CYEAR                090710
+00890C   10      BMONTH    COMP CMONTH               090810
+00900C   07                GOTO TAG01
+00910C   08                GOTO TAG01
+00920C   09                GOTO TAG23
+00930C   10                GOTO TAG08
+00940C           TAG01     TAG
+00950C                     MOVE BMONTH    M       20
+00960C           MCNT,M    SUB  BDAY      WORK
+00970C           WORK      ADD  1         WORK
+00980C   92      WORK      ADD  1         WORK
+00990C           TAG02     TAG
+01000C           M         COMP 12                       81
+01010C   81                GOTO TAG03
+01020C           M         ADD  1         M
+01030C   94      M         COMP 2                        92
+01040C   08      M         COMP CMONTH                   85
+01050C   08 85   WORK      ADD  1         WORK
+01060C   08 85             GOTO TAG08
+01070C           WORK      ADD  MCNT,M    WORK
+01080C   92      WORK      ADD  1         WORK
+01090C                     GOTO TAG02
+01100C           TAG03     TAG
+01110C                     Z-ADDBYEAR     TYEAR   40
+01120C                     SETOF                       9294
+01130C           TAG04     TAG
+01140C           TYEAR     ADD  1         TYEAR
+01150C                     MOVE TYEAR     TLY     20
+01160C           TLY       COMP 00                       96
+01170C  N96      TYEAR     DIV  4         TEST
+01180C  N96                MVR            LEAP           94
+01190C   96      TYEAR     DIV  400       TEST
+01200C   96                MVR            LEAP           94
+01210C           TYEAR     COMP CYEAR                    95
+01220C   95                GOTO TAG05
+01230C           WORK      ADD  365       WORK
+01240C   94      WORK      ADD  1         WORK
+01250C                     GOTO TAG04
+01260C           TAG05     TAG
+01270C                     Z-ADD0         M
+01280C           TAG06     TAG
+01290C           M         ADD  1         M
+01300C   94      M         COMP 2                        92
+01310C           M         COMP CMONTH                   82
+01320C   82                GOTO TAG07
+01330C           WORK      ADD  MCNT,M    WORK
+01340C   92 94   WORK      ADD  1         WORK
+01350C                     GOTO TAG06
+01360C           TAG07     TAG
+01370C           WORK      ADD  1         WORK
+01380C           TAG08     TAG
+01390C  N92                MOVE MCNT,C    METEST  20
+01400C   92                MOVE 29        METEST
+01410C                     MOVE '    '    PHY
+01420C                     MOVE '    '    EMT
+01430C                     MOVE '    '    INT
+01440C  N10      WORK      DIV  23        HASH    50
+01450C  N10                MVR            P       20     23
+01460C  N10 23             Z-ADD23        P              23
+01470C  N10                Z-ADD0         D       20
+01480C   10                Z-ADD1         P
+01490C   10      BDAY      SUB  1         D
+01500C           TAG09     TAG
+01510C           D         ADD  1         D
+01520C                     MOVE PT,P      PHY,D
+01530C           D         COMP METEST                   71
+01540C   71                GOTO TAG10
+01550C           P         ADD  1         P
+01560C           P         COMP 23                   24
+01570C   24      P         SUB  23        P
+01580C                     GOTO TAG09
+01590C           TAG10     TAG
+01600C  N10      WORK      DIV  28        HASH
+01610C  N10                MVR            E       20     28
+01620C  N10 28             Z-ADD28        E              28
+01630C  N10                Z-ADD0         D
+01640C   10                Z-ADD1         E
+01650C   10      BDAY      SUB  1         D
+01660C           TAG11     TAG
+01670C           D         ADD  1         D
+01680C                     MOVE ET,E      EMT,D
+01690C           D         COMP METEST                   71
+01700C   71                GOTO TAG12
+01710C           E         ADD  1         E
+01720C           E         COMP 28                   29
+01730C   29      E         SUB  28        E
+01740C                     GOTO TAG11
+01750C           TAG12     TAG
+01760C  N10      WORK      DIV  33        HASH
+01770C  N10                MVR            I       20     33
+01780C  N10 33             Z-ADD33        I              33
+01790C  N10                Z-ADD0         D
+01800C   10                Z-ADD1         I
+01810C   10      BDAY      SUB  1         D
+01820C           TAG13     TAG
+01830C           D         ADD  1         D
+01840C                     MOVE IT,I      INT,D
+01850C           D         COMP METEST                   71
+01860C   71                GOTO TAG14
+01870C           I         ADD  1         I
+01880C           I         COMP 33                   34
+01890C   34      I         SUB  33        I
+01900C                     GOTO TAG13
+01910C           TAG14     TAG
+01920C                     Z-ADD1         X       20     78
+01930C                     Z-ADD0         D
+01940C           TAG15     TAG
+01950C           D         ADD  1         D
+01960C                     MOVELPHY,D     TL      20
+01970C                     MOVE PHY,D     TR      20
+01980C           TL        COMP 17                       77
+01990C  N77      TR        COMP 17                       77
+02000C   77                MOVE D         CD,X
+02010C   77                MOVE 'P  '     TYPE,X
+02020C   77                SETON                     78
+02030C                     MOVELEMT,D     TL
+02040C                     MOVE EMT,D     TR
+02050C           TL        COMP 17                       77
+02060C  N77      TR        COMP 17                       77
+02070C   77N78             MOVE D         CD,X
+02080C   77                MOVE 'E '      TYPE,X
+02090C   77N78             SETON                     78
+02100C                     MOVELINT,D     TL
+02110C                     MOVE INT,D     TR
+02120C           TL        COMP 17                       77
+02130C  N77      TR        COMP 17                       77
+02140C   77N78             MOVE D         CD,X
+02150C   77                MOVE 'I'       TYPE,X
+02160C   77N78             SETON                     78
+02170C   78      X         ADD  1         X              78
+02180C           D         COMP METEST                   72
+02190C  N72                GOTO TAG15
+02200C                     SETON                         50
+02210C                     Z-ADD0         LN      20
+02220C           TAG16     TAG
+02230C           LN        ADD  1         LN
+02240C                     Z-ADD0         P
+02250C                     Z-ADD0         E
+02260C                     Z-ADD0         I
+02270C           TAG17     TAG
+02280C           P         ADD  1         P
+02290C           P         MULT 2         R       20
+02300C           R         SUB  1         L       20
+02310C                     MOVELPHY,P     PL      20
+02320C                     MOVE PHY,P     PR      20
+02330C           PL        COMP LN                       11
+02340C           PR        COMP LN                       12
+02350C   11                MOVE 'P'       LIN,L
+02360C           P         COMP METEST                   72
+02370C  N72                GOTO TAG17
+02380C           TAG18     TAG
+02390C           E         ADD  1         E
+02400C           E         MULT 2         R
+02410C           R         SUB  1         L
+02420C                     MOVELEMT,E     EL      20
+02430C                     MOVE EMT,E     ER      20
+02440C           EL        COMP LN                       11
+02450C           ER        COMP LN                       12
+02460C   11      LIN,L     COMP ' '                      99
+02470C   11 99             MOVE 'E'       LIN,L
+02480C   11N99             MOVE '+'       LIN,L
+02490C           E         COMP METEST                   72
+02500C  N72                GOTO TAG18
+02510C           TAG19     TAG
+02520C           I         ADD  1         I
+02530C           I         MULT 2         R
+02540C           R         SUB  1         L
+02550C                     MOVELINT,I     IL      20
+02560C                     MOVE INT,I     IR      20
+02570C           IL        COMP LN                       11
+02580C           IR        COMP LN                       12
+02590C   11      LIN,L     COMP ' '                      99
+02600C   11 99             MOVE 'I'       LIN,L
+02610C   11N99   LIN,L     COMP '+'                      87
+02620C   11N99N87          MOVE '+'       LIN,L
+02630C   11N99 87          MOVE '*'       LIN,L
+02640C           I         COMP METEST                   72
+02650C  N72                GOTO TAG19
+02660C           LN        COMP 17                       17
+02670C  N17                GOTO TAG21
+02680C                     Z-ADD0         Y       20
+02690C           TAG20     TAG
+02700C           Y         ADD  1         Y
+02710C           LIN,Y     COMP ' '                      18
+02720C   18                MOVE '-'       LIN,Y
+02730C           Y         COMP 62                       62
+02740C  N62                GOTO TAG20
+02750C           TAG21     TAG
+02760C* CODE TO ALLOW EVERY OTHER LINE TO PRINT
+02770C                     MOVE LN        K       10        WBS
+02780C           K         DIV  2         K                 WBS
+02790C                     MVR            J       10 51  55 WBS
+02800C           LN        COMP 33                       30 WBS
+02810C   19 51   X         ADD  1         X                 WBS
+02820C   19      X         COMP 9                      19
+02830C           Q         ADD  1         Q       20       WBS
+02840C                     MOVEALIN       SCR,Q            WBS
+02850C   51                MOVE BLN       LIN               WBS
+02860C   19 51             MOVE CD,X      CDE,X            WBS
+02870C   19 51             MOVE TYPE,X    TYP,X            WBS
+02880C           Q         COMP 33                       67 WBS
+02890C   67                Z-ADD1         Q                 WBS
+02900C   17                SETON                     19
+02910C   17                Z-ADD0         X
+02920C                     SETOF                     5051
+02930C  N30                GOTO TAG16
+02940C                     SETOF                     19      WBS
+02950C           TMONTH    ADD  1         TMONTH
+02960C           TMONTH    COMP XMONTH                   97
+02970C   97                GOTO TAG23
+02980C   10      2         SUB  BDAY      WORK
+02990C   10                SETOF                     10
+03000C           WORK      ADD  METEST    WORK
+03010C           C         ADD  1         C
+03020C           C         COMP 12                   13
+03030C  N13                GOTO TAG22
+03040C           C         SUB  12        C
+03050C           CYEAR     ADD  1         CYEAR
+03060C           CLY       ADD  1         CLY            89
+03070C  N89      CYEAR     DIV  4         TEST
+03080C  N89                MVR            LEAP           94
+03090C   89      CYEAR     DIV  400       TEST
+03100C   89                MVR            LEAP           94
+03110C           TAG22     TAG
+03120C                     MOVE C         CMONTH
+03130C   94      CMONTH    COMP 2                        92
+03140C                     GOTO TAG08
+03150C           TAG23     TAG
+0316 C           END       TAG
+03170C   KA                SETON                     LR
+03180C                     SETOF                     9192
+03190OSCREEN  D        01NLR
+0320 O                                   K5 'BCSCR'
+0321 O                         MON,C      4
+0322 O                         CYEAR      8
+0323 O                         MON,B     12
+0324 O                         BDAY      14
+0325 O                         BYEAR     18
+0326 O                         SCR,01 B  80
+0327 O                         SCR,03 B 142
+0328 O                         SCR,05 B 204
+0329 O                         SCR,07 B 266
+0330 O                         SCR,09 B 328
+0331 O                         SCR,11 B 390
+0332 O                         SCR,13 B 452
+0333 O                         SCR,15 B 514
+0334 O                         SCR,17 B 576
+0335 O                         SCR,19 B 638
+0336 O                         CDE,01ZB 640
+0337 O                         TYP,01 B 643
+0338 O                         SCR,21 B 705
+0339 O                         CDE,02ZB 707
+0340 O                         TYP,02 B 710
+0341 O                         SCR,23 B 772
+0342 O                         CDE,03ZB 774
+0343 O                         TYP,03 B 777
+0344 O                         SCR,25 B 839
+0345 O                         CDE,04ZB 841
+0346 O                         TYP,04 B 844
+0347 O                         SCR,27 B 906
+0348 O                         CDE,05ZB 908
+0349 O                         TYP,05 B 911
+0350 O                         SCR,29 B 973
+0351 O                         CDE,06ZB 975
+0352 O                         TYP,06 B 978
+0353 O                         SCR,31 B1040
+0354 O                         CDE,07ZB1042
+0355 O                         TYP,07 B1045
+0356 O                         SCR,33 B1107
+0357 O                         CDE,08ZB1109
+0358 O                         TYP,08 B1112
+0359 O        D        02
+0360 O                                   K5 'BCINP'
+**
+JAN.FEB.MAR.APR.MAY JUNEJULYAUG.SEP.OCT.NOV.DEC.
+**
+312831303130313130313031
+**
+1716151413121110090807060607080910111213
+1415161718192021222324252627282827262524
+232221201918
+**
+1716151413121110090807060504030405060708
+0910111213141516171819202122232524262728
+29303130292827262524232221201918
+**
+1716151413121110090807060504030201010203
+0405060708091011121314151617181920212223
+2425262728293031323333323130292827262524
+232221201918

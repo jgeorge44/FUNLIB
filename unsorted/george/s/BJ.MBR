@@ -1,0 +1,277 @@
+0001 H                              B                                     BJ
+0002 FWORK    CD  F     300            WORKSTN
+0003 E                    PH         10  2
+0004 E                    DH         10  2
+0005 E                    VAL    20 208  2 0
+0006 E                    CD     11  11  2
+0007 IWORK    NS  10   1 C1
+0008 I                                        2   60BEGBAL
+0009 I        NS  11   1 C2
+0010 I                                        2   60BET             19
+0011 I        NS  12   1 C3
+0012 I                                        2   2 REPLY
+0013 I        NS  13   1 C
+0014 C                     READ WORK
+0015 C                     SETON                     01
+0016 C                     EXCPT
+0017 C                     READ WORK
+0018 C                     SETOF                     01
+0019 C                     Z-ADDBEGBAL    BANK    61
+0020 C                     Z-ADD200       C#
+0021 C           START     TAG
+0022 C                     MOVEA'        'PH,3
+0023 C                     MOVEA'        'PH,7
+0024 C                     MOVEAPH        DH
+0025 C                     SETOF                     03
+0026 C                     SETON                     02
+0027 C           BANK      COMP 1                      97
+0028 C           GETBET    TAG
+0029 C                     SETOF                     70
+0030 C                     EXCPT
+0031 C   KG
+0032 COR 97                GOTO ENDPGM
+0033 C                     READ WORK
+0034 C           BET       COMP BANK                 70
+0035 C   19
+0036 COR 70                EXCPT
+0037 C   19
+0038 COR 70                GOTO GETBET
+0039 C           C#        COMP 178                  20
+0040 C   20                EXCPT
+0041 C   20                EXSR SHFFLE
+0042 C                     SETOF                     20
+0043 C                     Z-ADDBET       SVBET   50
+0044 C                     Z-ADD0         BET2
+0045 C                     SETOF                     02
+0046 C                     Z-ADDVAL,C#    PTOT    20
+0047 C                     Z-ADDPTOT      SAVE1   20
+0048 C                     MOVE CD,PTOT   PH,1
+0049 C           VAL,C#    COMP 11                       30
+0050 C           C#        ADD  1         C#      30
+0051 C                     Z-ADDVAL,C#    DTOT    20
+0052 C                     MOVE CD,DTOT   DH,1
+0053 C           VAL,C#    COMP 11                       35
+0054 C   35                SETON                     60
+0055 C           C#        ADD  1         C#
+0056 C           PTOT      ADD  VAL,C#    PTOT
+0057 C                     Z-ADDVAL,C#    K       20
+0058 C                     Z-ADDK         SAVE2   20
+0059 C                     MOVE CD,K      PH,2
+0060 C  N30      VAL,C#    COMP 11                       30
+0061 C   30                SETON                     29
+0062 C           PTOT      COMP 21                   31  40
+0063 C   31                Z-ADD12        PTOT
+0064 C                     Z-ADD3         PC      20
+0065 C           C#        ADD  1         C#
+0066 C           DTOT      ADD  VAL,C#    DTOT
+0067 C                     Z-ADDVAL,C#    K
+0068 C                     MOVE CD,K      DH,2
+0069 C           DTOT      COMP 21                   31  50
+0070 C   31                Z-ADD12        DTOT
+0071 C  N35      VAL,C#    COMP 11                       35
+0072 C           C#        ADD  1         C#
+0073 C                     Z-ADD3         DC      20
+0074 C                     SETON                     03
+0075 C                     EXCPT
+0076 C   60                EXCPT
+0077 C   60                READ WORK
+0078 C   60      REPLY     COMP 'Y'                      61
+0079 C   60 61   BET       DIV  2         INSBET  61
+0080 C   60 61 50BANK      ADD  INSBET    BANK
+0081 C   60 61N50BANK      SUB  INSBET    BANK
+0082 C                     SETOF                     6061
+0083 C   40N50   BET       MULT 1.5       WINBET  61
+0084 C   40N50   BANK      ADD  WINBET    BANK
+0085 C   50N40   BANK      SUB  BET       BANK
+0086 C   40
+0087 COR 50                SETON                     82
+0088 C   40
+0089 COR 50                GOTO END
+0090 C                     SETON                     80
+0091 C           HORS      TAG
+0092 C                     SETOF                     55
+0093 C                     EXCPT
+0094 C                     READ WORK
+0095 C                     SETOF                     65
+0096 C           REPLY     COMP 'H'                      81
+0097 C           REPLY     COMP 'S'                      82
+0098 C           REPLY     COMP 'D'                      83
+0099 C           REPLY     COMP 'P'                      55
+0100 C   83 75             GOTO HORS
+0101 C   84 55             GOTO HORS
+0102 C  N55
+0103 CANN81N82N83          GOTO HORS
+0104 C   82                GOTO STAY
+0105 C   83                SETON                     82
+0106 C   83      BET       MULT 2         BET
+0107 C   55      SAVE1     COMP SAVE2                6565
+0108 C   65                GOTO HORS
+0109 C   55                SETON                     84
+0110 C           DEAL      TAG
+0111 C   84N25             Z-ADD2         PC
+0112 C   84N25             Z-ADDSAVE1     PTOT
+0113 C   84N25             SETON                     25
+0114 C           PTOT      ADD  VAL,C#    PTOT
+0115 C                     Z-ADDVAL,C#    K
+0116 C                     MOVE CD,K      PH,PC
+0117 C           PC        ADD  1         PC
+0118 C           PTOT      COMP 21                   90
+0119 C           VAL,C#    COMP 11                       91
+0120 C           C#        ADD  1         C#
+0121 C   90 91   PTOT      SUB  10        PTOT
+0122 C   90N91N30          GOTO LOSE
+0123 C  N90 91             SETON                     30
+0124 C   90N91 30PTOT      SUB  10        PTOT
+0125 C   90N91 30          SETOF                     30
+0126 C                     SETOF                     9091
+0127 C   84 29             GOTO STAY
+0128 C  N84                SETON                     75
+0129 C   84      PC        COMP 3                    75
+0130 C  N83                GOTO HORS
+0131 C           STAY      TAG
+0132 C   84 27             GOTO DONE
+0133 C   84N90             Z-ADDBET       BET2    50
+0134 C   84                Z-ADDPTOT      PTOT2   20
+0135 C   84                Z-ADDSVBET     BET
+0136 C   84                SETON                     27
+0137 C   84                SETOF                     2583
+0138 C   84                MOVEA'        'PH,3
+0139 C   84                MOVEA'        'PH,7
+0140 C   84                GOTO DEAL
+0141 C           DONE      TAG
+0142 C                     SETON                     79
+0143 C                     SETOF                     80
+0144 C           DTOT      COMP 17                   85  85
+0145 C   85                GOTO COMP
+0146 C           DTOT      ADD  VAL,C#    DTOT
+0147 C           DTOT      COMP 21                   92
+0148 C           VAL,C#    COMP 11                       93
+0149 C                     Z-ADDVAL,C#    K
+0150 C                     MOVE CD,K      DH,DC
+0151 C           C#        ADD  1         C#
+0152 C           DC        ADD  1         DC
+0153 C                     EXCPT
+0154 C   92N93N35          GOTO WIN
+0155 C   92 93   DTOT      SUB  10        DTOT
+0156 C  N92 93             SETON                     35
+0157 C   92N93 35DTOT      SUB  10        DTOT
+0158 C   92N93 35          SETOF                     35
+0159 C                     SETOF                     9293
+0160 C                     GOTO STAY
+0161 C           COMP      TAG
+0162 C   84 92             GOTO WIN
+0163 C           PTOT      COMP DTOT                 949596
+0164 C   94                GOTO WIN
+0165 C   96                GOTO PUSH
+0166 C           LOSE      TAG
+0167 C                     Z-SUBBET       BET
+0168 C           WIN       TAG
+0169 C           BANK      ADD  BET       BANK
+0170 C           PUSH      TAG
+0171 C   84      BET2      COMP -1                       45
+0172 C   45 84             GOTO END
+0173 C   84N27             Z-ADD-1        BET2
+0174 C   84N27             GOTO STAY
+0175 C   84                Z-ADDBET2      BET
+0176 C   84                Z-ADDPTOT2     PTOT
+0177 C   84                Z-ADD-1        BET2
+0178 C   84                GOTO DONE
+0179 C           END       TAG
+0180 C                     SETON                     9979
+0181 C                     SETOF                     8075
+0182 C                     EXCPT
+0183 C                     SETOF                     272955
+0184 C                     SETOF                     909192
+0185 C                     SETOF                     939495
+0186 C                     SETOF                     257984
+0187 C                     SETOF                     969982
+0188 C                     READ WORK
+0189 C                     GOTO START
+0190 C           ENDPGM    TAG
+0191 C                     SETON                     LR
+0192 CSR         SHFFLE    BEGSR
+0193 CSR                   Z-ADD1         C#
+0194 CSR         RESET     TAG
+0195 CSR                   Z-ADD1         I       30
+0196 CSR                   TIME           SEED    60
+0197 CSR                   Z-ADDSEED      RESLT  130
+0198 CSR         RESLT     DIV  23        RESLT
+0199 CSR         LOOP      TAG
+0200 CSR         RESLT     MULT 85749     RESLT
+0201 CSR         RESLT     DIV  208       DIVD   130
+0202 CSR                   MVR            J       30
+0203 CSR         J         ADD  1         J
+0204 CSR                   MOVE VAL,I     TEMP    20
+0205 CSR                   MOVE VAL,J     VAL,I
+0206 CSR                   MOVE TEMP      VAL,J
+0207 CSR         I         ADD  1         I
+0208 CSR         I         COMP 209                    55
+0209 CSR 55                GOTO LOOP
+0210 CSR         C#        ADD  1         C#
+0211 CSR         C#        COMP 20                     55
+0212 CSR 55                GOTO RESET
+0213 CSR                   Z-ADD1         C#
+0214 CSR                   ENDSR
+0215 OWORK    E        01
+0216 O                                   K4 'BANK'
+0217 O        E        02N20
+0218 O                                   K3 'BET'
+0219 O                         BANK       9 '$     . '
+0220 O                       70          34 'YOUR BET CANNOT EXCEED Y'
+0221 O                       70          58 'OUR BANKROLL, RE-ENTER  '
+0222 O                 97                34 'YOU''VE BEEN WIPED OUT. '
+0223 O                 97                58 'THIS GAME IS OVER!      '
+0224 O        E        20
+0225 O                                   K3 'MSG'
+0226 O                                   26 'PRESS ENTER TO GET THE D'
+0227 O                                   38 'ECK SHUFFLED'
+0228 O        E        03
+0229 O                                   K5 'HANDS'
+0230 O                         PH        20
+0231 O                N79      DH,1      22
+0232 O                 79      DH        40
+0233 O                       60         156 'DO YOU WANT INSURANCE (Y'
+0234 O                       60         160 '/N):'
+0235 O                 80                85 'DOUBLE, SPLIT, HIT OR ST'
+0236 O                 80                89 'AY ?'
+0237 O                 80               160 '(D/P/H/S):'
+0238 O                 40N50 82          75 'YOU HAVE BLACKJACK! YOU '
+0239 O                 40N50 82          79 'WIN!'
+0240 O                N40 50 82          75 'DEALER HAS BLACKJACK! YO'
+0241 O                N40 50 82          82 'U LOSE!'
+0242 O                 40 50 82          75 'TIE! WE BOTH HAVE BLACKJ'
+0243 O                 40 50 82          79 'ACK!'
+0244 O                 90N91N84          75 'YOU''RE OVER 21, YOU LOS'
+0245 O                 90N91N84          77 'E!'
+0246 O                 92N93N84          75 'DEALER IS OVER 21, YOU W'
+0247 O                 92N93N84          78 'IN!'
+0248 O                 94N84             75 'YOU BEAT THE DEALER, YOU'
+0249 O                 94N84             80 ' WIN!'
+0250 O                 95N84             75 'DEALER BEAT YOU, YOU LOS'
+0251 O                 95N84             77 'E!'
+0252 O                 96N84             75 'TIE, NOBODY WINS OR LOSE'
+0253 O                 96N84             77 'S!'
+0254 O                 83 75            194 'YOU CAN ONLY DOUBLE ON 2'
+0255 O                 83 75            200 ' CARDS'
+0256 O                 84 55            194 'ONLY ONE SPLIT PER DEAL '
+0257 O                 84N27N99         185 'FIRST HAND'
+0258 O                 84 27N99         185 'SECOND HAND'
+0259 O                 65               194 'YOU CAN ONLY SPLIT PAIRS'
+0260 O                 84 99             75 'FIRST HAND TOTAL = '
+0261 O                 84 99   PTOT2     79
+0262 O                 99               159 'PRESS ENTER FOR NEXT HAN'
+0263 O                 99               160 'D'
+**
+11111111111111111111111111111111 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
+ 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4
+ 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 7
+ 7 7 7 7 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8
+ 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 9 9
+ 9 9 9 910101010101010101010101010101010
+1010101010101010101010101010101010101010
+1010101010101010101010101010101010101010
+1010101010101010
+**
+   2 3 4 5 6 7 8 9 F A

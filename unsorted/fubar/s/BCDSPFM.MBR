@@ -1,0 +1,27 @@
+0001 SBCDSP01   0124 NN
+0002 D          120102Y                                 PROGRAM SIZE
+0003 D          140134Y                                 PROGRAM STATUS
+0004 D           40168Y                                 TIME
+0005 DSTOP       80173Y
+0006 D*
+0007 D*
+0008 DX          22402Y                     62
+0009 D          1424 5Y                                 TASK EXECUTING
+0010 DUSIZE      52420Y
+0011 D          172426Y                                 STORAGE AVAILIBLE
+0012 DTOTPSZ     42446Y
+0013 D          182451Y                                 STORAGE COMMITMENT
+0014 DOVRCMT     52470Y
+0015 D           52476Y                                 RATIO
+0016 D*
+0017 D*
+0018 D*
+0019 SBCDSP02   V 00 NN
+0020 DHEAD1      9 1 2Y
+0021 DDLNZ1      8 112Y               31    21
+0022 DDLNZ2      8 122Y               32    22
+0023 DDLNZ3      8 132Y               33    23
+0024 DDLNZ4      8 142Y               34    24
+0025 DDLNZ5      8 152Y               35    25
+0026 DDLNZ6      8 162Y               36    26
+0027 DDLNZ7      8 172Y               37    27

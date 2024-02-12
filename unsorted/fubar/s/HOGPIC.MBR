@@ -1,0 +1,77 @@
+0001 H                              B       1                             HOGPIC
+0002 FHOG     IP    128 128            DISK
+0003 FPICTURE O     132 132     OF     PRINTER
+0004 IHOG     011O90   1 CF
+0005 I                                        2 128 DATA5
+0006 I        021O10   1 CR
+0007 I                                        2   7 LINENO
+0008 I                                        8 128 DATA1
+0009 I        031O20   1 CM
+0010 I                                        2   7 LINENO
+0011 I                                        8 128 DATA2
+0012 I        041O30   1 CX
+0013 I                                        2   7 LINENO
+0014 I                                        8 128 DATA3
+0015 I        051O40   1 CG
+0016 I                                        8 128 DATA4
+0017 I        06NO50   1 CS
+0018 I                                        3   80BDATE
+0019 I                                       10  29 BOPP
+0020 I                                       31  45 BSITE
+0021 I                                       47  520FDATE
+0022 I                                       54  73 FOPP
+0023 I                                       75  89 FSITE
+0024 C   10                SETOF                     203040
+0025 C   20                SETOF                     103040
+0026 C   30                SETOF                     102040
+0027 C   40                SETOF                     102030
+0028 C   50                SETOF                     102030
+0029 C   50                SETOF                     40
+0030 C                     SETOF                     60
+0031 C   70                GOTO SKIP
+0032 C   50                SETON                     60
+0033 C   50                SETON                     70
+0034 C           SKIP      TAG
+0035 C   50      FDATE     COMP 000000                   80
+0036 OPICTURE D  202   60
+0037 O                                   18 '<<<<<<<<<<<<<'
+0038 O                                   39 'BASKETBALL 1978-79'
+0039 O                                   55 '>>>>>>>>>>>>>'
+0040 O                                   91 '<<<<<<<<<<<<<<<'
+0041 O                                  107 'FOOTBALL 1978'
+0042 O                                  125 '>>>>>>>>>>>>>>>>'
+0043 O        D  0     60
+0044 O                                   11 'DATE'
+0045 O                                   28 'OPPONENT'
+0046 O                                   49 'SITE'
+0047 O                                   81 'DATE'
+0048 O                                   98 'OPPONENT'
+0049 O                                  119 'SITE'
+0050 O        D  3     60
+0051 O                                   11 '____'
+0052 O                                   28 '________'
+0053 O                                   49 '____'
+0054 O                                   81 '____'
+0055 O                                   98 '________'
+0056 O                                  119 '____'
+0057 O        D  0     10
+0058 O                         DATA1    124
+0059 O        D  0     20
+0060 O                         DATA2    124
+0061 O        D  0     30
+0062 O                         DATA3    124
+0063 O        D  1     40
+0064 O                                    2 '**'
+0065 O                         DATA4    124
+0066 O                                  132 '**'
+0067 O        D  2     50
+0068 O                         BDATE Y   13
+0069 O                         BOPP      38
+0070 O                         BSITE     58
+0071 O                   N80   FDATE Y   83
+0072 O                         FOPP     108
+0073 O                         FSITE    128
+0074 O        D  1     90
+0075 O                                    1 '*'
+0076 O                         DATA5    128
+0077 O                                  132 '****'

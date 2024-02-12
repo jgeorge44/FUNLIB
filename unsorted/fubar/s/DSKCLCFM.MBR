@@ -1,0 +1,63 @@
+0001 SDSKCLC01  0124 YY         99
+0002 DACCUM   0017023399                    Y
+0003 DOP      0002043099 Y     Y              Y
+0004 DFL0003  0016043399 Y                    Y
+0005 DFL0004  00010613Y                                CA
+0006 DFL0005  0017061501
+0007 DFL0006  00010650Y                                CB
+0008 DFL0007  0017065202
+0009 DFL0008  00010713Y                                CC
+0010 DFL0009  0017071503
+0011 DFL0010  00010750Y                                CD
+0012 DFL0011  0017075204
+0013 DFL0012  00010813Y                                CE
+0014 DFL0013  0017081505
+0015 DFL0014  00010850Y                                CF
+0016 DFL0015  0017085206
+0017 DFL0016  00010913Y                                CG
+0018 DFL0017  0017091507
+0019 DFL0018  00010950Y                                CH
+0020 DFL0019  0017095208
+0021 DFL0020  00011013Y                                CI
+0022 DFL0021  0017101509
+0023 DFL0022  00011050Y                                CJ
+0024 DFL0023  0017105210
+0025 DFL0024  00011113Y                                CK
+0026 DFL0025  0017111511
+0027 DFL0026  00011150Y                                CL
+0028 DFL0027  0017115212
+0029 DFL0028  00011213Y                                CM
+0030 DFL0029  0017121513
+0031 DFL0030  00011250Y                                CN
+0032 DFL0031  0017125214
+0033 DFL0032  00011313Y                                CO
+0034 DFL0033  0017131515
+0035 DFL0034  00011350Y                                CP
+0036 DFL0035  0017135216
+0037 DFL0036  00011413Y                                CQ
+0038 DFL0037  0017141517
+0039 DFL0038  00011450Y                                CR
+0040 DFL0039  0017145218
+0041 DFL0040  00011513Y                                CS
+0042 DFL0041  0017151519
+0043 DFL0042  00011550Y                                CT
+0044 DFL0043  0017155220
+0045 DFL0044  00011613Y                                CU
+0046 DFL0045  0017161521
+0047 DFL0046  00011650Y                                CV
+0048 DFL0047  0017165222
+0049 DFL0048  00011713Y                                CW
+0050 DFL0049  0017171523
+0051 DFL0050  00011750Y                                CX
+0052 DFL0051  0017175224
+0053 DFL0052  00011813Y                                CY
+0054 DFL0053  0017181525
+0055 DFL0054  00011850Y                                CZ
+0056 DFL0055  0017185226
+0057 DFL0056  03902002Y               Y                C+  Add        -  SubtraX
+0058 Dct   *  Multiply   /  Divide     %  Percent    EN-End    AD            SBX
+0059 D            ML            DV            PC            PT-Print  ST-Accum.X
+0060 D to Store  CA-Clear Accum.  SQ-Square Root   SV-Save  RT-Restore       GTX
+0061 D-Store to Accum.  RS-Clear Stores  XF-Crossfoot     CN-Cancel Last OperatX
+0062 Dion  RM-Get Remainder    SG-Change Sign   IN-Integer Value Fx-User FunctiX
+0063 Don

@@ -1,0 +1,19 @@
+0001 H                                                                    TIMER
+0002 FINPUT   IP  F      15            KEYBORD
+0003 FOUTPUT  O   F  80  80            CRT
+0004 C   10      'START'   KEY            XXX     10 10
+0005 C                     Z-ADDSEC       SAVE    20
+0006 C                     TIME           WORK   120
+0007 C                     MOVELWORK      HOURS   60
+0008 C                     MOVE HOURS     SEC     20
+0009 C           SAVE      COMP SEC                      12
+0010 C   12      1         ADD  COUNT     COUNT  150
+0011 C   12                GOTO RUN
+0012 C                     MOVE WORK      DAYS    60
+0013 C                     SETON                     11
+0014 C                     EXCPT
+0015 C           RUN       TAG
+0016 OOUTPUT  E 0001   11
+0017 O                         HOURS     40 '  :  :  '
+0018 O                         DAYS  Y   50
+0019 O                         COUNT ZB  70

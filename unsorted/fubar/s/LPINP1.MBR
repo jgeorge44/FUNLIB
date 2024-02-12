@@ -1,0 +1,274 @@
+0001 H     014                              1                             LPINP1
+0002 F****************************************************************
+0003 F*                                                              *
+0004 F*  LPINIT... THIS PROGRAM DISPLAYS THE PROMPTS FROM THE PROMPT *
+0005 F*   FILE AND HOLDS THE RESPONSES.  IF NO ANSWER IS GIVEN TO A  *
+0006 F*   QUESTION, THE DEFAULT ANSWER IS USED...                    *
+0007 F*                                                              *
+0008 F*   IND      USE                                               *
+0009 F*    20    ANSWER IS NO                                        *
+0010 F*    21    ANSWER IS YES                                       *
+0011 F*    40    NO ANSWER ENTERED... TAKE DEFAULT RESPONSE          *
+0012 F*    65    CHANGE TO ANSWERS REQUESTED                         *
+0013 F*    71    FORMAT 1 ID                                         *
+0014 F*    72    FORMAT 2 ID                                         *
+0015 F*    73    FORMAT 3 ID                                         *
+0016 F*    74    FORMAT 4 ID                                         *
+0017 F*    75    FORMAT 5 ID                                         *
+0018 F*    76    FORMAT 6 ID                                         *
+0019 F*    77    FORMAT 7 ID                                         *
+0020 F*    78    FORMAT 8 ID                                         *
+0021 F*    79    FORMAT 9 ID                                         *
+0022 F*    U1    THIS PROGRAM IS BEING USED FOR CHANGES ONLY         *
+0023 F*                                                              *
+0024 F*  MESSAGE TEXT FOR SETS/KEY...                                *
+0025 F*    01      1 FOR YES,   0 FOR NO                             *
+0026 F*    02    ANY CHANGES TO THE INPUT                            *
+0027 F*    03    KEY QUESTION # TO BE CHANGED                        *
+0028 F*    04    RENTAL % FOR YEAR                                   *
+0029 F*    05    SAME FOR REMAINING YEARS ON REPORT                  *
+0030 F*    06    ENTER MAINTENANCE % FOR YEAR                        *
+0031 F*    30    ANY EXTRA SHIFT RENTAL                              *
+0032 F*    31    EXTRA MAINTENANCE DESIRED                           *
+0033 F*    32    ANY ADDITIONAL LEASE EXPENSES                       *
+0034 F*    33    ANY ADDITIONAL PURCHASE EXPENSES                    *
+0035 F*    34    ENTER EXPENSES FOR YEAR                             *
+0036 F*                                                              *
+0037 F****************************************************************
+0038 FDATA    IP         30            KEYBORD
+0039 FLIST    O         132    2       PRINTER
+0040 FPROMPT  UC        128R           DISK
+0041 E                    MRP        11  4 1
+0042 E                    EXP        11  7 0
+0043 IPROMPT  NS  71   4 C1
+0044 I       OR   72   4 C2
+0045 I       OR   73   4 C3
+0046 I       OR   74   4 C4
+0047 I       OR   75   4 C5
+0048 I       OR   76   4 C6
+0049 I       OR   77   4 C7
+0050 I       OR   78   4 C8
+0051 I       OR   79   4 C9
+0052 I                                        5  44 MSG
+0053 I                                       45  74 DEF
+0054 I        NS  01
+0055 C****************************************************************
+0056 C         U1          GOTO CHANGE
+0057 C                     Z-ADD0         X       20
+0058 C           INPT      TAG
+0059 C                     EXSR INPUT
+0060 C         65          GOTO CHANGE
+0061 C************* EXTRA RENTAL QUESTION ****************************
+0062 C           RENT      TAG
+0063 C                     SET30
+0064 C                     KEY01          Y       10 212120
+0065 C         21          EXSR SUBRNT
+0066 C         65          GOTO CHANGE
+0067 C************* EXTRA MAINTENANCE QUESTION ***********************
+0068 C           MAINT     TAG
+0069 C                     SET31
+0070 C                     KEY01          Y          212120
+0071 C         21          EXSR SUBMAT
+0072 C         65          GOTO CHANGE
+0073 C************** EXTRA LEASE EXPENSE QUESTION ********************
+0074 C           LEXP      TAG
+0075 C                     SET32
+0076 C                     KEY01          Y          212120
+0077 C         21          EXSR SUBLXP
+0078 C         65          GOTO CHANGE
+0079 C************** EXTRA PURCHASE EXPENSE QUESTION *****************
+0080 C           PEXP      TAG
+0081 C                     SET33
+0082 C                     KEY01          Y          212120
+0083 C         21          EXSR SUBPXP
+0084 C         65          GOTO CHANGE
+0085 C************** CHANGE QUESTION *********************************
+0086 C           CHANGE    TAG
+0087 C                     SETOF                     65
+0088 C                     SET02
+0089 C                     KEY01          Y          656520
+0090 C         65          KEY03          X          65
+0091 C         65X         COMP 32                   333132
+0092 C      65 31          GOTO INPT
+0093 C      65 32          GOTO RENT
+0094 C      65 33X         COMP 34                   353334
+0095 C      65 33          GOTO MAINT
+0096 C      65 34          GOTO LEXP
+0097 C      65 35          GOTO PEXP
+0098 C                     SETON                     LR
+0099 C**************************
+0100 CSR         INPUT     BEGSR
+0101 C*          ******
+0102 CSR       65X         SUB  1         X
+0103 CSR         IN        TAG
+0104 CSR         X         ADD  1         X
+0105 CSR                   SETOF                     717273
+0106 CSR                   SETOF                     747576
+0107 CSR                   SETOF                     777879
+0108 CSR         X         CHAINPROMPT
+0109 CSR       71MSG       KEY            WRK1    1      40 IND 40 MEANS
+0110 CSR       72MSG       KEY            WRK2    20     40   NO ENTRY,
+0111 CSR       73MSG       KEY            WRK3    30     40  TAKE DEFAULT
+0112 CSR       74MSG       KEY            WRK4    4      40
+0113 CSR       75MSG       KEY            WRK7    72     40
+0114 CSR       76MSG       KEY            WRK8    8      40
+0115 CSR       77MSG       KEY            WRK9    92     40
+0116 CSR       78MSG       KEY            WRK15  15      40
+0117 CSR       79MSG       KEY            WRK30  30      40
+0118 CSR    71 40          MOVE DEF       WRK1
+0119 CSR    72 40          MOVE DEF       WRK2
+0120 CSR    73 40          MOVE DEF       WRK3
+0121 CSR    74 40          MOVE DEF       WRK4
+0122 CSR    75 40          MOVE DEF       WRK7
+0123 CSR    76 40          MOVE DEF       WRK8
+0124 CSR    77 40          MOVE DEF       WRK9
+0125 CSR    78 40          MOVE DEF       WRK15
+0126 CSR    79 40          MOVE DEF       WRK30
+0127 CSR                   SETON                     80
+0128 CSR                   EXCPT
+0129 CSR                   SETOF                     80
+0130 CSR       65          GOTO ENDIPT
+0131 CSR         X         COMP 31                       99
+0132 CSRN99                GOTO IN
+0133 CSR         ENDIPT    ENDSR
+0134 C****************************************************************
+0135 CSR         SUBRNT    BEGSR
+0136 C*          ******
+0137 CSR                   Z-ADD0         X
+0138 CSR                   SETOF                     21
+0139 CSR         LPRNT     TAG
+0140 CSR         X         ADD  1         X
+0141 CSR      N21          SET04
+0142 CSR      N21X         KEY            TEMP4   4
+0143 CSR                   MOVE TEMP4     MRP,X
+0144 CSR         X         COMP 11                       19
+0145 CSR       19          GOTO STPRTN
+0146 CSR      N21          SET05
+0147 CSR      N21          KEY01          Y          212120
+0148 CSR                   GOTO LPRNT
+0149 CSR         STPRTN    TAG
+0150 CSR                   SETON                     4686
+0151 CSR         32        CHAINPROMPT
+0152 CSR                   EXCPT
+0153 CSR                   SETOF                     4686
+0154 CSR                   ENDSR
+0155 C****************************************************************
+0156 CSR         SUBMAT    BEGSR
+0157 C*          ******
+0158 CSR                   Z-ADD0         X
+0159 CSR                   SETOF                     21
+0160 CSR         LPMAT     TAG
+0161 CSR         X         ADD  1         X
+0162 CSRN21                SET06
+0163 CSRN21      X         KEY            TEMP4
+0164 CSR                   MOVE TEMP4     MRP,X
+0165 CSR         X         COMP 11                       19
+0166 CSR       19          GOTO STPMAT
+0167 CSRN21                SET05
+0168 CSRN21                KEY01          Y          212120
+0169 CSR                   GOTO LPMAT
+0170 CSR         STPMAT    TAG
+0171 CSR                   SETON                     4687
+0172 CSR         33        CHAINPROMPT
+0173 CSR                   EXCPT
+0174 CSR                   SETOF                     4687
+0175 CSR                   ENDSR
+0176 C****************************************************************
+0177 CSR         SUBLXP    BEGSR
+0178 C*          ******
+0179 CSR                   Z-ADD0         X
+0180 CSR                   SETOF                     21
+0181 CSR         LPEXPL    TAG
+0182 CSR         X         ADD  1         X
+0183 CSR      N21          SET34
+0184 CSR      N21X         KEY            TEMP7   70
+0185 CSR                   MOVE TEMP7     EXP,X
+0186 CSR         X         COMP 11                       19
+0187 CSR       19          GOTO STPLXP
+0188 CSR      N21          SET05
+0189 CSR      N21          KEY01          Y          212120
+0190 CSR                   GOTO LPEXPL
+0191 CSR         STPLXP    TAG
+0192 CSR                   SETON                     4688
+0193 CSR         34        CHAINPROMPT
+0194 CSR                   EXCPT
+0195 CSR                   SETOF                     4688
+0196 CSR                   ENDSR
+0197 C****************************************************************
+0198 CSR         SUBPXP    BEGSR
+0199 C*          ******
+0200 CSR                   Z-ADD0         X
+0201 CSR                   SETOF                     21
+0202 CSR         LPEXPP    TAG
+0203 CSR         X         ADD  1         X
+0204 CSR      N21          SET34
+0205 CSR      N21X         KEY            TEMP7
+0206 CSR                   MOVE TEMP7     EXP,X
+0207 CSR         X         COMP 11                       19
+0208 CSR       19          GOTO STPPXP
+0209 CSR      N21          SET05
+0210 CSR      N21          KEY01          Y          212120
+0211 CSR                   GOTO LPEXPP
+0212 CSR         STPPXP    TAG
+0213 CSR                   SETON                     4689
+0214 CSR         35        CHAINPROMPT
+0215 CSR                   EXCPT
+0216 CSR                   SETOF                     4689
+0217 CSR                   ENDSR
+0218 C****************************************************************
+0219 OPROMPT  E        80
+0220 O                 71      WRK1     104
+0221 O                 72      WRK2     104
+0222 O                 73      WRK3     104
+0223 O                 74      WRK4     104
+0224 O                 75      WRK7     104
+0225 O                 76      WRK8     104
+0226 O                 77      WRK9     104
+0227 O                 78      WRK15    104
+0228 O                 79      WRK30    104
+0229 O        E        86
+0230 O                                    1 'R'
+0231 O                         MRP       45
+0232 O        E        87
+0233 O                                    1 'M'
+0234 O                         MRP       45
+0235 O        E        88
+0236 O                                    1 'L'
+0237 O                         EXP       78
+0238 O        E        89
+0239 O                                    1 'P'
+0240 O                         EXP       78
+0241 OLIST    H  101   1P
+0242 O                                    7 'QUEST #'
+0243 O                                   35 'QUESTION'
+0244 O                                   51 'RESPONSE'
+0245 OLIST    E  1     80
+0246 O                         X          2
+0247 O                         MSG       44
+0248 O                       71WRK1      46
+0249 O                       72WRK2      47
+0250 O                       73WRK3      48
+0251 O                       74WRK4      49
+0252 O                       75WRK7  1   55
+0253 O                       76WRK8      53
+0254 O                       77WRK9  1   55
+0255 O                       78WRK15     60
+0256 O                       79WRK30     75
+0257 O        E 11     46
+0258 O                       86          13 'EXTRA SHIFT %'
+0259 O                       87          13 'EXTRA MAINT %'
+0260 O                       88          19 'OTHER LEASE EXPENSE'
+0261 O                       89          22 'OTHER PURCHASE EXPENSE'
+0262 O                                   47 'YR1     YR2     YR3'
+0263 O                                   71 'YR4     YR5     YR6'
+0264 O                                   95 'YR7     YR8     YR9'
+0265 O                                  111 'YR10    YR11'
+0266 O        E 11     46
+0267 O                       86           2 '32'
+0268 O                       87           2 '33'
+0269 O                       88           2 '34'
+0270 O                       89           2 '35'
+0271 O                       86MRP      111 '&&&  0. '
+0272 O                       87MRP      111 '&&&  0. '
+0273 O                       88EXP      111 '    ,  0'
+0274 O                       89EXP      111 '    ,  0'

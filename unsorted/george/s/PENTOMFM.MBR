@@ -1,0 +1,95 @@
+0001 SPENT01    0124YYY                                                                     0001
+0002 D          230129Y                       Y        CTHE GAME OF PENTOMINOES             0002
+0003 D          750301Y                                CThe object of the game X
+0004 Dis to fill in a 10x6 matrix with the twelve 5-square
+0005 D          750401Y                                Cshapes which will be diX
+0006 Dsplayed.  Each shape may only be used once;  and the
+0007 D          330501Y                                Cmatrix must be completeX
+0008 Dly filled.
+0009 D          770701Y                                CIndicate which shape yoX
+0010 Du wish to use by naming the letter above it.  Indicate
+0011 D          780801Y                                Cits orientation by enteX
+0012 Dring how many rotations of 90 degrees from standard and
+0013 D          750901Y                                Cwhether you want it revX
+0014 Dersed (ie turned upside down over a HORIZONTAL axis).
+0015 D          621001Y                                CAlso enter the positionX
+0016 D where the @ character is to be placed.                                               0016
+0017 D          391201Y                                CCommand keys:- CK1 - ReX            0017
+0018 Dmove last entry                                                                       0018
+0019 D          311316Y                                CCK2 - Restart with emptX            0019
+0020 Dy matrix                                                                              0020
+0021 D          161416Y                                CCK3 - End of job                    0021
+0022 D          261516Y                                CCK4 - Print current matX            0022
+0023 Drix                                                                                   0023
+0024 D          151701Y                                CNow press ENTER                     0024
+0025 SPENT02    0124 YY         94                                                          0025
+0026 D           10134Y                                C1
+0027 D          100225Y                       Y        C1234567890
+0028 D           10322Y                                C1
+0029 D           10422Y                                C2
+0030 D           10522Y                                C3
+0031 D           10622Y                                C4
+0032 D           10722Y                                C5
+0033 D           10822Y                                C6
+0034 DMAT1      110324Y                       Y Y
+0035 DMAT2      110424Y                       Y Y
+0036 DMAT3      110524Y                       Y Y
+0037 DMAT4      110624Y                       Y Y
+0038 DMAT5      110724Y                       Y Y
+0039 DMAT6      110824Y                       Y Y
+0040 D          100925Y                                C1234567891
+0041 D           11034Y                                C0
+0042 D          371104Y                                CF  I  J L  N  P   T   UX
+0043 D   W  X   Y  Z                                                                        0043
+0044 D           21304Y                   70Y          C@F
+0045 D           21403Y                   70Y          CFF
+0046 D           11504Y                   70Y          CF
+0047 D           11307Y                   71Y          C@
+0048 D           11407Y                   71Y          CI
+0049 D           11507Y                   71Y          CI
+0050 D           11607Y                   71Y          CI
+0051 D           11707Y                   71Y          CI
+0052 D           11310Y                   72Y          C@
+0053 D           11410Y                   72Y          CJ
+0054 D           11510Y                   72Y          CJ
+0055 D           21609Y                   72Y          CJJ
+0056 D           11312Y                   73Y          C@
+0057 D           11412Y                   73Y          CL
+0058 D           31512Y                   73Y          CLLL
+0059 D           11315Y                   74Y          C@
+0060 D           21415Y                   74Y          CNN
+0061 D           11516Y                   74Y          CN
+0062 D           11616Y                   74Y          CN
+0063 D           21318Y                   75Y          C@P
+0064 D           21418Y                   75Y          CPP
+0065 D           11518Y                   75Y          CP
+0066 D           31321Y                   76Y          CT@T
+0067 D           11422Y                   76Y          CT
+0068 D           11522Y                   76Y          CT
+0069 D           11325Y                   77Y          C@
+0070 D           11327Y                   77Y          CU
+0071 D           31425Y                   77Y          CUUU
+0072 D           11329Y                   78Y          C@
+0073 D           21429Y                   78Y          CWW
+0074 D           21530Y                   78Y          CWW
+0075 D           11333Y                   79Y          C@
+0076 D           31432Y                   79Y          CXXX
+0077 D           11533Y                   79Y          CX
+0078 D           11337Y                   80Y          C@
+0079 D           21436Y                   80Y          CYY
+0080 D           11537Y                   80Y          CY
+0081 D           11637Y                   80Y          CY
+0082 D           21339Y                   81Y          C@Z
+0083 D           11440Y                   81Y          CZ
+0084 D           21540Y                   81Y          CZZ
+0085 D          121902Y                                CENTER LETTER
+0086 DLETTER     11915   Y
+0087 D          202002Y                                CROTATE(X90DEG) (0-3)
+0088 DROTATE     12024   YN
+0089 D          132102Y                                CREVERSE (R/ )
+0090 DREVERS     12116   Y
+0091 D          182202Y                                CPOSITION OF @: ROW
+0092 DROW        22222   YN   B   Y
+0093 D           62225Y                                CCOLUMN
+0094 DCOL        22232   YN   B   YY
+0095 DMESAGE    30240294              94                                                    0095

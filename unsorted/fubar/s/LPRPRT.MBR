@@ -1,0 +1,717 @@
+00010H     014                              1                             LPRPRT
+00020FDUMMY   IP  F   1   1            KEYBORD
+00030FWORK    IC  F 128 128R           DISK
+00040FREPORT  O   F 132 132    2       PRINTER
+0005 FPLOTDATAO         128    2       DISK
+00060F* ID F  C  H  L    FUNCTION OF INDICATORS                           LPRPRT
+00070F* 01            CONTROL RECORD                                      LPRPRT
+00080F* 02            HEADING RECORD                                      LPRPRT
+0009 F* 03            TAXES RECORD
+00100F* 04            SYSTEM RECORD                                       LPRPRT
+00110F* 05            OTHER CHARGES RECORD                                LPRPRT
+00120F* 06            EXTRA SHIFT RENT RECORD                             LPRPRT
+00130F* 07            MAINTENANCE RECORD                                  LPRPRT
+00140F* 08            REPORT LINE RECORD                                  LPRPRT
+00150F* 09            BLANK RECORD                                        LPRPRT
+00160F*      51       ANALYSIS INCLUDES YEAR 1                            LPRPRT
+00170F*      52       ANALYSIS INCLUDES YEAR 2                            LPRPRT
+00180F*      53       ANALYSIS INCLUDES YEAR 3                            LPRPRT
+00190F*      54       ANALYSIS INCLUDES YEAR 4                            LPRPRT
+00200F*      55       ANALYSIS INCLUDES YEAR 5                            LPRPRT
+00210F*      56       ANALYSIS INCLUDES YEAR 6                            LPRPRT
+00220F*      57       ANALYSIS INCLUDES YEAR 7                            LPRPRT
+00230F*      58       ANALYSIS INCLUDES YEAR 8                            LPRPRT
+00240F*      59       ANALYSIS INCLUDES YEAR 9                            LPRPRT
+00250F*      60       ANALYSIS INCLUDES YEAR 10                           LPRPRT
+00260F*      61       ANALYSIS INCLUDES YEAR 11                           LPRPRT
+00270F*      71       OUTPUT REPORT HEADING LINES                         LPRPRT
+00280F*      72       OUTPUT REPORT DETAIL LINE                           LPRPRT
+00290F*      73       OUTPUT DASHES SEPARATOR LINE                        LPRPRT
+00300F*      74       OUTPUT BLANK OR INTERMEDIATE HEADING LINE           LPRPRT
+00310F*      75       OUTPUT RENT HEADING LINE                            LPRPRT
+00320F*      76       OUTPUT DIFFERENCE HEADING LINE                      LPRPRT
+00330F*      81       PPT DEPR - SUM OF THE YEARS' DIGITS                 LPRPRT
+00340F*      82       PPT DEPR - STRAIGHT LINE                            LPRPRT
+00350F*      83       PPT DEPR - 1.5 DECLINING BALANCE                    LPRPRT
+00360F*      84       PPT DEPR - DOUBLE DECLINING BALANCE                 LPRPRT
+00370F*      85       PPT DEPR - DOUBLE DECLINING BAL. TO STRAIGHT LINE   LPRPRT
+00380F*      91       FIT DEPR - SUM OF THE YEARS' DIGITS                 LPRPRT
+00390F*      92       FIT DEPR - STRAIGHT LINE                            LPRPRT
+00400F*      93       FIT DEPR - 1.5 DECLINING BALANCE                    LPRPRT
+00410F*      94       FIT DEPR - DOUBLE DECLINING BALANCE                 LPRPRT
+00420F*      95       FIT DEPR - DOUBLE DECLINING BAL. TO STRAIGHT LINE   LPRPRT
+00430F*      97       STATUS NOT EQUAL TO 2 - PREVIOUS ERRORS ENCOUNTERED LPRPRT
+00440F*      98       GENERAL PURPOSE CALCULATION RESULT INDICATOR        LPRPRT
+00450F*         H1    TERMINATE PROCESSING - PREVIOUS ERRORS ENCOUNTERED  LPRPRT
+00460E                    DES     1  27 23
+00470E                    YTH        11  9 2                              LPRPRT
+00480E                    YTP        11  7 0                              LPRPRT
+00490E                    OCA        11  7 0                              LPRPRT
+00500E                    MRP        11  4 3                              LPRPRT
+00510E                    AMO        12  9 2                              LPRPRT
+00520IWORK    NS  01   1 CX                                               LPRPRT
+00530I                                        2   2 STATUS                LPRPRT
+00540I        NS  02   1 CH                                               LPRPRT
+00550I                                        2   30BEGYR                 LPRPRT
+00560I                                        4   50NOYRS                 LPRPRT
+00570I                                        6  35 TITLE                 LPRPRT
+00580I                                       36  65 CUSNAM                LPRPRT
+00590I        NS  03   1 CT                                               LPRPRT
+00600I                                        2   52FIT                   LPRPRT
+00610I                                        6   92SIT                   LPRPRT
+00620I                                       10  132STPE                  LPRPRT
+00630I                                       14  172STLE                  LPRPRT
+00640I                                       18  212PPT                   LPRPRT
+00650I                                       22  252INS                   LPRPRT
+00660I                                       26  26 STCE                  LPRPRT
+00670I                                       27  27 PPDM                  LPRPRT
+00680I                                       28  290PPDL                  LPRPRT
+00690I                                       30  332PPFBV                 LPRPRT
+0070 I                                       34  372ITCP
+0071 I                                       38  412ITCR
+0072 I                                       42  440RESALE
+00730I        NS  04   1 CS                                               LPRPRT
+00740I                                        2   9 SYSID                 LPRPRT
+00750I                                       10  110SHPMO                 LPRPRT
+00760I                                       12  130SHPYR                 LPRPRT
+00770I                                       15  232MAC                   LPRPRT
+00780I                                       24  322PURCHP                LPRPRT
+00790I                                       33  392MMMC                  LPRPRT
+00800I                                       40  410WTYMOS                LPRPRT
+00810I                                       42  451LDOWN                 LPRPRT
+00820I                                       46  492LINT                  LPRPRT
+00830I                                       50  520LTERM                 LPRPRT
+00840I                                       53  53 FITDM                 LPRPRT
+00850I                                       54  550FITDL                 LPRPRT
+00860I                                       56  592FITFBV                LPRPRT
+00870I                                       60  610FITDAD                LPRPRT
+00880I                                       62  702LDPAMT                LPRPRT
+00890I                                       71  720LDPMO                 LPRPRT
+00900I                                       73  740LDPYR                 LPRPRT
+00910I                                       75  832LAMT                  LPRPRT
+00920I                                       84  922LMPAMT                LPRPRT
+00930I                                       93  940LMPMO                 LPRPRT
+00940I                                       95  960LMPYR                 LPRPRT
+00950I                                       97 1052STPAMT                LPRPRT
+0096 I                                      106 1142PRTXCR
+0097 I                                      115 1232RNTXCR
+00980I        NS  05   1 CO                                               LPRPRT
+0099 I                                       20  96 OCA
+01000I        NS  06   1 CR                                               LPRPRT
+01010I       OR   07   1 CM                                               LPRPRT
+01020I                                        2  45 MRP
+01030I        NS  08   1 CL                                               LPRPRT
+01040I                                       21 128 AMO
+01050I        NS  09   1 C                                                LPRPRT
+0106 C   99                KEY01          TEST    1
+0107 C           'LPRPRT'  SET01
+0108 C           ' '       SET01
+0109 C                     SETON                     99LR
+01100C                     EXSR INIT                                      LPRPRT
+01110C   97                GOTO ENDDET                                    LPRPRT
+01120C                     EXSR PRNCPL                                    LPRPRT
+01130C                     EXSR INTRST                                    LPRPRT
+01140C                     EXSR DASHES                                    LPRPRT
+01150C                     EXSR TMOPAY                                    LPRPRT
+01160C                     EXSR DWNPAY                                    LPRPRT
+01170C                     EXSR MNTAMT                                    LPRPRT
+01180C                     EXSR PPTAX                                     LPRPRT
+01190C                     EXSR INSURE                                    LPRPRT
+0120 C                     EXSR PEXP
+01210C                     EXSR DASHES                                    LPRPRT
+01220C                     EXSR TCASHO                                    LPRPRT
+0123 C                     SETON                     3031
+01240C                     EXSR CUMTOT                                    LPRPRT
+0125 C                     SETOF                     3031
+01260C                     EXSR SPACE1                                    LPRPRT
+01270C                     EXSR TXDEPR                                    LPRPRT
+01280C                     EXSR DEDEXP                                    LPRPRT
+01290C                     EXSR SLSTAX                                    LPRPRT
+01300C                     EXSR TOTEXP                                    LPRPRT
+01310C                     EXSR TAXBEN                                    LPRPRT
+01320C                     EXSR PURTAX
+01330C                     EXSR DASHES                                    LPRPRT
+01340C                     EXSR PCHSAT                                    LPRPRT
+0135 C                     SETON                     3032
+01360C                     EXSR CUMTOT                                    LPRPRT
+0137 C                     SETOF                     3032
+01380C                     EXSR SPACE1                                    LPRPRT
+01390C                     EXSR SPACE1                                    LPRPRT
+01400C                     EXSR RENTHD                                    LPRPRT
+01410C                     EXSR RNTAMT                                    LPRPRT
+0142 C                     EXSR LEXP
+01430C                     EXSR CSHEXP                                    LPRPRT
+0144 C                     SETON                     3033
+01450C                     EXSR CUMTOT                                    LPRPRT
+0146 C                     SETOF                     3033
+01470C                     EXSR SPACE1                                    LPRPRT
+01480C                     EXSR EXPDED                                    LPRPRT
+01490C                     EXSR BENFIT                                    LPRPRT
+01500C                     EXSR RNTTAX
+01510C                     EXSR DASHES                                    LPRPRT
+01520C                     EXSR LCSHAT                                    LPRPRT
+0153 C                     SETON                     3034
+01540C                     EXSR CUMTOT                                    LPRPRT
+0155 C                     SETOF                     3034
+01560C                     EXSR SPACE1                                    LPRPRT
+01570C                     EXSR SPACE1                                    LPRPRT
+01580C                     EXSR DIFFHD                                    LPRPRT
+01590C                     EXSR DIFFBT                                    LPRPRT
+01600C                     EXSR DIFFAT                                    LPRPRT
+01610C                     EXSR CUMTOT                                    LPRPRT
+01620C           ENDDET    TAG                                            LPRPRT
+01630C*****************************************************               LPRPRT
+01640CSR         RRNCAL    BEGSR                                          LPRPRT
+01650C*          ******                                                   LPRPRT
+01660CSR                   Z-ADDLN        RRN     30
+01670CSR         RRN       SUB  1         RRN                             LPRPRT
+01680CSR         RRN       MULT NOYRS     RRN                             LPRPRT
+01690CSR         RRN       ADD  15        RRN
+01700CSR                   ENDSR                                          LPRPRT
+01710C*****************************************************               LPRPRT
+01720CSR         DASHES    BEGSR                                          LPRPRT
+01730C*          ******                                                   LPRPRT
+01740CSR                   SETON                     73                   LPRPRT
+01750CSR                   EXCPT                                          LPRPRT
+01760CSR                   SETOF                     73                   LPRPRT
+01770CSR                   ENDSR                                          LPRPRT
+01780C*****************************************************               LPRPRT
+01790CSR         CUMTOT    BEGSR                                          LPRPRT
+01800C*          ******                                                   LPRPRT
+01810CSR                   Z-ADD2         I                               LPRPRT
+01820CSR         CUMADD    TAG                                            LPRPRT
+01830CSR         YTH,Y     ADD  YTH,I     YTH,I                           LPRPRT
+01840CSR         I         COMP 11                       98               LPRPRT
+01850CSR 98                GOTO CUMOUT                                    LPRPRT
+01860CSR         1         ADD  I         I                               LPRPRT
+01870CSR         1         ADD  Y         Y                               LPRPRT
+01880CSR                   GOTO CUMADD                                    LPRPRT
+01890CSR         CUMOUT    TAG                                            LPRPRT
+01900CSR                   Z-ADDYTH       YTP       H                     LPRPRT
+01910CSR                   MOVE 22        LN      20
+01920CSR                   SETON                     72                   LPRPRT
+01930CSR                   EXCPT                                          LPRPRT
+01940CSR                   SETOF                     72                   LPRPRT
+01950CSR                   Z-ADD1         Y                               LPRPRT
+01960CSR                   ENDSR                                          LPRPRT
+01970C*****************************************************               LPRPRT
+01980CSR         RENTHD    BEGSR                                          LPRPRT
+01990C*          ******                                                   LPRPRT
+0200 CSR                   MOVE 23        LN
+02010CSR                   SETON                     7475                 LPRPRT
+02020CSR                   EXCPT                                          LPRPRT
+02030CSR                   SETOF                     7475                 LPRPRT
+02040CSR                   ENDSR                                          LPRPRT
+02050C*****************************************************               LPRPRT
+02060CSR         DIFFHD    BEGSR                                          LPRPRT
+02070C*          ******                                                   LPRPRT
+0208 CSR                   MOVE 23        LN
+02090CSR                   SETON                     7476                 LPRPRT
+02100CSR                   EXCPT                                          LPRPRT
+02110CSR                   SETOF                     7476                 LPRPRT
+02120CSR                   ENDSR                                          LPRPRT
+02130C*****************************************************               LPRPRT
+02140CSR         SPACE1    BEGSR                                          LPRPRT
+02150C*          ******                                                   LPRPRT
+0216 CSR                   MOVE 23        LN
+02170CSR                   SETON                     74                   LPRPRT
+02180CSR                   EXCPT                                          LPRPRT
+02190CSR                   SETOF                     74                   LPRPRT
+02200CSR                   ENDSR                                          LPRPRT
+02210C*****************************************************               LPRPRT
+02220CSR         LINTOT    BEGSR                                          LPRPRT
+02230C*          ******                                                   LPRPRT
+02240CSR         YTH       SUB  YTH       YTH                             LPRPRT
+02250CSR         GETYR     TAG                                            LPRPRT
+0226 CSR         AMO       SUB  AMO       AMO
+02270CSR         RRN       CHAINWORK                 90
+02280CSR                   XFOOTAMO       YTH,Y
+02290CSR         Y         COMP NOYRS                    98 LAST YEAR     LPRPRT
+02300CSR 98                GOTO LASTYR                                    LPRPRT
+02310CSR         1         ADD  Y         Y                               LPRPRT
+02320CSR         1         ADD  RRN       RRN                             LPRPRT
+02330CSR                   GOTO GETYR                                     LPRPRT
+02340CSR         LASTYR    TAG                                            LPRPRT
+02350CSR                   Z-ADD1         Y                               LPRPRT
+02360CSR                   Z-ADDYTH       YTP       H                     LPRPRT
+02370CSR                   SETON                     72                   LPRPRT
+02380CSR                   EXCPT                                          LPRPRT
+02390CSR                   SETOF                     72                   LPRPRT
+02400CSR                   ENDSR                                          LPRPRT
+02410C*****************************************************               LPRPRT
+02420CSR         INIT      BEGSR                                          LPRPRT
+02430C*          ******                                                   LPRPRT
+02440CSR         1         CHAINWORK                 90
+02450CSR         STATUS    COMP '2'                  9797                 LPRPRT
+02460CSR 97                SETON                     H1                   LPRPRT
+02470CSR 97                GOTO ENDI                                      LPRPRT
+02480CSR         2         CHAINWORK                 90
+02490CSR         3         CHAINWORK                 90
+02500CSR         4         CHAINWORK                 90
+02510CSR         FITDM     COMP '2'                  939192               LPRPRT
+02520CSR 93      FITDM     COMP '4'                  959394               LPRPRT
+02530CSR         PPDM      COMP '2'                  838182               LPRPRT
+02540CSR 83      PPDM      COMP '4'                  858384               LPRPRT
+02550CSR                   Z-ADDBEGYR     YTP                             LPRPRT
+02560CSR         YTP       SUB  1         YTP                             LPRPRT
+02570CSR                   Z-ADD1         I       20                      LPRPRT
+02580CSR         ILOOP     TAG                                            LPRPRT
+02590CSR         I         ADD  YTP,I     YTP,I                           LPRPRT
+02600CSR         YTP,I     COMP 100                  98  98               LPRPRT
+02610CSR 98      YTP,I     SUB  100       YTP,I                           LPRPRT
+02620CSR         1         ADD  I         I                               LPRPRT
+02630CSR         I         COMP NOYRS                  9898               LPRPRT
+02640CSR 98                GOTO ILOOP                                     LPRPRT
+02650CSR         BEGYR     ADD  NOYRS     ENDYR   20                      LPRPRT
+02660CSR         ENDYR     SUB  1         ENDYR                           LPRPRT
+02670CSR         2         COMP NOYRS                519852               LPRPRT
+02680CSR 98      4         COMP NOYRS                539854               LPRPRT
+02690CSR 98      6         COMP NOYRS                559856               LPRPRT
+02700CSR 98      8         COMP NOYRS                579858               LPRPRT
+02710CSR 98      10        COMP NOYRS                596160               LPRPRT
+02720CSR 61                SETON                     60                   LPRPRT
+02730CSR 60                SETON                     59                   LPRPRT
+02740CSR 59                SETON                     58                   LPRPRT
+02750CSR 58                SETON                     57                   LPRPRT
+02760CSR 57                SETON                     56                   LPRPRT
+02770CSR 56                SETON                     55                   LPRPRT
+02780CSR 55                SETON                     54                   LPRPRT
+02790CSR 54                SETON                     53                   LPRPRT
+02800CSR 53                SETON                     52                   LPRPRT
+02810CSR 52                SETON                     51                   LPRPRT
+02820CSR         STCE      COMP 'E'                      98               LPRPRT
+0283 CSR         RESALE    COMP 0                    10
+02840CSR                   SETON                     71                   LPRPRT
+02850CSR                   EXCPT                           HEADING OUTPUT LPRPRT
+02860CSR                   SETOF                     71                   LPRPRT
+02870CSR                   Z-ADD1         Y       20                      LPRPRT
+02880CSR                   Z-ADD1         M       20                      LPRPRT
+02890CSR         ENDI      ENDSR                                          LPRPRT
+02900C*****************************************************               LPRPRT
+02910CSR         PRNCPL    BEGSR                                          LPRPRT
+02920C*          ******                                                   LPRPRT
+02930CSR                   MOVE 01        LN
+02940CSR                   EXSR RRNCAL                                    LPRPRT
+02950CSR                   EXSR LINTOT                                    LPRPRT
+02960CSR                   ENDSR                                          LPRPRT
+02970C*****************************************************               LPRPRT
+02980CSR         INTRST    BEGSR                                          LPRPRT
+02990C*          ******                                                   LPRPRT
+03000CSR                   MOVE 02        LN
+03010CSR                   EXSR RRNCAL                                    LPRPRT
+03020CSR                   EXSR LINTOT                                    LPRPRT
+03030CSR                   ENDSR                                          LPRPRT
+03040C*****************************************************               LPRPRT
+03050CSR         TMOPAY    BEGSR                                          LPRPRT
+03060C*          ******                                                   LPRPRT
+03070CSR                   MOVE 03        LN
+03080CSR                   EXSR RRNCAL                                    LPRPRT
+03090CSR                   EXSR LINTOT                                    LPRPRT
+03100CSR                   ENDSR                                          LPRPRT
+03110C*****************************************************               LPRPRT
+03120CSR         DWNPAY    BEGSR                                          LPRPRT
+03130C*          ******                                                   LPRPRT
+03140CSR                   MOVE 04        LN
+03150CSR                   EXSR RRNCAL                                    LPRPRT
+03160CSR                   EXSR LINTOT                                    LPRPRT
+03170CSR                   ENDSR                                          LPRPRT
+03180C*****************************************************               LPRPRT
+03190CSR         MNTAMT    BEGSR                                          LPRPRT
+03200C*          ******                                                   LPRPRT
+03210CSR                   MOVE 05        LN
+03220CSR                   EXSR RRNCAL                                    LPRPRT
+03230CSR                   EXSR LINTOT                                    LPRPRT
+03240CSR                   ENDSR                                          LPRPRT
+03250C*****************************************************               LPRPRT
+03260CSR         PPTAX     BEGSR                                          LPRPRT
+03270C*          ******                                                   LPRPRT
+03280CSR                   MOVE 06        LN
+03290CSR                   EXSR RRNCAL                                    LPRPRT
+03300CSR                   EXSR LINTOT                                    LPRPRT
+03310CSR                   ENDSR                                          LPRPRT
+03320C*****************************************************               LPRPRT
+03330CSR         INSURE    BEGSR                                          LPRPRT
+03340C*          ******                                                   LPRPRT
+03350CSR                   MOVE 07        LN
+03360CSR                   EXSR RRNCAL                                    LPRPRT
+03370CSR                   EXSR LINTOT                                    LPRPRT
+03380CSR                   ENDSR                                          LPRPRT
+03390C*****************************************************               LPRPRT
+0340 CSR         PEXP      BEGSR
+0341 C*          ******
+0342 CSR                   MOVE 26        LN
+0343 CSR                   EXSR RRNCAL
+0344 CSR                   EXSR LINTOT
+0345 CSR                   ENDSR
+0346 C*****************************************************
+03470CSR         TCASHO    BEGSR                                          LPRPRT
+03480C*          ******                                                   LPRPRT
+03490CSR                   MOVE 08        LN
+03500CSR                   EXSR RRNCAL                                    LPRPRT
+03510CSR                   EXSR LINTOT                                    LPRPRT
+03520CSR                   ENDSR                                          LPRPRT
+03530C*****************************************************               LPRPRT
+03540CSR         TXDEPR    BEGSR                                          LPRPRT
+03550C*          ******                                                   LPRPRT
+03560CSR                   MOVE 09        LN
+03570CSR                   EXSR RRNCAL                                    LPRPRT
+03580CSR                   EXSR LINTOT                                    LPRPRT
+03590CSR                   ENDSR                                          LPRPRT
+03600C*****************************************************               LPRPRT
+03610CSR         DEDEXP    BEGSR                                          LPRPRT
+03620C*          ******                                                   LPRPRT
+03630CSR                   MOVE 10        LN
+03640CSR                   EXSR RRNCAL                                    LPRPRT
+03650CSR                   EXSR LINTOT                                    LPRPRT
+03660CSR                   ENDSR                                          LPRPRT
+03670C*****************************************************               LPRPRT
+03680CSR         SLSTAX    BEGSR                                          LPRPRT
+03690C*          ******                                                   LPRPRT
+03700CSR                   MOVE 11        LN
+03710CSR                   EXSR RRNCAL                                    LPRPRT
+0372 CSR         STCE      COMP 'E'                      98
+03730CSR 98                EXSR LINTOT
+03740CSR                   ENDSR                                          LPRPRT
+03750C*****************************************************               LPRPRT
+03760CSR         TOTEXP    BEGSR                                          LPRPRT
+03770C*          ******                                                   LPRPRT
+03780CSR                   MOVE 12        LN
+03790CSR                   EXSR RRNCAL                                    LPRPRT
+03800CSR                   EXSR LINTOT                                    LPRPRT
+03810CSR                   ENDSR                                          LPRPRT
+03820C*****************************************************               LPRPRT
+03830CSR         TAXBEN    BEGSR                                          LPRPRT
+03840C*          ******                                                   LPRPRT
+0385 CSR                   MOVE 13        LN
+03860CSR                   EXSR RRNCAL                                    LPRPRT
+03870CSR                   EXSR LINTOT                                    LPRPRT
+03880CSR                   ENDSR                                          LPRPRT
+03890C*****************************************************               LPRPRT
+03900CSR         PURTAX    BEGSR
+03910C*          ******                                                   LPRPRT
+0392 CSR                   MOVE 24        LN
+03930CSR                   EXSR RRNCAL
+03940CSR                   EXSR LINTOT
+03950CSR                   ENDSR
+03960C*****************************************************               LPRPRT
+03970CSR         PCHSAT    BEGSR                                          LPRPRT
+03980C*          ******                                                   LPRPRT
+03990CSR                   MOVE 14        LN
+04000CSR                   EXSR RRNCAL                                    LPRPRT
+04010CSR                   EXSR LINTOT                                    LPRPRT
+04020CSR                   ENDSR                                          LPRPRT
+04030C*****************************************************               LPRPRT
+04040CSR         RNTAMT    BEGSR                                          LPRPRT
+04050C*          ******                                                   LPRPRT
+04060CSR                   MOVE 15        LN
+04070CSR                   EXSR RRNCAL                                    LPRPRT
+04080CSR                   EXSR LINTOT                                    LPRPRT
+04090CSR                   ENDSR                                          LPRPRT
+04100C*****************************************************               LPRPRT
+0411 CSR         LEXP      BEGSR
+0412 C*          ******
+0413 CSR                   MOVE 27        LN
+0414 CSR                   EXSR RRNCAL
+0415 CSR                   EXSR LINTOT
+0416 CSR                   ENDSR
+0417 C*****************************************************
+04180CSR         CSHEXP    BEGSR                                          LPRPRT
+04190C*          ******                                                   LPRPRT
+04200CSR                   MOVE 16        LN
+04210CSR                   EXSR RRNCAL                                    LPRPRT
+04220CSR                   EXSR LINTOT                                    LPRPRT
+04230CSR                   ENDSR                                          LPRPRT
+04240C*****************************************************               LPRPRT
+04250CSR         EXPDED    BEGSR                                          LPRPRT
+04260C*          ******                                                   LPRPRT
+04270CSR                   MOVE 17        LN
+04280CSR                   EXSR RRNCAL                                    LPRPRT
+04290CSR                   EXSR LINTOT                                    LPRPRT
+04300CSR                   ENDSR                                          LPRPRT
+04310C*****************************************************               LPRPRT
+04320CSR         BENFIT    BEGSR                                          LPRPRT
+04330C*          ******                                                   LPRPRT
+04340CSR                   MOVE 18        LN
+0435 CSR                   EXSR RRNCAL                                    LPRPRT
+04360CSR                   EXSR LINTOT                                    LPRPRT
+04370CSR                   ENDSR                                          LPRPRT
+04380C*****************************************************               LPRPRT
+04390CSR         RNTTAX    BEGSR
+04400C*          ******                                                   LPRPRT
+04410CSR                   MOVE 25        LN
+0442 CSR                   EXSR RRNCAL
+04430CSR                   EXSR LINTOT
+04440CSR                   ENDSR
+04450C*****************************************************               LPRPRT
+04460CSR         LCSHAT    BEGSR                                          LPRPRT
+04470C*          ******                                                   LPRPRT
+04480CSR                   MOVE 19        LN
+04490CSR                   EXSR RRNCAL                                    LPRPRT
+04500CSR                   EXSR LINTOT                                    LPRPRT
+04510CSR                   ENDSR                                          LPRPRT
+04520C*****************************************************               LPRPRT
+04530CSR         DIFFBT    BEGSR                                          LPRPRT
+04540C*          ******                                                   LPRPRT
+04550CSR                   MOVE 20        LN
+04560CSR                   EXSR RRNCAL                                    LPRPRT
+04570CSR                   EXSR LINTOT                                    LPRPRT
+04580CSR                   ENDSR                                          LPRPRT
+04590C*****************************************************               LPRPRT
+04600CSR         DIFFAT    BEGSR                                          LPRPRT
+04610C*          ******                                                   LPRPRT
+04620CSR                   MOVE 21        LN
+04630CSR                   EXSR RRNCAL                                    LPRPRT
+04640CSR                   EXSR LINTOT                                    LPRPRT
+04650CSR                   ENDSR                                          LPRPRT
+04660C*****************************************************               LPRPRT
+0467 OREPORT  E   0620 71
+0468 O                         UDATE Y   18
+0469 O                                   67 'LEASE VERSUS PURCHASE'
+0470 O                                   77 'ANALYSIS'
+0471 O                         PAGE  Z  108
+0472 O                                  105 'PAGE'
+0473 O        E  1     71
+0474 O                                   55 'THE FOLLOWING HAS BEEN P'
+0475 O                                   79 'REPARED BY IBM FOR ILLUS'
+0476 O                                   91 'TRATION OF A'
+0477 O        E  1     71
+0478 O                                   55 'METHOD OF FINANCIAL ANAL'
+0479 O                                   79 'YSIS CONCERNING THE ACQU'
+0480 O                                   89 'ISITION OF'
+0481 O        E  1     71
+0482 O                                   55 'IBM PRODUCTS AND/OR SERV'
+0483 O                                   79 'ICES.  YOU ARE ADVISED N'
+0484 O                                   89 'OT TO RELY'
+0485 O        E  1     71
+0486 O                                   55 'UPON THIS ANALYSIS, BUT '
+0487 O                                   79 'TO MAKE YOUR OWN ANALYSI'
+0488 O                                   91 'S, INCLUDING'
+0489 O        E  1     71
+0490 O                                   55 'VERIFICATION WITHIN YOUR'
+0491 O                                   79 ' BUSINESS OF UNDERLYING '
+0492 O                                   91 'ASSUMPTIONS.'
+0493 O        E  1     71
+0494 O                                   55 'THIS ANALYSIS, INCLUDING'
+0495 O                                   79 ' ESTIMATED COST SAVINGS,'
+0496 O                                   91 ' IS PROVIDED'
+0497 O        E  1     71
+0498 O                                   55 'FOR INFORMATION PURPOSES'
+0499 O                                   79 ' ONLY, AND IBM MAKES NO '
+0500 O                                   89 'GUARANTEES'
+0501 O        E  1     71
+0502 O                                   55 'OR REPRESENTATIONS WITH '
+0503 O                                   79 'RESPECT TO ITS APPLICABI'
+0504 O                                   91 'LITY TO YOUR'
+0505 O        E  1     71
+0506 O                                   55 'BUSINESS OR ACCOUNTING P'
+0507 O                                   64 'RACTICES.'
+05080OREPORT  E  101   71                                                 LPRPRT
+05090O                                   51 'ESTIMATED ANNUAL CASH '      LPRPRT
+05100O                                   75 'FLOW AND EXPENSE SUMMARY'    LPRPRT
+05110O                         UDATE Y   18                               LPRPRT
+0512 O                         PAGE  Z  108
+0513 O                                  105 'PAGE'
+05140O        E  2     71                                                 LPRPRT
+05150O                         TITLE     30                               LPRPRT
+05160O                         CUSNAM   100                               LPRPRT
+05170O        E  1     71                                                 LPRPRT
+05180O                                   44 'PURCHASE     MONTHLY   '     LPRPRT
+05190O                                   65 'MONTHLY WRNTY    PCT '       LPRPRT
+05200O                                   89 'INTRST TERM  SHIPD  TAX '    LPRPRT
+05210O                                  108 ' FINAL DEPR  DEPREC'         LPRPRT
+05220O        E  1     71                                                 LPRPRT
+05230O                                   17 'SYSTEM      IDENT'           LPRPRT
+05240O                                   41 'COST        RENT'            LPRPRT
+05250O                                   64 'MAINT   MOS   DOWN'          LPRPRT
+05260O                                   88 'RATE   MOS  MO/YR LIFE'      LPRPRT
+05270O                                  108 'TX NBV  ADJ  METHOD'         LPRPRT
+05280O        E  2     71                                                 LPRPRT
+05290O                                    6 '1'                           LPRPRT
+05300O                         SYSID     17                               LPRPRT
+05310O                         PURCHP1   29                               LPRPRT
+05320O                         MAC   1   41                               LPRPRT
+05330O                         MMMC  1   51                               LPRPRT
+05340O                         WTYMOS3   57                               LPRPRT
+05350O                         LDOWN 3   64                               LPRPRT
+05360O                         LINT  3   71                               LPRPRT
+05370O                         LTERM 3   76                               LPRPRT
+05380O                         SHPMO     81 ' 0/'                         LPRPRT
+05390O                         SHPYR     83                               LPRPRT
+05400O                         FITDL 3   88                               LPRPRT
+05410O                         FITFBV3   95                               LPRPRT
+05420O                         FITDADL  101                               LPRPRT
+05430O                 91               122 'SUM OF YEARS'' DIGITS'       LPRPRT
+05440O                 92               115 'STRAIGHT LINE'               LPRPRT
+05450O                 93               123 '1.5 DECLINING BALANCE'       LPRPRT
+05460O                 94               124 'DBL. DECLINING BALANCE'      LPRPRT
+05470O                 95               126 'DBL. DCL. BAL TO ST.LINE'    LPRPRT
+05480O        E  1     71                                                 LPRPRT
+05490O                                   19 'INCOME TAX: FEDERAL'         LPRPRT
+05500O                         FIT   3   25                               LPRPRT
+05510O                                   45 'PCT*   PER.PROP.TAX'         LPRPRT
+05520O                         PPT   3   51                               LPRPRT
+05530O                                   73 'PCT/YR OF P.P.TAX BK.'       LPRPRT
+05540O                                   83 'VAL. USING'                  LPRPRT
+05550O                 81               104 'SUM OF YEARS'' DIGITS'       LPRPRT
+05560O                 82                97 'STRAIGHT LINE'               LPRPRT
+05570O                 83               105 '1.5 DECLINING BALANCE'       LPRPRT
+05580O                 84               106 'DBL. DECLINING BALANCE'      LPRPRT
+05590O                 85               108 'DBL. DCL. BAL TO ST.LINE'    LPRPRT
+05600O        E  1     71                                                 LPRPRT
+05610O                                   18 'STATE'                       LPRPRT
+05620O                         SIT   3   25                               LPRPRT
+05630O                                   30 'PCT*'                        LPRPRT
+0564 O                       10          45 'RESALE VALUE'
+0565 O                       10RESALEZ   49
+0566 O                       10          51 '%'
+05670O                                   77 'OVER'                        LPRPRT
+05680O                         PPDL  3   80                               LPRPRT
+05690O                                   95 'YEARS, DOWN TO'              LPRPRT
+05700O                         PPFBV 3  101                               LPRPRT
+05710O                                  105 'PCT'                         LPRPRT
+05720O        E  1     71                                                 LPRPRT
+05730O                                   19 'SALES TAX: PURCHASE'         LPRPRT
+05740O                         STPE  3   25                               LPRPRT
+05750O                                   30 'PCT*'                        LPRPRT
+05760O                 98                51 'SALES TAX EXPENSED'          LPRPRT
+0577 O                      N98          54 'SALES TAX CAPITALIZED'
+05780O        E  2     71                                                 LPRPRT
+05790O                                   18 'LEASE'                       LPRPRT
+05800O                         STLE  3   25                               LPRPRT
+05810O                                   42 'PCT*   INSURANCE'            LPRPRT
+05820O                         INS   3   48                               LPRPRT
+05830O                                   63 'PCT/YR OF COST'              LPRPRT
+0584 O                                   90 'RENTAL TAX CREDIT'
+0585 O                         ITCR  3   96
+0586 O                                   98 '%'
+0587 O                                  121 'PURCHASE TAX CREDIT'
+0588 O                         ITCP  3  127
+0589 O                                  129 '%'
+05900O        E  1     71                                                 LPRPRT
+0591 O                                   18 'SALES'
+0592 O                                   37 'DOWN   DUE'
+0593 O                                   65 'AMOUNT      MONTHLY'
+0594 O                                   71 'DUE'
+0595 O                                  100 'THIS ANALYSIS IS FOR INF'
+0596 O                                  124 'ORMATION PURPOSES ONLY A'
+0597 O                                  130 'ND IBM'
+05980O        E  1     71                                                 LPRPRT
+0599 O                                   17 'SYSTEM        TAX'
+0600 O                                   38 'PAYMENT  MO/YR'
+0601 O                                   52 'FINANCED'
+0602 O                                   72 'PAYMENT  MO/YR'
+0603 O                                  100 'MAKES NO GUARANTEES WITH'
+0604 O                                  124 ' RESPECT TO ITS APPLICAB'
+0605 O                                  130 'ILITY.'
+06060O        E  2     71                                                 LPRPRT
+06070O                                    4 '1'                           LPRPRT
+06080O                         STPAMT1   18                               LPRPRT
+06090O                         LDPAMT1   31                               LPRPRT
+06100O                         LDPMO 3   35                               LPRPRT
+06110O                         LDPYR     38                               LPRPRT
+06120O                         LAMT  1   52                               LPRPRT
+06130O                         LMPAMT1   65                               LPRPRT
+06140O                         LMPMO 3   69                               LPRPRT
+06150O                         LMPYR     72                               LPRPRT
+0616 O                                  100 'SEE STATEMENT ON PAGE ON'
+0617 O                                  102 'E.'
+06180O        E  2     71                                                 LPRPRT
+06190O                                   22 'NET ANNUAL CASH FLOWS'       LPRPRT
+06200O                                   39 'FOR PERIOD   1/'             LPRPRT
+06210O                         BEGYR     41                               LPRPRT
+06220O                                   52 'THRU  12/'                   LPRPRT
+06230O                         ENDYR     54                               LPRPRT
+06240O        E  1     71                                                 LPRPRT
+06250O                                   19 'EST. CASH FLOWS IF '         LPRPRT
+06260O                                   28 'PURCHASED'                   LPRPRT
+06270O        E  1     71                                                 LPRPRT
+06280O                                   13 'YEAR END:'                   LPRPRT
+06290O                 51      YTP,1     29 '     0 '                     LPRPRT
+06300O                 52      YTP,2     39 '     0 '                     LPRPRT
+06310O                 53      YTP,3     49 '     0 '                     LPRPRT
+06320O                 54      YTP,4     59 '     0 '                     LPRPRT
+06330O                 55      YTP,5     69 '     0 '                     LPRPRT
+06340O                 56      YTP,6     79 '     0 '                     LPRPRT
+06350O                 57      YTP,7     89 '     0 '                     LPRPRT
+06360O                 58      YTP,8     99 '     0 '                     LPRPRT
+06370O                 59      YTP,9    109 '     0 '                     LPRPRT
+06380O                 60      YTP,10   119 '     0 '                     LPRPRT
+06390O                 61      YTP,11   129 '     0 '                     LPRPRT
+06400O        E  1     72                                                 LPRPRT
+06410O                         DES,LN    23
+0642 O                                    2 '  '
+06430O                 51      YTP,1 L   31                               LPRPRT
+06440O                 52      YTP,2 L   41                               LPRPRT
+06450O                 53      YTP,3 L   51                               LPRPRT
+06460O                 54      YTP,4 L   61                               LPRPRT
+06470O                 55      YTP,5 L   71                               LPRPRT
+06480O                 56      YTP,6 L   81                               LPRPRT
+06490O                 57      YTP,7 L   91                               LPRPRT
+06500O                 58      YTP,8 L  101                               LPRPRT
+06510O                 59      YTP,9 L  111                               LPRPRT
+06520O                 60      YTP,10L  121                               LPRPRT
+06530O                 61      YTP,11L  131                               LPRPRT
+06540O        E  1     73                                                 LPRPRT
+06550O                 51                30 '-------'                     LPRPRT
+06560O                 52                40 '-------'                     LPRPRT
+06570O                 53                50 '-------'                     LPRPRT
+06580O                 54                60 '-------'                     LPRPRT
+06590O                 55                70 '-------'                     LPRPRT
+06600O                 56                80 '-------'                     LPRPRT
+06610O                 57                90 '-------'                     LPRPRT
+06620O                 58               100 '-------'                     LPRPRT
+06630O                 59               110 '-------'                     LPRPRT
+06640O                 60               120 '-------'                     LPRPRT
+06650O                 61               130 '-------'                     LPRPRT
+06660O        E  1     74                                                 LPRPRT
+06670O                 75                16 'EST. CASH FLOWS '            LPRPRT
+06680O                 75                25 'IF RENTED'                   LPRPRT
+06690O                 76                23 'EST. PURCHASE LESS RENT'     LPRPRT
+0670 OPLOTDATAE        31
+0671 O                                   80 'XX'
+0672 O                         BEGYR      3
+0673 O                         NOYRS      5
+0674 O        E        30
+0675 O                 31                80 'PB'
+0676 O                 32                80 'PA'
+0677 O                 33                80 'LB'
+0678 O                 34                80 'LA'
+0679 O                 51      YTP,1      8
+0680 O                 52      YTP,2     15
+0681 O                 53      YTP,3     22
+0682 O                 54      YTP,4     29
+0683 O                 55      YTP,5     36
+0684 O                 56      YTP,6     43
+0685 O                 57      YTP,7     50
+0686 O                 58      YTP,8     57
+0687 O                 59      YTP,9     64
+0688 O                 60      YTP,10    71
+0689 O                 61      YTP,11    78
+**                                                                        LPRPRT
+01 PRINCIPAL
+02 INTEREST          TX
+03 TOTAL INSTALLMENT
+04 DOWN PAYMENT
+05 MAINTENANCE       TX
+06 PERS.PROP TAX     TX
+07 INSURANCE         TX
+08 TOTAL CASH OUTFLOW
+09 TAX DEPRECIATION
+10 TAX.DED.EXPENSE   TX
+11 SALES TAX
+12 TOTAL EXPENSES
+13 TAX BENEFIT
+14 CASH FLOW AFTER TAX
+15 RENT + S.TAX      TX
+16 TOTAL CASH EXPENSE
+17 TOTAL TAX DED.EXP.
+18 TAX BENEFIT
+19 CASH FLOW AFTER TAX
+20 BEFORE TAXES
+21 AFTER TAXES
+22 CUMULATIVE
+23
+24 PURCHASE TAX CREDIT
+25 RENTAL TAX CREDIT
+26 OTHER EXPENSES    TX
+27 OTHER EXPENSES    TX

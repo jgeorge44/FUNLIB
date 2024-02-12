@@ -1,0 +1,131 @@
+0001 SFORMAT1   0100
+0002 D          23 1 2Y                                C******* DEALER ********
+0003 D          23 2 2Y                                C*                     *
+0004 D          23 3 2Y                                C* 1ST CARD FACE DOWN  *
+0005 D          23 4 2Y                                C*                     *
+0006 D          23 5 2Y                                C***********************
+0007 SFORMAT2   0124
+0008 D          23 157Y                                C******* PLAYER ********
+0009 D          23 257Y                                C*                     *
+0010 D           1 357Y                                C*
+0011 D           2 367Y                                COF
+0012 D           1 379Y                                C*
+0013 D          23 457Y                                C*                     *
+0014 D          23 557Y                                C***********************
+0015 DPVAL1      5 359Y
+0016 DPSUIT1     8 370Y
+0017 SFORMAT3   0100
+0018 D          23 6 2Y                                C*                     *
+0019 D           1 7 2Y                                C*
+0020 D           2 712Y                                COF
+0021 D           1 724Y                                C*
+0022 D          23 8 2Y                                C*                     *
+0023 D          23 9 2Y                                C***********************
+0024 DDVAL2      5 7 4Y
+0025 DDSUIT2     8 715Y
+0026 SFORMAT4   0100
+0027 D          23 657Y                                C*                     *
+0028 D           1 757Y                                C*
+0029 D           2 767Y                                COF
+0030 D           1 779Y                                C*
+0031 D          23 857Y                                C*                     *
+0032 D          23 957Y                                C***********************
+0033 DPVAL2      5 759Y
+0034 DPSUIT2     8 770Y
+0035 SFORMAT5   0100
+0036 D          2310 2Y                                C*                     *
+0037 D           111 2Y                                C*
+0038 D           21112Y                                COF
+0039 D           11124Y                                C*
+0040 D          2312 2Y                                C*                     *
+0041 D          2313 2Y                                C***********************
+0042 DDVAL3      511 4Y
+0043 DDSUIT3     81115Y
+0044 SFORMAT6   0100
+0045 D          231057Y                                C*                     *
+0046 D           11157Y                                C*
+0047 D           21167Y                                COF
+0048 D           11179Y                                C*
+0049 D          231257Y                                C*                     *
+0050 D          231357Y                                C***********************
+0051 DPVAL3      51159Y
+0052 DPSUIT3     81170Y
+0053 SFORMAT7   0100
+0054 D          2314 2Y                                C*                     *
+0055 D           115 2Y                                C*
+0056 D           21512Y                                COF
+0057 D           11524Y                                C*
+0058 D          2316 2Y                                C*                     *
+0059 D          2317 2Y                                C***********************
+0060 DDVAL4      515 4Y
+0061 DPSUIT4     81515Y
+0062 SFORMAT8   0100
+0063 D          231457Y                                C*                     *
+0064 D           11557Y                                C*
+0065 D           21567Y                                COF
+0066 D           11579Y                                C*
+0067 D          231657Y                                C*                     *
+0068 D          231757Y                                C***********************
+0069 DDVAL4      51559Y
+0070 DDSUIT4     81570Y
+0071 SFORMAT9   0100
+0072 D          2318 2Y                                C*                     *
+0073 D           119 2Y                                C*
+0074 D           21912Y                                COF
+0075 D           11924Y                                C*
+0076 D          2320 2Y                                C*                     *
+0077 D          2321 2Y                                C***********************
+0078 DDVAL5      519 4Y
+0079 DDSUIT5     81915Y
+0080 SFORMAT10  0100
+0081 D          231857Y                                C*                     *
+0082 D           11957Y                                C*
+0083 D           21967Y                                COF
+0084 D           11979Y                                C*
+0085 D          232057Y                                C*                     *
+0086 D          232157Y                                C***********************
+0087 DPVAL5      51959Y
+0088 DPSUIT5     81970Y
+0089 SFORMAT11  2302
+0090 D          5001 2Y                                CDO YOU WANT A HIT?  REPX
+0091 DLY HIT,STAY OR BJACK.
+0092 D           102 1Y  Y          Y     Y            CB
+0093 DWORD       502 3   YA    Y
+0094 SFORMAT12  0124 N     YY
+0095 D           1 1 2Y  Y          Y     Y            CA
+0096 D          261028Y                                CPLACE YOUR BET.  2 DIGIX
+0097 DTS.
+0098 D          121128Y                                CONLY PLEASE.
+0099 D          121228Y                                CCMD 7 TO END
+0100 DBET        21142   Y     Y            Y Y Y
+0101 SFORMAT13  2302 Y
+0102 D           1 1 1Y  Y          Y     Y            CA
+0103 D          600103Y                 Y              CCONGRATULATIONS,YOU WINX
+0104 D, PLACE YOUR BET FOR THE NEXT HAND.
+0105 DBET        2 2 2   YN    Y
+0106 SFORMAT14  2302 Y
+0107 D           1 2 1Y  Y          Y     Y            CA
+0108 D          500103Y                 Y              CSORRY YOU LOSE, PLACE YX
+0109 DOUR BET FOR THE NEXT HAND.
+0110 DBET        2 2 3   YN    Y
+0111 SFORMAT15  2302 Y
+0112 D           1 2 1Y  Y          Y     Y            CA
+0113 D          500102Y                 Y              CSORRY YOU BUSTED, PLACEX
+0114 D YOUR BET FOR THE NEXT HAND.
+0115 DBET        2 2 3   YN    Y
+0116 SFORMAT16  0100
+0117 D          23 1 2Y                                C******* DEALER ********
+0118 D          23 2 2Y                                C*                     *
+0119 D           1 3 2Y                                C*
+0120 D           2 312Y                                COF
+0121 D           1 324Y                                C*
+0122 D          23 4 2Y                                C*                     *
+0123 D          23 5 2Y                                C***********************
+0124 DDVAL1      7 3 4Y
+0125 DDSUIT1     8 315Y
+0126 SFORMAT17  0124    Y
+0127 D           1 1 2Y                   Y            CX
+0128 D          171831Y                 Y   Y          CYOU ARE A CHEAT!!
+0129 D          222129Y                                CYOU DO NOT HAVE BJACK.
+0130 D          392320Y                                CYOU ARE HEREBY EVICTED X
+0131 DFROM THIS CASINO.

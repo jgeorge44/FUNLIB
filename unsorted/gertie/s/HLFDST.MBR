@@ -1,0 +1,173 @@
+     SBIGN      01  N       Y
+     D          22 132Y               Y     Y          C3 - D  TIC - TAC - TOE
+     D          72 3 1Y                                CFIRST ----->     0     X
+     D            1                 2                 3
+     D          79 5 1Y                                CSECOND ---> 0   1   2  X
+     D 3     0   1   2   3     0   1   2   3     0   1   2   3
+     D          63 615Y                                C|   |   |         |   |X
+     D   |         |   |   |         |   |   |
+     D          10 7 1Y                                CTHIRD |  0
+     D           1 713Y               Y 15
+     D           1 715Y                                C|
+     D           1 717Y               Y 14
+     D           1 719Y                                C|
+     D           1 721Y               Y 13
+     D           1 723Y                                C|
+     D           1 725Y               Y 12
+     D           1 728Y                   01           C0
+     D           1 731Y               Y 11
+     D           1 733Y                                C|
+     D           1 735Y               Y 10
+     D           1 737Y                                C|
+     D           1 739Y               Y 09
+     D           1 741Y                                C|
+     D           1 743Y               Y 08
+     D           1 746Y                   01           C0
+     D           1 749Y               Y 23
+     D           1 751Y                                C|
+     D           1 753Y               Y 22
+     D           1 755Y                                C|
+     D           1 757Y               Y 21
+     D           1 759Y                                C|
+     D           1 761Y               Y 20
+     D           1 764Y                   01           C0
+     D           1 767Y               Y 19
+     D           1 769Y                                C|
+     D           1 771Y               Y 18
+     D           1 773Y                                C|
+     D           1 775Y               Y 17
+     D           1 777Y                                C|
+     D           1 779Y               Y 16
+     D           1 8 7Y                                C|
+     D          15 812Y                       Y        C   |   |   |
+     D          15 830Y                       Y        C   |   |   |
+     D          15 848Y                       Y        C   |   |   |
+     D          15 866Y                       Y        C   |   |   |
+     D           1 9 7Y                                C|
+     D          63 915Y                                C|   |   |         |   |X
+     D   |         |   |   |         |   |   |
+     D           110 7Y                                CV
+     D           11010Y                                C1
+     D           11013Y               Y 31
+     D           11015Y                                C|
+     D           11017Y               Y 30
+     D           11019Y                                C|
+     D           11021Y               Y 29
+     D           11023Y                                C|
+     D           11025Y               Y 28
+     D           11028Y                   01           C1
+     D           11031Y               Y 27
+     D           11033Y                                C|
+     D           11035Y               Y 26
+     D           11037Y                                C|
+     D           11039Y               Y 25
+     D           11041Y                                C|
+     D           11043Y               Y 24
+     D           11046Y                   01           C1
+     D           11049Y               Y 39
+     D           11051Y                                C|
+     D           11053Y               Y 38
+     D           11055Y                                C|
+     D           11057Y               Y 37
+     D           11059Y                                C|
+     D           11061Y               Y 36
+     D           11064Y                   01           C1
+     D           11067Y               Y 35
+     D           11069Y                                C|
+     D           11071Y               Y 34
+     D           11073Y                                C|
+     D           11075Y               Y 33
+     D           11077Y                                C|
+     D           11079Y               Y 32
+     D          151112Y                       Y        C   |   |   |
+     D          151130Y                       Y        C   |   |   |
+     D          151148Y                       Y        C   |   |   |
+     D          151166Y                       Y        C   |   |   |
+     D          631215Y                                C|   |   |         |   |X
+     D   |         |   |   |         |   |   |
+     D           11310Y                                C2
+     D           11313Y               Y 47
+     D           11315Y                                C|
+     D           11317Y               Y 46
+     D           11319Y                                C|
+     D           11321Y               Y 45
+     D           11323Y                                C|
+     D           11325Y               Y 44
+     D           11328Y                   01           C2
+     D           11331Y               Y 43
+     D           11333Y                                C|
+     D           11335Y               Y 42
+     D           11337Y                                C|
+     D           11339Y               Y 41
+     D           11341Y                                C|
+     D           11343Y               Y 40
+     D           11346Y                   01           C2
+     D           11349Y               Y 55
+     D           11351Y                                C|
+     D           11353Y               Y 54
+     D           11355Y                                C|
+     D           11357Y               Y 53
+     D           11359Y                                C|
+     D           11361Y               Y 52
+     D           11364Y                   01           C2
+     D           11367Y               Y 51
+     D           11369Y                                C|
+     D           11371Y               Y 50
+     D           11373Y                                C|
+     D           11375Y               Y 49
+     D           11377Y                                C|
+     D           11379Y               Y 48
+     D          151412Y                       Y        C   |   |   |
+     D          151430Y                       Y        C   |   |   |
+     D          151448Y                       Y        C   |   |   |
+     D          151466Y                       Y        C   |   |   |
+     D          631515Y                                C|   |   |         |   |X
+     D   |         |   |   |         |   |   |
+     D           11610Y                                C3
+     D           11613Y               Y 63
+     D           11615Y                                C|
+     D           11617Y               Y 62
+     D           11619Y                                C|
+     D           11621Y               Y 61
+     D           11623Y                                C|
+     D           11625Y               Y 60
+     D           11628Y                   01           C3
+     D           11631Y               Y 59
+     D           11633Y                                C|
+     D           11635Y               Y 58
+     D           11637Y                                C|
+     D           11639Y               Y 57
+     D           11641Y                                C|
+     D           11643Y               Y 56
+     D           11646Y                   01           C3
+     D           11649Y               Y 71
+     D           11651Y                                C|
+     D           11653Y               Y 70
+     D           11655Y                                C|
+     D           11657Y               Y 69
+     D           11659Y                                C|
+     D           11661Y               Y 68
+     D           11664Y                   01           C3
+     D           11667Y               Y 67
+     D           11669Y                                C|
+     D           11671Y               Y 66
+     D           11673Y                                C|
+     D           11675Y               Y 65
+     D           11677Y                                C|
+     D           11679Y               Y 64
+     D          631715Y                                C|   |   |         |   |X
+     D   |         |   |   |         |   |   |
+     D          1020 2Y                 02             C
+     D           32077   YNYY  Y      Y     Y N Y
+     D         3192101Y                                C                       X
+     D                                                                         X
+     D                                                                         X
+     D                                                                         X
+     D                                                                         X
+     D
+     SMSK                 N                                    123456
+     D          7511 3Y
+     SUNMASK              Y                                    123456
+     D          7511 3Y
+     SBASIC
+     D          7511 3Y

@@ -1,0 +1,8 @@
+     H    P010                      B       1                             PIXPRT
+     FDISKFILEIP    128 128            DISK
+     FPRINT   O     132 132     OF     PRINTER
+     IDISKFILENS  01
+     I                                        1   5 RECNO
+     I                                        6 128 RECORD
+     OPRINT   D  1     01
+     O                         RECORD   127

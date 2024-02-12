@@ -1,0 +1,172 @@
+     SFIRST          Y      Y
+     D          110135Y                     Y          C MIND MAZE
+     D           20316Y                                C*-
+     D           10319Y  Y          Y
+     D           30321Y                                C-*-
+     D           10325Y  Y          Y
+     D           30327Y                                C-*-
+     D           10331Y  Y          Y
+     D           30333Y                                C-*-
+     D           10337Y  Y          Y
+     D           30339Y                                C-*-
+     D           10343Y  Y          Y
+     D           30345Y                                C-*-
+     D           10349Y  Y          Y
+     D           30351Y                                C-*-
+     D           10355Y  Y          Y
+     D           30357Y                                C-*-
+     D           10361Y  Y          Y
+     D           20363Y                                C-*
+     D           10416Y  Y          Y
+     D           10422Y  Y     Y      Y
+     D           10428Y  Y            Y
+     D           10434Y  Y            Y
+     D           10440Y  Y            Y
+     D           10446Y  Y            Y
+     D           10452Y  Y            Y
+     D           10458Y  Y            Y
+     D           10464Y  Y          Y
+     D           2 516Y                                C*-
+     D           1 519Y  Y          Y
+     D           3 521Y                                C-*-
+     D           1 525Y  Y            Y
+     D           3 527Y                                C-*-
+     D           1 531Y  Y            Y
+     D           3 533Y                                C-*-
+     D           1 537Y  Y            Y
+     D           3 539Y                                C-*-
+     D           1 543Y  Y            Y
+     D           3 545Y                                C-*-
+     D           1 549Y  Y            Y
+     D           3 551Y                                C-*-
+     D           1 555Y  Y            Y
+     D           3 557Y                                C-*-
+     D           1 561Y  Y            Y
+     D           2 563Y                                C-*
+     D           1 616Y  Y          Y
+     D           1 622Y  Y            Y
+     D           1 628Y  Y            Y
+     D           1 634Y  Y            Y
+     D           1 640Y  Y            Y
+     D           1 646Y  Y            Y
+     D           1 652Y  Y            Y
+     D           1 658Y  Y            Y
+     D           1 664Y  Y          Y
+     D           2 716Y                                C*-
+     D           1 719Y  Y          Y
+     D           3 721Y                                C-*-
+     D           1 725Y  Y            Y
+     D           3 727Y                                C-*-
+     D           1 731Y  Y            Y
+     D           3 733Y                                C-*-
+     D           1 737Y  Y            Y
+     D           3 739Y                                C-*-
+     D           1 743Y  Y            Y
+     D           3 745Y                                C-*-
+     D           1 749Y  Y            Y
+     D           3 751Y                                C-*-
+     D           1 755Y  Y            Y
+     D           3 757Y                                C-*-
+     D           1 761Y  Y            Y
+     D           2 763Y                                C-*
+     D           1 816Y  Y          Y
+     D           10819Y                     Y          CS
+     D           1 822Y  Y            Y
+     D           1 828Y  Y            Y
+     D           1 834Y  Y            Y
+     D           1 840Y  Y            Y
+     D           1 846Y  Y            Y
+     D           10849Y                     Y          C@
+     D           1 852Y  Y            Y
+     D           1 858Y  Y            Y
+     D           1 864Y  Y          Y
+     D           2 916Y                                C*-
+     D           1 919Y  Y          Y
+     D           3 921Y                                C-*-
+     D           1 925Y  Y            Y
+     D           3 927Y                                C-*-
+     D           1 931Y  Y            Y
+     D           3 933Y                                C-*-
+     D           1 937Y  Y            Y
+     D           3 939Y                                C-*-
+     D           1 943Y  Y            Y
+     D           3 945Y                                C-*-
+     D           1 949Y  Y            Y
+     D           3 951Y                                C-*-
+     D           1 955Y  Y            Y
+     D           3 957Y                                C-*-
+     D           1 961Y  Y            Y
+     D           2 963Y                                C-*
+     D           11016Y  Y          Y
+     D           11022Y  Y            Y
+     D           11028Y  Y            Y
+     D           11034Y  Y            Y
+     D           11040Y  Y            Y
+     D           11046Y  Y            Y
+     D           11052Y  Y            Y
+     D           11058Y  Y            Y
+     D           11064Y  Y          Y
+     D           21116Y                                C*-
+     D           11119Y  Y          Y
+     D           31121Y                                C-*-
+     D           11125Y  Y            Y
+     D           31127Y                                C-*-
+     D           11131Y  Y            Y
+     D           31133Y                                C-*-
+     D           11137Y  Y            Y
+     D           31139Y                                C-*-
+     D           11143Y  Y            Y
+     D           31145Y                                C-*-
+     D           11149Y  Y            Y
+     D           31151Y                                C-*-
+     D           11155Y  Y            Y
+     D           31157Y                                C-*-
+     D           11161Y  Y            Y
+     D           21163Y                                C-*
+     D           11216Y  Y          Y
+     D           11222Y  Y            Y
+     D           11228Y  Y            Y
+     D           11234Y  Y            Y
+     D           11240Y  Y            Y
+     D           11246Y  Y            Y
+     D           11252Y  Y            Y
+     D           11258Y  Y            Y
+     D           11264Y  Y          Y
+     D           21316Y                                C*-
+     D           11319Y  Y          Y
+     D           31321Y                                C-*-
+     D           11325Y  Y          Y
+     D           31327Y                                C-*-
+     D           11331Y  Y          Y
+     D           31333Y                                C-*-
+     D           11337Y  Y          Y
+     D           31339Y                                C-*-
+     D           11343Y  Y          Y
+     D           31345Y                                C-*-
+     D           11349Y  Y          Y
+     D           31351Y                                C-*-
+     D           11355Y  Y          Y
+     D           31357Y                                C-*-
+     D           11361Y  Y          Y
+     D           21363Y                                C-*
+     D          78150106                                LOCK 12 GATES BY ENTERIX
+     DING ANY CHARACTER OTHER THAN BLANK IN APPROPRIATE GATE.
+     D          391716Y               Y Y
+     SHLFMM
+     D          11 235Y               Y     Y          C MIND MAZE
+     D          49 415Y
+     D          49 515Y
+     D          49 615Y
+     D          49 715Y
+     D          49 815Y
+     D          49 915Y
+     D          491015Y
+     D          491115Y
+     D          491215Y
+     D          491315Y
+     D          491415Y
+     D           11615N  Y Y            Y     Y
+     D          241620Y                 01
+     D           81738Y                 02
+     D           91838Y                 02
+     D           81938Y                 02

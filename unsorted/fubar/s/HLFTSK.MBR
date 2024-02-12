@@ -1,0 +1,130 @@
+HLFTSK   START 0
+         LA    WS,2
+         $ALOC
+         $OPEN
+ACCEPT   ST    AD+3,8                  INIT RESUME ADDRESS.
+         $WSIO OPC-ACI,RCAD-INPUT,INLEN-100
+         MVC   SAVNAM,$WSNAME(2,2)     SAVE THIS REQUESTOR ID.
+         CLI   $WSRTC(,2),$WSRACC      IF THIS IS NEW REQUESTOR, SEE IF
+         BNE   AA                      HE IS REALLY 'NEW'.
+         LA    IDTBL-16,1              SEARCH ID TABLE TO DETERMINE.
+AB       CLC   2(2,1),$WSNAME(,2)
+         BE    AD
+         CLI   1(,1),C' '
+         LA    2(,1),1
+         BNE   AB
+         MVC   0(2,1),$WSNAME(,2)      IF REALLY 1ST TIME, GET ATTRB.
+         $WSIO OPC-GTA,OPMOD-0
+         MVC   $WSNAME(2,2),W1         TRY TO ACQUIRE SYSTEM CONSOLE.
+         $WSIO OPC-ACQ,OPMOD-0
+         TBN   $WSRTC(,2),$WSRAFW      IF ACQUIRE FAILS, THEN RELEASE.
+         JT    AC
+         $WSIO OPC-REL,OPMOD-0
+AC       MVC   $WSNAME(2,2),SAVNAM     RESTORE CURRENT TUB ID.
+AE       MVC   OUTPUT+74(30),MSG1
+         $WSIO OPC-PUT,OPMOD-ERROR,RCAD-OUTPUT,OUTLEN-75
+         B     SIT
+         $WSIO OPC-CLR,OPMOD-0
+         B     SIT                     WAIT 3 SECONDS.
+         MVC   OUTPUT+74(30),MSG2      THIS MSG FOLLOWS CLEAR.
+         $WSIO OPC-PTI,FORMAT-BASIC,RCAD-OUTPUT,OUTLEN-75,OPMOD-0
+         B     ACCEPT
+         MVC   $WSPID(2,2),BLANK       INDICATE PRINTER NOT ALLOCATED.
+         $WSIO OPC-PUT,OPMOD-PRINT,RCAD-OUTPUT
+         MVC   OUTPUT+74(30),MSG5      INDICATE 'PUT ATTEMPTED'.
+         $WSIO OPC-PTI,FORMAT-BASIC,RCAD-OUTPUT,OUTLEN-75,OPMOD-0
+         B     ACCEPT
+         MVC   OUTPUT+74(30),MSG3      DO STOP-INVITE.
+         $WSIO OPC-PTI,FORMAT-BASIC,RCAD-OUTPUT,OUTLEN-75,OPMOD-0
+         B     SIT                     WAIT 3 SECONDS.
+         $WSIO OPC-STI,OPMOD-0
+         B     ACCEPT
+         $WSIO OPC-INQ,OPMOD-0
+         LA    WS,2                    RESTORE WS DTF ADDR.
+         MVI   $WSOPC(,2),0            THIS IS PARTICULAR STAT/INQ.
+         $WSIO OPMOD-0
+         $WSIO OPC-ERS,OPMOD-0
+         MVC   OUTPUT+74(30),MSG4      FUNCTION KEY TEST
+         $WSIO OPC-PTI,FORMAT-BASIC,RCAD-OUTPUT,OUTLEN-75,OPMOD-0
+         B     ACCEPT                  WAIT FOR COMMAND KEY 1.
+         CLI   $WSAID(,2),$AIDCM01     QUIT IF NOT CMD KEY 1.
+         BNE   EJ
+         $WSIO OPC-PTI,FORMAT-MSK,RCAD-OUTPUT,OUTLEN-75,OPMOD-0
+         B     ACCEPT                  MASK FUNCTION KEYS AND SEE WHAT.
+         CLI   $WSAID(,2),$AIDCM02     AFTER F-KEYS, CMD KEY 2 INDIC-
+         BNE   EJ                      TIME TO UNMASK AND EXAMINE F-KEY
+         MVI   LOOP,4                  INIT COUNT-TO-6 LOOP.
+         B     BC                      PRT,ROLUP,ROLDN,CLR,BSP,HELP.
+BD       B     ACCEPT
+         CLI   $WSAID(,2),$AIDPRNT     PRINT KEY CHECK.
+         JE    BB
+         CLI   $WSAID(,2),$AIDRLUP     ROLL-UP KEY CHECK.
+         JE    BB
+         CLI   $WSAID(,2),$AIDRLDN     ROLL-DOWN CHECK.
+         JE    BB
+         CLI   $WSAID(,2),$AIDCLER     CLEAR KEY CHECK.
+         JE    BB
+         CLI   $WSAID(,2),$AIDRBKS     RECORD-BACKSPACE CHECK.
+         JE    BB
+         CLI   $WSAID(,2),$AIDHELP     HELP KEY CHECK.
+         JNE   EJ                      IF NOT F-KEY, GO TO EJ.
+BB       MVC   OUTPUT+5,$WSAID(1,2)    PRINT AID TO DIFFERENTIATE LINE
+         CLI   $WSAID(,2),X'F0'        ROLLED LINES; CHANGE ANY NON-
+         JNL   BC                      PRINTABLE AID CHARACTERS TO
+         MVI   OUTPUT+5,X'F9'          THE CHARACTER '9'.
+BC       EQU   *
+         $WSIO OPC-PTI,FORMAT-UNMASK,RCAD-OUTPUT,OPMOD-ROLL,STRTLN-5,  X
+               ENDLN-11,RLCLER-Y,ROLINE-1,OUTLEN-75
+         ALC   LOOP,LOOP(1)            CHECK FOR 6TH K-KEY.
+         JOL   BF
+         B     BD
+EJ       LA    IDTBL-16,1              REMOVE THIS ID FROM ID TABLE.
+BE       CLC   2(2,1),$WSNAME(,2)      SEARCH FOR EQUAL NAME AND THEN
+         LA    2(,1),1                 WHEN FOUND, REMOVE IT FROM THE
+         BNE   BE                      TABLE.
+         MVC   0(2,1),BLANK
+BF       $WSIO OPC-PNW,OPMOD-PRUF,FORMAT-BIGN,OUTLEN-75
+         $WSIO OPC-REL
+         B     ACCEPT                  APRUF,RELEASE, THEN ACCEPT.
+AA       CLI   $WSRTC(,2),$WSRNAV      IF OPERATOR HAS RELEASED WS,
+         BE    EJ                      SCRUB WS AND RELEASE.
+         CLI   $WSRTC(,2),$WSRSTP      IF STOP-SYSTEM PENDING END THE
+         JNE   AF                      TASK.
+AG       $EOJ
+AF       MVI   OUTPUT+5,C' '           CLEAR 'AID BYTE' FIELD.
+         CLI   $WSRTC(,2),$WSRPE       GO TO EJ IF I/O ERROR.
+         BE    AG
+AD       B     0                       GO TO NEXT STEP IN PROGRAM.
+         SPACE 2
+SIT      MVI   TRB+$TRBTIME,3          SET 3-SECOND INTERVAL.
+         ST    SB+3,2                  REGISTER 2 MUST BE PRESERVED.
+         ST    SA+3,8                  SAVE RETURN ADDRESS IN BRANCH.
+         $SIT  TRB-TRB,ITYPE-REAL,TYPE-BIN
+SB       LA    0,2                     RESTORE WSDTF REGISTER.
+SA       B     0
+         EJECT
+WS       EQU   *
+         $DTFW MEMBER-HLFDST,INLEN-79,TNUM-8,INDEXA-INDX,HELP-Y,ROLL-Y,X
+               CLEAR-Y,RECBKS-Y,PRNT-Y
+         $DTFO WS-Y,FIELD-Y
+         $WSEQ
+LOOP     DS    CL1                     LOOP COUNTER FOR F-KEY TEST.
+BLANK    DC    CL2' '                  ID-TABLE 'ERASE' CONSTANT.
+MSG4     DC    CL30'TEST FUNCTION KEYS'
+TRB      $TRB  V-ALL
+MSG5     DC    CL30'PRINT ATTEMPTED'
+MSG3     DC    CL30'STOP-INVITE COMING'
+MSG2     DC    CL30'CLEAR COMPLETE'
+MSG1     DC    CL30'THIS IS A WRITE ERROR LINE'
+OUTPUT   EQU   *
+         DC    CL75' '
+W1       DC    CL2'W1'                 SYSTEM OPERATOR ACQUIRE ID.
+SAVNAM   DS    CL2
+IDTBL    DC    CL17' '                 TABLE FOR 8 REQUESTOR ID'S.
+CTR      DS    CL1
+         ORG   *,8
+INPUT    EQU   *
+         DS    CL200
+INDX     EQU   *
+         DS    CL100
+         END

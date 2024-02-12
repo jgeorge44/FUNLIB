@@ -1,0 +1,31 @@
+     SSCRN01    01
+     DRECODE  00010203Y  Y          Y     Y            C1
+     DFL0002  00350220Y               Y                CPICTURE CONVERSION/PRINX
+     DTING PROGRAM
+     DFL0003  00230610Y                                CAre you ready to print?
+     DYORN    00010635Y  YA    Y                Y      CY
+     DFL0005  03110643Y                                C(Y or N...if yes, pressX
+     D enter)                                                                  X
+     D                                                                         X
+     D                                      What character do you want         X
+     D                                          to replace in the picture?
+     DREPLCE  00011035Y  Y                      Y      C
+     DFL0007  02311043Y                                C(it must be in the pictX
+     Dure)                                                                     X
+     D                               What do you want to                       X
+     D                                   replace it with?
+     DSTRING  00401335   Y                      Y
+     DFL0009  01001510Y                                CReset string or        X
+     D                                                      continuous replacemX
+     Dent?
+     DRESET   00011635Y  YA                     Y      CR
+     DFL0011  06591643Y                                C(R or C)               X
+     D                 ........................................................X
+     D..............                 THIS PROGRAM WILL CONTINUE TO DO REPLACEMEX
+     DNTS AS LONG AS                    YOU SAY NO TO THE READY TO PRINT OPTIONX
+     D.  WHEN YOU SAY YES IT                   WILL START PRINTING THE PICTURE.X
+     D  IT IS SUGGESTED THAT YOU HAVE                 AN ORIGIONAL COPY OF THE X
+     DPICTURE FIRST TO SEE WHAT YOU MUST                     CHANGE.  FOR AN ORX
+     DIGIONAL, JUST SAY YES THE FIRST TIME AND NO                   REPLACEMENTX
+     DS WILL TAKE PLACE.                                                       X
+     D                            THANKYOU, DAVID GILFILEN

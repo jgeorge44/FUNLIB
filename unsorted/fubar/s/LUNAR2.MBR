@@ -1,0 +1,253 @@
+0001 H   C                                         03                     LUNAR2
+0002 FWK      CP F     1840            WORKSTN
+0003 E                    AR         22 59
+0004 E                    L          15  2 0
+0005 E                    ARF        59  1
+0006 E                    MSG     1  17 45
+0007 E                    GAF     1  22  3 0D
+0008 IWK      NS  02   1 C
+0009 I        NS  03   1NC9
+0010 I                                        1   20BURN
+0011 I        NS  04   1 C9
+0012 C      02             EXSR BEGIN
+0013 C      02             GOTO END
+0014 C      04             SETON                     LR
+0015 C      04             GOTO END
+0016 C           BURN      COMP 30                   121110
+0017 C      12             Z-ADD30        BURN       1012
+0018 C           BURN      MULT 18        BUR     30
+0019 C           Y         COMP 15                   16
+0020 C   16                Z-ADD1         Y
+0021 C                     Z-ADDBURN      L,Y
+0022 C           Y         ADD  1         Y
+0023 C                     Z-ADDBURN      WK4     31
+0024 C           LP        TAG
+0025 C     N02   WK4       DIV  1.5       WK4       H15
+0026 C      32             SETON                     15
+0027 C      17             SETON                     15
+0028 C           WK4       SUB  2         WK4     31
+0029 C      15N17FUEL      SUB  BUR       FUEL
+0030 C      15   VEL       SUB  WK4       VEL          17
+0031 C      15   DIST      SUB  VEL       DIST         18
+0032 C  N17 15N18          EXSR IMP
+0033 C      17 15          Z-ADD0         IMP
+0034 C      15             EXSR WARN
+0035 C      15             EXSR GRAF
+0036 C      15             EXSR LAND
+0037 C      15             EXSR DISPLY
+0038 C      15   T         ADD  1         T       30
+0039 C  N32 15N17WK4       COMP 1                    15
+0040 C      15             GOTO LP
+0041 C                     SETON                     05
+0042 C     NLR             EXCPT
+0043 C                     SETOF                     05
+0044 C           1         ADD  TR        TR      30
+0045 C                     SETON                     19
+0046 C           END       TAG
+0047 CSR         BEGIN     BEGSR
+0048 CSR                   TIME           TIM1    60
+0049 CSR                   Z-ADD5000      FUEL    40
+0050 CSR                   Z-ADD400       DIST    52
+0051 CSR                   Z-ADD50        VEL     31
+0052 CSR                   Z-ADD6         IMP     52
+0053 CSR                   MOVE MSG,1     AR,3
+0054 CSR                   MOVE MSG,2     AR,4
+0055 CSR                   MOVE MSG,3     AR,5
+0056 CSR                   MOVE MSG,4     AR,6
+0057 CSR                   MOVE MSG,5     AR,7
+0058 CSR                   MOVE MSG,6     AR,8
+0059 CSR                   MOVE MSG,7     AR,9
+0060 CSR                   MOVE MSG,8     AR,10
+0061 CSR                   MOVE MSG,9     AR,11
+0062 CSR                   MOVELMSG,10    FULMSG
+0063 CSR                   Z-ADD1         TI      30
+0064 CSR                   Z-ADD1         LI      30
+0065 CSR                   Z-ADD1         Y       20
+0066 CSR                   Z-ADD1         T
+0067 CSR                   Z-ADD2         WKT3
+0068 CSR                   EXSR GRAF
+0069 CSR                   SETON                     9105
+0070 CSR                   EXCPT
+0071 CSR                   SETOF                     9105
+0072 CSR                   MOVE ' '       BLK    59
+0073 CSR                   MOVE BLK       AR
+0074 CSR                   ENDSR
+0075 CSR         WARN      BEGSR
+0076 CSR         FUEL      COMP 1000                   3030
+0077 CSR         FUEL      COMP 500                    3131
+0078 CSR         FUEL      COMP 1                      32
+0079 CSR                   MOVELMSG,10    FULMSG
+0080 CSR    31             MOVELMSG,11    FULMSG 13
+0081 CSR    32             MOVELMSG,12    FULMSG
+0082 CSR       32          Z-ADD0         FUEL
+0083 CSR         VEL       COMP 80                   40  40
+0084 CSR         VEL       COMP 5                      4141
+0085 CSR         DIST      COMP 10                     5050
+0086 CSR         DIST      COMP 5                      5151
+0087 CSR         IMP       COMP 3                      6060
+0088 CSR         IMP       COMP 1                      6161
+0089 CSR                   SETOF                     90
+0090 CSR    32             SETON                     90
+0091 CSR    40 60          SETON                     90
+0092 CSR    51             SETON                     90
+0093 CSR    61             SETON                     90
+0094 CSR                   ENDSR
+0095 CSR         IMP       BEGSR
+0096 CSR         VEL       MULT VEL       VEL2    82
+0097 CSR         4         MULT DIST      WK1     62
+0098 CSR         WK1       ADD  VEL2      VEL2
+0099 CSR                   SQRT VEL2      VEL2
+0100 CSR         VEL2      SUB  VEL       WK2     62
+0101 CSR         WK2       DIV  2         IMP       H
+0102 CSR                   ENDSR
+0103 CSR         DISPLY    BEGSR
+0104 CSR         TEST      TAG
+0105 CSR                   TIME           TIM1    60
+0106 CSR         TIML      COMP TIM1                     07
+0107 CSR    07             GOTO TEST
+0108 CSR                   SETON                     91
+0109 CSR                   EXCPT
+0110 CSR                   SETOF                     91
+0111 CSR                   TIME           TIML    60
+0112 CSR                   ENDSR
+0113 CSR         GRAF      BEGSR
+0114 CSR                   MOVEA'| '      ARF,TI
+0115 CSR                   MOVEAARF       AR,LI
+0116 CSR                   MOVE ' '       ARF
+0117 CSR                   Z-ADD1         LI      30
+0118 CSR                   Z-ADDDIST      TST     30H
+0119 CSR         TST       LOKUPGAF,LI                 2525
+0120 CSR    25             MOVEAAR,LI     ARF
+0121 CSR         T         DIV  2         TI      20H
+0122 CSR    25             MOVEA'M'       ARF,TI
+0123 CSR   N25             MOVEA'#'       ARF,TI
+0124 CSR    25             MOVEAARF       AR,LI
+0125 CSR   N25             MOVEAARF       AR,22
+0126 CSR                   ENDSR
+0127 CSR         LAND      BEGSR
+0128 CSR         DIST      COMP .75                    2626
+0129 CSR                   Z-ADDDIST      DIST         2626
+0130 CSR    26   VEL       COMP 5                    27
+0131 CSR         VEL       ADD  13        M       20
+0132 CSR    27 26          Z-ADD17        M
+0133 CSR    27 26          SETON                     89
+0134 CSR    26 27          EXCPT
+0135 CSR    26 27          EXSR DELY
+0136 CSR    26 27          SETOF                     89
+0137 CSR    26 27          EXCPT
+0138 CSR    26 27          EXSR DELY
+0139 CSR    26 27          SETON                     88
+0140 CSR    26 27          EXCPT
+0141 CSR    26 27          EXSR DELY
+0142 CSR    26             Z-ADD0         DIST
+0143 CSR    26             Z-ADD0         IMP
+0144 CSR                   SETOF                     2788
+0145 CSR    26             MOVE MSG,M     AR,5
+0146 CSR                   SETON                     202191
+0147 CSR    26             EXCPT
+0148 CSR                   SETOF                     202191
+0149 CSR    26             EXSR DELY
+0150 CSR    26             SETON                     LR
+0151 CSR    26             SETOF                     15
+0152 CSR                   ENDSR
+0153 CSR         DELY      BEGSR
+0154 CSR         LPT       TAG
+0155 CSR   N95             TIME           WKT1    60
+0156 CSR         WKT1      COMP WKT2                     95
+0157 CSR                   TIME           WKT2    60
+0158 CSR    95             GOTO LPT
+0159 CSR         WKT3      SUB  1         WKT3    10   9696
+0160 CSR   N96             GOTO LPT
+0161 CSR                   Z-ADD2         WKT3
+0162 CSR                   ENDSR
+0163 OWK      E        91
+0164 O                                   K8 'ZLUN1   '
+0165 O                         AR,1    0059
+0166 O                         AR,2    0118
+0167 O                         FULMSG  0131
+0168 O                         AR,3    0190
+0169 O                         FUEL  3 0194
+0170 O                         AR,4    0253
+0171 O                         AR,5    0312
+0172 O                         AR,6    0371
+0173 O                         VEL   3 0376
+0174 O                         AR,7    0435
+0175 O                         AR,8    0494
+0176 O                         AR,9    0553
+0177 O                         DIST  3 0560
+0178 O                         AR,10   0619
+0179 O                         AR,11   0678
+0180 O                         AR,12   0737
+0181 O                         TIM1    0745 '  :  :  '
+0182 O                         AR,13   0804
+0183 O                         AR,14   0863
+0184 O                         AR,15   0922
+0185 O                         IMP   3 0927
+0186 O                         AR,16   0986
+0187 O                         AR,17   1045
+0188 O                         AR,18   1104
+0189 O                         AR,19   1163
+0190 O                         L,1     1165
+0191 O                         L,2     1167
+0192 O                         L,3     1169
+0193 O                         L,4     1171
+0194 O                         L,5     1173
+0195 O                         AR,20   1232
+0196 O                         L,6     1234
+0197 O                         L,7     1236
+0198 O                         L,8     1238
+0199 O                         L,9     1240
+0200 O                         L,10    1242
+0201 O                         AR,21   1301
+0202 O                         L,11    1303
+0203 O                         L,12    1305
+0204 O                         L,13    1307
+0205 O                         L,14    1309
+0206 O                         L,15    1311
+0207 O                         AR,22   1370
+0208 O        E        05
+0209 O                                   K5 'ZLUN3'
+0210 O                         BURN  3    2
+0211 O        E        27
+0212 O                                   K5 'ZLUN2'
+**
+  YOU ARE INITIALLY 400 METERS ABOVE
+THE LUNAR SURFACE TRAVELING 50 M/SEC
+WITH 5000 LITERS OF FUEL ABOARD. EACH
+TIME YOU FIRE THE ROCKETS WILL BURN
+15 X THAT AMOUNT OF FUEL. A BURN OF 03 WILL
+REDUCE YOUR VELOCITY 0.0M/SEC. A MAXIMUM
+BURN OF 30.  WILL REDUCE YOUR VELOCITY
+32.5 M/SEC. YOU HAVE 6.0 SECONDS TO IMPACT.
+            GOOD  LUCK!
+ FUEL
+ FUEL LOW
+ FUEL GONE
+YOU HAVE MADE A PERFECT LANDING!!
+YOUR LANDING WAS NOT BAD. GOOD JOB!
+YOUR LANDING WAS TOO FAST!!
+YOU CRASH LANDED! YOU WILL NOT SURVIVE!
+YOU HAVE CRASHED AND YOU ARE DEAD!!
+**
+400
+300
+200
+100
+090
+080
+070
+060
+050
+040
+030
+020
+010
+009
+008
+007
+006
+005
+004
+003
+002
+001

@@ -1,0 +1,83 @@
+0001 H                                                                    GAME01
+0002 FWS      CD  F     170            WORKSTN
+0003 E                    DECK       52  2 0
+0004 E                    TABD   13  52  2 0 TABN    3
+0005 E                    DISC        3  1 0
+0006 E                    NAME       52  3
+0007 IWS      NS  01
+0008 I                                        1  10 PLAY
+0009 I                                       11  13 D
+0010 C           $START    TAG
+0011 C* DEAL THE CARDS
+0012 C                     Z-ADD0         I       20
+0013 C                     Z-ADD1         K       20
+0014 C                     Z-ADD0         DECK
+0015 C           $LP1      TAG
+0016 C           I         ADD  1         I
+0017 C           I         COMP 52                   90
+0018 C   90                GOTO $DN1
+0019 C           $LP2      TAG
+0020 C                     EXSR $RANDM
+0021 C                     MOVE $RANDM    NORML   66
+0022 C           NORML     MULT 52        J       20
+0023 C           J         ADD  K         K
+0024 C           $AGAIN    TAG
+0025 C           K         COMP 52                   90
+0026 C   90      K         SUB  52        K
+0027 C           DECK,K    COMP 0                    90
+0028 C   90      K         ADD  1         K
+0029 C   90                GOTO $AGAIN
+0030 C                     Z-ADDI         DECK,K
+0031 C           I         LOKUPTABD      TABN           90
+0032 C                     MOVE TABN      NAME,K
+0033 C                     GOTO $LP1
+0034 C           $DN1      TAG
+0035 C* SEND FIRST SCREEN
+0036 C                     SETON                     30
+0037 C                     EXCPT
+0038 C                     SETOF                     30
+0039 C* RANDOM PAUSE
+0040 C                     EXSR $DELAY
+0041 C* ASK FOR PLAY
+0042 C                     SETON                     32
+0043 C                     READ WS                       LR
+0044 C   KL
+0045 COR LR                GOTO $END
+0046 C                     GOTO $START
+0047 C           $END      TAG
+0048 C                     SETON                     LR
+0049 CSR         $RANDM    BEGSR
+0050 CSR                   TIME           $@TIME  60
+0051 CSR         $@WRK1    ADD  7589641   $@WRK1  60
+0052 CSR         $@WRK1    MULT $@TIME    $@WRK2 120
+0053 CSR                   MOVE $@WRK2    $@WRK3  9
+0054 CSR                   MOVEL$@WRK3    $@WRK1
+0055 CSR         $@WRK1    ADD  1589623   $RANDM  60
+0056 CSR                   ENDSR
+0057 CSR         $DELAY    BEGSR
+0058 CSR                   TIME           $@TIME  60
+0059 CSR                   EXSR $RANDM
+0060 CSR                   MOVE $RANDM    NORML
+0061 CSR         NORML     MULT 30        WAIT    60
+0062 CSR         WAIT      ADD  $@TIME    WAIT
+0063 CSR         $DELOP    TAG
+0064 CSR                   TIME           $@TIME  60
+0065 CSR         $@TIME    COMP WAIT                 90
+0066 CSRN90                GOTO $DELOP
+0067 CSR                   ENDSR
+0068 OWS      E        30
+0069 O       OR        32
+0070 O                                   K8 'GAME0101'
+0071 O                                    1 '1'
+0072 O                                    6 '0'
+0073 O                         NAME,1   119
+0074 O                         NAME,2   122
+0075 O                         NAME,3   132
+0076 O                         NAME,4   135
+0077 O                         NAME,5   170
+0078 O                    30            160 'WAIT FOR YOUR TURN      '
+**
+01A S022 S033 S044 S055 S066 S077 S088 S099 S1010S11J S12Q S13K S
+14A H152 H163 H174 H185 H196 H207 H218 H229 H2310H24J H25Q H26K H
+27A D282 D293 D304 D315 D326 D337 D348 D359 D3610D37J D38Q D39K D
+40A C412 C423 C434 C445 C456 C467 C478 C489 C4910C50J C51Q C52K C

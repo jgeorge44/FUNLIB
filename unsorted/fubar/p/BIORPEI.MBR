@@ -1,0 +1,6 @@
+// IF ?1?/REMOVE                        REMOVE BIOR,ALL,LIBRARY
+// IF ?1?/REMOVE                        RETURN
+// LIBRARY NAME-FUNLIB
+// SWITCH 00000000
+// LOAD BIOPEI
+// RUN

@@ -1,0 +1,271 @@
+0001 H     024                                                            LIFE
+0002 FKEY     CD   17281728            WORKSTN                            LIFE
+0003 E                    UA        576  3                                LIFE
+0004 E                    LOC       576  4 0                              LIFE
+0005 E                    ADJ         8  4 0                              LIFE
+0006 E                    LOCX        8  1 0                              LIFE
+0007 E                    LOCY        8  1 0                              LIFE
+0008 IKEY     NS  01                                                      LIFE
+0009 I                                        11728 UA                    LIFE
+0010 C*                                                                   LIFE
+0011 C*  THIS SECTION SETS UP CONSTANT RUN DATA AND IS EXECUTED ONLY      LIFE
+0012 C*  DURING FIRST CYCLE TIME.                                         LIFE
+0013 C*                                                                   LIFE
+0014 C   10                GOTO START                                     LIFE
+0015 C                     SETON                     10                   LIFE
+0016 C                     Z-ADD576       UAMX    40       SET UA LENGTH  LIFE
+0017 C                     Z-ADD24        USIZE   40       SET GRID SIZE  LIFE
+0018 C                     MOVE ' . '     NULL    3        SET NULL VALUE LIFE
+0019 C                     MOVE ' * '     DOT     3        SET DOT VALUE  LIFE
+0020 C                     MOVE 'N* '     NDOT    3        SET NEW DOT VALLIFE
+0021 C                     MOVE 'X* '     XDOT    3        SET DEL DOT VALLIFE
+0022 C                     Z-ADD576       LOCMAX  40       SET LOCATE SIZELIFE
+0023 C                     Z-SUB1         LOCX,1           LOAD LOCATE    LIFE
+0024 C                     Z-SUB1         LOCX,7           ARRAYS         LIFE
+0025 C                     Z-SUB1         LOCX,8                          LIFE
+0026 C                     Z-ADD1         LOCX,3                          LIFE
+0027 C                     Z-ADD1         LOCX,4                          LIFE
+0028 C                     Z-ADD1         LOCX,5                          LIFE
+0029 C                     Z-SUB1         LOCY,1                          LIFE
+0030 C                     Z-SUB1         LOCY,2                          LIFE
+0031 C                     Z-SUB1         LOCY,3                          LIFE
+0032 C                     Z-ADD1         LOCY,5                          LIFE
+0033 C                     Z-ADD1         LOCY,6                          LIFE
+0034 C                     Z-ADD1         LOCY,7                          LIFE
+0035 C                     READ KEY                        READ FIRST RCD LIFE
+0036 C                     EXSR PREP                       SET UP UNIVERSELIFE
+0037 C                     EXCPT                           WRITE SCREEN   LIFE
+0038 C*                                                                   LIFE
+0039 C*  START REGULAR CYCLING                                            LIFE
+0040 C*                                                                   LIFE
+0041 C           START     TAG                                            LIFE
+0042 C                     READ KEY                                       LIFE
+0043 C   KG                SETON                     LR                   LIFE
+0044 C   KG                GOTO END                                       LIFE
+0045 C                     EXSR SCAN                       LOOK FOR ELEMNTLIFE
+0046 C                     Z-ADD0         H       40       EVALUATE EACH  LIFE
+0047 C           LOOP      TAG                             POINT          LIFE
+0048 C           H         ADD  1         H                               LIFE
+0049 C           H         COMP LOCMAX               20    CK FOR DONE    LIFE
+0050 C  N20      LOC,H     COMP 0                        20               LIFE
+0051 C   20                GOTO DISPLY                                    LIFE
+0052 C                     EXSR FINDA                                     LIFE
+0053 C                     EXSR NEXT                                      LIFE
+0054 C                     EXSR GEN1                                      LIFE
+0055 C                     GOTO LOOP                                      LIFE
+0056 C           DISPLY    TAG                                            LIFE
+0057 C                     EXSR PREP                                      LIFE
+0058 C                     EXCPT                                          LIFE
+0059 C                     GOTO START                                     LIFE
+0060 C           END       TAG                                            LIFE
+0061 C*-------------------------------------------------------------------LIFE
+0062 C*                                                                   LIFE
+0063 C*  THIS SUBROUTINE SCANS THE UNIVERSE ARRAY -UA- LOOKING IN EACH    LIFE
+0064 C*  ELEMENT FOR A VALUE IF - * - CALLED A DOT.  THE ELEMENT          LIFE
+0065 C*  NUMBER FOR EACH DOT IS STORED, IN ORDER OF OCCURANCE, IN THE     LIFE
+0066 C*  LOCATION ARRAY, LOC.                                             LIFE
+0067 C*                                                                   LIFE
+0068 C*-------------------------                                          LIFE
+0069 CSR         SCAN      BEGSR                                          LIFE
+0070 C*-------------------------                                          LIFE
+0071 C*                                                                   LIFE
+0072 CSR                   Z-ADD1         J       40       INIT LOC CNTR  LIFE
+0073 CSR                   Z-ADD0         I       40       INIT UNIVERS CTLIFE
+0074 CSR         SCANL     TAG                                            LIFE
+0075 CSR         I         ADD  1         I                BUMP UN CNTR   LIFE
+0076 CSR         I         COMP UAMX                 20    CK FOR UN END  LIFE
+0077 CSR 20                GOTO SCAN1                      EXIT TO FILL   LIFE
+0078 CSR         UA,I      COMP DOT                      20CK FOR DOT     LIFE
+0079 CSRN20                GOTO SCANL                      LOOP IF NONE   LIFE
+0080 CSR         J         COMP LOCMAX               20    CK FOR LOC FULLLIFE
+0081 CSR 20                GOTO SCANXT                     EXIT IF FULL   LIFE
+0082 CSR                   Z-ADDI         LOC,J            SAVE DOT LOCAT LIFE
+0083 CSR         J         ADD  1         J                BUMP LOC CNTR  LIFE
+0084 CSR                   GOTO SCANL                      LOOP FOR MORE  LIFE
+0085 CSR         SCAN1     TAG                                            LIFE
+0086 CSR         J         COMP LOCMAX               20    FILL REMAINING LIFE
+0087 CSR 20                GOTO SCANXT                     LOCATIONS WITH LIFE
+0088 CSR                   Z-ADD0         LOC,J            ZEROS          LIFE
+0089 CSR         J         ADD  1         J                               LIFE
+0090 CSR                   GOTO SCAN1                                     LIFE
+0091 CSR         SCANXT    ENDSR                                          LIFE
+0092 C*-------------------------------------------------------------------LIFE
+0093 C*                                                                   LIFE
+0094 C*  THIS SUBROUTINE DETERMINES THE LINEAR UNIVERSE LOCATION FOR      LIFE
+0095 C*  EACH OF THE ADJACENT LOCATIONS POINTED TO BY H.  SUBROUTINE      LIFE
+0096 C*  -WRAP- IS USED TO DETECT AND CORRECT POSSIBEL UNIVERSE           LIFE
+0097 C*  WRAP CONDITIONS.                                                 LIFE
+0098 C*                                                                   LIFE
+0099 C*-------------------------                                          LIFE
+0100 CSR         FINDA     BEGSR                                          LIFE
+0101 C*-------------------------                                          LIFE
+0102 C*                                                                   LIFE
+0103 CSR         LOC,H     DIV  USIZE     Y       40       FIND X - Y     LIFE
+0104 CSR                   MVR            X       40       LOCATION OF DOTLIFE
+0105 CSR         Y         ADD  1         Y                               LIFE
+0106 CSR                   Z-ADD0         J       40       INIT LOC CNTR  LIFE
+0107 CSR         FINDAL    TAG                                            LIFE
+0108 CSR         J         ADD  1         J                BUMP CNTR      LIFE
+0109 CSR         J         COMP 8                    20    CK FOR DONE    LIFE
+0110 CSR 20                GOTO FINDXT                     EXIT WHEN DONE LIFE
+0111 CSR         X         ADD  LOCX,J    XA      40       GET NEXT LOCAT LIFE
+0112 CSR         Y         ADD  LOCY,J    YA      40                      LIFE
+0113 CSR                   EXSR WRAP                       CK FOR WRAP    LIFE
+0114 CSR                   Z-ADDZA        ADJ,J            SAVE POINT VAL LIFE
+0115 CSR                   GOTO FINDAL                     LOOP BACK      LIFE
+0116 CSR         FINDXT    ENDSR                                          LIFE
+0117 C*-------------------------------------------------------------------LIFE
+0118 C*                                                                   LIFE
+0119 C*  THIS SUBROUTINE CHECKS THE VALUES PASSED IN XA AND YA TO SEE     LIFE
+0120 C*  IF THEY ARE VALID POINT IN THE UNIVERSE.  IF NOT, IT APPLIES     LIFE
+0121 C*  A UNIVERSE CORRECTION FACTOR TO WRAP IT.  WHEN VERIFIED/CORRECTEDLIFE
+0122 C*  IT CONVERTS THE LOCATION TO ITS LINEAR REPRESENTATION AND        LIFE
+0123 C*  PASSES IT BACK IN ZA.                                            LIFE
+0124 C*                                                                   LIFE
+0125 C*-------------------------------------------------------------------LIFE
+0126 CSR         WRAP      BEGSR                                          LIFE
+0127 C*-------------------------                                          LIFE
+0128 CSR         XA        COMP 1                      20  CK X VALUE LO  LIFE
+0129 CSR 20      XA        ADD  USIZE     XA               WRAP TO RIGHT  LIFE
+0130 CSR         YA        COMP 1                      20  CK Y VALUE LO  LIFE
+0131 CSR 20      YA        ADD  USIZE     YA               WRAP TO BOTTOM LIFE
+0132 CSR         XA        COMP USIZE                20    CK X VALUE HI  LIFE
+0133 CSR 20      XA        SUB  USIZE     XA               WRAP TO LEFT   LIFE
+0134 CSR         YA        COMP USIZE                20    CK Y VALUE HI  LIFE
+0135 CSR 20      YA        SUB  USIZE     YA               WRAP TO TOP    LIFE
+0136 CSR         YA        SUB  1         YA               CONVERT TO     LIFE
+0137 CSR         YA        MULT USIZE     ZA      40       VALUE          LIFE
+0138 CSR         ZA        ADD  XA        ZA                              LIFE
+0139 CSR         WRAPXT    ENDSR                                          LIFE
+0140 C*------------------------------------------------------------------ LIFE
+0141 C*                                                                   LIFE
+0142 C*  THIS SUBROUTINE DETERMINES WHETHER A DOT AT LOCATION H WILL      LIFE
+0143 C*  SURVIVE TO THE NEXT CYCLE OR NOT.  IT DOES THIS BY SEEING        LIFE
+0144 C*  HOW MANY ADJACENT LOCATIONS ARE OCCUPIED.  IF 2 OR 3 HAVE        LIFE
+0145 C*  DOTS IT WILL SURVIVE.  ANYTHING ELSE MEANS DESTRUCTION.          LIFE
+0146 C*                                                                   LIFE
+0147 C*-------------------------                                          LIFE
+0148 CSR         NEXT      BEGSR                                          LIFE
+0149 C*-------------------------                                          LIFE
+0150 CSR                   Z-ADD0         CNTR    20       INIT DOT CNTR  LIFE
+0151 CSR                   Z-ADD0         J                INIT LOC PNTR  LIFE
+0152 CSR         NEXTL     TAG                                            LIFE
+0153 CSR         J         ADD  1         J                BUMP POINTER   LIFE
+0154 CSR         J         COMP 8                    20    CK FOR DONE    LIFE
+0155 CSR 20                GOTO NEXT1                      GO ON IF DONE  LIFE
+0156 CSR                   Z-ADDADJ,J     I                GET UN LOCATIONLIFE
+0157 CSR         UA,I      COMP DOT                      20LOOK FOR DOT   LIFE
+0158 CSRN20      UA,I      COMP XDOT                     20               LIFE
+0159 CSR 20      CNTR      ADD  1         CNTR             CNT ADJ DOT    LIFE
+0160 CSR                   GOTO NEXTL                      LOOP BACK      LIFE
+0161 CSR         NEXT1     TAG                                            LIFE
+0162 CSR         CNTR      COMP 2                        20CK FOR DOT     LIFE
+0163 CSRN20      CNTR      COMP 3                        20SURVIVAL       LIFE
+0164 CSRN20                Z-ADDLOC,H     I                               LIFE
+0165 CSRN20                MOVE XDOT      UA,I             DELETE DOT     LIFE
+0166 CSR         NEXTXT    ENDSR                                          LIFE
+0167 C*-------------------------------------------------------------------LIFE
+0168 C*                                                                   LIFE
+0169 C*  THIS SUBROUTINE SCANS ALL LOCATIONS ADJACENT TO LOCATION H,      LIFE
+0170 C*  PASSES THEIR COORDINATES. TO GEN2 TO DETERMINE IF NEW DOTS       LIFE
+0171 C*  SHOULD BE GENERATED.                                             LIFE
+0172 C*                                                                   LIFE
+0173 C*-------------------------                                          LIFE
+0174 CSR         GEN1      BEGSR                                          LIFE
+0175 C*-------------------------                                          LIFE
+0176 CSR                   Z-ADDADJ,2     A       40       RETRIEVE POINT LIFE
+0177 CSR                   Z-ADDADJ,8     B       40       VALUES AND     LIFE
+0178 CSR                   Z-ADDADJ,1     C       40       CONVERT        LIFE
+0179 CSR                   EXSR GEN2                                      LIFE
+0180 CSR                   Z-ADDADJ,4     A                               LIFE
+0181 CSR                   Z-ADDADJ,8     B                               LIFE
+0182 CSR                   Z-ADDADJ,2     C                               LIFE
+0183 CSR                   EXSR GEN2                                      LIFE
+0184 CSR                   Z-ADDADJ,2     A                               LIFE
+0185 CSR                   Z-ADDADJ,4     B                               LIFE
+0186 CSR                   Z-ADDADJ,3     C                               LIFE
+0187 CSR                   EXSR GEN2                                      LIFE
+0188 CSR                   Z-ADDADJ,2     A                               LIFE
+0189 CSR                   Z-ADDADJ,6     B                               LIFE
+0190 CSR                   Z-ADDADJ,4     C                               LIFE
+0191 CSR                   EXSR GEN2                                      LIFE
+0192 CSR                   Z-ADDADJ,4     A                               LIFE
+0193 CSR                   Z-ADDADJ,6     B                               LIFE
+0194 CSR                   Z-ADDADJ,5     C                               LIFE
+0195 CSR                   EXSR GEN2                                      LIFE
+0196 CSR                   Z-ADDADJ,4     A                               LIFE
+0197 CSR                   Z-ADDADJ,8     B                               LIFE
+0198 CSR                   Z-ADDADJ,6     C                               LIFE
+0199 CSR                   EXSR GEN2                                      LIFE
+0200 CSR                   Z-ADDADJ,6     A                               LIFE
+0201 CSR                   Z-ADDADJ,8     B                               LIFE
+0202 CSR                   Z-ADDADJ,7     C                               LIFE
+0203 CSR                   EXSR GEN2                                      LIFE
+0204 CSR                   Z-ADDADJ,2     A                               LIFE
+0205 CSR                   Z-ADDADJ,6     B                               LIFE
+0206 CSR                   Z-ADDADJ,8     C                               LIFE
+0207 CSR                   EXSR GEN2                                      LIFE
+0208 CSR                   Z-ADDADJ,1     A                               LIFE
+0209 CSR                   Z-ADDADJ,3     B                               LIFE
+0210 CSR                   Z-ADDADJ,2     C                               LIFE
+0211 CSR                   EXSR GEN2                                      LIFE
+0212 CSR                   Z-ADDADJ,3     A                               LIFE
+0213 CSR                   Z-ADDADJ,5     B                               LIFE
+0214 CSR                   Z-ADDADJ,4     C                               LIFE
+0215 CSR                   EXSR GEN2                                      LIFE
+0216 CSR                   Z-ADDADJ,5     A                               LIFE
+0217 CSR                   Z-ADDADJ,7     B                               LIFE
+0218 CSR                   Z-ADDADJ,6     C                               LIFE
+0219 CSR                   EXSR GEN2                                      LIFE
+0220 CSR                   Z-ADDADJ,7     A                               LIFE
+0221 CSR                   Z-ADDADJ,1     B                               LIFE
+0222 CSR                   Z-ADDADJ,8     C                               LIFE
+0223 CSR                   EXSR GEN2                                      LIFE
+0224 CSR         GEN1XT    ENDSR                                          LIFE
+0225 C*-------------------------------------------------------------------LIFE
+0226 C*                                                                   LIFE
+0227 C*  THIS SUBROUTINE CHECKS A LOCATION ADJACENT TO LOCATION H         LIFE
+0228 C*  TO DETERMINE IF ANY NEW DOTS WHOULD BE GENERATED.  THE TWO       LIFE
+0229 C*  GENERATING POINTS, IN ADDITION TO H ARE PASSED IN A AND B.       LIFE
+0230 C*  IF CONDITIONS ARE MET, A NEW POINT WILL BE GERERATED AT C.       LIFE
+0231 C*                                                                   LIFE
+0232 C*-------------------------                                          LIFE
+0233 CSR         GEN2      BEGSR                                          LIFE
+0234 C*-------------------------                                          LIFE
+0235 CSR         UA,C      COMP DOT                      20CK FOR DOT     LIFE
+0236 CSRN20      UA,C      COMP XDOT                     20THERE          LIFE
+0237 CSR 20                GOTO GEN2XT                     EXIT IF SO     LIFE
+0238 CSR         UA,A      COMP DOT                      20CK FOR A DOT   LIFE
+0239 CSRN20      UA,A      COMP XDOT                     20AT LOC -A-     LIFE
+0240 CSRN20                GOTO GEN2XT                     EXIT IF NONE   LIFE
+0241 CSR         UA,B      COMP DOT                      20CK FOR A DOT   LIFE
+0242 CSRN20      UA,B      COMP XDOT                     20AT LOC -B-     LIFE
+0243 CSRN20                GOTO GEN2XT                     EXIT IF NONE   LIFE
+0244 CSR                   MOVE NDOT      UA,C             GENERATE DOT   LIFE
+0245 CSR         GEN2XT    ENDSR                                          LIFE
+0246 C*-------------------------------------------------------------------LIFE
+0247 C*                                                                   LIFE
+0248 C*  THIS SUBROUTINE PREPARES THE UNIVERSE FOR THE NEXT DISPLAY.      LIFE
+0249 C*  IT CHANGES ALL XDOTS TO NULL, ALL NDOTS TO DOTS.  ALL DOTS       LIFE
+0250 C*  ARE LEFT UNCHANGED.  ANYTHING NOT RECOGNIZED WILL BE CHANGED     LIFE
+0251 C*  TO NULL.                                                         LIFE
+0252 C*                                                                   LIFE
+0253 C*-------------------------                                          LIFE
+0254 CSR         PREP      BEGSR                                          LIFE
+0255 C*-------------------------                                          LIFE
+0256 CSR                   Z-ADD0         J                INIT UN CNTR   LIFE
+0257 CSR         PREPL     TAG                                            LIFE
+0258 CSR         J         ADD  1         J                BUMP CNTR      LIFE
+0259 CSR         J         COMP UAMX                 20    CK FOR DONE    LIFE
+0260 CSR 20                GOTO PREPXT                     EXIT IF DONE   LIFE
+0261 CSR         UA,J      COMP NDOT                     20CK FOR NEW DOT LIFE
+0262 CSR 20                MOVE DOT       UA,J                            LIFE
+0263 CSR 20                GOTO PREPL                      LOOP BACK      LIFE
+0264 CSR         UA,J      COMP DOT                      20CK FOR OLD DOT LIFE
+0265 CSR 20                GOTO PREPL                      LOOP BACK      LIFE
+0266 CSR                   MOVE NULL      UA,J             MAKE NULL      LIFE
+0267 CSR                   GOTO PREPL                      LOOP BACK      LIFE
+0268 CSR         PREPXT    ENDSR                                          LIFE
+0269 OKEY     E                                                           LIFE
+0270 O                                   K6 'LIFE01'                      LIFE
+0271 O                         UA      1728                               LIFE

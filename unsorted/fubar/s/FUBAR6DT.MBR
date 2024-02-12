@@ -1,0 +1,17 @@
+FUBAR6DT,1
+0003                              LIBRARY: FUBAR ... SYSTEM ACTIVITY
+0005     1-  DIGITAL CLOCK - CYCLE TIMER
+0006     2-
+0007     3-  SYSTEM UTILIZATION GRAPH
+0008     4-                                  13-
+0009     5-  CHECK - SESSION STATUS          14-
+0010     6-                                  15-
+0011     7-  CHECK - COMMUNICATIONS          16-
+0012     8-                                  17-
+0013     9-  CHECK - INOUT JOB-QUE           18-
+0014    10-                                  19-
+0015    11-                                  20-
+0016    12-                                  21-
+0017                                         22-  RETURN TO WORK MENU (XMAIN)
+0018                                         23-  RETURN TO MAIN MENU (PLAY)
+0019                                         24-  EXIT - OFF

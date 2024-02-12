@@ -1,0 +1,229 @@
+0001 H                                                                    LPINP2
+0002 F****************************************************************
+0003 F*  LPINP2... THIS PROGRAM READS THE PROMPT FILE.  POSITIONS 1  *
+0004 F*       AND TWO  IS THE RECORD CODE WHICH IS THE QUESTION #... *
+0005 F*       AFTER THE FIRST 35 RECORDS ARE READ, THE PROGRAM       *
+0006 F*       PERFORMS A MINOR EDIT ON THE DATA FOR RANGES.  IF THE  *
+0007 F*       ANSWER IS OUT OF RANGE, A DEFAULT ANSWER IS SELECTED...*
+0008 F*       AFTER THIS, THE PROGRAM PASSES THE ANSWERS TO THE      *
+0009 F*       WORK FILE THAT THE LEASE/PURCHASE PROGRAMS WILL USE... *
+0010 F****************************************************************
+0011 FDUMMY   IP          1            KEYBORD
+0012 FWORK    OC        128R           DISK
+0013 FPROMPT  ID        128            DISK
+0014 E                    MRP        11  4 1
+0015 IPROMPT  NS       1 C0   2 C1
+0016 I                                       75 104 CUSNAM
+0017 I        NS       1 C0   2 C2
+0018 I                                       75 104 TITLE
+0019 I        NS       1 C0   2 C3
+0020 I                                      103 1040BEGYR           50
+0021 I        NS       1 C0   2 C4
+0022 I                                      103 1040NOYRS
+0023 I        NS       1 C0   2 C5
+0024 I                                      101 104 FIT
+0025 I        NS       1 C0   2 C6
+0026 I                                      101 104 SIT
+0027 I        NS       1 C0   2 C7
+0028 I                                      101 104 STPE
+0029 I        NS       1 C0   2 C8
+0030 I                                      101 104 STLE
+0031 I        NS       1 C0   2 C9
+0032 I                                      101 104 PPT
+0033 I        NS       1 C1   2 C0
+0034 I                                      101 104 INS
+0035 I        NS       1 C1   2 C1
+0036 I                                      104 104 STCE
+0037 I        NS       1 C1   2 C2
+0038 I                                      104 104 PPDM
+0039 I        NS       1 C1   2 C3
+0040 I                                      103 104 PPDL
+0041 I        NS       1 C1   2 C4
+0042 I                                      101 104 PPFBV
+0043 I        NS       1 C1   2 C5
+0044 I                                       97 104 SYSID
+0045 I        NS       1 C1   2 C6
+0046 I                                      103 1040SHPMO           51
+0047 I        NS       1 C1   2 C7
+0048 I                                      103 1040SHPYR           52
+0049 I        NS       1 C1   2 C8
+0050 I                                      102 104 RESALE
+0051 I        NS       1 C1   2 C9
+0052 I                                       96 104 MAC
+0053 I        NS       1 C2   2 C0
+0054 I                                       96 104 PURCHP
+0055 I        NS       1 C2   2 C1
+0056 I                                       98 104 MMMC
+0057 I        NS       1 C2   2 C2
+0058 I                                      103 104 WTYMOS
+0059 I        NS       1 C2   2 C3
+0060 I                                      101 104 LDOWN
+0061 I        NS       1 C2   2 C4
+0062 I                                      101 104 LINT
+0063 I        NS       1 C2   2 C5
+0064 I                                      102 104 LTERM
+0065 I        NS       1 C2   2 C6
+0066 I                                      104 104 FITDM
+0067 I        NS       1 C2   2 C7
+0068 I                                      103 104 FITDL
+0069 I        NS       1 C2   2 C8
+0070 I                                      101 104 FITFBV
+0071 I        NS       1 C2   2 C9
+0072 I                                      103 104 FITDAD
+0073 I        NS       1 C3   2 C0
+0074 I                                      101 104 PTXCRP
+0075 I        NS       1 C3   2 C1
+0076 I                                      101 104 RTXCRP
+0077 I        NS  13   1 CR
+0078 I                                        1  45 RENT
+0079 I        NS  14   1 CM
+0080 I                                        1  45 MAINT
+0081 I        NS  15   1 CL
+0082 I                                        2  78 LEXP
+0083 I        NS  16   1 CP
+0084 I                                        2  78 PEXP
+0085 I        NS
+0086 C****************************************************************
+0087 C                     SETON                     99
+0088 C        N99          KEY01          Y       1
+0089 C                     EXSR INIT
+0090 C                     Z-ADD0         X       20
+0091 C           READ      TAG
+0092 C           X         ADD  1         X
+0093 C                     READ PROMPT
+0094 C           X         COMP 35                       31
+0095 C        N31          GOTO READ
+0096 C           NOYRS     COMP 1                      98
+0097 C        N98NOYRS     COMP 11                   98
+0098 C         98          Z-ADD6         NOYRS
+0099 C         50          Z-ADDUYEAR     BEGYR
+0100 C           STCE      COMP 'C'                      98
+0101 C        N98          MOVE 'E'       STCE
+0102 C           PPDM      COMP '1'                  98  98
+0103 C         98PPDM      COMP '5'                    9898
+0104 C        N98          MOVE '4'       PPDM
+0105 C         51          MOVE UMONTH    SHPMO
+0106 C         52          MOVE UYEAR     SHPYR
+0107 C           FITDM     COMP '1'                    98
+0108 C        N98FITDM     COMP '5'                  98
+0109 C         98          MOVE '4'       FITDM
+0110 C****************************************************************
+0111 C*   BEGIN OUTPUT TO THE WORK FILE HERE.....
+0112 C           FINISH    TAG
+0113 C           1         CHAINWORK
+0114 C                     SETON                     41
+0115 C                     EXCPT
+0116 C                     SETOF                     41
+0117 C           2         CHAINWORK
+0118 C                     SETON                     42
+0119 C                     EXCPT
+0120 C                     SETOF                     42
+0121 C           3         CHAINWORK
+0122 C                     SETON                     43
+0123 C                     EXCPT
+0124 C                     SETOF                     43
+0125 C           4         CHAINWORK
+0126 C                     SETON                     44
+0127 C                     EXCPT
+0128 C                     SETOF                     44
+0129 C           5         CHAINWORK
+0130 C                     SETON                     45
+0131 C                     EXCPT
+0132 C                     SETOF                     45
+0133 C           9         CHAINWORK
+0134 C                     SETON                     49
+0135 C                     EXCPT
+0136 C                     SETON                     49
+0137 C        N13          GOTO NEXT
+0138 C           13        CHAINWORK
+0139 C                     SETON                     86
+0140 C                     EXCPT
+0141 C                     SETOF                     86
+0142 C           NEXT      TAG
+0143 C        N14          GOTO OUT
+0144 C           14        CHAINWORK
+0145 C                     SETON                     87
+0146 C                     EXCPT
+0147 C                     SETOF                     87
+0148 C           OUT       TAG
+0149 C                     SETON                     LR
+0150 C****************************************************************
+0151 C***  INITIAL OUTPUT TO THE WORK FILE... INITIALIZE THE EXTRA ***
+0152 C***  SHIFT AND EXTRA MAINTENANCE RECORD TO 100.0%            ***
+0153 C****************************************************************
+0154 CSR         INIT      BEGSR
+0155 CSR         377       CHAINWORK                 97
+0156 CSRN97                GOTO FILEOK
+0157 CSR                   MOVE '9'       STATUS  1
+0158 CSR         1         CHAINWORK
+0159 CSR                   EXCPT
+0160 CSR                   SETON                     LR
+0161 CSR                   GOTO ENDI
+0162 CSR         FILEOK    TAG
+0163 CSR                   Z-ADD100.0     MRP
+0164 CSR         13        CHAINWORK
+0165 CSR                   SETON                     46
+0166 CSR                   EXCPT
+0167 CSR                   SETOF                     46
+0168 CSR         14        CHAINWORK
+0169 CSR                   SETON                     47
+0170 CSR                   EXCPT
+0171 CSR                   SETOF                     47
+0172 CSR         ENDI      ENDSR
+0173 C****************************************************************
+0174 OWORK    E        41
+0175 O                                    2 'X1'
+0176 O        E        42
+0177 O                                    1 'H'
+0178 O                         BEGYR      3
+0179 O                         NOYRS      5
+0180 O                         TITLE     35
+0181 O                         CUSNAM    65
+0182 O        E        43
+0183 O                                    1 'T'
+0184 O                         FIT        5
+0185 O                         SIT        9
+0186 O                         STPE      13
+0187 O                         STLE      17
+0188 O                         PPT       21
+0189 O                         INS       25
+0190 O                         STCE      26
+0191 O                         PPDM      27
+0192 O                         PPDL      29
+0193 O                         PPFBV     33
+0194 O                         PTXCRP    37
+0195 O                         RTXCRP    41
+0196 O                         RESALE    44
+0197 O        E        44
+0198 O                                    1 'S'
+0199 O                         SYSID      9
+0200 O                         SHPMO     11
+0201 O                         SHPYR     13
+0202 O                                   14 'R'
+0203 O                         MAC       23
+0204 O                         PURCHP    32
+0205 O                         MMMC      39
+0206 O                         WTYMOS    41
+0207 O                         LDOWN     45
+0208 O                         LINT      49
+0209 O                         LTERM     52
+0210 O                         FITDM     53
+0211 O                         FITDL     55
+0212 O                         FITFBV    59
+0213 O                         FITDAD    61
+0214 O        E        45
+0215 O                                   19 'O  PURCHASE EXPENSE'
+0216 O                         PEXP      96
+0217 O        E        49
+0218 O                                   19 'O     LEASE EXPENSE'
+0219 O                         LEXP      96
+0220 O        E        46
+0221 O                                    1 'R'
+0222 O                         MRP       45
+0223 O        E        47
+0224 O                                    1 'M'
+0225 O                         MRP       45
+0226 O        E        86
+0227 O                         RENT      45
+0228 O        E        87
+0229 O                         MAINT     45

@@ -1,0 +1,65 @@
+0001 SBCINP     0124  Y
+0002 DCON1       20102Y  Y                             CXX
+0003 DCON2      170310Y                                CENTER BIRTH MONTH
+0004 DBMONTH     20330   YN    Y            Y   Y
+0005 DCON3      170510Y                                CENTER BIRTH DAY
+0006 DBDAY       20530   YN                 Y   Y
+0007 DCON4      170710Y                                CENTER BIRTH YEAR
+0008 DBYEAR      40730   YN                 Y   Y
+0009 DCON5      170910Y                                CENTER CHART MONTH
+0010 DCMONTH     20930   YN                 Y   Y
+0011 DCON6      171110Y                                CENTER CHART YEAR
+0012 DCYEAR      41130   YN                 Y   Y
+0013 DCON7      121515Y                     Y          CCK-1 FOR EOJ
+0014 SBCSCR     0124  Y
+0015 DMON        40102Y
+0016 DYEAR       40107Y
+0017 DBIRTH      90153Y                                CBIRTHDATE
+0018 DMONB       40163Y
+0019 DDAY        20168Y
+0020 DYEARB      40171Y
+0021 DCON1      620401Y                     Y          C01  03  05  07  09  11 X
+0022 D 13  15  17  19  21  23  25  27  29  31
+0023 DCON2      580503Y                     Y          C02  04  06  08  10  12 X
+0024 D 14  16  18  20  22  24  26  28  30
+0025 DCON3      610601Y                                C* * * * * * * * * * * *X
+0026 D * * * * * * * * * * * * * * * * * * *
+0027 DSCR1      620801Y
+0028 DCON4      140864Y                     Y          CP-PHYSICAL -23
+0029 DSCR2      620901Y
+0030 DCON5      140964Y                     Y          CE-EMOTIONAL-28
+0031 DSCR3      621001Y
+0032 DCON6      141064Y                     Y          CI-INTELLECT-33
+0033 DSCR4      621101Y
+0034 DSCR5      621201Y
+0035 DCON7      151264Y                     Y          C+-2 CYCLES MEET
+0036 DSCR6      621301Y
+0037 DCON8      151364Y                     Y          C*-3 CYCLES MEET
+0038 DSCR7      621401Y
+0039 DSCR8      621501Y
+0040 DSCR9      621601Y
+0041 DCON10     131664Y                     Y          CCRITICAL DAYS
+0042 DSCR10     621701Y
+0043 DFLD1       21764Y
+0044 DTYP1       31767Y
+0045 DSCR11     621801Y
+0046 DFLD2       21864Y
+0047 DTYP2       31867Y
+0048 DSCR12     621901Y
+0049 DFLD3       21964Y
+0050 DTYP3       31967Y
+0051 DSCR13     622001Y
+0052 DFLD4       22064Y
+0053 DTYP4       32067Y
+0054 DSCR14     622101Y
+0055 DFLD5       22164Y
+0056 DTYP5       32167Y
+0057 DSCR15     622201Y
+0058 DFLD6       22264Y
+0059 DTYP6       32267Y
+0060 DSCR16     622301Y
+0061 DFLD7       22364Y
+0062 DTYP7       32367Y
+0063 DSCR17     622401Y
+0064 DFLD8       22464Y
+0065 DTYP8       32467Y

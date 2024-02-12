@@ -1,0 +1,459 @@
+0101 H    P010                                                            TTT
+0102 FKEYIN   IP  F 079 079            KEYBORD
+0104 FGAME1   O   F 079 079            CRT
+0201 E                    TABNUM  1  02  2 0ATABANS 45
+0401 C                     MOVE '   '     ANS     3
+0402 C                     SETON                     10
+0403 C           AGAIN     TAG
+0404 C           MCNT      SUB  MCNT      MCNT    10
+0405 C                     SETOF                     111213
+0406 C                     SETOF                     141516
+0407 C                     SETOF                     171819
+0408 C                     SETOF                     212223
+0409 C                     SETOF                     242526
+0410 C                     SETOF                     272829
+0413 C                     SETOF                         75
+0414 C                     SETOF                     707174
+0415 C                     SETOF                     765072
+     C                     SETOF                     838485
+     C                     SETOF                     868788
+     C                     SETOF                     898182
+     C                     SETOF                     515253
+     C                     SETOF                     545556
+     C                     SETOF                     575859
+     C                     SETOF                     777879
+0416 C                     MOVE ' '       BOX1
+0417 C                     MOVE ' '       BOX2
+0418 C                     MOVE ' '       BOX3
+0418 C                     MOVE ' '       BOX4
+0419 C                     MOVE ' '       BOX5
+0501 C                     MOVE ' '       BOX6
+0502 C                     MOVE ' '       BOX7
+0503 C                     MOVE ' '       BOX8
+0504 C                     MOVE ' '       BOX9
+0505 C                     BITOF'01'      FIRST   1
+0506 C                     EXCPT
+0507 C                     SETOF                     10
+0508 C           BACK      TAG
+0509 C           MOVE      TAG
+0510 C           MCNT      ADD  1         MCNT
+0511 C           TAGAIN    TAG
+0512 C                     MOVE ' '       GIANS   1
+0513 C           'CHOICE?' KEY            GIANS
+0515 C                     SETOF                     010203
+0516 C                     SETOF                     040506
+0517 C                     SETOF                     070809
+0518 C                     SETOF                     515253
+0519 C                     SETOF                     545556
+0520 C                     SETOF                     575859
+0601 C                     SETOF                     0950
+0602 C                     SETOF                     707172
+0603 C                     SETOF                     747577
+0604 C                     SETON                     76
+0606 C           GIANS     COMP '5'                  30  05
+0607 C   05 15             GOTO ERROR
+0608 C   05 25             GOTO ERROR
+0609 C   30                GOTO HI
+0610 C   05                MOVE 'X'       BOX5    1
+0611 C   05                SETON                     1585
+0612 C   05                GOTO OUTA
+0614 C           GIANS     COMP '4'                      04
+0615 C   04 14             GOTO ERROR
+0616 C   04 24             GOTO ERROR
+0617 C   04                MOVE 'X'       BOX4    1
+0618 C   04                SETON                     1484
+0619 C   04                GOTO OUTA
+0701 C           GIANS     COMP '3'                      03
+0702 C   03 13             GOTO ERROR
+0703 C   03 23             GOTO ERROR
+0704 C   03                MOVE 'X'       BOX3    1
+0705 C   03                SETON                     1383
+0706 C   03                GOTO OUTA
+0708 C           GIANS     COMP '2'                      02
+0709 C   02 12             GOTO ERROR
+0710 C   02 22             GOTO ERROR
+0711 C   02                MOVE 'X'       BOX2    1
+0712 C   02                SETON                     1282
+0713 C   02                GOTO OUTA
+0715 C           GIANS     COMP '1'                      01
+0716 C   01 11             GOTO ERROR
+0717 C   01 21             GOTO ERROR
+0718 C   01                MOVE 'X'       BOX1    1
+0719 C   01                SETON                     1181
+0720 C   01                GOTO OUTA
+0802 C           HI        TAG
+0804 C           GIANS     COMP '6'                      06
+0805 C   06 16             GOTO ERROR
+0806 C   06 26             GOTO ERROR
+0807 C   06                MOVE 'X'       BOX6    1
+0808 C   06                SETON                     1686
+0809 C   06                GOTO OUTA
+0811 C           GIANS     COMP '7'                      07
+0812 C   07 17             GOTO ERROR
+0813 C   07 27             GOTO ERROR
+0814 C   07                MOVE 'X'       BOX7    1
+0815 C   07                SETON                     1787
+0816 C   07                GOTO OUTA
+0818 C           GIANS     COMP '8'                      08
+0819 C   08 18             GOTO ERROR
+0820 C   08 28             GOTO ERROR
+0901 C   08                MOVE 'X'       BOX8    1
+0902 C   08                SETON                     1888
+0903 C   08                GOTO OUTA
+0904 C           GIANS     COMP '9'                      09
+0905 C   09 19             GOTO ERROR
+0906 C   09 29             GOTO ERROR
+0907 C   09                MOVE 'X'       BOX9    1
+0908 C   09                SETON                     1989
+0910 C           OUTA      TAG
+0911 C                     TESTB'01'      FIRST          31
+0912 C   31                GOTO BYPASS
+0913 C*   IF 1ST CHOICE IS X IN CORNERS,O CHOSES 5
+0914 C   11                SETON                     2555
+0915 C   13                SETON                     2555
+0916 C   17                SETON                     2555
+0917 C   19                SETON                     2555
+0918 C   25                MOVE 'O'       BOX5
+0919 C   25                GOTO SKIP0
+0920 C*  IF 1ST X IS 5, O CHOSES 1
+1001 C   15                SETON                     2151
+1002 C   21                MOVE 'O'       BOX1
+1003 C   21                GOTO SKIP0
+1004 C*  IF 1ST X IS 2, O CHOSES 3
+1005 C   12                SETON                     2353
+1006 C   23                MOVE 'O'       BOX3
+1007 C   23                GOTO SKIP0
+1008 C*   IF 1ST X IS 4, O CHOSES 7
+1009 C   14                SETON                     2757
+1010 C   27                MOVE 'O'       BOX7
+1011 C   27                GOTO SKIP0
+1012 C*  IF 1ST X IS 6, O CHOSES 9
+1013 C   16                SETON                     2959
+1014 C   29                MOVE 'O'       BOX9
+1015 C   29                GOTO SKIP0
+1016 C*  IF 1ST X IS 8, O CHOSES 7
+1017 C   18                SETON                     2757
+1018 C   27                MOVE 'O'       BOX7
+1019 C   27                GOTO SKIP0
+1101 C           BYPASS    TAG
+     C   81 82 83          SETON                     78
+     C   84 85 86          SETON                     78
+     C   87 88 89          SETON                     78
+     C   81 84 87          SETON                     78
+     C   82 85 88          SETON                     78
+     C   83 86 89          SETON                     78
+     C   81 85 89          SETON                     78
+     C   83 85 87          SETON                     78
+     C   78                GOTO YOUWIN
+1102 C   22 23N11          SETON                     2151
+1103 C   21 23N12          SETON                     2252
+1104 C   21 22N13          SETON                     2353
+1105 C   21 22 23          GOTO WIN
+1106 C   25 26N14          SETON                     2454
+1107 C   24 26N15          SETON                     2555
+1108 C   24 25N16          SETON                     2656
+1109 C   24 25 26          GOTO WIN
+1110 C   28 29N17          SETON                     2757
+1111 C   27 29N18          SETON                     2858
+1112 C   27 28N19          SETON                     2959
+1113 C   27 28 29          GOTO WIN
+1114 C   24 27N11          SETON                     2151
+1115 C   21 27N14          SETON                     2454
+1201 C   21 24N17          SETON                     2757
+1202 C   21 24 27          GOTO WIN
+1203 C   25 28N12          SETON                     2252
+1204 C   22 28N15          SETON                     2555
+1205 C   22 25N18          SETON                     2858
+1206 C   22 25 28          GOTO WIN
+1207 C   26 29N13          SETON                     2353
+1208 C   23 29N16          SETON                     2656
+1209 C   23 26N19          SETON                     2959
+1210 C   23 26 29          GOTO WIN
+1211 C   25 29N11          SETON                     2151
+1212 C   21 29N15          SETON                     2555
+1213 C   21 25N19          SETON                     2959
+1214 C   21 25 29          GOTO WIN
+1215 C   25 27N13          SETON                     2353
+1301 C   23 27N15          SETON                     2555
+1302 C   23 25N17          SETON                     2757
+1303 C   23 25 27          GOTO WIN
+1305 C   12 13N21          SETON                     2151
+1306 C   11 13N22          SETON                     2252
+1307 C   11 12N23          SETON                     2353
+1308 C   51                GOTO STOP
+1309 C   52                GOTO STOP
+1310 C   53                GOTO STOP
+1312 C   15 16N24          SETON                     2454
+1313 C   14 16N25          SETON                     2555
+1314 C   14 15N26          SETON                     2656
+1315 C   54                GOTO STOP
+1316 C   55                GOTO STOP
+1317 C   56                GOTO STOP
+1319 C   18 19N27          SETON                     2757
+1320 C   17 19N28          SETON                     2858
+1401 C   17 18N29          SETON                     2959
+1402 C   57                GOTO STOP
+1403 C   58                GOTO STOP
+1404 C   59                GOTO STOP
+1406 C   14 17N21          SETON                     2151
+1407 C   11 17N24          SETON                     2454
+1408 C   11 14N27          SETON                     2757
+1409 C   51                GOTO STOP
+1410 C   54                GOTO STOP
+1411 C   57                GOTO STOP
+1413 C   15 18N22          SETON                     2252
+1414 C   12 18N25          SETON                     2555
+1415 C   12 15N28          SETON                     2858
+1416 C   52                GOTO STOP
+1417 C   55                GOTO STOP
+1418 C   58                GOTO STOP
+1420 C   16 19N23          SETON                     2353
+1501 C   13 19N26          SETON                     2656
+1502 C   13 16N29          SETON                     2959
+1503 C   53                GOTO STOP
+1504 C   56                GOTO STOP
+1505 C   59                GOTO STOP
+1507 C   15 19N21          SETON                     2151
+1508 C   11 19N25          SETON                     2555
+1509 C   11 15N29          SETON                     2959
+1510 C   51                GOTO STOP
+1511 C   55                GOTO STOP
+1512 C   59                GOTO STOP
+1514 C   15 17N23          SETON                     2353
+1515 C   13 17N25          SETON                     2555
+1516 C   13 15N27          SETON                     2757
+1517 C   53                GOTO STOP
+1518 C   55                GOTO STOP
+1519 C   57                GOTO STOP
+1601 C           MCNT      COMP 2                    75
+1602 C   75                GOTO HOP
+1604 C**       T R A P S
+1605 C   13 14 25          SETON                     2151
+1606 C   11 19 25          SETON                     2252
+1607 C   11 16 25          SETON                     2353
+1608 C   21 15 19          SETON                     2757
+1609 C   14 19 25          SETON                     2757
+1610 C   13 17 25          SETON                     2858
+1611 C   16 17 25          SETON                     2959
+1612 C   51                GOTO SKIP0
+1613 C   52                GOTO SKIP0
+1614 C   53                GOTO SKIP0
+1615 C   57                GOTO SKIP0
+1616 C   58                GOTO SKIP0
+1617 C   59                GOTO SKIP0
+1618 C           HOP       TAG
+1619 C*
+1701 C   11                GOTO PASS1
+1702 C   12                GOTO PASS1
+1703 C   13                GOTO PASS1
+1704 C  N21N22N19          SETON                     2151
+1705 C  N21N23N19          SETON                     2151
+1706 C  N22N23N51          SETON                     2353
+1707 C                     GOTO SKIP0
+1708 C           PASS1     TAG
+1710 C   14                GOTO PASS2
+1711 C   15                GOTO PASS2
+1712 C   16                GOTO PASS2
+1713 C  N24N25             SETON                     2454
+1714 C  N24N26             SETON                     2454
+1715 C  N25N26N54          SETON                     2656
+1716 C                     GOTO SKIP0
+1717 C           PASS2     TAG
+1719 C   17                GOTO PASS3
+1720 C   18                GOTO PASS3
+1801 C   19                GOTO PASS3
+1802 C  N27N28N13          SETON                     2757
+1803 C  N27N29N13          SETON                     2757
+1804 C  N28N29N57          SETON                     2959
+1805 C                     GOTO SKIP0
+1806 C           PASS3     TAG
+1808 C   11                GOTO PASS4
+1809 C   14                GOTO PASS4
+1810 C   17                GOTO PASS4
+1811 C  N21N24N19          SETON                     2151
+1812 C  N21N27N19          SETON                     2151
+1813 C  N24N27N51          SETON                     2757
+1814 C                     GOTO SKIP0
+1815 C           PASS4     TAG
+1817 C   12                GOTO PASS5
+1818 C   15                GOTO PASS5
+1819 C   18                GOTO PASS5
+1820 C  N25N28             SETON                     2858
+1901 C  N22N28             SETON                     2858
+1902 C  N22N25N58          SETON                     2252
+1903 C                     GOTO SKIP0
+1904 C           PASS5     TAG
+1906 C   13                GOTO PASS6
+1907 C   16                GOTO PASS6
+1908 C   19                GOTO PASS6
+1909 C  N26N29N11          SETON                     2959
+1910 C  N23N29N11          SETON                     2959
+1911 C  N23N26N59          SETON                     2353
+1912 C                     GOTO SKIP0
+1913 C           PASS6     TAG
+1915 C   11                GOTO PASS7
+1916 C   15                GOTO PASS7
+1917 C   19                GOTO PASS7
+1918 C  N25N29             SETON                     2959
+1919 C  N21N29             SETON                     2959
+1920 C  N21N25N59          SETON                     2151
+2001 C                     GOTO SKIP0
+2002 C           PASS7     TAG
+2004 C   13                GOTO PASS8
+2005 C   15                GOTO PASS8
+2006 C   17                GOTO PASS8
+2007 C  N23N25N57          SETON                     2353
+2008 C  N25N27             SETON                     2757
+2009 C  N23N27             SETON                     2757
+2010 C                     GOTO SKIP0
+2011 C           PASS8     TAG
+2013 C  N21N11             SETON                     2151
+2014 C   51                GOTO OUTD
+2015 C  N22N12             SETON                     2252
+2016 C   52                GOTO OUTD
+2017 C  N23N13             SETON                     2353
+2018 C   53                GOTO OUTD
+2019 C  N24N14             SETON                     2454
+2020 C   54                GOTO OUTD
+2101 C  N25N15             SETON                     2555
+2102 C   55                GOTO OUTD
+2103 C  N26N16             SETON                     2656
+2104 C   56                GOTO OUTD
+2105 C  N27N17             SETON                     2757
+2106 C   57                GOTO OUTD
+2107 C  N28N18             SETON                     2858
+2108 C   58                GOTO OUTD
+2109 C  N29N19             SETON                     2959
+2111 C                     GOTO TIE
+2112 C           OUTD      TAG
+2113 C           SKIP0     TAG
+2114 C           STOP      TAG
+2115 C                     BITON'01'      FIRST
+2116 C   51                MOVE 1         MYMOVE  10
+2117 C   52                MOVE 2         MYMOVE
+2118 C   53                MOVE 3         MYMOVE
+2119 C   54                MOVE 4         MYMOVE
+2120 C   55                MOVE 5         MYMOVE
+2201 C   56                MOVE 6         MYMOVE
+2202 C   57                MOVE 7         MYMOVE
+2203 C   58                MOVE 8         MYMOVE
+2204 C   59                MOVE 9         MYMOVE
+2205 C   21                MOVE 'O'       BOX1
+2206 C   22                MOVE 'O'       BOX2
+2207 C   23                MOVE 'O'       BOX3
+2208 C   24                MOVE 'O'       BOX4
+2209 C   25                MOVE 'O'       BOX5
+2210 C   26                MOVE 'O'       BOX6
+2211 C   27                MOVE 'O'       BOX7
+2212 C   28                MOVE 'O'       BOX8
+2213 C   29                MOVE 'O'       BOX9
+2214 C                     SETON                     09
+2215 C                     EXCPT
+2216 C                     GOTO MOVE
+2217 C           WIN       TAG
+2218 C                     SETON                     70
+2219 C           TIE       TAG
+2220 C  N70                SETON                     71
+     C           YOUWIN    TAG
+     C   78                SETON                     79
+2301 C                     SETON                     09
+     C   79                SETOF                     818283
+     C   79                SETOF                     848586
+     C   79                SETOF                     878889
+     C   79                GOTO OUT
+2302 C   21                MOVE 'O'       BOX1
+2303 C   22                MOVE 'O'       BOX2
+2304 C   23                MOVE 'O'       BOX3
+2305 C   24                MOVE 'O'       BOX4
+2306 C   25                MOVE 'O'       BOX5
+2307 C   26                MOVE 'O'       BOX6
+2308 C   27                MOVE 'O'       BOX7
+2309 C   28                MOVE 'O'       BOX8
+2310 C   29                MOVE 'O'       BOX9
+     C           OUT       TAG
+2311 C                     EXCPT
+2312 C           05        LOKUPTABNUM    TABANS         74
+2313 C   74      TABANS    KEY            ANS
+2314 C           ANS       COMP 'Y'                      72
+2315 C   72                GOTO AGAIN
+2316 C           END       TAG
+2317 C           06        LOKUPTABNUM    TABANS         50
+2318 C   50      TABANS    KEY            GIANS
+2319 C                     SETON                     LR
+2320 C   LR                GOTO END1
+2401 C           ERROR     TAG
+2402 C                     SETON                     0977
+2403 C                     SETOF                     76
+2404 C                     EXCPT
+2405 C                     GOTO TAGAIN
+2406 C           END1      TAG
+2501 OGAME1   E  101   10
+2502 O                                   60 '      *       *      '
+2503 O        E  1     10
+2504 O                                   60 '  1   *   2   *   3  '
+2505 O        E  1     10
+2506 O                                   60 '      *       *      '
+2507 O        E  1     10
+2508 O                                   60 '* * * * * * * * * * *'
+2509 O                                   25 'EACH BOX IS NUMBERED 1-9'
+2510 O        E  1     10
+2511 O                                   60 '      *       *      '
+2512 O                                   22 'CHOOSE THE NUMBER YOU'
+2513 O        E  1     10
+2514 O                                   60 '  4   *   5   *   6  '
+2515 O                                   20 'WANT AND TYPE IT ON'
+2516 O        E  1     10
+2517 O                                   60 '      *       *      '
+2518 O                                   12 'THE CONSOLE'
+2519 O        E  1     10
+2520 O                                   60 '* * * * * * * * * * *'
+2601 O                                   18 'G O O D   L U C K'
+2602 O        E  1     10
+2603 O                                   60 '      *       *      '
+2604 O        E  1     10
+2605 O                                   60 '  7   *   8   *   9  '
+2606 O        E        10
+2607 O                                   60 '      *       *      '
+2608 O        E  1     09
+2609 O                                   60 '      *       *      '
+2610 O        E  1     09
+2611 O                                   60 '      *       *      '
+2612 O                         BOX1      42
+2613 O                         BOX2      50
+2614 O                         BOX3      58
+2615 O        E  1     09
+2616 O                                   60 '      *       *      '
+2617 O        E  1     09
+2618 O                                   60 '* * * * * * * * * * *'
+2619 O        E  1     09
+2620 O                                   60 '      *       *      '
+2701 O        E  1     09
+2702 O                                   60 '      *       *      '
+2703 O                         BOX4      42
+2704 O                         BOX5      50
+2705 O                         BOX6      58
+2706 O                N70N71 76          12 'I CHOOSE BOX'
+2707 O                N70N71 76MYMOVE    14
+2708 O                N70N71N79          25 'YOUR TURN'
+2709 O                 71                10 'WE TIED'
+2710 O                 70                 8 'I WON'
+2711 O                 77                12 'INVALID MOVE'
+     O                 79                17 'CONGRATS YOU WON!'
+2712 O        E  1     09
+2713 O                                   60 '      *       *      '
+2714 O        E  1     09
+2715 O                                   60 '* * * * * * * * * * *'
+2716 O        E  1     09
+2717 O                                   60 '      *       *      '
+2718 O        E  1     09
+2719 O                                   60 '      *       *      '
+     O                         BOX7      42
+2801 O                         BOX8      50
+2802 O                         BOX9      58
+2803 O        E        09
+2804 O                                   60 '      *       *      '
+2805 O        E 1      74
+2806 O                         TABANS   079
+**
+05 WOULD YOU LIKE TO PLAY AGAIN?  Y OR N
+06 OK, MAYBE ANOTHER TIME.

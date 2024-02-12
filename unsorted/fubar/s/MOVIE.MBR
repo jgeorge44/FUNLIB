@@ -1,0 +1,11 @@
+0001 H     016                                                            MOVIE
+0002 FKEY     CD    128 128            WORKSTN                            MOVIE
+0003 FINPUT   IPE F 128 128            DISK                               MOVIE
+0004 IINPUT   NS  01                                                      MOVIE
+0005 I                                        1 128 FIELD                 MOVIE
+0006 IKEY     NS  02                                                      MOVIE
+0007 C  N10                READ KEY                                       MOVIE
+0008 C                     SETON                     10                   MOVIE
+0009 OKEY     D        01                                                 MOVIE
+0010 O                                   K5 'MOVIE'                       MOVIE
+0011 O                         FIELD    128                               MOVIE

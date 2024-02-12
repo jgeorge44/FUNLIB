@@ -1,0 +1,94 @@
+0001 SSCREEN01  0124  N
+0002 D           70102Y                                 PROGRAM
+0003 D          280127Y                                 PROGRAM STATUS DEMONSTRX
+0004 DATION
+0005 D           40168Y                                 TIME
+0006 DXTIME      80173Y
+0007 D*
+0008 D           40202Y                                 SIZE
+0009 DHSIZE01    303 3Y
+0010 DHSIZE02    304 3Y
+0011 DHSIZE03    305 3Y
+0012 DHSIZE04    306 3Y
+0013 DHSIZE05    307 3Y
+0014 DHSIZE06    308 3Y
+0015 DHSIZE07    309 3Y
+0016 DHSIZE08    310 3Y
+0017 DHSIZE09    311 3Y
+0018 DHSIZE10    312 3Y
+0019 DHSIZE11    313 3Y
+0020 DHSIZE12    314 3Y
+0021 DHSIZE13    315 3Y
+0022 DHSIZE14    316 3Y
+0023 DHSIZE15    317 3Y
+0024 DHSIZE16    318 3Y
+0025 D*
+0026 D*
+0027 D*
+0028 D           71902Y                                 PROGRAM
+0029 DPRG-1      61911Y
+0030 DPRG-2      61919Y
+0031 DPRG-3      61927Y
+0032 DPRG-4      61935Y
+0033 DPRG-5      61943Y
+0034 DPRG-6      61951Y
+0035 DPRG-7      61959Y
+0036 DPRG-8      61967Y
+0037 DPRG-9      61975Y
+0038 D*
+0039 D*
+0040 D*
+0041 D*
+0042 D           42002Y                                 SIZE
+0043 DPSZ-1      32011Y
+0044 DPSZ-2      32019Y
+0045 DPSZ-3      32027Y
+0046 DPSZ-4      32035Y
+0047 DPSZ-5      32043Y
+0048 DPSZ-6      32051Y
+0049 DPSZ-7      32059Y
+0050 DPSZ-8      32067Y
+0051 DPSZ-9      32075Y
+0052 D*
+0053 D*
+0054 D*
+0055 D*
+0056 D           72102Y                                 WORKSTN
+0057 DPWS-1      22111Y
+0058 DPWS-2      22119Y
+0059 DPWS-3      22127Y
+0060 DPWS-4      22135Y
+0061 DPWS-5      22143Y
+0062 DPWS-6      22151Y
+0063 DPWS-7      22159Y
+0064 DPWS-8      22167Y
+0065 DPWS-9      22176Y
+0066 D*
+0067 D*
+0068 D*
+0069 D*
+0070 DTASK#      22402Y
+0071 D          142405Y                                 TASK EXECUTING
+0072 DUSIZE      42421Y
+0073 D          172426Y                                 STORAGE AVAILABLE
+0074 DTOTPSZ     42445Y
+0075 D          182450Y                                 STORAGE COMMITMENT
+0076 DOVRCMT     52469Y
+0077 D           52475Y                                 RATIO
+0078 D*
+0079 D*
+0080 DERROR     602302Y               6161  61
+0081 D*
+0082 D*
+0083 D*
+0084 D*
+0085 SSCREEN02  V 00  N
+0086 DDLN-1      60111Y               31    21
+0087 DDLN-2      60119Y               32    22
+0088 DDLN-3      60127Y               33    23
+0089 DDLN-4      60135Y               34    24
+0090 DDLN-5      60143Y               35    25
+0091 DDLN-6      60151Y               36    26
+0092 DDLN-7      60159Y               37    27
+0093 DDLN-8      60167Y               38    28
+0094 DDLN-9      60175Y               39    29

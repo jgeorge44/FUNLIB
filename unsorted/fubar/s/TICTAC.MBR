@@ -1,0 +1,383 @@
+     H      14                                                            TICTAC         0001
+     FKEYBORD IP     40  40            KEYBORD                                           0002
+     F*                                                                                  0003
+     F**************************************************************************         0004
+     F*                                                                        *         0005
+     F*               COPYRIGHT 1976 BY HARDCORE SOFTWARE, INC.                *         0006
+     F*                                                                        *         0007
+     F*           3561 RURAL ROUTE PLAZA     MOLINE, ILLINOIS 61265            *         0008
+     F*                                                                        *         0009
+     F**************************************************************************         0010
+     E                    CRT         9  1                                               0011
+     E                    BLANK       9  1                                               0012
+     E                    YOU         9  2 0                                             0013
+     E                    ME          9  2 0                                             0014
+     E                    T           9  2 0                                             0015
+     E                    SUM         3  2 0                                             0016
+     E                    CN          9  1 0                                             0017
+     E                    CNT         9  1 0                                             0018
+     E                    VAL         9  1 0                                             0019
+     E                    MSG     1   8 40                                               0020
+     E                    LN1    40  40  1                                               0021
+     E                    LN2    40  40  1                                               0022
+     E                    LN3    40  40  1                                               0023
+     E                    LN4    40  40  1                                               0024
+     E                    LN5    40  40  1                                               0025
+     E                    CMT     6   6  9                                               0026
+     E                    SCN     8   8  3                                               0027
+     E                    CRN     4   4  2 0                                             0028
+     E                    TABSQR  9   9  2 0 TABVAL  2 0                                 0029
+     E                    TABXOX  6   6  9                                               0030
+     C* HOUSEKEEPING                                                                     0031
+     C                     MOVEACMT,1     CMT1    9                                      0032
+     C                     MOVEACMT,2     CMT2    9                                      0033
+     C                     MOVEACMT,3     CMT3    9                                      0034
+     C                     MOVEACMT,4     CMT4    9                                      0035
+     C                     MOVEACMT,5     CMT5    9                                      0036
+     C                     MOVEACMT,6     CMT6    9                                      0037
+     C                     Z-ADD15000     PAUSE   50                                     0038
+     C                     Z-ADD1         X                                              0039
+     C                     Z-ADD1         DVAL    10                                     0040
+     C           ILOOP     TAG                                                           0041
+     C           X         LOKUPTABSQR    TABVAL         99                              0042
+     C           TABVAL    SUB  10        VAL,X                                          0043
+     C           X         ADD  1         X                                              0044
+     C           X         COMP 10                     99                                0045
+     C   99                GOTO ILOOP                                                    0046
+     C*                                                                                  0047
+     C* THE RULES ARE DISPLAYED.                                                         0048
+     C           MSG,1     SET                                                           0049
+     C           MSG,2     SET                                                           0050
+     C           MSG,3     SET                                                           0051
+     C           MSG,4     SET                                                           0052
+     C           MSG,5     SET                                                           0053
+     C                     EXSR PAUSE                                                    0054
+     C*                                                                                  0055
+     C* THE BOARD DIAGRAM IS DISPLAYED.                                                  0056
+     C                     MOVEA'12345678'CRT                                            0057
+     C                     MOVEA'9'       CRT,9                                          0058
+     C                     EXSR DISPLA                                                   0059
+     C           LINE5     SET                                                           0060
+     C                     EXSR PAUSE                                                    0061
+     C*                                                                                  0062
+     C* THE PLAYER CHOOSES WHETHER HE WILL PLAY FIRST OR SECOND.                         0063
+     C           NEWGAM    TAG                                                           0064
+     C                     SETOF                     0102                                0065
+     C                     MOVEABLANK     CRT                                            0066
+     C                     MOVEABLANK     LN3,21                                         0067
+     C                     MOVEABLANK     LN5,21                                         0068
+     C                     Z-ADD0         ME                                             0069
+     C                     Z-ADD0         YOU                                            0070
+     C                     Z-ADD3000      PAUSE                                          0071
+     C           MSG,6     SET                                                           0072
+     C           MSG,7     SET                                                           0073
+     C           MSG,8     SET                                                           0074
+     C           ' '       SET                                                           0075
+     C           ' '       KEY            REPLY   3                                      0076
+     C           REPLY     COMP 'NO '                    99                              0077
+     C                     MOVE 'X'       YRMRK   1                                      0078
+     C                     MOVE 'O'       MYMRK   1                                      0079
+     C   99                MOVE 'O'       YRMRK                                          0080
+     C   99                MOVE 'X'       MYMRK                                          0081
+     C   99                GOTO CONTIN                                                   0082
+     C*                                                                                  0083
+     C           BEGIN     TAG                                                           0084
+     C*                                                                                  0085
+     C                     EXSR STALE                                                    0086
+     C   03                GOTO ENDGAM                                                   0087
+     C                     MOVEACMT1      LN3,21                                         0088
+     C                     EXSR DISPLA                                                   0089
+     C           LINE5     KEY            Y                                              0090
+     C                     Z-ADDY         X       20                                     0091
+     C           CRT,X     COMP ' '                      99                              0092
+     C  N99                GOTO BEGIN                                                    0093
+     C           X         LOKUPTABSQR    TABVAL         99                              0094
+     C                     Z-ADDTABVAL    YOU,X                                          0095
+     C                     MOVEAYRMRK     CRT,X                                          0096
+     C           CONTIN    TAG                                                           0097
+     C*                                                                                  0098
+     C* THE MACHINE CHECKS FOR AN OPPONENT WIN OR A STALEMATE.                           0099
+     C                     SETON                     0405                                0100
+     C                     Z-ADDYOU       T                                              0101
+     C                     EXSR SCAN                                                     0102
+     C   01                MOVEACMT3      LN3,21                                         0103
+     C   01                GOTO ENDGAM                                                   0104
+     C                     EXSR STALE                                                    0105
+     C   03                GOTO ENDGAM                                                   0106
+     C                     MOVEACMT2      LN3,21                                         0107
+     C                     EXSR DISPLA                                                   0108
+     C           LINE5     SET                                                           0109
+     C                     EXSR PAUSE                                                    0110
+     C*                                                                                  0111
+     C* THE MACHINE CHECKS FOR A MACHINE WIN.                                            0112
+     C                     SETOF                     05                                  0113
+     C                     Z-ADDME        T                                              0114
+     C                     EXSR SCAN                                                     0115
+     C   02                MOVEACMT4      LN3,21                                         0116
+     C   02                GOTO ENDGAM                                                   0117
+     C*                                                                                  0118
+     C* THE MACHINE CHECKS FOR NEED TO BLOCK THE OPPONENT.                               0119
+     C                     Z-ADDYOU       T                                              0120
+     C                     EXSR SCAN                                                     0121
+     C   02                GOTO BEGIN                                                    0122
+     C*                                                                                  0123
+     C* THE MACHINE ATTEMPTS A FORK MANEUVRE.                                            0124
+     C                     SETOF                     04                                  0125
+     C                     MOVE MYMRK     MARK1   1                                      0126
+     C                     MOVE YRMRK     MARK2   1                                      0127
+     C                     Z-ADD1         GAUGE   10                                     0128
+     C                     EXSR SCAN                                                     0129
+     C   03                GOTO BEGIN                                                    0130
+     C*                                                                                  0131
+     C* THE MACHINE ANTICIPATES A FORK MANEUVRE BY THE OPPONENT.                         0132
+     C                     XFOOTYOU       YTEST   20                                     0133
+     C                     MOVEACRT       XOX     9                                      0134
+     C           XOX       LOKUPTABXOX                   06                              0135
+     C   06                GOTO RLOOP                                                    0136
+     C                     MOVE YRMRK     MARK1                                          0137
+     C                     MOVE MYMRK     MARK2                                          0138
+     C                     EXSR SCAN                                                     0139
+     C   03                GOTO BEGIN                                                    0140
+     C*                                                                                  0141
+     C* THE MACHINE CHECKS FOR A NON-CENTER FIRST MOVE BY THE OPPONENT.                  0142
+     C           YTEST     COMP 0                    99                                  0143
+     C   99      YTEST     COMP 20                     99                                0144
+     C   99      CRT,5     COMP ' '                      99                              0145
+     C   99                EXSR REACT                                                    0146
+     C   03                GOTO BEGIN                                                    0147
+     C*                                                                                  0148
+     C* THE MACHINE GENERATES A RANDOM RESPONSE AND CHECKS IT FOR VALIDITY.              0149
+     C           RLOOP     TAG                                                           0150
+     C           D         ADD  DVAL      D       20                                     0151
+     C           D         COMP 9                    99                                  0152
+     C   99                Z-SUB1         DVAL                                           0153
+     C   99                GOTO RLOOP                                                    0154
+     C*                                                                                  0155
+     C           D         COMP 1                      99                                0156
+     C   99                Z-ADD1         DVAL                                           0157
+     C   99                GOTO RLOOP                                                    0158
+     C                     Z-ADDVAL,D     X                                              0159
+     C                     XFOOTME        MTEST   20     99                              0160
+     C           X         DIV  2         TEST    11     07                              0161
+     C   99 07             GOTO RLOOP                                                    0162
+     C*                                                                                  0163
+     C           CRT,X     COMP ' '                      99                              0164
+     C  N99                GOTO RLOOP                                                    0165
+     C*                                                                                  0166
+     C  N06                GOTO MOVE                                                     0167
+     C           MTEST     COMP 15                       99                              0168
+     C   99N07                                                                           0169
+     CORN99 07             GOTO RLOOP                                                    0170
+     C*                                                                                  0171
+     C           MOVE      TAG                                                           0172
+     C                     MOVEAMYMRK     CRT,X                                          0173
+     C           X         LOKUPTABSQR    TABVAL         99                              0174
+     C                     Z-ADDTABVAL    ME,X                                           0175
+     C                     GOTO BEGIN                                                    0176
+     C*                                                                                  0177
+     C           ENDGAM    TAG                                                           0178
+     C                     MOVEACMT6      LN5,21                                         0179
+     C                     EXSR DISPLA                                                   0180
+     C           LINE5     KEY            REPLY                                          0181
+     C                     MOVEABLANK     CRT                                            0182
+     C           REPLY     COMP 'NO '                    99                              0183
+     C  N99                GOTO NEWGAM                                                   0184
+     C                     SETON                     LR                                  0185
+     C*                                                                                  0186
+     C**************************************************************************         0187
+     CSR         DISPLA    BEGSR                                                         0188
+     C* THIS ROUTINE POSTS THE LATEST MOVES TO THE BOARD AND DISPLAYS THEM.              0189
+     CSR                   MOVE CRT,1     LN1,3                                          0190
+     CSR                   MOVE CRT,2     LN1,8                                          0191
+     CSR                   MOVE CRT,3     LN1,13                                         0192
+     CSR                   MOVE CRT,4     LN3,3                                          0193
+     CSR                   MOVE CRT,5     LN3,8                                          0194
+     CSR                   MOVE CRT,6     LN3,13                                         0195
+     CSR                   MOVE CRT,7     LN5,3                                          0196
+     CSR                   MOVE CRT,8     LN5,8                                          0197
+     CSR                   MOVE CRT,9     LN5,13                                         0198
+     CSR                   MOVEALN1       LINE1  40                                      0199
+     CSR                   MOVEALN2       LINE2  40                                      0200
+     CSR                   MOVEALN3       LINE3  40                                      0201
+     CSR                   MOVEALN4       LINE4  40                                      0202
+     CSR                   MOVEALN5       LINE5  40                                      0203
+     CSR         ' '       SET                                                           0204
+     CSR         LINE1     SET                                                           0205
+     CSR         LINE2     SET                                                           0206
+     CSR         LINE3     SET                                                           0207
+     CSR         LINE4     SET                                                           0208
+     CSR                   ENDSR                                                         0209
+     C*                                                                                  0210
+     C**************************************************************************         0211
+     CSR         PAUSE     BEGSR                                                         0212
+     C* THIS ROUTINE HOLDS THE SCREEN DISPLAY MOMENTARILY.                               0213
+     CSR                   Z-SUBPAUSE     P       50                                     0214
+     CSR         PLOOP     TAG                                                           0215
+     CSR         P         ADD  1         P            99                                0216
+     CSR 99                GOTO PLOOP                                                    0217
+     CSR                   ENDSR                                                         0218
+     C*                                                                                  0219
+     C**************************************************************************         0220
+     CSR         STALE     BEGSR                                                         0221
+     C* THIS ROUTINE DETERMINES IF ALL SQUARES OF THE BOARD HAVE BEEN FILLED.            0222
+     CSR                   Z-ADD1         X                                              0223
+     CSR                   SETOF                     03                                  0224
+     CSR         STLOOP    TAG                                                           0225
+     CSR         CRT,X     COMP ' '                      99                              0226
+     CSR 99                GOTO ENDSTA                                                   0227
+     CSR         X         ADD  1         X                                              0228
+     CSR         X         COMP 10                       03                              0229
+     CSRN03                GOTO STLOOP                                                   0230
+     CSR                   MOVEACMT5      LN3,21                                         0231
+     CSR         ENDSTA    ENDSR                                                         0232
+     C*                                                                                  0233
+     C**************************************************************************         0234
+     CSR         SCAN      BEGSR                                                         0235
+     C* THIS ROUTINE DEFINES ROWS OF THREE FOR THE 'ACROSS' AND 'FORK' ROUTINES.         0236
+     CSR                   Z-ADD1         S       10                                     0237
+     CSR         SCLOOP    TAG                                                           0238
+     CSR                   MOVELSCN,S     X                                              0239
+     CSR                   MOVE SCN,S     Y       10                                     0240
+     CSR 04                EXSR ACROSS                                                   0241
+     CSRN04                EXSR FORK                                                     0242
+     CSR 01                                                                              0243
+     COR 02N05             GOTO ENDSCN                                                   0244
+     CSR         S         ADD  1         S                                              0245
+     CSR         S         COMP 9                      99                                0246
+     CSR 99                GOTO SCLOOP                                                   0247
+     CSRN04                EXSR SEARCH                                                   0248
+     CSR         ENDSCN    ENDSR                                                         0249
+     C*                                                                                  0250
+     C**************************************************************************         0251
+     CSR         ACROSS    BEGSR                                                         0252
+     C* THIS ROUTINE DETERMINES IF A PLAYER HAS A WIN.                                   0253
+     CSR                   Z-ADD1         Z       10                                     0254
+     CSR         ALOOP     TAG                                                           0255
+     CSR                   Z-ADDT,X       SUM,Z                                          0256
+     CSR         X         ADD  Y         X                                              0257
+     CSR         Z         ADD  1         Z                                              0258
+     CSR         Z         COMP 4                      99                                0259
+     CSR 99                GOTO ALOOP                                                    0260
+     CSR                   XFOOTSUM       X                                              0261
+     CSR         45        SUB  X         X              01                              0262
+     CSR         X         LOKUPTABVAL    TABSQR         02                              0263
+     CSRN02                                                                              0264
+     COR 05                GOTO ENDACR                                                   0265
+     CSR                   Z-ADDTABSQR    Z                                              0266
+     CSR         CRT,Z     COMP ' '                      99                              0267
+     CSRN99                SETOF                     02                                  0268
+     CSRN99                GOTO ENDACR                                                   0269
+     CSR                   MOVEAMYMRK     CRT,Z                                          0270
+     CSR                   Z-ADDX         ME,Z                                           0271
+     CSR         ENDACR    ENDSR                                                         0272
+     C*                                                                                  0273
+     C**************************************************************************         0274
+     CSR         FORK      BEGSR                                                         0275
+     C* THIS ROUTINE DETERMINES POTENTIAL FORKS.                                         0276
+     CSR                   Z-SUB3         Z                                              0277
+     CSR                   Z-ADD0         CN                                             0278
+     CSR                   SETOF                     03                                  0279
+     CSR         FLOOP     TAG                                                           0280
+     CSR         CRT,X     COMP MARK1                    99                              0281
+     CSR 99                SETON                     03                                  0282
+     CSR         CRT,X     COMP MARK2                    99                              0283
+     CSR 99                GOTO ENDFRK                                                   0284
+     CSR         CRT,X     COMP ' '                      99                              0285
+     CSR 99      CN,X      ADD  1         CN,X                                           0286
+     CSR         X         ADD  Y         X                                              0287
+     CSR         Z         ADD  1         Z            99                                0288
+     CSR 99                GOTO FLOOP                                                    0289
+     CSR 03      CNT       ADD  CN        CNT                                            0290
+     CSR         ENDFRK    ENDSR                                                         0291
+     C*                                                                                  0292
+     C**************************************************************************         0293
+     CSR         SEARCH    BEGSR                                                         0294
+     C* THIS ROUTINE DETERMINES THE BEST FORK, IF ANY.                                   0295
+     CSR                   Z-ADD1         X                                              0296
+     CSR                   Z-ADD0         Y                                              0297
+     CSR         SLOOP     TAG                                                           0298
+     CSR         CNT,X     COMP Y                    99                                  0299
+     CSR 99                Z-ADDCNT,X     Y                                              0300
+     CSR         X         ADD  1         X                                              0301
+     CSR         X         COMP 10                     99                                0302
+     CSR 99                GOTO SLOOP                                                    0303
+     CSR         Y         COMP GAUGE                03                                  0304
+     CSRN03                GOTO ENDSCH                                                   0305
+     CSR         ELOOP     TAG                                                           0306
+     CSR         E         ADD  1         E       20                                     0307
+     CSR         E         COMP 9                    99                                  0308
+     CSR 99      E         SUB  9         E                                              0309
+     CSR         Y         COMP CNT,E                    99                              0310
+     CSRN99                GOTO ELOOP                                                    0311
+     CSR         E         LOKUPTABSQR    TABVAL         99                              0312
+     CSR                   MOVEAMYMRK     CRT,E                                          0313
+     CSR                   Z-ADDTABVAL    ME,E                                           0314
+     CSR         ENDSCH    TAG                                                           0315
+     CSR                   Z-ADD0         CNT                                            0316
+     CSR                   ENDSR                                                         0317
+     C*                                                                                  0318
+     C**************************************************************************         0319
+     CSR         REACT     BEGSR                                                         0320
+     C* THIS ROUTINE RESPONDS TO A NON-CENTER FIRST MOVE BY THE OPPONENT.                0321
+     CSR                   XFOOTME        MTEST   20 99                                  0322
+     CSR 99                GOTO MOVE2                                                    0323
+     CSR                   Z-ADD1         X                                              0324
+     CSR         YTEST     LOKUPCRN,X                    99                              0325
+     CSR 99                Z-ADD15        X                                              0326
+     CSR 99                GOTO MARK                                                     0327
+     CSR                   Z-ADD0         GAUGE                                          0328
+     CSR                   EXSR SCAN                                                     0329
+     CSR                   GOTO ENDREA                                                   0330
+     CSR         MOVE2     TAG                                                           0331
+     CSR         R         ADD  1         R       10                                     0332
+     CSR         R         COMP 4                    99                                  0333
+     CSR 99      R         SUB  4         R                                              0334
+     CSR         MTEST     COMP CRN,R                    99                              0335
+     CSR 99                GOTO MOVE2                                                    0336
+     CSR         MTEST     ADD  CRN,R     THIRTY  20                                     0337
+     CSR         THIRTY    COMP 30                       99                              0338
+     CSR 99                GOTO MOVE2                                                    0339
+     CSR         CRN,R     COMP YTEST                    99                              0340
+     CSR 99                GOTO MOVE2                                                    0341
+     CSR         CRN,R     ADD  MTEST     QTEST   20                                     0342
+     CSR         45        SUB  QTEST     QTEST                                          0343
+     CSR         QTEST     COMP YTEST                    99                              0344
+     CSR 99                GOTO MOVE2                                                    0345
+     CSR                   Z-ADDCRN,R     X                                              0346
+     CSR         MARK      TAG                                                           0347
+     CSR         X         LOKUPTABVAL    TABSQR         99                              0348
+     CSR                   Z-ADDTABSQR    Z                                              0349
+     CSR                   Z-ADDX         ME,Z                                           0350
+     CSR                   MOVEAMYMRK     CRT,Z                                          0351
+     CSR                   SETON                     03                                  0352
+     CSR         ENDREA    ENDSR                                                         0353
+     C**************************************************************************         0354
+**                                                                                       0355
+INSTRUCTIONS:                                                                            0356
+EACH SQUARE OF THE TIC-TAC-TOE BOARD IS                                                  0357
+NUMBERED. PLEASE INDICATE YOUR MOVES BY                                                  0358
+ENTERING THE NUMBERS OF THE APPROPRIATE                                                  0359
+SQUARES AS SHOWN IN THE NEXT DIAGRAM:                                                    0360
+'X' & 'O' WILL BE ASSIGNED TO THE FIRST                                                  0361
+AND SECOND PLAYERS RESPECTIVELY. DO YOU                                                  0362
+WISH TO PLAY FIRST? (KEY 'YES' OR 'NO')                                                  0363
+**                                                                                       0364
+    |    |                                                                               0365
+**                                                                                       0366
+----+----+----                                                                           0367
+**                                                                                       0368
+    |    |                                                                               0369
+**                                                                                       0370
+----+----+----                                                                           0371
+**                                                                                       0372
+    |    |                                                                               0373
+**                                                                                       0374
+YOUR TURNMY TURN  YOU WIN  YOU LOSE STALEMATEREMATCH?                                    0375
+**                                                                                       0376
+011013014023032033041071                                                                 0377
+**                                                                                       0378
+12141618                                                                                 0379
+**                                                                                       0380
+011602110318041705150613071208190914                                                     0381
+**                                                                                       0382
+X   O   X  X O X  X   X   O  X X O  O   X   X  O X X                                     0383

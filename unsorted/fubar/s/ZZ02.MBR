@@ -1,0 +1,149 @@
+0001 H                                             02                     ZZ02
+0002 F*              S L O T   M A C H I N E   G A M E                    ZZ02
+0003 F*                                                                   ZZ02
+0004 F*  ORIGINAL BY G. LORENZ  03/21/78                                  ZZ02
+0005 F*                                                                   ZZ02
+0006 F*                                                                   ZZ02
+0007 FWK      CP  F     200            WORKSTN                            ZZ02
+0008 E                    A1      9   9  7                                ZZ02
+0009 E                    A2      9   9  7                                ZZ02
+0010 E                    A3      9   9  7                                ZZ02
+0011 E                    A4      9   9  7                                ZZ02
+0012 E                    A5      9   9  7                                ZZ02
+0013 E                    A6      9   9  7                                ZZ02
+0014 E                    A7      9   9  7                                ZZ02
+0015 E                    RND    80  80  1 0                              ZZ02
+0016 E                    TEST        3  1                                ZZ02
+0017 IWK      XX  01   6NC                                                ZZ02
+0018 I*      OR   02   6 C2                                               ZZ02
+0019 I       OR   03   6 C                                                ZZ02
+0020 I                                        1   6 SCN                   ZZ02
+0021 C  N66                Z-ADD1.        A       20                      ZZ02
+0022 C  N66                Z-ADD1.        X                               ZZ02
+0023 C  N66                Z-ADD1.        Y                               ZZ02
+0024 C  N66                Z-ADD1.        Z                               ZZ02
+0025 C  N66                Z-ADD1.        D                               ZZ02
+0026 C  N66                Z-ADD1.        E                               ZZ02
+0027 C  N66                Z-ADD1.        F                               ZZ02
+0028 C  N66                Z-ADD25.       TOTAL   82                      ZZ02
+0029 C                     SETON                     66                   ZZ02
+0030 C                     SETOF                     2526                 ZZ02
+0031 C   KG                SETON                     LR                   ZZ02
+0032 C   KG                GOTO END                                       ZZ02
+0033 C  N01                GOTO END                                       ZZ02
+0034 C                     TIME           TME     60                      ZZ02
+0035 C                     MOVE TME       P       20                      ZZ02
+0036 C           P         ADD  3.        P                               ZZ02
+0037 C           P         COMP 58.                  30                   ZZ02
+0038 C   30                Z-ADD5.        P                               ZZ02
+0039 C*                                                                   ZZ02
+0040 C           LOOP1     TAG                             **** LOOP1 ****ZZ02
+0041 C*                                                                   ZZ02
+0042 C                     SETON                     26                   ZZ02
+0043 C                     TIME           TME     60                      ZZ02
+0044 C                     MOVE TME       T       20                      ZZ02
+0045 C           T         COMP P                    20                   ZZ02
+0046 C  N20      1.        ADD  A         A                               ZZ02
+0047 C  N20      A         COMP 80.                  21                   ZZ02
+0048 C  N20 21             Z-ADD1.        A                               ZZ02
+0049 C  N20                MOVE RND,A     X       10                      ZZ02
+0050 C  N20      1.        ADD  A         A                               ZZ02
+0051 C  N20      A         COMP 80.                  21                   ZZ02
+0052 C  N20 21             Z-ADD1.        A                               ZZ02
+0053 C  N20                MOVE RND,A     Y       10                      ZZ02
+0054 C  N20      1.        ADD  A         A                               ZZ02
+0055 C  N20      A         COMP 80.                  21                   ZZ02
+0056 C  N20 21             Z-ADD1.        A                               ZZ02
+0057 C  N20                MOVE RND,A     Z       10                      ZZ02
+0058 C  N20                SETON                     90                   ZZ02
+0059 C  N20                EXCPT                                          ZZ02
+0060 C                     SETOF                     90                   ZZ02
+0061 C  N20                GOTO LOOP1                                     ZZ02
+0062 C*                                                                   ZZ02
+0063 C                     TIME           TME     60                      ZZ02
+0064 C                     MOVE TME       TME3    3                       ZZ02
+0065 C                     MOVEATME3      TEST                            ZZ02
+0066 C           TEST,1    COMP TEST,2                   25               ZZ02
+0067 C  N25      TEST,1    COMP TEST,3                   25               ZZ02
+0068 C* N25      TEST,2    COMP TEST,3                   25               ZZ02
+0069 C   25      1.        MULT A         TOT     40                      ZZ02
+0070 C   25      TOT       ADD  TOTAL     TOTAL                           ZZ02
+0071 C  N25      TOTAL     SUB  1.        TOTAL                           ZZ02
+0072 C   25                MOVE X         D       10                      ZZ02
+0073 C   25                MOVE X         E       10                      ZZ02
+0074 C   25                MOVE X         F       10                      ZZ02
+0075 C  N25                MOVE X         D                               ZZ02
+0076 C  N25                MOVE Y         E                               ZZ02
+0077 C  N25                MOVE Z         F                               ZZ02
+0078 C*                                                                   ZZ02
+0079 C           END       TAG                                            ZZ02
+0080 OWK      D        03NLR                                              ZZ02
+0081 O                                   K6 'ZZ0201'                      ZZ02
+0082 O        E        90                                                 ZZ02
+0083 O                                   K6 'ZZ0202'                      ZZ02
+0084 O                         A1,X       7                               ZZ02
+0085 O                         A2,X      28                               ZZ02
+0086 O                         A3,X      49                               ZZ02
+0087 O                         A4,X      70                               ZZ02
+0088 O                         A5,X      91                               ZZ02
+0089 O                         A6,X     112                               ZZ02
+0090 O                         A7,X     133                               ZZ02
+0091 O*                                                                   ZZ02
+0092 O                         A1,Y      14                               ZZ02
+0093 O                         A2,Y      35                               ZZ02
+0094 O                         A3,Y      56                               ZZ02
+0095 O                         A4,Y      77                               ZZ02
+0096 O                         A5,Y      98                               ZZ02
+0097 O                         A6,Y     119                               ZZ02
+0098 O                         A7,Y     140                               ZZ02
+0099 O*                                                                   ZZ02
+0100 O                         A1,Z      21                               ZZ02
+0101 O                         A2,Z      42                               ZZ02
+0102 O                         A3,Z      63                               ZZ02
+0103 O                         A4,Z      84                               ZZ02
+0104 O                         A5,Z     105                               ZZ02
+0105 O                         A6,Z     126                               ZZ02
+0106 O                         A7,Z     147                               ZZ02
+0107 O        D        01NLR                                              ZZ02
+0108 O                                   K6 'ZZ0202'                      ZZ02
+0109 O                         A1,D       7                               ZZ02
+0110 O                         A2,D      28                               ZZ02
+0111 O                         A3,D      49                               ZZ02
+0112 O                         A4,D      70                               ZZ02
+0113 O                         A5,D      91                               ZZ02
+0114 O                         A6,D     112                               ZZ02
+0115 O                         A7,D     133                               ZZ02
+0116 O*                                                                   ZZ02
+0117 O                         A1,E      14                               ZZ02
+0118 O                         A2,E      35                               ZZ02
+0119 O                         A3,E      56                               ZZ02
+0120 O                         A4,E      77                               ZZ02
+0121 O                         A5,E      98                               ZZ02
+0122 O                         A6,E     119                               ZZ02
+0123 O                         A7,E     140                               ZZ02
+0124 O*                                                                   ZZ02
+0125 O                         A1,F      21                               ZZ02
+0126 O                         A2,F      42                               ZZ02
+0127 O                         A3,F      63                               ZZ02
+0128 O                         A4,F      84                               ZZ02
+0129 O                         A5,F     105                               ZZ02
+0130 O                         A6,F     126                               ZZ02
+0131 O                         A7,F     147                               ZZ02
+0132 O                    25            155 'JACK POT'                    ZZ02
+0133 O                 26      TOTAL J  166                               ZZ02
+**
+   11   2222   3333  4   4  555555  6666  7777777 8888   9999
+**
+  111  2    2 3    3 4   4  5      6    6      7 8    8 9    9
+**
+   11       2      3 4   4  5      6          7  8    8 9    9
+**
+   11    222    333  444444 55555  66666     7    8888   99999
+**
+   11   2          3     4       5 6    6   7    8    8      9
+**
+   11  2      3    3     4  5    5 6    6  7     8    8      9
+**
+  1111 222222  3333      4   5555   6666  7       8888       9
+**
+53851256376945277235891426476486991234953164825735914277452374956623147451328537

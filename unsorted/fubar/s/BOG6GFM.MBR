@@ -1,0 +1,168 @@
+0001 SSCREEN1   0124  Y
+0002 DFL0001     20102Y  YA         Y Y                CXX
+0003 DFL0002  00010107Y               Y     Y          CW
+0004 DFL0003  00010113Y               Y     Y          CW
+0005 DFL0004     70117Y               Y     Y          CEEEEEEE
+0006 DFX0004     10127Y               Y     Y          CL
+0007 DFL0005     70137Y               Y     Y          CCCCCCCC
+0008 DFL0006     70147Y               Y     Y          COOOOOOO
+0009 DFL0007     10157Y               Y     Y          CM
+0010 DFL0008     10163Y               Y     Y          CM
+0011 DFL0009     70167Y               Y     Y          CEEEEEEE
+0012 DFL0010  00010207Y               Y     Y          CW
+0013 DFL0011  00010210Y               Y     Y          CW
+0014 DFL0012  00010213Y               Y     Y          CW
+0015 DFL0013  00010217Y               Y     Y          CE
+0016 DFX0013  00010227Y               Y     Y          CL
+0017 DFL0014  00010237Y               Y     Y          CC
+0018 DFL0015  00010247Y               Y     Y          CO
+0019 DFL0016  00010253Y               Y     Y          CO
+0020 DFL0017     20257Y               Y     Y          CMM
+0021 DFL0018     20262Y               Y     Y          CMM
+0022 DFL0019  00010267Y               Y     Y          CE
+0023 DFL0020  00010307Y               Y     Y          CW
+0024 DFL0021  00010309Y               Y     Y          CW
+0025 DFL0022  00010311Y               Y     Y          CW
+0026 DFL0023  00010313Y               Y     Y          CW
+0027 DFL0024     40317Y               Y     Y          CEEEE
+0028 DFX0024     10327Y               Y     Y          CL
+0029 DFL0025  00010337Y               Y     Y          CC
+0030 DFL0026  00010347Y               Y     Y          CO
+0031 DFL0027  00010353Y               Y     Y          CO
+0032 DFL0028  00010357Y               Y     Y          CM
+0033 DFL0029  00010359Y               Y     Y          CM
+0034 DFL0030  00010361Y               Y     Y          CM
+0035 DFL0031  00010363Y               Y     Y          CM
+0036 DFL0032     40367Y               Y     Y          CEEEE
+0037 DFL0033     20407Y               Y     Y          CWW
+0038 DFL0034     20412Y               Y     Y          CWW
+0039 DFL0035  00010417Y               Y     Y          CE
+0040 DFL0036  00010427Y               Y     Y          CL
+0041 DFL0038  00010437Y               Y     Y          CC
+0042 DFL0039  00010447Y               Y     Y          CO
+0043 DFL0040  00010453Y               Y     Y          CO
+0044 DFL0041  00010457Y               Y     Y          CM
+0045 DFL0042  00010460Y               Y     Y          CM
+0046 DFL0043  00010463Y               Y     Y          CM
+0047 DFL0044  00010467Y               Y     Y          CE
+0048 DFL0045     10507Y               Y     Y          CW
+0049 DFL0046     10513Y               Y     Y          CW
+0050 DFL0047     70517Y               Y     Y          CEEEEEEE
+0051 DFX0047     70527Y               Y     Y          CLLLLLLL
+0052 DFL0048     70537Y               Y     Y          CCCCCCCC
+0053 DFL0049     70547Y               Y     Y          COOOOOOO
+0054 DFL0050  00010557Y               Y     Y          CM
+0055 DFL0051  00010563Y               Y     Y          CM
+0056 DFL0052     70567Y               Y     Y          CEEEEEEE
+0057 DFL0053  00070706Y               Y     Y          CTTTTTTT
+0058 DFL0054  00070716Y               Y     Y          COOOOOOO
+0059 DFL0055  00070732Y               Y     Y          CPPPPPPP
+0060 DFX0059     70742Y               Y     Y          CEEEEEEE
+0061 DFL0056  00070752Y               Y     Y          CPPPPPPP
+0062 DFL0057     70762Y               Y     Y          CSSSSSSS
+0063 DFL0058     30772Y               Y     Y          CIII
+0064 DFL0059     10809Y               Y     Y          CT
+0065 DFL0060     10816Y               Y     Y          CO
+0066 DFL0061     10822Y               Y     Y          CO
+0067 DFL0062     10832Y               Y     Y          CP
+0068 DFL0063     10838Y               Y     Y          CP
+0069 DFL0064     10842Y               Y     Y          CE
+0070 DFL0065     10852Y               Y     Y          CP
+0071 DFL0066     10858Y               Y     Y          CP
+0072 DFL0067     10862Y               Y     Y          CS
+0073 DFL0068     10873Y               Y     Y          CI
+0074 DFL0069     10909Y               Y     Y          CT
+0075 DFL0070     10916Y               Y     Y          CO
+0076 DFL0071     10922Y               Y     Y          CO
+0077 DFL0072     30926Y               Y     Y          C---
+0078 DFL0073     70932Y               Y     Y          CPPPPPPP
+0079 DFL0074     30942Y               Y     Y          CEEE
+0080 DFL0075     70952Y               Y     Y          CPPPPPPP
+0081 DFL0076     70962Y               Y     Y          CSSSSSSS
+0082 DFL0077     10973Y               Y     Y          CI
+0083 DFL0078     11009Y               Y     Y          CT
+0084 DFL0079     11016Y               Y     Y          CO
+0085 DFL0080     11022Y               Y     Y          CO
+0086 DFL0081     11032Y               Y     Y          CP
+0087 DFL0082     11042Y               Y     Y          CE
+0088 DFL0083     11052Y               Y     Y          CP
+0089 DFL0084     11068Y               Y     Y          CS
+0090 DFL0085     11073Y               Y     Y          CI
+0091 DFL0086     11109Y               Y     Y          CT
+0092 DFL0087     71116Y               Y     Y          COOOOOOO
+0093 DFL0088     11132Y               Y     Y          CP
+0094 DFL0089     71142Y               Y     Y          CEEEEEEE
+0095 DFL0090     11152Y               Y     Y          CP
+0096 DFL0091     71162Y               Y     Y          CSSSSSSS
+0097 DFL0092     31172Y               Y     Y          CIII
+0098 DFL0095  00631306Y               Y                CPEPSI-COLA GENERAL BOTTX
+0099 DLERS, INC. - MUNSTER DIVISION:
+0100 DFL0096  00041371Y               Y Y   Y          C 05
+0101 DFX0096    101506Y               Y                CDATA DEPT:
+0102 DFX0097    571518Y               Y     Y          C CHRIS GREENE - WIZARD X
+0103 D ****  BONNIE BUTLER - SORCERESS
+0104 DFL0097    241706Y               Y                CBOB THOMAS' TROOPS
+0105 DSENAME  00641811Y               Y     Y
+0106 DFL0099  00242006Y               Y                CBOB PARKER'S PLATOON
+0107 DSALNAM  00642111Y               Y     Y
+0108 DFL0100    242306Y               Y                COFFICE ORDERLIES
+0109 DCENAME    642411Y               Y     Y
+0110 SSCREEN2   1801
+0111 DSENAME  00640111Y               Y     Y
+0112 DSANAM     640411Y               Y     Y
+0113 DCENAME    640711Y               Y     Y
+0114 SBLINK     0105
+0115 DFL0002  00010107Y               50    50         C
+0116 DFL0003  00010113Y               50    50         C
+0117 DFL0004     70117Y               51    51         C
+0118 DFX0004     10127Y               52    52         C
+0119 DFL0005     70137Y               53    53         C
+0120 DFL0006     70147Y               54    54         C
+0121 DFL0007     10157Y               55    55         C
+0122 DFL0008     10163Y               55    55         C
+0123 DFL0009     70167Y               56    56         C
+0124 DFL0010  00010207Y               50    50         C
+0125 DFL0011  00010210Y               50    50         C
+0126 DFL0012  00010213Y               50    50         C
+0127 DFL0013  00010217Y               51    51         C
+0128 DFX0013  00010227Y               52    52         C
+0129 DFL0014  00010237Y               53    53         C
+0130 DFL0015  00010247Y               54    54         C
+0131 DFL0016  00010253Y               54    54         C
+0132 DFL0017     20257Y               55    55         C
+0133 DFL0018     20262Y               55    55         C
+0134 DFL0019  00010267Y               56    56         C
+0135 DFL0020  00010307Y               50    50         C
+0136 DFL0021  00010309Y               50    50         C
+0137 DFL0022  00010311Y               50    50         C
+0138 DFL0023  00010313Y               50    50         C
+0139 DFL0024     40317Y               51    51         C
+0140 DFX0024     10327Y               52    52         C
+0141 DFL0025  00010337Y               53    53         C
+0142 DFL0026  00010347Y               54    54         C
+0143 DFL0027  00010353Y               54    54         C
+0144 DFL0028  00010357Y               55    55         C
+0145 DFL0029  00010359Y               55    55         C
+0146 DFL0030  00010361Y               55    55         C
+0147 DFL0031  00010363Y               55    55         C
+0148 DFL0032     40367Y               56    56         C
+0149 DFL0033     20407Y               50    50         C
+0150 DFL0034     20412Y               50    50         C
+0151 DFL0035  00010417Y               51    51         C
+0152 DFL0036  00010427Y               52    52         C
+0153 DFL0038  00010437Y               53    53         C
+0154 DFL0039  00010447Y               54    54         C
+0155 DFL0040  00010453Y               54    54         C
+0156 DFL0041  00010457Y               55    55         C
+0157 DFL0042  00010460Y               55    55         C
+0158 DFL0043  00010463Y               55    55         C
+0159 DFL0044  00010467Y               56    56         C
+0160 DFL0045     10507Y               50    50         C
+0161 DFL0046     10513Y               50    50         C
+0162 DDFL0047    70517Y               51    51         C
+0163 DFX0047     70527Y               52    52         C
+0164 DFL0048     70537Y               53    53         C
+0165 DFL0049     70547Y               54    54         C
+0166 DFL0050  00010557Y               55    55         C
+0167 DFL0051  00010563Y               55    55         C
+0168 DFL0052     70567Y               56    56         C

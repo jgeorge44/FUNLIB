@@ -1,0 +1,26 @@
+     SAMORT     0124 YY 80      80
+     DC1         1 1 2Y  Y          Y     Y            C1
+     DC2        23 222Y               Y       Y        CAMORTIZATION CALCULATOR
+     DC3        34 511Y                                CANNUAL INTEREST RATE (XX
+     DX.XXXX) ---
+     DIN         7 551Y  Y    B81     81
+     DC4A        1 559Y                                C%
+     DC4B       34 611Y                                CNUMBER OF MONTHS TO AMOX
+     DRTIZE -----
+     D#P         3 655Y  YN   B82     82
+     DC5        34 711Y                                CPRINCIPAL AMOUNT (WHOLEX
+     D DOLLARS) -
+     DP$         6 752Y  YN   B83  Y  83
+     DERROR     60 81380              80    80
+     DC6        341011Y                                CMONTHLY PAYMENT AMOUNT X
+     D-----------
+     DPAYMNT    101048Y
+     DC7        341111Y                                CTOTAL OF PAYMENTS -----X
+     D-----------
+     DPAYTOT    121146Y
+     DC8        341211Y                                CTOTAL INTEREST PAID ---X
+     D-----------
+     DINTTOT    101248Y
+     DCMD1      391511Y                                CCMD KEY 1 - PRINT AMORTX
+     DIZATION SCHEDULE
+     DCMD9      231611Y                                CCMD KEY 9 - END PROGRAM

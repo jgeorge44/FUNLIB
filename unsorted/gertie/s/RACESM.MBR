@@ -1,0 +1,85 @@
+0001 SZZ0101     124 YY     Y
+0002 DSCRN       6 1 2Y  Y          Y                  CZZ0101
+0003 D          10 331Y                       Y        CDIRECTIONS
+0004 D           61133Y                                CENTER
+0005 D          141229Y                       Y        CPLAYERS  NAMES
+0006 DPNME1     101431   Y     Y                Y
+0007 DPNME2     101531   Y                      Y
+0008 DPNME3     101631   Y                      Y
+0009 DPNME4     101731   Y                      Y
+0010 DPNME5     101831   Y                      Y
+0011 DPNME6     101931   Y                      Y
+0012 DPNME7     102031   Y                      Y
+0013 DPNME8     102131   Y                      Y
+0014 DPNME9     102231   Y                      Y
+0015 D          2024 1Y               Y                CPRESS ENTER WHEN ALL
+0016 D          232422Y               Y                CPLAYERS NAMES HAVE BEEN
+0017 D           72446Y               Y                CENTERED
+0018 SZZ0102     124  N
+0019 DSCRN       6 1 2Y  Y          Y                  CZZ0102
+0020 D          11 329Y                       Y        CRACE NUMBER
+0021 DRECENO     1 341Y
+0022 D           5 421Y                                CHORSE
+0023 D           5 440Y                                CHORSE
+0024 D           6 521Y                       Y        CNUMBER
+0025 D           4 540Y                       Y        CNAME
+0026 SZZ0103    V  1  N
+0027 DSCRN       6 1 2Y  Y          Y     Y            CZZ0103
+0028 DNMBR       1 124Y
+0029 DHNME1     10 138Y
+0030 SZZ0104    16 9 YY
+0031 DSCRN       6 1 2Y  Y          Y     Y            CZZ0104
+0032 DPNME      10 121Y               Y
+0033 D          18 133Y                                CENTER YOUR BET NOW
+0034 D           6 311Y                                CAMOUNT
+0035 DAMT        3 318   YN   Z                 Y
+0036 D          12 331Y                                CHORSE NUMBER
+0037 DHOR        1 344   YN   Z
+0038 D           6 351Y                                CWIN(W)
+0039 DWPS        1 361   YA        Y
+0040 D          10 431Y                                C(1 THRU 9)
+0041 D           8 451Y                                CPLACE(P)
+0042 D           7 551Y                                CSHOW(S)
+0043 D          21 716Y               Y                CPRESS ENTER AFTER ALL
+0044 D          19 738Y               Y                CVALUES ARE ENTERED.
+0045 DMSG       50 9 1Y
+0046 SZZ0105     124  N Y
+0047 DSCRN       6 1 2Y                                CZZ0105
+0048 D           6 473Y                                CFINISH
+0049 D           5 5 4Y                       Y        CHORSE
+0050 D           4 574Y                       Y        CLINE
+0051 SZZ0106    V 01  N
+0052 DHNME      10 1 2Y
+0053 DOUT       60 115Y
+0054 D           1 176Y                                C*
+0055 DPLACE      1 179Y
+0056 SZZ0107     124  Y Y
+0057 DSCRN       6 1 2Y  Y          Y                  CZZ0107
+0058 D          13 230Y                       Y        CPLAYERS TOTALS
+0059 D           4 4 6Y                       Y        CNAME
+0060 D           6 419Y                       Y        CAMOUNT
+0061 D           4 432Y                       Y        CNAME
+0062 D           6 445Y                       Y        CAMOUNT
+0063 D           4 458Y                       Y        CNAME
+0064 D           6 471Y                       Y        CAMOUNT
+0065 DPNME1     10 5 3Y
+0066 DPTOT1      6 519Y
+0067 DPNME2     10 529Y
+0068 DPTOT2      6 545Y
+0069 DPNME3     10 555Y
+0070 DPTOT3      6 571Y
+0071 DPNME4     10 6 3Y
+0072 DPTOT4      6 619Y
+0073 DPNME5     10 629Y
+0074 DPTOT5      6 645Y
+0075 DPNME6     10 655Y
+0076 DPTOT6      6 671Y
+0077 DPNME7     10 7 3Y
+0078 DPTOT7      6 719Y
+0079 DPNME8     10 729Y
+0080 DPTOT8      6 745Y
+0081 DPNME9     10 755Y
+0082 DPTOT9      6 771Y
+0083 D          2011 2Y                                CPRESS ENTER FOR NEXT
+0084 D           41123Y                                CRACE
+0085 D          2312 2Y                                CCMD KEY 7  TO END RACES

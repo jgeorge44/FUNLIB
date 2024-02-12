@@ -1,0 +1,7 @@
+0101 H   C  10                                     01                     GPRACE
+0103 FVIDEO   CP          1            WORKSTN                            GPRACE
+0106 IVIDEO   NS  01                                                      GPRACE
+0107 C   01                SETON                       U1LR               GPRACE
+0108 OVIDEO   D        01                                                 GPRACE
+0109 O                                   K6 'ZZFROG'                      GPRACE
+/*

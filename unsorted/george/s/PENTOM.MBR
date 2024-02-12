@@ -1,0 +1,258 @@
+     H                              B       1      02                     PENTOM            0001
+     FWORKSTN CP  F     100            WORKSTN                                              0002
+     FPRINTER O   F  96  96            PRINTER                                              0003
+     E                    MAT        66  1                                                  0004
+     E                    MTO         6 11                                                  0005
+     E                    CRD    20 240  1                                                  0006
+     E                    LET    12  12  1   LTS     1                                      0007
+     E                    M          10  1 0                                                0008
+     E                    MN         10  1                                                  0009
+     E                    STR        12  1                                                  0010
+     IWORKSTN NS  01                                                                        0011
+     I                                        1   1 LETTER                                  0012
+     I                                        2   20ROTATE                                  0013
+     I                                        3   3 REVERS                                  0014
+     I                                        4   50ROW                                     0015
+     I                                        6   70COL                                     0016
+     I            DS                                                                        0017
+     I                                        1  66 MAT                                     0018
+     I                                        1  66 MTO                                     0019
+     C  N99                SETON                     10                                     0020
+     C  N99                Z-ADD0         Q     0020                                        0021
+     C  N99                GOTO END99                                                       0022
+     C*                                                                                     0023
+     C                     SETOF                     10                                     0024
+     C                     SETON                     11                                     0025
+     C                     SETOF                     909192                                 0026
+     C                     SETOF                     949396                                 0027
+     C  N98                GOTO OUTPUT                                                      0028
+     C*                                                                                     0029
+     C   KA                GOTO REMOVE                                                      0030
+     C   KB                GOTO RESTRT                                                      0031
+     C   KC                SETON                     LR                                     0032
+     C   KC                SETOF                     10                                     0033
+     C   KC                GOTO END                                                         0034
+     C   KD                EXSR PRINT                                                       0035
+     C   KD                GOTO OUTPUT                                                      0036
+     C*                                                                                     0037
+     C                     Z-ADD1         Z     0030                                        0038
+     C           LETTER    LOKUPLET,Z                    97                                 0039
+     C   97      LETTER    LOKUPLTS                      97                                 0040
+     C  N97                SETON                     90                                     0041
+     C  N97                GOTO ERROR                                                       0042
+     C           ROTATE    COMP 0                    97  97                                 0043
+     C   97      ROTATE    COMP 3                      9797                                 0044
+     C  N97                SETON                     91                                     0045
+     C  N97                GOTO ERROR                                                       0046
+     C           REVERS    COMP ' '                      97                                 0047
+     C  N97      REVERS    COMP 'R'                      97                                 0048
+     C  N97                SETON                     92                                     0049
+     C  N97                GOTO ERROR                                                       0050
+     C           ROW       COMP 1                    97  97                                 0051
+     C   97      ROW       COMP 6                      9797                                 0052
+     C   97      COL       COMP 1                    97  97                                 0053
+     C   97      COL       COMP 10                     9797                                 0054
+     C  N97                SETON                     93                                     0055
+     C   97                GOTO OK                                                          0056
+     C           ERROR     TAG                                                              0057
+     C                     SETON                     94                                     0058
+     C                     GOTO END                                                         0059
+     C*                                                                                     0060
+     C           OK        TAG                                                              0061
+     C           Z         SUB  1         Z1    0030                                        0062
+     C           Z1        MULT 20        Z1                                                0063
+     C           Z1        ADD  1         Z1                                                0064
+     C           ROTATE    COMP 1                        97                                 0065
+     C  N97      ROTATE    COMP 3                        97                                 0066
+     C   97      Z1        ADD  10        Z1                                                0067
+     C                     MOVEACRD,Z1    MN                                                0068
+     C                     MOVE MN        M                                                 0069
+     C           ROTATE    COMP 2                    97  97                                 0070
+     C   97                Z-SUBM         M                                                 0071
+     C           REVERS    COMP 'R'                      97                                 0072
+     C   97                Z-SUBM,1       M,1                                               0073
+     C   97                Z-SUBM,3       M,3                                               0074
+     C   97                Z-SUBM,5       M,5                                               0075
+     C   97                Z-SUBM,7       M,7                                               0076
+     C   97                Z-SUBM,9       M,9                                               0077
+     C*                                                                                     0078
+     C                     MOVEAMAT       MATSVE066                                         0079
+     C                     Z-ADD1         X     0020                                        0080
+     C                     Z-ADD2         Y     0020                                        0081
+     C           LOOP2     TAG                                                              0082
+     C           ROW       ADD  M,X       AD    0030                                        0083
+     C           AD        SUB  1         AD                                                0084
+     C           AD        MULT 11        AD                                                0085
+     C           AD        ADD  COL       AD                                                0086
+     C           AD        ADD  M,Y       AD                                                0087
+     C           AD        ADD  1         AD                                                0088
+     C           AD        COMP 1                      96                                   0089
+     C  N96      AD        COMP 66                   96                                     0090
+     C  N96      MAT,AD    COMP ' '                  96                                     0091
+     C   96                MOVEAMATSVE    MAT                                               0092
+     C   96                GOTO ERROR                                                       0093
+     C*                                                                                     0094
+     C                     MOVE LETTER    MAT,AD                                            0095
+     C           2         ADD  X         X                                                 0096
+     C           2         ADD  Y         Y                                                 0097
+     C           Y         COMP 10                   97                                     0098
+     C  N97                GOTO LOOP2                                                       0099
+     C  N70      Z         COMP 1                        70                                 0100
+     C  N71      Z         COMP 2                        71                                 0101
+     C  N72      Z         COMP 3                        72                                 0102
+     C  N73      Z         COMP 4                        73                                 0103
+     C  N74      Z         COMP 5                        74                                 0104
+     C  N75      Z         COMP 6                        75                                 0105
+     C  N76      Z         COMP 7                        76                                 0106
+     C  N77      Z         COMP 8                        77                                 0107
+     C  N78      Z         COMP 9                        78                                 0108
+     C  N79      Z         COMP 10                       79                                 0109
+     C  N80      Z         COMP 11                       80                                 0110
+     C  N81      Z         COMP 12                       81                                 0111
+     C                     MOVE ' '       LTS,Z                                             0112
+     C           OUTPUT    TAG                                                              0113
+     C                     Z-ADD1         Z1                                                0114
+     C           LOOP1     TAG                                                              0115
+     C           MAT,Z1    COMP ' '                    97                                   0116
+     C   97                MOVE ' '       MAT,Z1                                            0117
+     C           Z1        ADD  1         Z1                                                0118
+     C           Z1        COMP 66                   97                                     0119
+     C  N97                GOTO LOOP1                                                       0120
+     C*                                                                                     0121
+     C                     BITON'2357'    CODEB 001                                         0122
+     C                     BITON'235'     CODEA 001                                         0123
+     C                     BITOF'1'       CODEA                                             0124
+     C                     BITOF'1'       CODEB                                             0125
+     C                     Z-ADD1         X                                                 0126
+     C                     Z-ADD2         Y                                                 0127
+     C           LOOP3     TAG                                                              0128
+     C           X         DIV  11        Z                                                 0129
+     C                     MVR            Z                                                 0130
+     C           Z         COMP 0                        97                                 0131
+     C   97                GOTO LOOP4                                                       0132
+     C           Z         COMP 1                        97                                 0133
+     C           MAT,Y     COMP ' '                      95                                 0134
+     C   97                MOVE CODEB     MAT,X                                             0135
+     C   97 95             MOVE CODEA     MAT,X                                             0136
+     C   97                GOTO LOOP4                                                       0137
+     C           MAT,X     COMP ' '                    9797                                 0138
+     C  N97N95                                                                              0139
+     COR 97 95             GOTO LOOP4                                                       0140
+     C   97                MOVE CODEB     MAT,X                                             0141
+     C   95                MOVE CODEA     MAT,Y                                             0142
+     C           LOOP4     TAG                                                              0143
+     C           X         ADD  1         X                                                 0144
+     C           Y         ADD  1         Y                                                 0145
+     C           Y         COMP 66                   97                                     0146
+     C  N97                GOTO LOOP3                                                       0147
+     C   98                MOVE LETTER    STR,Q                                             0148
+     C           1         ADD  Q         Q          98                                     0149
+     C                     GOTO END                                                         0150
+     C*                                                                                     0151
+     C           REMOVE    TAG                                                              0152
+     C           Q         SUB  1         Q              97                                 0153
+     C   97                GOTO RESTRT                                                      0154
+     C                     MOVE STR,Q     LETTER                                            0155
+     C                     Z-ADD1         X                                                 0156
+     C           REMVE1    TAG                                                              0157
+     C           LETTER    LOKUPMAT,X                    97                                 0158
+     C   97                MOVE ' '       MAT,X                                             0159
+     C   97                GOTO REMVE1                                                      0160
+     C*                                                                                     0161
+     C                     Z-ADD1         X                                                 0162
+     C           LETTER    LOKUPLET,X                    97                                 0163
+     C                     SETOF                     505152                                 0164
+     C                     SETOF                     535455                                 0165
+     C                     SETOF                     565758                                 0166
+     C                     SETOF                     596061                                 0167
+     C           X         COMP 2                    525051                                 0168
+     C   52      X         COMP 4                    545253                                 0169
+     C   54      X         COMP 6                    565455                                 0170
+     C   56      X         COMP 8                    585657                                 0171
+     C   58      X         COMP 10                   605859                                 0172
+     C   60      X         COMP 12                     6061                                 0173
+     C   50                SETOF                     70                                     0174
+     C   51                SETOF                     71                                     0175
+     C   52                SETOF                     72                                     0176
+     C   53                SETOF                     73                                     0177
+     C   54                SETOF                     74                                     0178
+     C   55                SETOF                     75                                     0179
+     C   56                SETOF                     76                                     0180
+     C   57                SETOF                     77                                     0181
+     C   58                SETOF                     78                                     0182
+     C   59                SETOF                     79                                     0183
+     C   60                SETOF                     80                                     0184
+     C   61                SETOF                     81                                     0185
+     C                     MOVE LET,X     LTS,X                                             0186
+     C           Q         SUB  1         Q                                                 0187
+     C                     SETOF                     98                                     0188
+     C                     GOTO OUTPUT                                                      0189
+     C*                                                                                     0190
+     C           RESTRT    TAG                                                              0191
+     C                     Z-ADD0         Q          98                                     0192
+     C                     MOVE ' '       STR                                               0193
+     C                     SETOF                     707172                                 0194
+     C                     SETOF                     737475                                 0195
+     C                     SETOF                     767778                                 0196
+     C                     SETOF                     798081                                 0197
+     C                     MOVE ' '       MAT                                               0198
+     C                     MOVE LET       LTS                                               0199
+     C                     GOTO OUTPUT                                                      0200
+     C*                                                                                     0201
+     C           END99     TAG                                                              0202
+     C                     SETON                     9910                                   0203
+     C           END       TAG                                                              0204
+     C*                                                                                     0205
+     CSR         PRINT     BEGSR                                                            0206
+     CSR                   TIME           TIME  0060                                        0207
+     CSR                   SETON                     40                                     0208
+     CSR                   EXCPT                                                            0209
+     CSR                   SETOF                     40                                     0210
+     CSR                   Z-ADD1         X                                                 0211
+     CSR         PRINT1    TAG                                                              0212
+     CSR                   SETON                     41                                     0213
+     CSR                   EXCPT                                                            0214
+     CSR                   SETOF                     41                                     0215
+     CSR         X         ADD  1         X                                                 0216
+     CSR         X         COMP 6                    97                                     0217
+     CSRN97                GOTO PRINT1                                                      0218
+     CSR                   SETON                     42                                     0219
+     CSR                   EXCPT                                                            0220
+     CSR                   SETOF                     42                                     0221
+     CSR                   ENDSR                                                            0222
+     OWORKSTN D        10                                                                   0223
+     O                                   K6 'PENT01'                                        0224
+     OWORKSTN D        11                                                                   0225
+     O                                   K6 'PENT02'                                        0226
+     O                         MAT       66                                                 0227
+     O                       90          90 'INVALID LETTER SELECTED.'                      0228
+     O                       91          86 'INVALID ROTATE CODE.'                          0229
+     O                       92          87 'INVALID REVERSE CODE'                          0230
+     O                       93          90 'COLUMN/ROW NOT IN MATRIX'                      0231
+     O                       96          90 'OUTSIDE MATRIX OR OVERLA'                      0232
+     O                       96          96 'PPING.'                                        0233
+     OPRINTER E  106   40                                                                   0234
+     O                         UDATE Y    8                                                 0235
+     O                         TIME  Y   18                                                 0236
+     O                                   32 'XXXXXXXXXXXX'                                  0237
+     O        E  1     41                                                                   0238
+     O                         MTO,X     31                                                 0239
+     O                                   21 'X'                                             0240
+     O                                   32 'X'                                             0241
+     O        E        42                                                                   0242
+     O                                   32 'XXXXXXXXXXXX'                                  0243
+**                                                                                          0244
+000110201J00100J0KJJ                                                                        0245
+0010203040000J0K0L0M                                                                        0246
+001020303J000J0K0LJL                                                                        0247
+0010202122000J0K1K2K                                                                        0248
+0010112131000J1J1K1L                                                                        0249
+000110112000100J1J0K                                                                        0250
+000J01102000J0100J0K                                                                        0251
+0010111202000J1J2J20                                                                        0252
+0010112122000J1J1K2K                                                                        0253
+001J10112000JJ0J1J0K                                                                        0254
+001020301J000J0K0LJJ                                                                        0255
+000111212200101J1K2K                                                                        0256
+**                                                                                          0257
+FFIIJJLLNNPPTTUUWWXXYYZZ                                                                    0258

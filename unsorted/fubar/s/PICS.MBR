@@ -1,0 +1,16 @@
+0001 H    P014                      B       1                             PICS
+0002 F*
+0003 F*  CTG - CALLED BY PROC-FILER  IN GAMES LIBRARY-FUBAR
+0004 F*        PRINTS PICTURE FILES HAVING 128 BYTE RECORDS
+0005 F*
+0006 FPICTURE IPE F 128 128            DISK                               PICS
+0007 FPRINT   O   F 132 132           LPRINTER                            PICS
+0008 LPRINT    66FL 66OL                                                  PICS
+0009 IPICTURE AA  01   6 C;                                               PICS
+0010 I                                        7 128 REPETE                PICS
+0011 I        BB  02   6NC;                                               PICS
+0012 I                                        7 128 RECORD                PICS
+0013 OPRINT   D  0     01                                                 PICS
+0014 O                         REPETE   132                               PICS
+0015 O        D  1     02                                                 PICS
+0016 O                         RECORD   132                               PICS

@@ -1,0 +1,129 @@
+     H014  020                              1                             R2D2
+     FPRINTER O   F     132     OF    LPRINTER
+     FWORKSTN CP  F     200            WORKSTN
+     E                    ARA     1 163 80
+     E                    NARA       80  1
+     LPRINTER  88FL 88OL
+     IWORKSTN NS  01  02 C1  01 C0
+     I                                        3  32 NAME            02
+     I        NS  10
+     C*
+     C********************************************************************
+     C*
+     C   KG                SETON                     LR
+     C   LR                GOTO END
+     C  N01
+     COR 01 02             GOTO END
+     C                     MOVEANAME      NARA
+     C                     Z-ADD1         N       20
+     C           TAG0      TAG
+     C           NARA,N    COMP ' '                      40
+     C   40      N         ADD  1         N
+     C   40                GOTO TAG0
+     C           N         DIV  2         N         H
+     C                     MOVEANARA,N    NAMEO  30
+     C           TAG1      TAG
+     C   01                Z-ADD1         I       30
+     C   01                SETON                       10
+     C   01                EXCPT
+     C   01                SETOF                       10
+     C*
+     C           TAG2      TAG
+     C                     MOVE ARA,I     LAST3   3
+     C           LAST3     COMP '   '                    03
+     C  N03                SETON                     04
+     C   03                SETOF                     04
+     C   04                MOVEAARA,I     IO1    60
+     C   04      I         ADD  1         I
+     C   04                MOVEAARA,I     IO2    65
+     C   03
+     COR 04                EXCPT
+     C                     SETOF                     0304
+     C           I         ADD  1         I
+     C           I         COMP 60                   05
+     C  N05                GOTO TAG2
+     C           END       TAG
+     C*
+     C********************************************************************
+     OWORKSTN D        01NLR
+     O       OR        10
+     O                                   K6 'SCRN01'
+     O                                   26 '                        '
+     O                                   32 '      '
+     OPRINTER E   18   10
+     O                                   81 'ARTOO DETOO WELCOMES'
+     O                                   60 'HERO ROBOT'
+     O        E 2      10
+     O                         NAMEO  B  81
+     O        E 2      10
+     O                                   67 'TO'
+     O        E 2      10
+     O                                   67 'IBM'
+     O        E 2      10
+     O                         UDATE Y   69
+     O        E   39   10
+     O                                    1 ' '
+     O        E        03
+     O                         ARA,I    105
+     O        E        04
+     O                         IO1       65
+     O                         IO2      130
+**
+                               SSSSSSSSSSSSSSSSSS
+                            SSS                  SSS
+                          SS   SSSSSSSSSSSSSSSSSS   SS
+                        SS                            SS
+                      S                                  S
+                     S               AAAAAA               S
+                    S              AAA    AAA              S
+                   S               AAA    AAA               S
+                  S               AAAA    AAAA               S
+                 S   WW  RRRR     AAAAAAAAAAAA     RRRRR  WW  S
+                 S   WW  RRRR                     R     R WW  S
+                 S   WW          SS AAAAAAAA      R     R WW  S
+                SS   WW  RRRR    SS AAAAAAAA       RRRRR  WW  SS
+                SS   WW  RRRR    SS AAAAAAAA              WW  SS
+                SS                                            SS
+          TTTTTTT SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS TTTTTTT
+         TT S   T        S                            S        T   S TT
+         TT S   T        SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS        T   S TT
+         TT S   T                                              T   S TT
+         TT S   T  STAR     ...        ..........        STAR  T   S TT
+         TT S   T  /  /  ..............................  /  /  T   S TT
+         TT S   T  /  /     ...        ..........        /  /  T   S TT
+         TT S   T  /  /                                  /  /  T   S TT
+         TT S   T  /  /       ...........        ...     /  /  T   S TT
+         TT S   T  /  /  ..............................  /  /  T   S TT
+         TT S   T  /  /       ...........        ...     /  /  T   S TT
+         TT S   T  /  /                                  /  /  T   S TT
+         TT S   T  /  /  ########  XXXXXXXXXX  00000000  /  /  T   S TT
+         TT S   T  /  /  #      #  XXXXXXXXXX  0     00  /  /  T   S TT
+         TT S   T  /  /  #      #  XX ---- XX  0      0  /  /  T   S TT
+         TT S   T  /  /  ########  XX ---- XX  0      0  /  /  T   S TT
+         TT S   T  /  /            XX ---- XX  0      0  /  /  T   S TT
+         TT S   T  /  /  111  ###  XXXXXXXXXX  0      0  /  /  T   S TT
+         TTTTTTTT  /  /       # #  XX ---- XX  0      0  /  /  TTTTTTTT
+         TT S   T  /  /  111  # #  XX ---- XX  0      0  /  /  T   S TT
+         TT S   T  /  /       # #  XX ---- XX  0      0  /  /  T   S TT
+         TT S   T  /  /  111  # #  XXXXXXXXXX  0      0  /  /  T   S TT
+         TT S   T  WARS       ###  XXXXXXXXXX  00000000  WARS  T   S TT
+         TT S   T                                              T   S TT
+         TT S   T 1 1 1   XXXXX    //////////  XXXXXXXX        T   S TT
+         TT S   T 1 1 1   X   X    //////////  XXXXXXXX        T   S TT
+         TT S   T 1 1 1   XXXXX                                T   S TT
+         TT SSSST 1 1 1            WWWWWWWWWW  EEE DDD RRR     TSSSS TT
+         TT S   T 1 1 1  EEEEEEEE  W        W  E E D D R R     T   S TT
+         TT S   T 1 1 1  E E E  E  W        W  E E D D R R     T   S TT
+         TT S   T 1 1 1  E E E  E  W        W  E E D D R R     T   S TT
+         TTTTTTTTT1 1 1  EEEEEEEE  WWWWWWWWWW  EEE DDD RRR    TTTTTTTTT
+         TT       T                                          T       TT
+         T       T TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT T      TT
+         TT     T TTT  T                                T  TTT T     TT
+        TT 00   T   T T                                  T T   T   00 TT
+        T   0   T   TT                                    TT   T   0   T
+       T    0   T   T                                      T   T   0    T
+      T     0   T   T                                      T   T   0     T
+     T      0   T   T                                      T   T   0      T
+      T     0   T   T                                      T   T   0     T
+       TTTTTTTTTTTTT                                        TTTTTTTTTTTTT
+         WWWWWWWWW                                            WWWWWWWWW

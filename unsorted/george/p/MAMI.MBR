@@ -1,0 +1,9 @@
+// * 'M A S T E R    M I N D    G A M E'
+// * ' '
+// * ' 1 = DEUTSCH'
+// * ' 2 = ENGLISCH'
+// * 'WAEHLEN SIE DIE BILDSCHIRM-SPRACHE'
+// IFF ?1R?/1 IFF ?1?/2  CANCEL
+// IF ?1?/1 SWITCH 01000000
+// IF ?1?/2 SWITCH 00100000
+MAMI1

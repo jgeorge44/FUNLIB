@@ -1,0 +1,195 @@
+0001 H    B                                                               GAME02
+0002 FWS      CD  F 100                WORKSTN
+0003 E                    DECK       52  2 0
+0004 E                    TABD   13  52  2 0 TABN    3
+0005 E                    NAME       52  3
+0006 E                    VALU       52  2 0
+0007 E                    US          5  3
+0008 E                    THEM        5  3
+0009 IWS      NS  90
+0010 I                                        1   1 ACTION
+0011 I                                        1   3 WORK2
+0012 C                     READ WS                       LR
+0013 C                     Z-ADD250       LEFT    60
+0014 C           $START    TAG
+0015 C* DEAL THE CARDS
+0016 C                     Z-ADD0         I       20
+0017 C                     Z-ADD1         K       20
+0018 C                     Z-ADD0         DECK
+0019 C                     MOVE '   '     US
+0020 C                     MOVE '   '     THEM
+0021 C           $LP1      TAG
+0022 C           I         ADD  1         I
+0023 C           I         COMP 52                   90
+0024 C   90                GOTO $DN1
+0025 C           $LP2      TAG
+0026 C                     EXSR $RANDM
+0027 C                     MOVE $RANDM    NORML   66
+0028 C           NORML     MULT 52        J       20
+0029 C           J         ADD  K         K            9090
+0030 C   90                Z-ADD1         K
+0031 C           $AGAIN    TAG
+0032 C           K         COMP 52                   90
+0033 C   90      K         SUB  52        K
+0034 C           DECK,K    COMP 0                    90
+0035 C   90      K         ADD  1         K
+0036 C   90                GOTO $AGAIN
+0037 C                     Z-ADDI         DECK,K
+0038 C           I         LOKUPTABD      TABN           90
+0039 C                     MOVE TABN      NAME,K
+0040 C                     MOVELTABN      TEST    2
+0041 C           TEST      COMP 'A '                     90
+0042 C   90                Z-ADD1         VALU,K
+0043 C   90                GOTO $LP1
+0044 C           TEST      COMP '10'                   9090
+0045 C   90                Z-ADD10        VALU,K
+0046 C   90                GOTO $LP1
+0047 C                     MOVE TEST      VALU,K
+0048 C           VALU,K    DIV  10        VALU,K
+0049 C                     GOTO $LP1
+0050 C           $DN1      TAG
+0051 C* SEND 'BET?' SCREEN
+0052 C                     SETON                     15
+0053 C                     EXCPT
+0054 C                     SETOF                     15
+0055 C                     READ WS                       LR
+0056 C   KL
+0057 COR LR                GOTO $END
+0058 C                     MOVE WORK2     BET     30
+0059 C           BET       COMP LEFT                 90
+0060 C   90                GOTO $DN1
+0061 C                     MOVE NAME,1    THEM,1
+0062 C                     MOVE NAME,2    US,1
+0063 C                     MOVE NAME,3    THEM,2
+0064 C                     MOVE NAME,4    US,2
+0065 C           VALU,1    ADD  VALU,3    TCOUNT  20
+0066 C           VALU,2    ADD  VALU,4    OCOUNT  20
+0067 C* CHECK FOR BLACKJACK
+0068 C           OCOUNT    COMP 11                       81
+0069 C   81      VALU,2    COMP 1                        80
+0070 C   81N80   VALU,4    COMP 1                        80
+0071 C           TCOUNT    COMP 11                       71
+0072 C   71      VALU,1    COMP 1                        70
+0073 C   71N70   VALU,3    COMP 1                        70
+0074 C   70 80             GOTO $TIE
+0075 C   80                GOTO $WIN
+0076 C   70      LEFT      ADD  BET       LEFT
+0077 C   70                GOTO $LOSE
+0078 C                     Z-ADD3         I
+0079 C                     SETOF                     7080
+0080 C           $LP3      TAG
+0081 C* SEND FIRST SCREEN
+0082 C                     SETON                     2010
+0083 C                     EXCPT
+0084 C                     SETOF                     2010
+0085 C* GET RESPONSE
+0086 C                     READ WS                       LR
+0087 C   KL
+0088 COR LR                GOTO $END
+0089 C           ACTION    COMP 'S'                      90
+0090 C   90                GOTO $DN3
+0091 C           I         ADD  2         J
+0092 C                     MOVE NAME,J    THEM,I
+0093 C           TCOUNT    ADD  VALU,J    TCOUNT
+0094 C           TCOUNT    COMP 21                   80
+0095 C   80                GOTO $WIN
+0096 C           I         ADD  1         I
+0097 C           I         COMP 5                    70
+0098 C   70                GOTO $LOSE
+0099 C                     GOTO $LP3
+0100 C           $DN3      TAG
+0101 C           OCOUNT    COMP 16                   90
+0102 C   90                GOTO $DN4
+0103 C           J         ADD  1         J
+0104 C                     MOVE NAME,J    US,3
+0105 C                     SETON                     30
+0106 C                     EXCPT
+0107 C                     SETOF                     30
+0108 C           OCOUNT    ADD  VALU,J    OCOUNT
+0109 C           OCOUNT    COMP 21                   90
+0110 C   90                GOTO $LOSE
+0111 C           OCOUNT    COMP 16                   90
+0112 C   90                GOTO $DN4
+0113 C           J         ADD  1         J
+0114 C                     MOVE NAME,J    US,4
+0115 C                     SETON                     30
+0116 C                     EXCPT
+0117 C                     SETOF                     30
+0118 C           OCOUNT    ADD  VALU,J    OCOUNT
+0119 C           OCOUNT    COMP 21                   90
+0120 C   90                GOTO $LOSE
+0121 C           OCOUNT    COMP 16                   90
+0122 C   90                GOTO $DN4
+0123 C           J         ADD  1         J
+0124 C                     MOVE NAME,J    US,5
+0125 C                     SETON                     30
+0126 C                     EXCPT
+0127 C                     SETOF                     30
+0128 C           OCOUNT    ADD  VALU,J    OCOUNT
+0129 C           OCOUNT    COMP 21                   90
+0130 C   90                GOTO $LOSE
+0131 C           $DN4      TAG
+0132 C* CHECK FOR ACE = 11
+0133 C                     Z-ADD5         J
+0134 C           TCOUNT    COMP 11                   90
+0135 C   90                GOTO $DN5
+0136 C           $LP5      TAG
+0137 C                     MOVELTHEM,J    TEST    2
+0138 C           TEST      COMP 'A '                     90
+0139 C   90      TCOUNT    ADD  10        TCOUNT
+0140 C   90                GOTO $DN5
+0141 C           J         SUB  1         J          90
+0142 C   90                GOTO $LP5
+0143 C           $DN5      TAG
+0144 C           OCOUNT    COMP TCOUNT               8070
+0145 C   80                GOTO $WIN
+0146 C   70                GOTO $LOSE
+0147 C           $TIE      TAG
+0151 C                     SETOF                     7080
+0148 C                     SETON                     103060
+0149 C                     EXCPT
+0150 C                     SETOF                     103060
+0152 C                     READ WS                       LR
+0153 C                     GOTO $START
+0154 C           $WIN      TAG
+0155 C           LEFT      SUB  BET       LEFT         LRLR
+0156 C                     SETON                     103080
+0157 C                     EXCPT
+0158 C                     SETOF                     103080
+0159 C                     READ WS                       LR
+0160 C   LR                GOTO $END
+0161 C                     GOTO $START
+0162 C           $LOSE     TAG
+0163 C           LEFT      ADD  BET       LEFT
+0164 C                     SETON                     103070
+0165 C                     EXCPT
+0166 C                     SETOF                     103070
+0167 C                     READ WS                       LR
+0168 C                     GOTO $START
+0169 C           $END      TAG
+0170 C                     SETON                     LR
+0171 CSR         $RANDM    BEGSR
+0172 CSR                   TIME           $@TIME  60
+0173 CSR         $@WRK1    ADD  7589641   $@WRK1  60
+0174 CSR         $@WRK1    MULT $@TIME    $@WRK2 120
+0175 CSR                   MOVE $@WRK2    $@WRK3  9
+0176 CSR                   MOVEL$@WRK3    $@WRK1
+0177 CSR         $@WRK1    ADD  1589623   $RANDM  60
+0178 CSR                   ENDSR
+0179 OWS      E        20
+0180 O       OR        30
+0181 O                                   K8 'GAME0201'
+0182 O                         US        15
+0183 O                         THEM      30
+0184 O                       20           3 '???'
+0185 O                    60             54 'ITS A TIE - PRESS ENTER '
+0186 O                    70             54 'YOU WIN. PRESS ENTER.   '
+0187 O                    80             54 'YOU LOSE. PRESS ENTER   '
+0188 O        E        15
+0189 O                                   K8 'GAME0202'
+0190 O                         LEFT  Z    6
+**
+01A S022 S033 S044 S055 S066 S077 S088 S099 S1010S11J S12Q S13K S
+14A H152 H163 H174 H185 H196 H207 H218 H229 H2310H24J H25Q H26K H
+27A D282 D293 D304 D315 D326 D337 D348 D359 D3610D37J D38Q D39K D
+40A C412 C423 C434 C445 C456 C467 C478 C489 C4910C50J C51Q C52K C

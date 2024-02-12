@@ -1,0 +1,201 @@
+0001 H                                                                    MAMI
+0002 FCRT     CP         19            WORKSTN
+0003 F                                              KNUM        5
+0004 F                                              KSAVDS DS
+0005 F                                              KIND       30
+0006 F                                              KSLN   LINE
+0007 F                                              KID    TNAME
+0008 F***************************************************************
+0009 F*
+0010 F*  BEZUGSZAHLEN:  01,02 RECINDICATOREN
+0011 F*                 17    SPIELENDE (RICHTIG ODER 7 VERSUCHE)
+0012 F*                 18    GENERIERTE ZAHL AUF CRT
+0013 F*                N19    1.ZYKLUS (WS)
+0014 F*                 20    WORK
+0015 F*                 22    WORK INNERHALB SR
+0016 F*                 23    STEUERUNG AUSGABE MAMI03 (=ANTWORT INTERPRET.)
+0017 F*                N25    FEHLER IM INPUT
+0018 F*                 26    SOUND ALARM
+0019 F*                 30    ZAHL RICHTIG ERRATEN
+0020 F*                 80    AUSGABE MAMI03 (ANTWORT INTERPRETATION)
+0021 F*                 81    AUSGABE MAMI04 (ANTWORT)
+0022 F*                N99    1.ZYKLUS (JOB)
+0023 F*
+0024 F*                 KA    NEUES SPIEL
+0025 F*                 KG    ENDE
+0026 F*
+0027 F*                 U1    GENERIERTE ZAHL AUF CRT
+0028 F*                 U2    SCREEN DEUTSCH
+0029 F*                 U3    SCREEN ENGLISCH
+0030 F*
+0031 F***************************************************************
+0032 E                    ZE          4  1               EINGABE ZAHL
+0033 E                    ZO          4  1               GENERIERTE ZAHL
+0034 E                    ERG         4  1               ERGEBNIS
+0035 ICRT     CP  01   1 C1
+0036 I                                        2   5 ZE
+0037 I                                        2   20ZE1
+0038 I                                        3   30ZE2
+0039 I                                        4   40ZE3
+0040 I                                        5   50ZE4
+0041 I                                        2   50ZINPUT
+0042 I        CP  02
+0043 IDS          DS
+0044 I                                        1  10 DOUT
+0045 I                                        1   10ZE1
+0046 I                                        4   40ZE2
+0047 I                                        7   70ZE3
+0048 I                                       10  100ZE4
+0049 I                                       11  14 ZO
+0050 I                                       15  150Z
+0051 I                                       16  170LINE
+0052 C   KG                SETOF                     U2U3
+0053 C   KG                GOTO END
+0054 C                     SETOF                     3026
+0055 C                     SETON                     25
+0056 C  N19
+0057 COR 17
+0058 COR KA                EXSR $FIRST
+0059 C                     EXIT SUBR20
+0060 C                     RLABL          OP      1
+0061 C                     RLABL          TNAME   2
+0062 C                     RLABL          RCODE   1
+0063 C   KA
+0064 CORN01                GOTO END
+0065 C******************************************
+0066 C*  INPUT-TEST
+0067 C******************************************
+0068 C           ZE,1      COMP '0'                    2020
+0069 C  N20      ZE,2      COMP '0'                    20
+0070 C  N20      ZE,3      COMP '0'                    20
+0071 C  N20      ZE,4      COMP '0'                    20
+0072 C  N20      ZE,1      COMP ZE,2                     20
+0073 C  N20      ZE,1      COMP ZE,3                     20
+0074 C  N20      ZE,1      COMP ZE,4                     20
+0075 C  N20      ZE,2      COMP ZE,3                     20
+0076 C  N20      ZE,2      COMP ZE,4                     20
+0077 C  N20      ZE,3      COMP ZE,4                     20
+0078 C   20                SETOF                     25
+0079 C   20                SETON                     26
+0080 C   20                GOTO END
+0081 C***************************************************************
+0082 C*  VERARBEITUNG INPUT
+0083 C***************************************************************
+0084 C           Z         COMP 1                        20
+0085 C   20                EXSR $GEN
+0086 C                     MOVE DOUT      V      10
+0087 C*
+0088 C* SUCHEN STELLE + ZAHL RICHTIG
+0089 C*
+0090 C                     Z-ADD0         Z2      10
+0091 C                     Z-ADD1         Z3      10
+0092 C                     MOVE ' '       ERG
+0093 C           W1        TAG
+0094 C           ZE,Z3     COMP ZO,Z3                    20
+0095 C   20      Z2        ADD  1         Z2
+0096 C   20                MOVE 'X'       ERG,Z2
+0097 C           Z3        ADD  1         Z3
+0098 C           Z3        COMP 5                        20
+0099 C  N20                GOTO W1
+0100 C           Z2        COMP 4                        30
+0101 C  N30                GOTO SUCH2
+0102 C                     MOVEAERG       E       4
+0103 C                     SETON                     1781
+0104 C   23                SETON                     80
+0105 C                     EXCPT
+0106 C                     SETOF                     808123
+0107 C                     GOTO END
+0108 C*
+0109 C*  SUCHEN ZAHL RICHTIG + STELLE FALSCH
+0110 C*
+0111 C           SUCH2     TAG
+0112 C                     Z-ADD1         W2      10
+0113 C           W2        TAG
+0114 C                     Z-ADD1         Z3
+0115 C           ZE,W2     LOKUPZO,Z3                    20
+0116 C   20      W2        COMP Z3                   2020
+0117 C   20      Z2        ADD  1         Z2
+0118 C   20                MOVE 'O'       ERG,Z2
+0119 C           W2        ADD  1         W2
+0120 C           W2        COMP 5                        20
+0121 C  N20                GOTO W2
+0122 C                     MOVEAERG       E
+0123 C           Z         COMP 7                        17
+0124 C   23                SETON                     80
+0125 C                     SETON                     81
+0126 C                     EXCPT
+0127 C                     SETOF                     808123
+0128 C           LINE      ADD  2         LINE
+0129 C           Z         ADD  1         Z
+0130 C           END       TAG
+0131 C***************************************************************
+0132 C*  $FIRST   INIT   PROGRAMM
+0133 C******************************************
+0134 CSR         $FIRST    BEGSR
+0135 CSR                   SETOF                     17
+0136 CSR                   SETON                     19
+0137 CSR U1                SETON                     18
+0138 CSR                   Z-ADD1         Z       10
+0139 CSR                   Z-ADD10        LINE
+0140 CSR                   MOVE 'I'       OP
+0141 CSR                   ENDSR
+0142 C******************************************
+0143 C*  $GEN   GENERATION  ZUFALLSZAHL
+0144 C******************************************
+0145 CSR         $GEN      BEGSR
+0146 CSR                   MOVE ' '       ZO
+0147 CSRN99                Z-ADDZINPUT    ZINP
+0148 CSR                   SETON                     222399
+0149 CSR                   Z-ADD1         Z2
+0150 CSR         GEN       TAG
+0151 CSR         ZINP      MULT 3.141587  WK116  116
+0152 CSR                   Z-ADDWK116     WK116A 116
+0153 CSR         WK116     MULT WK116     WK116
+0154 CSR         WK116     MULT WK116     WK116
+0155 CSR         WK116     MULT WK116A    WK116
+0156 CSR                   MOVE WK116     ZINP    40
+0157 CSR                   MOVE WK116     WK050   50
+0158 CSR                   MOVELWK050     ZAHL    1
+0159 CSR 22      ZAHL      COMP '0'                      20
+0160 CSR 22 20             GOTO GEN
+0161 CSR                   SETOF                     22
+0162 CSR         ZAHL      LOKUPZO                       20
+0163 CSR 20                GOTO GEN
+0164 CSR                   MOVE ZAHL      ZO,Z2
+0165 CSR         Z2        ADD  1         Z2
+0166 CSR         Z2        COMP 5                        20
+0167 CSRN20                GOTO GEN
+0168 CSR                   ENDSR
+0169 OCRT     DR       01 KG
+0170 O        D        02 U2
+0171 O       OR        KA U2
+0172 O                                   K6 'MAMI01'
+0173 O        D        01 U2
+0174 O       OR        02 U2
+0175 O                                   K6 'MAMI02'
+0176 O                         Z          1
+0177 O                         ZO         5
+0178 O        E        80 U2
+0179 O                                   K6 'MAMI03'
+0180 O        E        81 U2
+0181 O                                   K6 'MAMI04'
+0182 O                         Z          1
+0183 O                         V         11
+0184 O                         E         15
+0185 O                         ZO        19
+0186 O        D        02 U3
+0187 O       OR        KA U3
+0188 O                                   K6 'MAMI05'
+0189 O        D        01 U3
+0190 O       OR        02 U3
+0191 O                                   K6 'MAMI06'
+0192 O                         Z          1
+0193 O                         ZO         5
+0194 O        E        80 U3
+0195 O                                   K6 'MAMI07'
+0196 O        E        81 U3
+0197 O                                   K6 'MAMI08'
+0198 O                         Z          1
+0199 O                         V         11
+0200 O                         E         15
+0201 O                         ZO        19

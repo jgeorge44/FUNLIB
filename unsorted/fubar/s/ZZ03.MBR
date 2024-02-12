@@ -1,0 +1,285 @@
+0001 H     014                                     01                     ZZ03
+0002 F*                S Y S T E M / 3 4   C A L C U L A T O R            ZZ03
+0003 F*                                                                   ZZ03
+0004 F*   ORIGINAL BY G. LORENZ  06/07/78                                 ZZ03
+0005 F*                                                                   ZZ03
+0006 FWK      CP  F     100            WORKSTN                            ZZ03
+0007 E                    FCT1       15  1                                ZZ03
+0008 E                    FCT2        8  1                                ZZ03
+0009 IWK      XX  02   6 C                                                ZZ03
+0010 I       OR   01   6 C1                                               ZZ03
+0011 I                                        8  22 FCT1                  ZZ03
+0012 I                                       22  22 M1                    ZZ03
+0013 I                                       22  22 BLANK           04    ZZ03
+0014 I                                       23  23 ACTION                ZZ03
+0015 I                                       24  31 FCT2                  ZZ03
+0016 I                                       31  31 M2                    ZZ03
+0017 I                                       31  31 BLANK           05    ZZ03
+0018 C                     SETOF                     606162               ZZ03
+0019 C                     SETOF                     631011               ZZ03
+0020 C                     SETOF                     318990               ZZ03
+0021 C                     SETOF                     323591               ZZ03
+0022 C*                                                                   ZZ03
+0023 C   KG                SETON                     LR                   ZZ03
+0024 C   KG                                                               ZZ03
+0025 COR 02                GOTO END                                       ZZ03
+0026 C*                                                                   ZZ03
+0027 C           ACTION    COMP '+'                      06               ZZ03
+0028 C           ACTION    COMP '-'                      07               ZZ03
+0029 C           ACTION    COMP '*'                      08               ZZ03
+0030 C           ACTION    COMP '/'                      09               ZZ03
+0031 C           ACTION    COMP 'R'                      03               ZZ03
+0032 C           ACTION    COMP 'P'                      15               ZZ03
+0033 C  N06N07N08                                                         ZZ03
+0034 CANN09N03N15          SETON                     6061                 ZZ03
+0035 C   04                                                               ZZ03
+0036 COR 05N03             SETON                     6062                 ZZ03
+0037 C   60                GOTO END                                       ZZ03
+0038 C*                                                                   ZZ03
+0039 C                     Z-ADD15.       B       20                      ZZ03
+0040 C                     Z-ADD15.       Z       20                      ZZ03
+0041 C                     Z-ADD0.        P1                              ZZ03
+0042 C                     Z-ADD0.        P2                              ZZ03
+0043 C           M1        COMP '-'                      10               ZZ03
+0044 C           M2        COMP '-'                      11               ZZ03
+0045 C                     Z-ADD15.       A       20                      ZZ03
+0046 C           LOOP1     TAG                                            ZZ03
+0047 C           FCT1,A    COMP '.'                      12               ZZ03
+0048 C  N12      FCT1,A    COMP '-'                      12               ZZ03
+0049 C  N12                MOVE FCT1,A    FCT1,B                          ZZ03
+0050 C  N12      B         SUB  1.        B                               ZZ03
+0051 C   12      15.       SUB  A         P1      20                      ZZ03
+0052 C           A         SUB  1.        A          13                   ZZ03
+0053 C   13                GOTO LOOP1                                     ZZ03
+0054 C                     Z-ADD8.        B                               ZZ03
+0055 C                     Z-ADD8.        A                               ZZ03
+0056 C           LOOP2     TAG                                            ZZ03
+0057 C           FCT2,A    COMP '.'                      12               ZZ03
+0058 C  N12      FCT2,A    COMP '-'                      12               ZZ03
+0059 C  N12                MOVE FCT2,A    FCT2,B                          ZZ03
+0060 C  N12      B         SUB  1.        B                               ZZ03
+0061 C   12      8.        SUB  A         P2      20                      ZZ03
+0062 C           A         SUB  1.        A          13                   ZZ03
+0063 C   13                GOTO LOOP2                                     ZZ03
+0064 C   10      P1        SUB  1.        P1           14                 ZZ03
+0065 C   10 14             Z-ADD0.        P1                              ZZ03
+0066 C   11      P2        SUB  1.        P2           14                 ZZ03
+0067 C   11 14             Z-ADD0.        P2                              ZZ03
+0068 C           P1        COMP 4.                   63                   ZZ03
+0069 C  N63      P2        COMP 4.                   63                   ZZ03
+0070 C   63                SETON                     60                   ZZ03
+0071 C   63                GOTO END                                       ZZ03
+0072 C           P1        COMP 0.                       40               ZZ03
+0073 C           P1        COMP 1.                       41               ZZ03
+0074 C           P1        COMP 2.                       42               ZZ03
+0075 C           P1        COMP 3.                       43               ZZ03
+0076 C           P1        COMP 4.                       44               ZZ03
+0077 C           P2        COMP 0.                       50               ZZ03
+0078 C           P2        COMP 1.                       51               ZZ03
+0079 C           P2        COMP 2.                       52               ZZ03
+0080 C           P2        COMP 3.                       53               ZZ03
+0081 C           P2        COMP 4.                       54               ZZ03
+0082 C*                                                                   ZZ03
+0083 C*                                                                   ZZ03
+0084 C*                                                                   ZZ03
+0085 C*                                                                   ZZ03
+0086 C                     MOVEAFCT1      FCT11  15                       ZZ03
+0087 C                     MOVEAFCT2      FCT22   8                       ZZ03
+0088 C   10                MOVE FCT11     NBR14  14                       ZZ03
+0089 C   10                MOVEL'0'       FCT11                           ZZ03
+0090 C   10                MOVE NBR14     FCT11                           ZZ03
+0091 C   11                MOVE FCT22     NBR7    7                       ZZ03
+0092 C   11                MOVEL'0'       FCT22                           ZZ03
+0093 C   11                MOVE NBR7      FCT22                           ZZ03
+0094 C*                                                                   ZZ03
+0095 C   40                MOVE FCT11     N10    150                      ZZ03
+0096 C   41                MOVE FCT11     N11    151                      ZZ03
+0097 C   42                MOVE FCT11     N12    152                      ZZ03
+0098 C   43                MOVE FCT11     N13    153                      ZZ03
+0099 C   44                MOVE FCT11     N14    154                      ZZ03
+0100 C   50                MOVE FCT22     N20     80                      ZZ03
+0101 C   51                MOVE FCT22     N21     81                      ZZ03
+0102 C   52                MOVE FCT22     N22     82                      ZZ03
+0103 C   53                MOVE FCT22     N23     83                      ZZ03
+0104 C   54                MOVE FCT22     N24     84                      ZZ03
+0105 C*                                                                   ZZ03
+0106 C   10                EXSR NEG1                                      ZZ03
+0107 C   11                EXSR NEG2                                      ZZ03
+0108 C   03                GOTO SQR                                       ZZ03
+0109 C   07                GOTO SUB                                       ZZ03
+0110 C   08                GOTO MUL                                       ZZ03
+0111 C   09                GOTO DIV                                       ZZ03
+0112 C   15                GOTO PWR                                       ZZ03
+0113 C   40 50   N10       ADD  N20       RESULT 144                      ZZ03
+0114 C   40 51   N10       ADD  N21       RESULT                          ZZ03
+0115 C   40 52   N10       ADD  N22       RESULT                          ZZ03
+0116 C   40 53   N10       ADD  N23       RESULT                          ZZ03
+0117 C   40 54   N10       ADD  N24       RESULT                          ZZ03
+0118 C   41 50   N11       ADD  N20       RESULT                          ZZ03
+0119 C   41 51   N11       ADD  N21       RESULT                          ZZ03
+0120 C   41 52   N11       ADD  N22       RESULT                          ZZ03
+0121 C   41 53   N11       ADD  N23       RESULT                          ZZ03
+0122 C   41 54   N11       ADD  N24       RESULT                          ZZ03
+0123 C   42 50   N12       ADD  N20       RESULT                          ZZ03
+0124 C   42 51   N12       ADD  N21       RESULT                          ZZ03
+0125 C   42 52   N12       ADD  N22       RESULT                          ZZ03
+0126 C   42 53   N12       ADD  N23       RESULT                          ZZ03
+0127 C   42 54   N12       ADD  N24       RESULT                          ZZ03
+0128 C   43 50   N13       ADD  N20       RESULT                          ZZ03
+0129 C   43 51   N13       ADD  N21       RESULT                          ZZ03
+0130 C   43 52   N13       ADD  N22       RESULT                          ZZ03
+0131 C   43 53   N13       ADD  N23       RESULT                          ZZ03
+0132 C   43 54   N13       ADD  N24       RESULT                          ZZ03
+0133 C   44 50   N14       ADD  N20       RESULT                          ZZ03
+0134 C   44 51   N14       ADD  N21       RESULT                          ZZ03
+0135 C   44 52   N14       ADD  N22       RESULT                          ZZ03
+0136 C   44 53   N14       ADD  N23       RESULT                          ZZ03
+0137 C   44 54   N14       ADD  N24       RESULT                          ZZ03
+0138 C                     GOTO END                                       ZZ03
+0139 C*-------------------------------------------------------------------ZZ03
+0140 C           SUB       TAG                             **** SUB ****  ZZ03
+0141 C*-------------------------------------------------------------------ZZ03
+0142 C   40 50   N10       SUB  N20       RESULT                          ZZ03
+0143 C   40 51   N10       SUB  N21       RESULT                          ZZ03
+0144 C   40 52   N10       SUB  N22       RESULT                          ZZ03
+0145 C   40 53   N10       SUB  N23       RESULT                          ZZ03
+0146 C   40 54   N10       SUB  N24       RESULT                          ZZ03
+0147 C   41 50   N11       SUB  N20       RESULT                          ZZ03
+0148 C   41 51   N11       SUB  N21       RESULT                          ZZ03
+0149 C   41 52   N11       SUB  N22       RESULT                          ZZ03
+0150 C   41 53   N11       SUB  N23       RESULT                          ZZ03
+0151 C   41 54   N11       SUB  N24       RESULT                          ZZ03
+0152 C   42 50   N12       SUB  N20       RESULT                          ZZ03
+0153 C   42 51   N12       SUB  N21       RESULT                          ZZ03
+0154 C   42 52   N12       SUB  N22       RESULT                          ZZ03
+0155 C   42 53   N12       SUB  N23       RESULT                          ZZ03
+0156 C   42 54   N12       SUB  N24       RESULT                          ZZ03
+0157 C   43 50   N13       SUB  N20       RESULT                          ZZ03
+0158 C   43 51   N13       SUB  N21       RESULT                          ZZ03
+0159 C   43 52   N13       SUB  N22       RESULT                          ZZ03
+0160 C   43 53   N13       SUB  N23       RESULT                          ZZ03
+0161 C   43 54   N13       SUB  N24       RESULT                          ZZ03
+0162 C   44 50   N14       SUB  N20       RESULT                          ZZ03
+0163 C   44 51   N14       SUB  N21       RESULT                          ZZ03
+0164 C   44 52   N14       SUB  N22       RESULT                          ZZ03
+0165 C   44 53   N14       SUB  N23       RESULT                          ZZ03
+0166 C   44 54   N14       SUB  N24       RESULT                          ZZ03
+0167 C                     GOTO END                                       ZZ03
+0168 C*-------------------------------------------------------------------ZZ03
+0169 C           MUL       TAG                             **** MUL ****  ZZ03
+0170 C*-------------------------------------------------------------------ZZ03
+0171 C   40 50   N10       MULT N20       RESULT                          ZZ03
+0172 C   40 51   N10       MULT N21       RESULT                          ZZ03
+0173 C   40 52   N10       MULT N22       RESULT                          ZZ03
+0174 C   40 53   N10       MULT N23       RESULT                          ZZ03
+0175 C   40 54   N10       MULT N24       RESULT                          ZZ03
+0176 C   41 50   N11       MULT N20       RESULT                          ZZ03
+0177 C   41 51   N11       MULT N21       RESULT                          ZZ03
+0178 C   41 52   N11       MULT N22       RESULT                          ZZ03
+0179 C   41 53   N11       MULT N23       RESULT                          ZZ03
+0180 C   41 54   N11       MULT N24       RESULT                          ZZ03
+0181 C   42 50   N12       MULT N20       RESULT                          ZZ03
+0182 C   42 51   N12       MULT N21       RESULT                          ZZ03
+0183 C   42 52   N12       MULT N22       RESULT                          ZZ03
+0184 C   42 53   N12       MULT N23       RESULT                          ZZ03
+0185 C   42 54   N12       MULT N24       RESULT                          ZZ03
+0186 C   43 50   N13       MULT N20       RESULT                          ZZ03
+0187 C   43 51   N13       MULT N21       RESULT                          ZZ03
+0188 C   43 52   N13       MULT N22       RESULT                          ZZ03
+0189 C   43 53   N13       MULT N23       RESULT                          ZZ03
+0190 C   43 54   N13       MULT N24       RESULT                          ZZ03
+0191 C   44 50   N14       MULT N20       RESULT                          ZZ03
+0192 C   44 51   N14       MULT N21       RESULT                          ZZ03
+0193 C   44 52   N14       MULT N22       RESULT                          ZZ03
+0194 C   44 53   N14       MULT N23       RESULT                          ZZ03
+0195 C   44 54   N14       MULT N24       RESULT                          ZZ03
+0196 C                     GOTO END                                       ZZ03
+0197 C*-------------------------------------------------------------------ZZ03
+0198 C           DIV       TAG                             **** DIV ****  ZZ03
+0199 C*-------------------------------------------------------------------ZZ03
+0200 C   40 50   N10       DIV  N20       RESULT                          ZZ03
+0201 C   40 51   N10       DIV  N21       RESULT                          ZZ03
+0202 C   40 52   N10       DIV  N22       RESULT                          ZZ03
+0203 C   40 53   N10       DIV  N23       RESULT                          ZZ03
+0204 C   40 54   N10       DIV  N24       RESULT                          ZZ03
+0205 C   41 50   N11       DIV  N20       RESULT                          ZZ03
+0206 C   41 51   N11       DIV  N21       RESULT                          ZZ03
+0207 C   41 52   N11       DIV  N22       RESULT                          ZZ03
+0208 C   41 53   N11       DIV  N23       RESULT                          ZZ03
+0209 C   41 54   N11       DIV  N24       RESULT                          ZZ03
+0210 C   42 50   N12       DIV  N20       RESULT                          ZZ03
+0211 C   42 51   N12       DIV  N21       RESULT                          ZZ03
+0212 C   42 52   N12       DIV  N22       RESULT                          ZZ03
+0213 C   42 53   N12       DIV  N23       RESULT                          ZZ03
+0214 C   42 54   N12       DIV  N24       RESULT                          ZZ03
+0215 C   43 50   N13       DIV  N20       RESULT                          ZZ03
+0216 C   43 51   N13       DIV  N21       RESULT                          ZZ03
+0217 C   43 52   N13       DIV  N22       RESULT                          ZZ03
+0218 C   43 53   N13       DIV  N23       RESULT                          ZZ03
+0219 C   43 54   N13       DIV  N24       RESULT                          ZZ03
+0220 C   44 50   N14       DIV  N20       RESULT                          ZZ03
+0221 C   44 51   N14       DIV  N21       RESULT                          ZZ03
+0222 C   44 52   N14       DIV  N22       RESULT                          ZZ03
+0223 C   44 53   N14       DIV  N23       RESULT                          ZZ03
+0224 C   44 54   N14       DIV  N24       RESULT                          ZZ03
+0225 C                     GOTO END                                       ZZ03
+0226 C*-------------------------------------------------------------------ZZ03
+0227 C           SQR       TAG                             **** SQR ****  ZZ03
+0228 C*-------------------------------------------------------------------ZZ03
+0229 C   40                SQRT N10       RESULT                          ZZ03
+0230 C   41                SQRT N11       RESULT                          ZZ03
+0231 C   42                SQRT N12       RESULT                          ZZ03
+0232 C   43                SQRT N13       RESULT                          ZZ03
+0233 C   44                SQRT N14       RESULT                          ZZ03
+0234 C                     GOTO END                                       ZZ03
+0235 C*-------------------------------------------------------------------ZZ03
+0236 C           PWR       TAG                             **** PWR ****  ZZ03
+0237 C*-------------------------------------------------------------------ZZ03
+0238 C   40                Z-ADDN10       RESULT                          ZZ03
+0239 C   41                Z-ADDN11       RESULT                          ZZ03
+0240 C   42                Z-ADDN12       RESULT                          ZZ03
+0241 C   43                Z-ADDN13       RESULT                          ZZ03
+0242 C   44                Z-ADDN14       RESULT                          ZZ03
+0243 C           N20       SUB  1.        N20        33                   ZZ03
+0244 C  N33                GOTO END                                       ZZ03
+0245 C*-------------------------------------------------------------------ZZ03
+0246 C           PWR1      TAG                             **** PWR1 **** ZZ03
+0247 C*-------------------------------------------------------------------ZZ03
+0248 C   40      RESULT    MULT N10       RESULT                          ZZ03
+0249 C   41      RESULT    MULT N11       RESULT                          ZZ03
+0250 C   42      RESULT    MULT N12       RESULT                          ZZ03
+0251 C   43      RESULT    MULT N13       RESULT                          ZZ03
+0252 C   44      RESULT    MULT N14       RESULT                          ZZ03
+0253 C           N20       SUB  1.        N20        33                   ZZ03
+0254 C   33                GOTO PWR1                                      ZZ03
+0255 C                     GOTO END                                       ZZ03
+0256 C*-------------------------------------------------------------------ZZ03
+0257 C           END       TAG                             **** END ****  ZZ03
+0258 C*-------------------------------------------------------------------ZZ03
+0259 C           RESULT    COMP 0.                   99  99               ZZ03
+0260 C*                                                                   ZZ03
+0261 C********************************************************************ZZ03
+0262 CSR         NEG1      BEGSR                           **** NEG1 **** ZZ03
+0263 C********************************************************************ZZ03
+0264 CSR         N10       MULT -1.       N10                             ZZ03
+0265 CSR         N11       MULT -1.       N11                             ZZ03
+0266 CSR         N12       MULT -1.       N12                             ZZ03
+0267 CSR         N13       MULT -1.       N13                             ZZ03
+0268 CSR         N14       MULT -1        N14                             ZZ03
+0269 C                     ENDSR                                          ZZ03
+0270 C*                                                                   ZZ03
+0271 CSR         NEG2      BEGSR                                          ZZ03
+0272 CSR         N20       MULT -1.       N20                             ZZ03
+0273 CSR         N21       MULT -1.       N21                             ZZ03
+0274 CSR         N22       MULT -1.       N22                             ZZ03
+0275 CSR         N23       MULT -1.       N23                             ZZ03
+0276 CSR         N24       MULT -1.       N24                             ZZ03
+0277 C                     ENDSR                                          ZZ03
+0278 OWK      D        01NLR                                              ZZ03
+0279 O       OR        02NLR                                              ZZ03
+0280 O                                   K6 'ZZ0301'                      ZZ03
+0281 O                    99N02RESULTL   17                               ZZ03
+0282 O                   N99N02RESULTL   16                               ZZ03
+0283 O                    60 61          40 'INVALID ACTION'              ZZ03
+0284 O                    60 62          49 'FACT 1 OR FACT 2 - BLANK'    ZZ03
+0285 O                    60 63          37 'DECIMAL > 4'                 ZZ03

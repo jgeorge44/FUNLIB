@@ -1,0 +1,22 @@
+     SXAND01    0124 YY
+     D           10180Y  Y          Y     Y             1
+     D          120221Y                                 YOU USE 'X'.
+     D          210421Y                                 DO YOU WISH TO BEGIN?
+     D          200621Y                                 ENTER 'YES' OR 'NO'.
+     DYESNO      30821   Y     Y
+     SXAND02    0124 YY
+     D           10180Y  Y          Y     Y             2
+     D           60220Y  Y     Y
+     D           60420Y  Y
+     D           60620Y  Y
+     D           60230Y  Y
+     D           60430Y  Y
+     D           60630Y  Y
+     D           60240Y  Y
+     D           60440Y  Y
+     D           60640Y  Y
+     D          250320Y                                 ~~~~~     ~~~~~     ~~~X
+     D~~
+     D          250520Y                                 ~~~~~     ~~~~~     ~~~X
+     D~~
+     DMESAGE    400815Y                     Y

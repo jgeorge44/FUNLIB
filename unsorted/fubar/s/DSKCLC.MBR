@@ -1,0 +1,335 @@
+     H                                             01                     DSKCLC            0001
+     FWORKSTN CP  F     500            WORKSTN                                              0002
+     F                                              KID    TNO                              0003
+     FDESKCALCUC  F 512 512R           DISK                                                 0004
+     FPRINTER O   F 132 132            PRINTER                                              0005
+     E                    A          26 15 6                                                0006
+     E                    B          26 15 6                                                0007
+     E                    F          16  1                                                  0008
+     E                    ALPH   26  26  1                                                  0009
+     E                    TABM    8   8  2   TABN    2 0                                    0010
+     IWORKSTN NS                                                                            0011
+     I                                        1   2 OP                                      0012
+     I                                        3  18 F                                       0013
+     IDESKCALCNS                                                                            0014
+     I                                        1 390 B                                       0015
+     I           UDS                                                                        0016
+     I                                      225 226 $OP                                     0017
+     I                                      227 2416$ACCUM                                  0018
+     I                                      242 2566$NUMBR                                  0019
+     C   U1                Z-ADD$ACCUM    ACCUM                                             0020
+     C   U1      TNO       LOKUPTABM      TABN           98                                 0021
+     C   U1      TABN      ADD  50        TABN                                              0022
+     C   U1      TABN      CHAINDESKCALC                                                    0023
+     C   U1                MOVE B         A                                                 0024
+     C   U1                SETON                     9981                                   0025
+     C   U1                GOTO OUT                                                         0026
+     C  N90                MOVE ' '       BLANKS016                                         0027
+     C  N90                MOVEL'00000000'A                                                 0028
+     C  N90                MOVE '00000000'A                                                 0029
+     C  N90                GOTO END                                                         0030
+     C*                                                                                     0031
+     C                     SETOF                     83                                     0032
+     C           OP        COMP 'CN'                     85                                 0033
+     C   85                GOTO CANCEL                                                      0034
+     C                     Z-ADD1         $X      20                                        0035
+     C           RUBISH    TAG                                                              0036
+     C                     Z-ADDA,$X      WORK   156                                        0037
+     C                     Z-ADDWORK      B,$X                                              0038
+     C           1         ADD  $X        $X                                                0039
+     C           $X        COMP 26                   98                                     0040
+     C  N98                GOTO RUBISH                                                      0041
+     C                     Z-ADDACCUM     ACCUMX 156                                        0042
+     C*                                                                                     0043
+     C                     SETON                     99                                     0044
+     C                     MOVEAF         FIELD  15                                         0045
+     C           FIELD     COMP BLANKS                   84                                 0046
+     C                     Z-ADD1         Z     0020                                        0047
+     C           F,1       LOKUPALPH,Z                   89                                 0048
+     C   89                Z-ADDA,Z       NUMBER                                            0049
+     C   89                GOTO OP                                                          0050
+     C*                                                                                     0051
+     C                     Z-ADD1         X     0020                                        0052
+     C           ' '       LOKUPF,X                      88                                 0053
+     C                     Z-ADD1         Y     0020                                        0054
+     C           '.'       LOKUPF,Y                      87                                 0055
+     C  N87                Z-ADDX         Y                                                 0056
+     C                     MOVE BLANKS    DECA  007                                         0057
+     C                     MOVE BLANKS    INTA  009                                         0058
+     C   88                MOVEAF,Y       DECA                                              0059
+     C                     MOVE DECA      DEC   0066                                        0060
+     C*                                                                                     0061
+     C  N88                GOTO NUMBLD                                                      0062
+     C                     Z-ADD17        X                                                 0063
+     C           LOOP1     TAG                                                              0064
+     C           X         SUB  1         X              88                                 0065
+     C           Y         SUB  1         Y            8787                                 0066
+     C   87N88             MOVE '0'       F,X                                               0067
+     C  N87N88             MOVE F,Y       F,X                                               0068
+     C  N88                GOTO LOOP1                                                       0069
+     C*                                                                                     0070
+     C           NUMBLD    TAG                                                              0071
+     C                     MOVEAF,8       INTA                                              0072
+     C                     MOVE INTA      INT   0090                                        0073
+     C           INT       ADD  DEC       NUMBER0156                                        0074
+     C   84                Z-ADDACCUM     NUMBER                                            0075
+     C*                                                                                     0076
+     C           OP        TAG                                                              0077
+     C           OP        COMP 'F '                 85  85                                 0078
+     C   85      OP        COMP 'F9'                   8585                                 0079
+     C   85                SETON                     LRU1                                   0080
+     C   85                MOVE OP        $OP                                               0081
+     C   85                Z-ADDACCUM     $ACCUM                                            0082
+     C   85                Z-ADDNUMBER    $NUMBR                                            0083
+     C   85      TNO       LOKUPTABM      TABN           98                                 0084
+     C   85      TABN      ADD  50        TABN                                              0085
+     C   85      TABN      CHAINDESKCALC                                                    0086
+     C   85                SETON                     70                                     0087
+     C   85                EXCPT                                                            0088
+     C   85                SETOF                     70                                     0089
+     C   85                GOTO END1                                                        0090
+     C           OP        COMP 'AD'                     85                                 0091
+     C  N85      OP        COMP '+ '                     85                                 0092
+     C   85      ACCUM     ADD  NUMBER    ACCUM                                             0093
+     C   85                GOTO OUT                                                         0094
+     C*                                                                                     0095
+     C           OP        COMP 'SB'                     85                                 0096
+     C  N85      OP        COMP '- '                     85                                 0097
+     C   85      ACCUM     SUB  NUMBER    ACCUM                                             0098
+     C   85                GOTO END                                                         0099
+     C*                                                                                     0100
+     C           OP        COMP 'ML'                     85                                 0101
+     C  N85      OP        COMP '* '                     85                                 0102
+     C   85      ACCUM     MULT NUMBER    ACCUM 0156                                        0103
+     C   85                GOTO OUT                                                         0104
+     C*                                                                                     0105
+     C           OP        COMP 'DV'                     85                                 0106
+     C  N85      OP        COMP '/ '                     85                                 0107
+     C   85      NUMBER    COMP 0                        83                                 0108
+     C   85N83   ACCUM     DIV  NUMBER    ACCUM                                             0109
+     C   85N83   ACCUM     DIV  NUMBER    DIVNUM0150                                        0110
+     C   85N83             MVR            REMAIN0090                                        0111
+     C   85                GOTO OUT                                                         0112
+     C*                                                                                     0113
+     C           OP        COMP 'XF'                     85                                 0114
+     C   85                XFOOTA         ACCUM                                             0115
+     C   85                GOTO OUT                                                         0116
+     C*                                                                                     0117
+     C           OP        COMP 'AV'                     85                                 0118
+     C   85N84   NUMBER    COMP 0                        83                                 0119
+     C   85N83             XFOOTA         ACCUM                                             0120
+     C   85N84N83ACCUM     DIV  NUMBER    ACCUM                                             0121
+     C   85 84   ACCUM     DIV  26        ACCUM                                             0122
+     C   85                GOTO OUT                                                         0123
+     C*                                                                                     0124
+     C           OP        COMP 'SQ'                     85                                 0125
+     C   85      ACCUM     COMP 0                      8383                                 0126
+     C   85N83             SQRT ACCUM     ACCUM                                             0127
+     C   85                GOTO OUT                                                         0128
+     C*                                                                                     0129
+     C           OP        COMP 'RM'                     85                                 0130
+     C   85                Z-ADDREMAIN    ACCUM                                             0131
+     C   85                GOTO OUT                                                         0132
+     C*                                                                                     0133
+     C           OP        COMP 'PC'                     85                                 0134
+     C  N85      OP        COMP '%'                      85                                 0135
+     C   85      NUMBER    DIV  100       PCNT   158H                                       0136
+     C   85      ACCUM     MULT PCNT      ACCUM                                             0137
+     C   85                GOTO OUT                                                         0138
+     C           OP        COMP 'CL'                     85                                 0139
+     C   85                Z-ADD0         A,Z            80                                 0140
+     C   85                GOTO OUT                                                         0141
+     C*                                                                                     0142
+     C           OP        COMP 'RS'                     85                                 0143
+     C   85                Z-ADD0         A                                                 0144
+     C   85                SETON                     81                                     0145
+     C   85                GOTO OUT                                                         0146
+     C*                                                                                     0147
+     C           OP        COMP 'ST'                     85                                 0148
+     C   85                Z-ADDACCUM     A,Z                                               0149
+     C   85                SETON                     80                                     0150
+     C   85                GOTO OUT                                                         0151
+     C*                                                                                     0152
+     C           OP        COMP 'CA'                     85                                 0153
+     C   85                Z-ADD0         ACCUM                                             0154
+     C   85                GOTO OUT                                                         0155
+     C*                                                                                     0156
+     C           OP        COMP 'EN'                     LR                                 0157
+     C   LR                GOTO END                                                         0158
+     C*                                                                                     0159
+     C           OP        COMP 'SV'                     85                                 0160
+     C   85      TNO       LOKUPTABM      TABN           98                                 0161
+     C   85      TABN      CHAINDESKCALC                                                    0162
+     C   85                SETON                     70                                     0163
+     C   85                EXCPT                                                            0164
+     C   85                SETOF                     70                                     0165
+     C   85                GOTO OUT                                                         0166
+     C*                                                                                     0167
+     C           OP        COMP 'RT'                     85                                 0168
+     C   85      TNO       LOKUPTABM      TABN           98                                 0169
+     C   85      TABN      CHAINDESKCALC                                                    0170
+     C   85                MOVE B         A                                                 0171
+     C   85                SETON                     81                                     0172
+     C   85                GOTO OUT                                                         0173
+     C*                                                                                     0174
+     C           OP        COMP 'PT'                     85                                 0175
+     C   85                SETON                     71                                     0176
+     C   85                EXCPT                                                            0177
+     C   85                SETOF                     71                                     0178
+     C   85                GOTO OUT                                                         0179
+     C*                                                                                     0180
+     C           OP        COMP 'GT'                     85                                 0181
+     C   85                Z-ADDA,Z       ACCUM                                             0182
+     C   85                GOTO OUT                                                         0183
+     C*                                                                                     0184
+     C           OP        COMP 'SG'                     85                                 0185
+     C   85                Z-SUBACCUM     ACCUM                                             0186
+     C   85                GOTO OUT                                                         0187
+     C*                                                                                     0188
+     C           OP        COMP 'IN'                     85                                 0189
+     C   85                Z-ADDACCUM     ACCUM9  90                                        0190
+     C   85                Z-ADDACCUM9    ACCUM                                             0191
+     C   85                GOTO OUT                                                         0192
+     C           CANCEL    TAG                                                              0193
+     C                     SETON                     81                                     0194
+     C                     Z-ADDB         A                                                 0195
+     C                     Z-ADDACCUMX    ACCUM                                             0196
+     C                     GOTO OUT                                                         0197
+     C*                                                                                     0198
+     C           OUT       TAG                                                              0199
+     C                     SETOF                     010203                                 0200
+     C                     SETOF                     040506                                 0201
+     C                     SETOF                     070809                                 0202
+     C                     SETOF                     101112                                 0203
+     C                     SETOF                     131415                                 0204
+     C                     SETOF                     161718                                 0205
+     C                     SETOF                     192021                                 0206
+     C                     SETOF                     222324                                 0207
+     C                     SETOF                     2526                                   0208
+     C   81                SETON                     010203                                 0209
+     C   81                SETON                     040506                                 0210
+     C   81                SETON                     070809                                 0211
+     C   81                SETON                     101112                                 0212
+     C   81                SETON                     131415                                 0213
+     C   81                SETON                     161718                                 0214
+     C   81                SETON                     192021                                 0215
+     C   81                SETON                     222324                                 0216
+     C   81                SETON                     2526                                   0217
+     C  N80                GOTO END                                                         0218
+     C           Z         COMP 2                    030102                                 0219
+     C   03      Z         COMP 4                    050304                                 0220
+     C   05      Z         COMP 6                    070506                                 0221
+     C   07      Z         COMP 8                    090708                                 0222
+     C   09      Z         COMP 10                   110910                                 0223
+     C   11      Z         COMP 12                   131112                                 0224
+     C   13      Z         COMP 14                   151314                                 0225
+     C   15      Z         COMP 16                   171516                                 0226
+     C   17      Z         COMP 18                   191718                                 0227
+     C   19      Z         COMP 20                   211920                                 0228
+     C   21      Z         COMP 22                   232122                                 0229
+     C   23      Z         COMP 24                   252324                                 0230
+     C   25      Z         COMP 26                     2526                                 0231
+     C*                                                                                     0232
+     C           END       TAG                                                              0233
+     C                     SETOF                     8081U1                                 0234
+     C                     SETON                     90                                     0235
+     C                     MOVE ACCUM     ACCUMA 15                                         0236
+     C                     MOVEAACCUMA    F,2                                               0237
+     C                     SETOF                     414243                                 0238
+     C                     SETOF                     434445                                 0239
+     C                     SETOF                     4647                                   0240
+     C           F,16      COMP '0'                      46                                 0241
+     C                     BITON'03'      MINZER  1                                         0242
+     C  N46      F,16      COMP MINZER                   46                                 0243
+     C   46      F,15      COMP '0'                      45                                 0244
+     C   45      F,14      COMP '0'                      44                                 0245
+     C   44      F,13      COMP '0'                      43                                 0246
+     C   43      F,12      COMP '0'                      42                                 0247
+     C   42      F,11      COMP '0'                      41                                 0248
+     C           ACCUM     COMP 0                      47                                   0249
+     C           END1      TAG                                                              0250
+     OWORKSTN D       NU1                                                                   0251
+     O                                   K8 'DSKCLC01'                                      0252
+     O                         ACCUM   0016 '       0 .      '                              0253
+     O                 83                16 '****************'                              0254
+     O                                   35 '                '                              0255
+     O                         A        477 '       0 .      -'                             0256
+     O                 41              0011 '  '                                            0257
+     O                 42              0012 ' '                                             0258
+     O                 43              0013 ' '                                             0259
+     O                 44              0014 ' '                                             0260
+     O                 45              0015 ' '                                             0261
+     O                 46              0016 ' '                                             0262
+     O                N46 47             17 '-'                                             0263
+     O                 46 47             16 '-'                                             0264
+     O                 45 47             16 '- '                                            0265
+     O                 44 47             16 '-  '                                           0266
+     O                 43 47             16 '-   '                                          0267
+     O                 42 47             16 '-    '                                         0268
+     O                 41 47             16 '-     '                                        0269
+     ODESKCALCE        70                                                                   0270
+     O                         A        390                                                 0271
+     OPRINTER E  206   71                                                                   0272
+     O                                 0009 'ACCUM. = '                                     0273
+     O                         ACCUM   0026 '       0 .      -'                             0274
+     O        E  1     71                                                                   0275
+     O                                 0001 'A'                                             0276
+     O                                 0021 'F'                                             0277
+     O                                 0041 'K'                                             0278
+     O                                 0061 'P'                                             0279
+     O                                 0081 'U'                                             0280
+     O                                 0101 'Z'                                             0281
+     O                         A,1   L 0019                                                 0282
+     O                         A,6   L 0039                                                 0283
+     O                         A,11  L 0059                                                 0284
+     O                         A,16  L 0079                                                 0285
+     O                         A,21  L 0099                                                 0286
+     O                         A,26  L 0119                                                 0287
+     O        E  1     71                                                                   0288
+     O                                 0001 'B'                                             0289
+     O                                 0021 'G'                                             0290
+     O                                 0041 'L'                                             0291
+     O                                 0061 'Q'                                             0292
+     O                                 0081 'V'                                             0293
+     O                         A,2   L 0019                                                 0294
+     O                         A,7   L 0039                                                 0295
+     O                         A,12  L 0059                                                 0296
+     O                         A,17  L 0079                                                 0297
+     O                         A,22  L 0099                                                 0298
+     O        E  1     71                                                                   0299
+     O                                 0001 'C'                                             0300
+     O                                 0021 'H'                                             0301
+     O                                 0041 'M'                                             0302
+     O                                 0061 'R'                                             0303
+     O                                 0081 'W'                                             0304
+     O                         A,3   L 0019                                                 0305
+     O                         A,8   L 0039                                                 0306
+     O                         A,13  L 0059                                                 0307
+     O                         A,18  L 0079                                                 0308
+     O                         A,23  L 0099                                                 0309
+     O        E  1     71                                                                   0310
+     O                                 0001 'D'                                             0311
+     O                                 0021 'I'                                             0312
+     O                                 0041 'N'                                             0313
+     O                                 0061 'S'                                             0314
+     O                                 0081 'X'                                             0315
+     O                         A,4   L 0019                                                 0316
+     O                         A,9   L 0039                                                 0317
+     O                         A,14  L 0059                                                 0318
+     O                         A,19  L 0079                                                 0319
+     O                         A,24  L 0099                                                 0320
+     O        E  3     71                                                                   0321
+     O                                 0001 'E'                                             0322
+     O                                 0021 'J'                                             0323
+     O                                 0041 'O'                                             0324
+     O                                 0061 'T'                                             0325
+     O                                 0081 'Y'                                             0326
+     O                         A,5   L 0019                                                 0327
+     O                         A,10  L 0039                                                 0328
+     O                         A,15  L 0059                                                 0329
+     O                         A,20  L 0079                                                 0330
+     O                         A,25  L 0099                                                 0331
+**                                                                                          0332
+ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                                  0333
+**                                                                                          0334
+W101W202W303W404W505W606W707W808                                                            0335

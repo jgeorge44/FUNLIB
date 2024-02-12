@@ -1,0 +1,58 @@
+0001 H                                      1                             AMORT2
+0002 FREPORT  O   F 132 132     OF     PRINTER
+0003 E                    $           6  9 2             PRINT $ ARRAY
+0004 ILOCAL      UDS
+0005 I                                        1   64YRINT
+0006 I                                        7  159MOINT
+0007 I                                       16  180#P
+0008 I                                       19  240P$
+0009 I                                       25  322PAYMNT
+0010 C                     SETON                     OF70LRSET INDICATORS
+0011 C           PAYMNT    MULT #P        PAYTOT  92       CALC PAYTOT
+0012 C                     Z-ADDP$        $,3              SET UP $,3
+0013 C           MAIN01    TAG
+0014 C           1         ADD  CNT       CNT     30       ADD 1 TO CNT
+0015 C           CNT       COMP #P                       10THIS LAST TIME
+0016 C           $,3       MULT MOINT     $,2              CALC INT
+0017 C           PAYMNT    SUB  $,2       $,1              CALC PRINC
+0018 C           $,3       SUB  $,1       $,3        1111  CALC PRINC BAL
+0019 C      10 11$,3       ADD  $,1       $,1              ADJUST PRINC/BAL
+0020 C         10          Z-ADD0         $,3              FOR LAST TIME
+0021 C           $,1       ADD  $,4       $,4              ACCUM PRINC
+0022 C           $,2       ADD  $,5       $,5              ACCUM INT
+0023 C           PAYMNT    ADD  $,6       $,6              ACCUM PAYMNT
+0024 C                     SETON                     71    PRINT
+0025 C                     EXCPT                           AMORTIZATION
+0026 C                     SETOF                     7071  SCHEDULE
+0027 C        N10          GOTO MAIN01                     N/DONE-MAIN01
+0028 OREPORT  H  202   OF
+0029 O                                   24 'AMORTIZATION SCHEDULE'
+0030 O                                   40 'AMORT2'
+0031 O                         UDATE Y   56
+0032 O        H  1     OF 70
+0033 O                                   24 'ANNUAL INTEREST RATE'
+0034 O                         YRINT     41 '0 .    &%'
+0035 O        H  1     OF 70
+0036 O                                   20 'NUMBER OF MONTHS'
+0037 O                         #P    Z   39
+0038 O        H  2     OF 70
+0039 O                                   20 'PRINCIPAL AMOUNT'
+0040 O                         P$    1   39
+0041 O        H  1     OF 70
+0042 O                                   19 'MONTHLY PAYMENT'
+0043 O                         PAYMNT1   39
+0044 O        H  2     OF 70
+0045 O                                   21 'TOTAL OF PAYMENTS'
+0046 O                         PAYTOT1   39
+0047 O        H  1     OF
+0048 O                                   65 'PRINCIPAL    CUMULATIVE'
+0049 O                                   93 'CUMULATIVE    CUMULATIVE'
+0050 O        H  2     OF
+0051 O                                   23 'MONTH      PRINCIPAL'
+0052 O                                   37 'INTEREST'
+0053 O                                   65 'BALANCE     PRINCIPAL'
+0054 O                                   93 'INTEREST       PAYMENT'
+0055 O        EF 1     71
+0056 O                         CNT   Z    7
+0057 O                         $     1   93
+0058 O        T     01 LR

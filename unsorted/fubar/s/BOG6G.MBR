@@ -1,0 +1,85 @@
+0001 H                                                                    BOG6G
+0002 FSCREEN  CP  F    1920            WORKSTN                            BOG6G
+0003 F                                              KNUM        1         BOG6G
+0004 E                    ARE    49 147  1                                BOG6G
+0005 E                    ARA    49 147  1                                BOG6G
+0006 E                    ARC    49 294  1                                BOG6G
+0007 E                    ARP        64  1                                BOG6G
+0008 E                    ARQ        64  1                                BOG6G
+0009 E                    ARR        64  1                                BOG6G
+0010 ISCREEN  NS  01   1 C                                                BOG6G
+0011 I       OR        1 CX                                               BOG6G
+0012 C                     Z-ADD1         X
+0013 C           START     TAG                                            BOG6G
+0014 C                     Z-ADD1         W       30                      BOG6G
+0015 C   77                Z-ADD1         X       30                      BOG6G
+0016 C           LOOP      TAG                                            BOG6G
+0017 C                     Z-ADD1         R       20                      BOG6G
+0018 C                     Z-ADD2         L       20                      BOG6G
+0019 C           PUTSC     TAG                                            BOG6G
+0020 C                     MOVE ARP,L     ARP,R                           BOG6G
+0021 C                     MOVE ARQ,L     ARQ,R                           BOG6G
+0022 C                     MOVE ARR,L     ARR,R                           BOG6G
+0023 C           R         ADD  1         R                               BOG6G
+0024 C           L         ADD  1         L                               BOG6G
+0025 C           L         COMP 65                       20               BOG6G
+0026 C  N20                GOTO PUTSC                                     BOG6G
+0027 C                     MOVE ARE,W     ARP,R                           BOG6G
+0028 C                     MOVE ARA,W     ARQ,R                           BOG6G
+0029 C                     MOVE ARC,X     ARR,R                           BOG6G
+0030 C                     MOVEAARP       SENAME 64                       BOG6G
+0031 C                     MOVEAARQ       SANAME 64                       BOG6G
+0032 C                     MOVEAARR       CENAME 64                       BOG6G
+0033 C  N10                SETON                     11                   BOG6G
+0034 C   10                SETON                     12                   BOG6G
+0035 C                     EXCPT                                          BOG6G
+0036 C                     SETOF                     1112                 BOG6G
+0037 C                     SETON                     10                   BOG6G
+0038 C           W         ADD  1         W                               BOG6G
+0039 C           X         ADD  1         X                               BOG6G
+0040 C           W         COMP 148                      30               BOG6G
+0041 C           X         COMP 295                      77               BOG6G
+0042 C           SECO      TAG                                            BOG6G
+0043 C   56N57             SETON                     57                   BOG6G
+0044 C   55N56             SETON                     56                   BOG6G
+0045 C   54N55             SETON                     55                   BOG6G
+0046 C   53N54             SETON                     54                   BOG6G
+0047 C   52N53             SETON                     53                   BOG6G
+0048 C   51N52             SETON                     52                   BOG6G
+0049 C   50N51             SETON                     51                   BOG6G
+0050 C  N50                SETON                     50                   BOG6G
+0051 C   57                SETOF                     505152               BOG6G
+0052 C   57                SETOF                     535455               BOG6G
+0053 C   57                SETOF                     5657                 BOG6G
+0054 C                     SETON                     15                   BOG6G
+0055 C                     EXCPT                                          BOG6G
+0056 C                     SETOF                     15                   BOG6G
+0057 C  N30                GOTO LOOP                                      BOG6G
+0058 C                     GOTO START                                     BOG6G
+0059 OSCREEN  E        11 01N15                                           BOG6G
+0060 O                                   K7 'SCREEN1'                     BOG6G
+0061 O                         SENAME    64                               BOG6G
+0062 O                         SANAME   128                               BOG6G
+0063 O                         CENAME   192                               BOG6G
+0064 O        E        12N15                                              BOG6G
+0065 O                                   K7 'SCREEN2'                     BOG6G
+0066 O                         SENAME    64                               BOG6G
+0067 O                         SANAME   128                               BOG6G
+0068 O                         CENAME   192                               BOG6G
+0069 O        E        15                                                 BOG6G
+0070 O                                   K5 'BLINK'                       BOG6G
+**
+ BONNIE MEFFORD * NEIL GIBBS * JOHN SUROWIEC * BO
+B LEVICK * CHARLES SENEGAL * RON WRIGHT * GUY WEB
+BER * JOHN SILGALIS * LEO MAGLISH * ELMER FUDDE *
+**
+ TOM GOVERT * GEORGE FREMER * DON GROBNER * SCOTT
+Y RAY * FRITZ SUROWIEC * DON SWEENEY * GENE TRUMA
+N * BILL WHITE * JACK BOYLAN * WALTER LISS * HI *
+**
+ PATTY BURK * CRYSTAL COOPER * PAT COWEN * BARB C
+ZERWINSKI * BETTY DI GIOVANNI * KAREN DREWNIAK *
+DEBRA ECHTERLING * BARBARA FETTY  * LORNA ANDERSO
+N * MARY GRIFFITH  * SUE HOPSON * SHARON KOREEN *
+ LIZ MISNER * WILMA MONAGHAN * BETTE POWELL * LAU
+RA ULMENSTINE * KAREN SIATTA * CONNIE SIEFERMAN *

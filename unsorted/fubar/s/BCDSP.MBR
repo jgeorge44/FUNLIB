@@ -1,0 +1,515 @@
+0001 H      14                              1      02                     BCDSP 0001
+0002 FSMFLOG  IC  F 256 256R           DISK                                     0002
+0003 FREPORT  CD  F      65            WORKSTN                                  0003
+0004 F                                              KSLN   L
+0005 E                    RTSK        5 48               SYS STATUS/TSK STATUS  0004
+0006 E                    TYP     1  15 14               PROGRAM TYPES          0005
+0007 E*                   TABTP#  1   7  3 0 TABPDC  8   PRIORITY DESC          0006
+0008 E                    PRC         7  8               PROC NAME              0007
+0009 E                    PRG         7  6               PROG NAME              0008
+0010 E                    PSZ        16  2 0             SIZE                   0009
+0011 E*                   PTY         7  7               PROGRAM TYPE           0010
+0012 E                    PWS         7  2               WORK STATION           0011
+0013 E                    PST         7  1               STATUS                 0012
+0014 E                    PPR         7  8               PRIORITY               0013
+0015 E                    DLN         7  8               DISPLAY LINE           0014
+0016 E                    HDR     1  24  9               HEADINGS               0015
+0017 IREPORT  NS
+0018 I                                        1   60HHMMSS
+0019 ISMFLOG  AA  01   1 D1                                                     0016
+0020 I                                        1  16 MAJHDR                      0017
+0021 I                                       17  64 RIPL                        0018
+0022 I        AB  02   1 D2   2 D0                                              0019
+0023 I       OR   03   1 D2                                                     0020
+0024 I                                        1  16 MAJHDR                      0021
+0025 I                                       17 256 RTSK                        0022
+0026 I        AC  98                                                            0023
+0027 I            DS                                                            0024
+0028 I* MAJOR HEADER RECORD                                                     0025
+0029 I                                        1  16 MAJHDR                      0026
+0030 I                                        1   1 MAJID                       0027
+0031 I                                        2   2 MAJBLK                      0028
+0032 I                                        3   5 MAJDAT                      0029
+0033 I                                        6   8 MAJTIM                      0030
+0034 I*                                       9  16 UNUSED                      0031
+0035 I            DS                                                            0032
+0036 I* MINOR HEADER RECORD                                                     0033
+0037 I                                        1   4 MINHDR                      0034
+0038 I                                        1   1 MINID                       0035
+0039 I                                        2   2 MINREC                      0036
+0040 I*                                       3   4 UNUSED                      0037
+0041 I            DS                                                            0038
+0042 I* IPL RECORD                                                              0039
+0043 I                                        1  48 RIPL                        0040
+0044 I                                        5   5 INREL#                      0041
+0045 I                                        6   6 INMOD#                      0042
+0046 I                                        7   7 INMSIZ                      0043
+0047 I                                        8   8 INCSIZ                      0044
+0048 I                                        9   9 INDSIZ                      0045
+0049 I                                       10  10 INFG1                       0046
+0050 I                                       11  11 INFG2                       0047
+0051 I                                       12  12 INUSIZ                      0048
+0052 I                                       13  13 INMAXR                      0049
+0053 I                                       14  14 INSQS                       0050
+0054 I                                       15  15 INWSQS                      0051
+0055 I                                       16  16 INTSIZ                      0052
+0056 I                                       17  17 IN#TUB                      0053
+0057 I                                       18  18 INPTUB                      0054
+0058 I                                       19  19 INWSIZ                      0055
+0059 I                                       20  20 INISIZ                      0056
+0060 I            DS                                                            0057
+0061 I* SYSTEM STATUS RECORD                                                    0058
+0062 I                                        1  48 RSYS                        0059
+0063 I                                        5   5 INUSZ                       0060
+0064 I                                        8   8 INTER#                      0061
+0065 I                                        9   9 INMRT#                      0062
+0066 I                                       10  10 INTSK#                      0063
+0067 I                                       11  12 INASQ                       0064
+0068 I                                       13  14 INAWSQ                      0065
+0069 I                                       15  15 IN#SQS                      0066
+0070 I                                       16  17 INLSQS                      0067
+0071 I            DS                                                            0068
+0072 I* TASK STATUS RECORD                                                      0069
+0073 I                                        1  48 TSKSTT                      0070
+0074 I                                        5   5 INSTAT                      0071
+0075 I                                        6   6 INTMSS                      0072
+0076 I                                        7   7 INTWSC                      0073
+0077 I                                        8   8 INTMRT                      0074
+0078 I                                        9   9 MRTFLG                      0075
+0079 I                                       10  10 NRTFLG                      0076
+0080 I                                       11  18 INTUID                      0077
+0081 I                                       19  26 INTPRC                      0078
+0082 I                                       27  34 INTPGM                      0079
+0083 I                                       35  36 INTJID                      0080
+0084 I                                       37  37 NEPFLG                      0081
+0085 I                                       38  38 INTID#                      0082
+0086 I                                       39  39 INPRI#                      0083
+0087 C* INITILIZATION PROCESSING                                                0084
+0088 C  N99                Z-ADD1         KEY     40                            0085
+0089 C           KEY       CHAINSMFLOG               60                         0086
+0090 C  N99                READ REPORT                   99                     0087
+0091 C   98                GOTO END                                             0088
+0092 C           KEY       ADD  1         KEY                                   0089
+0093 C           MAJTIM    COMP BRKTIM                   55                     0090
+0094 C  N55                EXSR CLEAR                      CLEAR CRT ARRAY      0091
+0095 C  N99                BITOF'01234567'BIT     1                             0092
+0096 C  N99                MOVELBIT       CNVI                                  0093
+0097 C  N99                SETON                         99                     0094
+0098 C********************************************************************      0095
+0099 C*                                                                  *      0096
+0100 C* IPL RECORD PROCESSING                                            *      0097
+0101 C*                                                                  *      0098
+0102 C********************************************************************      0099
+0103 C   03
+0104 COR       02          GOTO SKIP01                                          0100
+0105 C                     GOTO END                                             0183
+0106 C           SKIP01    TAG                                                  0184
+0107 C                     Z-ADD1         CTR1    10                            0185
+0108 C                     TESTB'4567'    MAJBLK     10                         0186
+0109 C        N10          GOTO LOOP01                                          0187
+0110 C                     SETON                     72                         0188
+0111 C                     MOVE RTSK,CTR1 RSYS                                  0189
+0112 C                     MOVELRTSK,CTR1 MINHDR                                0190
+0113 C********************************************************************      0191
+0114 C*                                                                  *      0192
+0115 C* SYSTEM STATUS RECORD PROCESSING                                  *      0193
+0116 C*                                                                  *      0194
+0117 C********************************************************************      0195
+0118 C                     EXSR UNPACK                                          0196
+0119 C                     Z-ADDTOD       STOP    40                            0197
+0120 C* COMPUTE NUMBER OF WORKSTATIONS                                          0199
+0121 C                     MOVE INTER#    CNVI                                  0200
+0122 C                     EXSR CNVDEC                                          0201
+0123 C                     MOVE CNVO      #ATERM  20                            0202
+0124 C* COMPUTE NUMBER OF USER TASKS                                            0203
+0125 C                     MOVE INTSK#    CNVI                                  0204
+0126 C                     EXSR CNVDEC                                          0205
+0127 C                     MOVE CNVO      #UTASK  20                            0206
+0128 C* COMPUTE NUMBER OF MRT TASKS                                             0207
+0129 C                     MOVE INMRT#    CNVI                                  0208
+0130 C                     EXSR CNVDEC                                          0209
+0131 C                     MOVE CNVO      #MRT    20                            0210
+0132 C* COMPUTE AVAILABLE SYSTEM QUEUE SPACE                                    0211
+0133 C                     MOVE BIT       CNVI                                  0212
+0134 C                     MOVELCNVI      B4      4                             0213
+0135 C                     MOVE INASQ     B4                                    0214
+0136 C                     EXIT SUBRBO                                          0215
+0137 C                     RLABL          B4                                    0216
+0138 C                     RLABL          D9      90                            0217
+0139 C                     MOVE D9        AVSQS   50                            0218
+0140 C* COMPUTE NUMBER OF SQS AREAS                                             0219
+0141 C                     MOVE IN#SQS    CNVI                                  0220
+0142 C                     EXSR CNVDEC                                          0221
+0143 C                     Z-ADDCNVO      #SQS    40                            0222
+0144 C* COMPUTE LARGEST SQS AREA SIZE                                           0223
+0145 C                     MOVE INLSQS    B4                                    0224
+0146 C                     EXIT SUBRBO                                          0225
+0147 C                     RLABL          B4                                    0226
+0148 C                     RLABL          D9                                    0227
+0149 C                     MOVE D9        LGSQS   50                            0228
+0150 C* COMPUTE AVAILABLE WORKSTATION QUEUE SPACE                               0229
+0151 C                     MOVE INAWSQ    B4                                    0230
+0152 C                     EXIT SUBRBO                                          0231
+0153 C                     RLABL          B4                                    0232
+0154 C                     RLABL          D9                                    0233
+0155 C                     MOVE D9        AVWSQS  50                            0234
+0156 C* COMPUTE CURRENT USER AREA SIZE                                          0235
+0157 C                     MOVE INUSZ     CNVI                                  0236
+0158 C                     EXSR CNVDEC                                          0237
+0159 C                     Z-ADDCNVO      USIZE   30                            0238
+0160 C           USIZE     ADD  USIZE     USIZE                                 0239
+0161 C                     GOTO SKIP04                                          0240
+0162 C           LOOP01    TAG                                                  0241
+0163 C                     MOVELRTSK,CTR1 MINHDR                                0242
+0164 C                     TESTB'4567'    MINID      11                         0243
+0165 C         11          GOTO END                                             0244
+0166 C                     TESTB'5'       MINID          13THIS TYPE 4 REC      0245
+0167 C        N13          GOTO SKIP02                     NO - SKIP02          0246
+0168 C********************************************************************      0247
+0169 C*                                                                  *      0248
+0170 C*  EVENT COUNTER PROCESSING                                        *      0249
+0171 C*                                                                  *      0250
+0172 C********************************************************************      0251
+0173 C                     GOTO SKIP04                     GOTO SKIP04          0252
+0174 C********************************************************************      0253
+0175 C*                                                                  *      0254
+0176 C* TASK STATUS RECORD PROCESSING                                    *      0255
+0177 C*                                                                  *      0256
+0178 C********************************************************************      0257
+0179 C           SKIP02    TAG                                                  0258
+0180 C                     SETON                     97
+0181 C           X         ADD  1         X                                     0259
+0182 C           X         COMP 8                        58                     0260
+0183 C                     MOVE RTSK,CTR1 TSKSTT                                0262
+0184 C* COMPUTE TASK REGION SIZE                                                0263
+0185 C                     MOVE INTMSS    CNVI                                  0264
+0186 C                     EXSR CNVDEC                                          0265
+0187 C                     MOVE CNVO      PSZ,X                                 0266
+0188 C           PSZ,X     ADD  PSZ,X     PSZ,X                                 0267
+0189 C           PSZ,X     ADD  TOTPSZ    TOTPSZ  40                            0268
+0190 C   58                GOTO END                                             0261
+0191 C* RETRIEVE PROCEDURE/PROGRAM NAMES AND USER ID                            0270
+0192 C                     MOVE INTPRC    PRC,X   8                             0271
+0193 C                     MOVELINTPGM    HOLDNM  1                             0272
+0194 C           HOLDNM    COMP ' '                  17  17                     0273
+0195 C         17HOLDNM    COMP '9'                    1717                     0274
+0196 C         17          MOVELINTPGM    PRG,X                                 0275
+0197 C        N17          MOVE TYP,15    PRG,X                                 0276
+0198 C                     MOVE INTUID    USERID  8                             0277
+0199 C* COMPUTE NUMBER OF REQUESTORS                                            0278
+0200 C                     MOVE INTWSC    CNVI                                  0279
+0201 C                     EXSR CNVDEC                                          0280
+0202 C                     MOVE CNVO      #REQ    30                            0281
+0203 C* COMPUTE TASK STATUS                                                     0282
+0204 C                     TESTB'1'       INSTAT         50                     0283
+0205 C         50          MOVE 'S'       PST,X                                 0284
+0206 C        N50          MOVE 'A'       PST,X                                 0285
+0207 C* COMPUTE TASK PRIORITY                                                   0286
+0208 C*                    MOVE INPRI#    CNVI                                  0287
+0209 C*                    EXSR CNVDEC                                          0288
+0210 C*                    MOVE CNVO      TP      30                            0289
+0211 C*          TP        LOKUPTABTP#    TABPDC         50                     0290
+0212 C*        50          MOVE TABPDC    PPR,X   8                             0291
+0213 C* DETERMINE PROGRAM TYPE                                                  0292
+0214 C                     Z-ADD0         ID#     20                            0293
+0215 C           INTID#    COMP '1'                  50  50                     0294
+0216 C         50INTID#    COMP '9'                    5050                     0295
+0217 C         50          MOVE INTID#    ID#                                   0296
+0218 C     N17 50          MOVE TYP,ID#   PRG,X                                 0297
+0219 C         50          GOTO SKIP03                                          0298
+0220 C                     Z-ADD10        ID#                                   0299
+0221 C                     TESTB'2'       NEPFLG         51                     0300
+0222 C                     TESTB'4'       MRTFLG         50                     0301
+0223 C         50          Z-ADD12        ID#                                   0302
+0224 C         511         ADD  ID#       ID#                                   0303
+0225 C                     TESTB'7'       NRTFLG         50                     0304
+0226 C         50          Z-ADD14        ID#                                   0305
+0227 C           SKIP03    TAG                                                  0306
+0228 C*                    MOVELTYP,ID#   PTY,X                                 0307
+0229 C                     MOVE INTJID    PWS,X                                 0308
+0230 C           SKIP04    TAG                                                  0309
+0231 C           1         ADD  CTR1      CTR1                                  0310
+0232 C           CTR1      COMP 5                    12                         0311
+0233 C        N12          GOTO LOOP01                                          0312
+0234 C           END       TAG                                                  0313
+0235 C   98 99 97          EXSR DSPLY                      END OF FILE          0314
+0236 C   98 99             EXSR DELAY
+0237 C*                                                                         0315
+0238 C********************************************************************      0316
+0239 C*                                                                         0317
+0240 CSR         UNPACK    BEGSR                                                0318
+0241 CSR                   MOVELMAJDAT    PK      4                             0319
+0242 CSR                   EXIT SUBRUP                     **************       0320
+0243 CSR                   RLABL          PK               ************         0321
+0244 CSR                   RLABL          UPK     70       **************       0322
+0245 C*R                   Z-ADDUPK       UPK     70       **************
+0246 CSR                   MOVELUPK       DATE    60                            0323
+0247 CSR                   MLLZO1         DATE                                  0324
+0248 CSR                   MOVELMAJTIM    PK                                    0325
+0249 CSR                   EXIT SUBRUP                     **************       0326
+0250 CSR                   RLABL          PK               **************       0327
+0251 CSR                   RLABL          UPK              *************88      0328
+0252 CSR                   MOVELUPK       TOD     40                            0329
+0253 CSR                   MLLZO1         TOD                                   0330
+0254 CSR         UNPEND    ENDSR                                                0331
+0255 C*                                                                         0332
+0256 C********************************************************************      0333
+0257 C*                                                                         0334
+0258 CSR         CNVDEC    BEGSR                                                0335
+0259 CSR                   EXIT SUBRBO                                          0336
+0260 CSR                   RLABL          CNVI    2                             0337
+0261 CSR                   RLABL          CNVO    40                            0338
+0262 CSR                   ENDSR                                                0339
+0263 C*                                                                         0340
+0264 C*                                                                         0341
+0265 C******************************************    **********************      0342
+0266 C*                                                                         0343
+0267 C*                                                                         0344
+0268 CSR         CLEAR     BEGSR                           CLEAR ARRAYS         0345
+0269 CSR                   Z-ADD0         X       20       ARRAY POINTER        0346
+0270 CSR                   MOVE '        'PRC                                   0347
+0271 CSR                   MOVE '      '  PRG                                   0348
+0272 CSR                   Z-ADD0         PSZ                                   0349
+0273 C*R                   MOVE '       ' PTY                                   0350
+0274 CSR                   MOVE '  '      PWS                                   0351
+0275 CSR                   MOVE ' '       PST                                   0352
+0276 CSR                   MOVE '        'PPR                                   0353
+0277 CSR                   MOVE MAJTIM    BRKTIM  3                             0354
+0278 CSR                   Z-ADD0         TOTPSZ
+0279 CSR                   ENDSR                                                0355
+0280 C*                                                                         0356
+0281 C*                                                                         0357
+0282 C*                                                                         0358
+0283 C******************************************    **********************      0359
+0284 C*                                                                         0360
+0285 C*                                                                         0361
+0286 CSR         DSPLY     BEGSR                           DISPLAY ON CRT       0362
+0287 CSR                   SETOF                     97
+0288 CSR         TOTPSZ    DIV  USIZE     OVRCMT  42       CAL OVER COMMIT      0363
+0289 CSR         X         COMP 7                    62
+0290 CSR                   SETON                     56                         0364
+0291 CSR                   EXCPT                           WRITE 1ST SCREN      0365
+0292 CSR                   SETOF                     56                         0366
+0293 C*                    DEBUGREPORT                                          0367
+0294 CSR                   Z-ADD24        L       20       VARABLE LN #         0368
+0295 CSR                   SETON                     57    COND. VAR LINE       0369
+0296 CSR                   EXSR DIND                       CLEAR CRT INDIC      0370
+0297 C*R                   MOVE HDR,L     HEAD1   9        PRIORITY LINE        0371
+0298 C*R                   MOVEAPPR       DLN                                   0372
+0299 CSR         L         SUB  1         L                                     0374
+0300 C*R                   EXCPT                                                0373
+0301 CSR                   MOVE '        'DLN
+0302 C*R                   MOVE HDR,L     HEAD1            TYPE LINE            0375
+0303 C*R                   MOVELPTY,1     DLN,1                                 0376
+0304 C*R                   MOVELPTY,2     DLN,2
+0305 C*R                   MOVELPTY,3     DLN,3
+0306 C*R                   MOVELPTY,4     DLN,4
+0307 C*R                   MOVELPTY,5     DLN,5
+0308 C*R                   MOVELPTY,6     DLN,6
+0309 C*R                   MOVELPTY,7     DLN,7
+0310 CSR         L         SUB  1         L                                     0378
+0311 C*R                   EXCPT                                                0377
+0312 CSR                   MOVE '        'DLN
+0313 CSR                   MOVE HDR,L     HEAD1   9        WS LINE              0379
+0314 CSR                   MOVELPWS,1     DLN,1                                 0380
+0315 CSR                   MOVELPWS,2     DLN,2
+0316 CSR                   MOVELPWS,3     DLN,3
+0317 CSR                   MOVELPWS,4     DLN,4
+0318 CSR                   MOVELPWS,5     DLN,5
+0319 CSR                   MOVELPWS,6     DLN,6
+0320 CSR                   MOVELPWS,7     DLN,7
+0321 CSR         L         SUB  1         L                                     0382
+0322 CSR                   EXCPT                                                0381
+0323 CSR                   MOVE '        'DLN
+0324 CSR                   MOVE HDR,L     HEAD1            PROG LINE            0383
+0325 CSR                   MOVE 'K'       DOG     3                             0384
+0326 CSR                   Z-ADD1         Z       10
+0327 CSR         DSP99     TAG
+0328 CSR         PSZ,Z     COMP 0                        63
+0329 CSRN63                MOVELPSZ,Z     DOG
+0330 CSRN63                MOVELDOG       DLN,Z
+0331 CSR         Z         ADD  1         Z
+0332 CSR         Z         COMP 8                        63
+0333 CSR   N63             GOTO DSP99
+0334 CSR         L         SUB  1         L                                     0386
+0335 CSR                   EXCPT                                                0385
+0336 CSR                   MOVE HDR,L     HEAD1            PROC LINE            0387
+0337 CSR                   MOVEAPRC       DLN                                   0388
+0338 C*                                                    NOW THE BARS         0390
+0339 CSR         DSP01     TAG                                                  0392
+0340 CSR         L         SUB  1         L                                     0393
+0341 CSR         L         COMP 3                        61
+0342 CSR         L         COMP 2                        58ARE BARS COMP.       0394
+0343 CSR 58                GOTO DSP02                      IF YES EXIT          0395
+0344 CSR                   EXCPT                           AND WRITE THEM       0397
+0345 CSR                   EXSR DBARS                      CONSTRUCT BARS       0396
+0346 C*                    DEBUGREPORT
+0347 CSR                   GOTO DSP01                      DO SOME MORE         0399
+0348 CSR         DSP02     TAG                             FINSHED WITH         0400
+0349 CSR                   SETOF                     57
+0350 CSR                   ENDSR                             'THE BARS'         0401
+0351 C*                                                                         0402
+0352 C*                                                                         0403
+0353 C*                                                                         0404
+0354 C******************************************    **********************      0405
+0355 C*                                                                         0406
+0356 C*                                                                         0407
+0357 C*                                                                         0408
+0358 CSR         DBARS     BEGSR                           CONSTRUCT BARS       0409
+0359 CSR                   MOVE HDR,L     HEAD1
+0360 CSR                   MOVE '        'DLN              CLEAR THE LINE       0410
+0361 CSR         PSZ,1     COMP 0                    21    REVERSE IMAGE        0411
+0362 CSR         PSZ,1     SUB  2         PSZ,1          58LAST REVERSE ?       0412
+0363 CSR         PST,1     COMP 'A'                      31HIGH INTENSITY       0413
+0364 CSR    58 31
+0365 COR 61 21 31          MOVEA'ACTIVE'  DLN,1            LAST & ACTIVE        0414
+0366 CSR         PST,1     COMP 'S'                      59NORM FOR SWAP        0415
+0367 CSR 58 59
+0368 COR 61 21 59          MOVEA' SWAP'   DLN,1            LAST & SWAPPED       0416
+0369 C*            BAR # 2                                                      0417
+0370 CSR         PSZ,2     COMP 0                    22    REVERSE IMAGE        0418
+0371 CSR         PSZ,2     SUB  2         PSZ,2          58LAST REVERSE ?       0419
+0372 CSR         PST,2     COMP 'A'                      32HIGH INTENSITY       0420
+0373 CSR 58 32
+0374 COR 61 22 32          MOVEA'ACTIVE'  DLN,2            LAST & ACTIVE        0421
+0375 CSR         PST,2     COMP 'S'                      59NORM FOR SWAP        0422
+0376 CSR 61 22 59
+0377 COR 58 59             MOVEA' SWAP'   DLN,2            LAST & SWAPPED       0423
+0378 C*                      BAR # 3                                            0424
+0379 CSR         PSZ,3     COMP 0                    23    REVERSE IMAGE        0425
+0380 CSR         PSZ,3     SUB  2         PSZ,3          58LAST REVERSE ?       0426
+0381 CSR         PST,3     COMP 'A'                      33HIGH INTENSITY       0427
+0382 CSR 61 23 33
+0383 COR 58 33             MOVEA'ACTIVE'  DLN,3            LAST & ACTIVE        0428
+0384 CSR         PST,3     COMP 'S'                      59NORM FOR SWAP        0429
+0385 CSR 61 23 59
+0386 COR 58 59             MOVEA' SWAP'   DLN,3            LAST & SWAPPED       0430
+0387 C*                      BAR # 4                                            0431
+0388 CSR         PSZ,4     COMP 0                    24    REVERSE IMAGE        0432
+0389 CSR         PSZ,4     SUB  2         PSZ,4          58LAST REVERSE ?       0433
+0390 CSR         PST,4     COMP 'A'                      34HIGH INTENSITY       0434
+0391 CSR 61 24 34
+0392 COR 58 34             MOVEA'ACTIVE'  DLN,4            LAST & ACTIVE        0435
+0393 CSR         PST,4     COMP 'S'                      59NORM FOR SWAP        0436
+0394 CSR 61 24 59
+0395 COR 58 59             MOVEA' SWAP'   DLN,4            LAST & SWAPPED       0437
+0396 C*                      BAR # 5                                            0438
+0397 CSR         PSZ,5     COMP 0                    25    REVERSE IMAGE        0439
+0398 CSR         PSZ,5     SUB  2         PSZ,5          58LAST REVERSE ?       0440
+0399 CSR         PST,5     COMP 'A'                      35HIGH INTENSITY       0441
+0400 CSR 61 25 35
+0401 COR 58 35             MOVEA'ACTIVE'  DLN,5            LAST & ACTIVE        0442
+0402 CSR         PST,5     COMP 'S'                      59NORM FOR SWAP        0443
+0403 CSR 61 25 59
+0404 COR 58 59             MOVEA' SWAP'   DLN,5            LAST & SWAPPED       0444
+0405 C*                      BAR # 6                                            0445
+0406 CSR         PSZ,6     COMP 0                    26    REVERSE IMAGE        0446
+0407 CSR         PSZ,6     SUB  2         PSZ,6          58LAST REVERSE ?       0447
+0408 CSR         PST,6     COMP 'A'                      36HIGH INTENSITY       0448
+0409 CSR 61 26 36
+0410 COR 58 36             MOVEA'ACTIVE'  DLN,6            LAST & ACTIVE        0449
+0411 CSR         PST,6     COMP 'S'                      59NORM FOR SWAP        0450
+0412 CSR 61 59 26
+0413 COR 58 59             MOVEA' SWAP'   DLN,6            LAST & SWAPPED       0451
+0414 C*                      BAR # 7                                            0452
+0415 CSR         PSZ,7     COMP 0                    27    REVERSE IMAGE        0453
+0416 CSR         PSZ,7     SUB  2         PSZ,7          58LAST REVERSE ?       0454
+0417 CSR         PST,7     COMP 'A'                      37HIGH INTENSITY       0455
+0418 CSR 61 27 37
+0419 COR 58 37             MOVEA'ACTIVE'  DLN,7            LAST & ACTIVE        0456
+0420 CSR         PST,7     COMP 'S'                      59NORM FOR SWAP        0457
+0421 CSR 61 59 27
+0422 COR 58 59             MOVEA' SWAP'   DLN,7            LAST & SWAPPED       0458
+0423 C*                                                                         0459
+0424 CSR                   ENDSR                                                0460
+0425 C*                                                                         0461
+0426 C*                                                                         0462
+0427 C*                                                                         0463
+0428 C******************************************    **********************      0464
+0429 C*                                                                         0465
+0430 C*                                                                         0466
+0431 C*                                                                         0467
+0432 CSR         DIND      BEGSR                           RESET INDICATOR      0468
+0433 CSR                   SETOF                     202122 FOR CRT             0469
+0434 CSR                   SETOF                     232425                     0470
+0435 CSR                   SETOF                     2627                       0471
+0436 CSR                   SETOF                     313233                     0472
+0437 CSR                   SETOF                     343536                     0473
+0438 CSR                   SETOF                     37                         0474
+0439 CSR                   ENDSR                                                0475
+0440 C*
+0441 C*
+0442 C*
+0443 C******************************************    *******************
+0444 C*
+0445 C*
+0446 CSR         DELAY     BEGSR
+0447 CSR                   EXIT SUBRWT
+0448 CSR                   RLABL          HHMMSS
+0449 CSR                   ENDSR
+0450 OREPORT  E        56                                                       0476
+0451 O*                                                                         0477
+0452 O*       SCREEN 1                                                          0478
+0453 O*                                                                         0479
+0454 O                                   K7 'BCDSP01'                           0480
+0455 O                         STOP       8
+0456 O                         X         10
+0457 O                         USIZE 4   15                                     0482
+0458 O                         TOTPSZ4   19                                     0483
+0459 O                         OVRCMT2   24                                     0484
+0460 O*                                                                         0485
+0461 O        E        57                                                       0486
+0462 O*                                                                         0487
+0463 O*                                                                         0488
+0464 O*       SCREEN 2                                                          0489
+0465 O*                                                                         0490
+0466 O                                   K7 'BCDSP02'                           0491
+0467 O                         HEAD1      9                                     0492
+0468 O                         DLN,1     17                                     0493
+0469 O                         DLN,2     25
+0470 O                         DLN,3     33
+0471 O                         DLN,4     41
+0472 O                         DLN,5     49
+0473 O                         DLN,6     57
+0474 O                         DLN,7     65
+**     TYP                                                                      0494
+SPOOL  SPOOLWRT    1                                                            0495
+JOBQ               2                                                            0496
+UNUSED             3                                                            0497
+MRJE   MRJE        4                                                            0498
+BSC    BSC         5                                                            0499
+SDLC   SDLC        6                                                            0500
+SNA    SNA         7                                                            0501
+BWS    BWS         8                                                            0502
+REBUILDREBUILD     9                                                            0503
+SRT               10                                                            0504
+NEP-SRT           11                                                            0505
+MRT               12                                                            0506
+NEP-MRT           13                                                            0507
+NRT               14                                                            0508
+       SCHEDULER  15                                                            0509
+**   HEADINGS                                                                   0517
+BLANK1
+BLANK2
+BLANK3
+32K                                                                             0518
+30K                                                                             0519
+28K                                                                             0520
+26K                                                                             0521
+24K                                                                             0522
+22K                                                                             0523
+20K                                                                             0524
+18K                                                                             0526
+16K                                                                             0527
+14K                                                                             0528
+12K                                                                             0529
+10K                                                                             0530
+ 8K                                                                             0531
+ 6K                                                                             0532
+ 4K                                                                             0533
+ 2K                                                                             0534
+PROGRAM                                                                         0536
+SIZE                                                                            0537
+WORK STN                                                                        0538
+BLANK                                                                           0539
+BLANK

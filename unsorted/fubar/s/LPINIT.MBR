@@ -1,0 +1,109 @@
+     H     014                              1                             LPINIT
+0002 F****************************************************************
+0003 F*                                                              *
+0004 F*  LPINIT BUILDS THE PROMPT FILE AND PRINTS THE                *
+0005 F*    PROMPT FILE...                                            *
+0006 F*                                                              *
+0007 F*  THE PROMPT FILE SERVES TWO PURPOSES..                       *
+0008 F*       1.  IT CONTAINS ONE RECORD FOR EACH QUESTION.          *
+0009 F*          THE RELATIVE RECORD NUMBER IS THE QUESTION NUMBER.  *
+0010 F*       2.  IT ALSO CONTAINS THE FORMAT TYPE CODE WHICH IS     *
+0011 F*          THE LENGTH OF THE RESPONSE...                       *
+0012 F*       FORMAT CODE    FIELD LENGTH                            *
+0013 F*           01            1 ALPHA                              *
+0014 F*           02          2.0 NUMERIC                            *
+0015 F*           03          3.0 NUMERIC                            *
+0016 F*           04            4 ALPHA                              *
+0017 F*           05          7.2 NUMERIC                            *
+0018 F*           06            8 ALPHA                              *
+0019 F*           07          9.2 NUMERIC                            *
+0020 F*           08           15 ALPHA                              *
+0021 F*           09           30 ALPHA                              *
+0022 F*                                                              *
+0023 F****************************************************************
+0024 FPROMPT  OC        128R           DISK
+0025 FDUMMY   IP          1            KEYBORD
+0026 FPRINT   O         132            PRINTER
+0027 E                    ARA     1  35 72
+0028 E****************************************************************
+0029 E*  ARA ARRAY CONTAINS THE FORMAT CODE, THE QUESTION, AND THE   *
+0030 E*               DEFAULT ANSWER                                 *
+0031 E****************************************************************
+0032 C                     SETON                     99
+0033 C        N99          KEY01          Y       1
+0034 C           LOOP      TAG
+0035 C           X         ADD  1         X       20
+0036 C                     SETON                     01
+0037 C           X         CHAINPROMPT
+0038 C                     EXCPT
+0039 C                     SETOF                     01
+0040 C           X         COMP 35                       02
+0041 C        N02          GOTO LOOP
+0042 C                     SETON                     LR
+0043 OPROMPT  E        01
+0044 O                         X          2
+0045 O                         ARA,X     74
+0046 OPRINT   H  301   1P
+0047 O                                   70 'LEASE VS PURCHASE QUESTI'
+0048 O                                   76 'ONAIRE'
+0049 O        H  2     1P
+0050 O                                   21 'QUEST #      QUESTION'
+0051 O                                   77 'DEFAULT RESPONSE'
+0052 O        T  1     LR
+0053 O                                   23 'DEPRECIATION CODES ARE-'
+0054 O                                   47 'CODE   DESCRIPTION'
+0055 O        T  1     LR
+0056 O                                   54 '1    SUM OF THE YEARS DI'
+0057 O                                   58 'GITS'
+0058 O        T  1     LR
+0059 O                                   48 '2    STRAIGHT LINE'
+0060 O        T  1     LR
+0061 O                                   54 '3    150% DECLINING BALA'
+0062 O                                   57 'NCE'
+0063 O        T  1     LR
+0064 O                                   54 '4    DOUBLE DECLINING BA'
+0065 O                                   78 'LANCE - USE NO FINAL BOO'
+0066 O                                   85 'K VALUE'
+0067 O        T  1     LR
+0068 O                                   54 '5    DOUBLE DECLINING BA'
+0069 O                                   76 'LANCE TO STRAIGHT LINE'
+0070 O        E  1     01
+0071 O                         X          5
+0072 O                         ARA,X     77
+0073 O                                    7 '  '
+**
+09ENTER CUSTOMER NAME
+09REPORT TITLE                            LEASE VS. PURCHASE ANALYSIS
+02BEGINNING YEAR FOR ANALYSIS
+02NUMBER OF YEARS IN ANALYSIS  01 THRU 11                             05
+04FIT RATE (4 DIGITS WITH 2 DEC. )                                  4800
+04SIT RATE (4 DIGITS WITH 2 DEC. )                                  0000
+04SALES TAX % FOR PUR (4 DIGIT WITH 2 DEC)                          0000
+04SALES TAX % FOR LEASE (4 DIGIT,2 DEC)                             0000
+04PERSONAL PROPERTY TAX (4 DIGIT,2 DEC)                             0000
+04ANNUAL INSURANCE %    (4 DIGIT,2 DEC)                             0000
+01STATE TAX-"C"=CAPITALIZED; "E"=EXPENSED                              E
+01PROP TAX METH. SEE END OF QUESTIONAIRE  FOR VALID CODES.             2
+02PROP TAX LIFE IN YEARS (2 DIGITS)                                   05
+04PROP TAX FINAL BOOK VALUE AS A %                                  0000
+06SYSTEM IDENTIFICATION
+02SHIPMENT MONTH
+02SHIPMENT YEAR
+03RESALE VALUE AS A % OF PURCHASE                                    000
+07MAC (DOLLARS AND CENTS)
+07PUR (INCLUDE ACCRUALS; DOLLARS & CENTS)
+05MMMC (DOLLARS AND CENTS)
+02WARRANTY MONTHS REMAINING (2 DIGITS)                                00
+04DOWN PAYMENT % (4 DIGITS, 1 DEC)                                  0250
+04LOAN INTEREST RATE (4 DIGITS, 2 DEC)                              1000
+03LOAN TERM IN MONTHS (3 DIGITS)                                     048
+01FIT DEPREC METH. SEE END OF QUESTIONAIRE FOR CODES                   4
+02FIT DEPRECIATION LIFE IN YRS. (2 DIGITS)                            05
+04FIT FINAL BOOK VALUE % (4 DIGITS, 2 DEC)                          0000
+02FIT DEPREC ADJ IN MOS. (2 DIGITS)                                   00
+04ITC % FOR PURCHASE (4 DIGITS, 2 DEC.)                             1000
+04ITC % FOR RENT (4 DIGITS, 2 DEC)                                  0667
+  EXTRA SHIFT RENTAL QUESTIONS
+  EXTRA MAINTENANCE QUESTIONS
+  ADDITIONAL LEASE EXPENSE QUESTIONS
+  ADDITIONAL PURCHASE EXPENSE QUESTIONS

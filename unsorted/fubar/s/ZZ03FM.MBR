@@ -1,0 +1,18 @@
+0001 SZZ0301    0124 YY 60  Y
+0002 DSCRNID     6 1 2Y  Y          Y                  CZZ0301
+0003 D          21 131Y               Y     Y          CSYSTEM 34  CALCULATOR
+0004 D          19 316Y                                CFACTOR 1 --------->
+0005 DFACT1     16 336Y  Y    ZY                Y
+0006 D          19 516Y                                COPERATION -------->
+0007 DACTION     1 536   Y                      Y
+0008 D          19 716Y                                CFACTOR 2 --------->
+0009 DFACT2      8 736Y  Y    Z                 Y
+0010 D          161133Y                       Y        C** OPERATIONS **
+0011 D          121234Y                                C+ = ADDITION
+0012 D          151334Y                                C- = SUBTRACTION
+0013 D          181434Y                                C* = MULTIPLICATION
+0014 D          121534Y                                C/ = DIVISION
+0015 D          151634Y                                CR = SQUARE ROOT
+0016 D          151734Y                                CP = POWERS
+0017 DERROR     302226Y               Y Y   60
+0018 D          202431Y               Y     Y          CCMD KEY 7 TO END JOB

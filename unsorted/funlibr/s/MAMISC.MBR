@@ -1,0 +1,43 @@
+0001 SMASTMIND   124  Y
+0002 DRA         1 110Y  Y          Y     Y             1
+0003 D          23 230Y                     Y          C M A S T E R   M I N D
+0004 D          69 4 6Y                                CES SIND 4 VERSCHIEDENE X
+0005 DZAHLEN IN DER RICHTIGEN REIHENFOLGE ZU ERRATEN
+0006 D          70 5 6Y                                CDIE 0 KANN NICHT AN DERX
+0007 D 1.STELLE STEHEN. KEINE ZAHL DOPPELT.7 VERSUCHE
+0008 DZ          1 722Y               Y
+0009 D          11 724Y               Y                C. VERSUCH :
+0010 DZE1        1 737Y  YN    Y      Y                CX
+0011 DZE2        1 739Y  YN           Y                CX
+0012 DZE3        1 741Y  YN           Y                CX
+0013 DZE4        1 743Y  YN           Y                CX
+0014 DGEN        4 761Y               Y   18
+0015 D           6 753Y               Y Y 40           CFEHLER
+0016 D*
+0017 D           91016Y                 5110           C1.VERSUCH
+0018 DV1        101030Y                 5110
+0019 DE1         41046Y                 5110
+0020 D          211053Y                   10           CX=ZAHL+STELLE RICHTIG
+0021 D          281153Y                   10           CO=ZAHL RICHTIG/STELLE FX
+0022 DALSCH
+0023 D           91216Y                 5211           C2.VERSUCH
+0024 DV2        101230Y                 5211
+0025 DE2         41246Y                 5211
+0026 D           91416Y                 5312           C3.VERSUCH
+0027 DV3        101430Y                 5312
+0028 DE3         41446Y                 5312
+0029 D           91616Y                 5413           C4.VERSUCH
+0030 DV4        101630Y                 5413
+0031 DE4         41646Y                 5413
+0032 D           91816Y                 5514           C5.VERSUCH
+0033 DV5        101830Y                 5514
+0034 DE5         41846Y                 5514
+0035 D           92016Y                 5615           C6.VERSUCH
+0036 DV6        102030Y                 5615
+0037 DE6         42046Y                 5615
+0038 D           92216Y                 5716           C7.VERSUCH
+0039 DV7        102230Y                 5716
+0040 DE7         42246Y                 5716
+0041 DGEN        42261Y                   16
+0042 D          172416Y                   17           CNEUES SPIEL = FT1
+0043 D          102437Y                   17           CENDE = FT7

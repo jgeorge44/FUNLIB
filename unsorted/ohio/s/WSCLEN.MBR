@@ -1,0 +1,1441 @@
+0001 H     024                                     10                     WSCLEN
+0002 F******************************************************************* WSCLEN
+0003 F* PROGRAM NAME - AVA30                                            * WSCLEN
+0004 F*                                                                 * WSCLEN
+0005 F* DESCRIPTIVE NAME -  WORK STATION SEARCH PROGRAM                 * WSCLEN
+0006 F*                                                                 * WSCLEN
+0007 F* 5726-XR1 COPYRIGHT IBM CORP 1978                                * WSCLEN
+0008 F* LICENSED MATERIAL - PROGRAM PROPERTY OF IBM                     * WSCLEN
+0009 F* REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083.          * WSCLEN
+0010 F*                                                                 * WSCLEN
+0011 F* VERSION 01/MODIFICATION 01      PTF 0010                        * WSCLEN
+0012 F* DATE 07/11/78                                                   * WSCLEN
+0013 F* APARS APPLIED - AT5012,5013,5014,6835,6691,7196,6887            * WSCLEN
+0014 F*                                                                 * WSCLEN
+0015 F*                                                                 * WSCLEN
+0016 F* PROGRAM PURPOSE                                                 * WSCLEN
+0017 F* THIS WORK STATION PROGRAM SEARCHES A MASTER FILE FOR SPECIFIED  * WSCLEN
+0018 F* FIELD VALUES.                                                   * WSCLEN
+0019 F*                                                                 * WSCLEN
+0020 F******************************************************************* WSCLEN
+0021 F*                                                                 * WSCLEN
+0022 F*     TAILORING RESPONSES THAT GENERATED THIS PROGRAM             * WSCLEN
+0023 F*                                                                 * WSCLEN
+0024 F**IPROG**IPROC*  *SPROG**SPROC*  *LIBNM*  *SECCD*SCHAR*MODSC*SAVSC* WSCLEN
+0025 F* WICLEN WICLENP  WSCLEN WSCLENP  CEPLIB          NO    NO    YES * WSCLEN
+0026 F*                                                                 * WSCLEN
+0027 F**FLENM*  *RECLN**NRECD**DELCD*DCPOS*                             * WSCLEN
+0028 F* CLENTMST  0512  005000   D    0017                              * WSCLEN
+0029 F*                                                                 * WSCLEN
+0030 F**ANSKY*  *FNAME**STRPS**ENDPS*DECPL*FORMT*INDID*DSPFD*DELFD*ECODE* WSCLEN
+0031 F* FLD001   SSN     0001   0009   0     N    01    YES   NO        * WSCLEN
+0032 F* FLD002   NAME    0018   0048         A    02    YES   NO        * WSCLEN
+0033 F* FLD003   AFDC    0133   0133         A          YES   NO        * WSCLEN
+0034 F* FLD004   NIF     0141   0142   0     N          YES   NO        * WSCLEN
+0035 F* FLD005   VET     0146   0146   0     N          YES   NO        * WSCLEN
+0036 F* FLD006   CTITLE  0447   0448   0     N          YES   NO        * WSCLEN
+0037 F* FLD007   CACTY   0449   0450   0     N          YES   NO        * WSCLEN
+0038 F* FLD008   CDATE   0451   0454   0     P          YES   NO        * WSCLEN
+0039 F* FLD009   STITLE  0459   0460   0     N          YES   NO        * WSCLEN
+0040 F* FLD010   SACTY   0461   0462   0     N          YES   NO        * WSCLEN
+0041 F* FLD011   STATUS  0017   0017         A          YES   NO        * WSCLEN
+0042 F*                                                                 * WSCLEN
+0043 F******************************************************************* WSCLEN
+0044 F*                                                                 * WSCLEN
+0045 F* ID F  C  H  L    FUNCTION OF INDICATORS                         * WSCLEN
+0046 F*                                                                 * WSCLEN
+0047 F* 01            MASTER FILE RECORD INPUT                          * WSCLEN
+0048 F* 02            PAGE OPTION INPUT                                 * WSCLEN
+0049 F* 03            REQUEST SCREEN INPUT                              * WSCLEN
+0050 F* 04            UNDEFINED SCREEN INPUT                            * WSCLEN
+0051 F* 05            INDEX FILE RECORD INPUT                           * WSCLEN
+0052 F*       20      ONE OR MORE FIELDS ARE IN ERROR                   * WSCLEN
+0053 F*       21-31   OUTPUT FIELD ERROR INDICATORS                     * WSCLEN
+0054 F*       32-36   ERROR MESSAGE INDICATORS                          * WSCLEN
+0055 F*       37      SUSPCT FOUND A SUSPECT                            * WSCLEN
+0056 F*       38      HIT FOUND A HIT                                   * WSCLEN
+0057 F*       39      NO SUSPECT FOUND                                  * WSCLEN
+0058 F*       40      HIT LIST IS FULL                                  * WSCLEN
+0059 F*       41      ICOMP, AND THUS SEARCH, FOUND A SUSPECT           * WSCLEN
+0060 F*       42      NO RECORD FOUND BY INDEX FILE CHAIN               * WSCLEN
+0061 F*       43      ALL POSSIBLE SUSPECTS IN INDEX HAVE BEEN PASSED   * WSCLEN
+0062 F*       44      NO RECORD FOUND BY MASTER FILE CHAIN              * WSCLEN
+0063 F*       45      INDEX FILE ERROR DETECTED                         * WSCLEN
+0064 F*       46      DATA FORMAT - PACKED LEFT JUSTIFIED               * WSCLEN
+0065 F*       47      DATA FORMAT - ALPHABETEC OR ZONED DEC. LEFT JUST. * WSCLEN
+0066 F*       48      DATA FORMAT - ZONED DECIMAL RIGHT JUSTIFIED       * WSCLEN
+0067 F*       49      DATA FORMAT - PACKED DECIMAL RIGHT JUSTIFIED      * WSCLEN
+0068 F*       50      DATA FORMAT - RIGHT JUSTIFIED                     * WSCLEN
+0069 F*       51      EQUAL WILL SATISFY THE COMPARE                    * WSCLEN
+0070 F*       52      LESS THAN WILL SATISFY THE COMPARE                * WSCLEN
+0071 F*       53      GREATER THAN WILL SATISFY THE COMPARE             * WSCLEN
+0072 F*       54      SEARCH VALUE COMPARES EQUAL                       * WSCLEN
+0073 F*       55      SEARCH VALUE COMPARES LESS THAN                   * WSCLEN
+0074 F*       56      SEARCH VALUE COMPARES GREATER THAN                * WSCLEN
+0075 F*       57      ANCHK FOUND CHARACTER TO BE VALID                 * WSCLEN
+0076 F*       58      UNDERSCORE IS CONSIDERED A VALID CHARACTER        * WSCLEN
+0077 F*       59      SCREEN IS FULL OR NO MORE HITS IN LIST ARL        * WSCLEN
+0078 F*       60      PAGING OPTION WAS TO CANCEL THIS REQUEST          * WSCLEN
+0079 F*       61-73   CONDITION INDEX CHAINS TO ONE OF UP TO 13 FILES   * WSCLEN
+0080 F*       61      INDEX01 FILE PROCESSING                           * WSCLEN
+0081 F*       62      INDEX02 FILE PROCESSING                           * WSCLEN
+0082 F*       77      USED IN DISPLY/GETPAG SUBROUTINE                  * WSCLEN
+0083 F*       78      FIRST AND/OR IS AN OR                             * WSCLEN
+0084 F*       79      SECOND AND/OR IS AN OR                            * WSCLEN
+0085 F*       80      OUTPUT SCREEN AVA305-MSG AND CMD KEY FOR 1920     * WSCLEN
+0086 F*       **      OUTPUT SCREEN AVA306-MSG AND CMD KEY FOR 960      * WSCLEN
+0087 F*       81      OUTPUT SCREEN AVA304-DETAIL RECORDS 1920/960      * WSCLEN
+0088 F*       82      OUTPUT SCREEN AVA301-ENTER SEARCH REQUEST-1920    * WSCLEN
+0089 F*       **      OUTPUT SCREEN AVA302-ENTER SEARCH REQUEST-960     * WSCLEN
+0090 F*       83      OUTPUT SCREEN AVA303-HEADING DISPLAY-1920/960     * WSCLEN
+0091 F*       84      OUTPUT SCREEN AVA307-DETAIL RECORDS-1920/960      * WSCLEN
+0092 F*       85      FIELD HAS PASSED AN INDIVIDUAL EDIT               * WSCLEN
+0093 F*       86-87   SECURITY CODE                                     * WSCLEN
+0094 F*       88-90   GENERAL PURPOSE INDICATORS                        * WSCLEN
+0095 F*       91      N-ACTION CODE BUT 100 HITS HAVE NOT BEEN MADE     * WSCLEN
+0096 F*       92      END OF SEARCH                                     * WSCLEN
+0097 F*       93      N-ACTION CODE                                     * WSCLEN
+0098 F*       94      INITIALIZE SCREEN ERROR                           * WSCLEN
+00991F*       95      PAGING BACK AFTER 100 MATCHES                       WSCLEN
+01002F*       96      RECORD ALREADY IN HIT LIST (ARL)                    WSCLEN
+0101 F*       97      RELATIVE RECORD NUMBER GREATER IN INDEX FILE READ * WSCLEN
+0102 F*       98      NUMBER FIELD GREATER THAN 1-FORWARD SUBROUTINE    * WSCLEN
+0103 F*       99      FIRST TIME ROUTINE                                * WSCLEN
+0104 F*       KY      END OF JOB                                        * WSCLEN
+0105 F*       U2      960 CHARACTER DISPLAY                             * WSCLEN
+0106 F*      NU2      1920 CHARACTER DISPLAY                            * WSCLEN
+0107 F*       U7                                                        * WSCLEN
+0108 F*         Y     INCREMENTS ARC/ARD                                * WSCLEN
+0109 F*         I     QUERY CONDITION POINTER                           * WSCLEN
+0110 F*         I1    TOTAL NUMBER OF HITS DISPLAYED                    * WSCLEN
+0111 F*         I3    NUMBER OF HIT BEING DISPLAYED                     * WSCLEN
+0112 F*         I4    HIT IS DISPLAYED ON THIS SCREEN LINE              * WSCLEN
+0113 F******************************************************************* WSCLEN
+0114 FINPUT   IC  F 512 512R           DISK                               WSCLEN
+0115 FINDEX01 IC  F 256   8R           DISK                               WSCLEN
+0116 FINDEX02 IC  F 256   8R           DISK                               WSCLEN
+0117 FWORKSTN CD  F     300            WORKSTN                            WSCLEN
+0118 F                                              KSLN   SLNO           WSCLEN
+0119 F                                              KID    WKSID          WSCLEN
+0120 E                    ARA     1  14  6   AR1    12
+0121 E                    ARC     1  38  6   ARD    12                    WSCLEN
+0122 E                    ARF       512  1  D            MASTER FILE REC. WSCLEN
+0123 E                    ARG         8  1               SEARCH WORK AREA WSCLEN
+0124 E                    ARB     1  14  6   AR2    12
+0125 E                    ARL       200  7 0             HIT LIST         WSCLEN
+0126 E                    ARH         8  1               SEARCH WORK AREA WSCLEN
+0127 E                    FLD         3  6               FIELD NAMES      WSCLEN
+0128 E                    OPR         3  2               LOGICAL OPERATORSWSCLEN
+0129 E                    VLU         3  8               SEARCH VALUES    WSCLEN
+0130 E                    AO          2  3               AND/OR           WSCLEN
+0131 E                    SFLD        3  6               SAVE ARRAYS      WSCLEN
+0132 E                    SOPR        3  2                                WSCLEN
+0133 E                    SVLU        3  8                                WSCLEN
+0134 E                    SAO         2  3                                WSCLEN
+0135 E                    IDX         3  3 0             ARC/ARD INDEX    WSCLEN
+0136 E                    ID          3  2               INDEX DESIGNATOR WSCLEN
+0137 E                    REC         3  7 0             CURR INDEX PTR   WSCLEN
+0138 E                    ERR     1   5 40                                WSCLEN
+0139 E                    MSG     1   4 40                                WSCLEN
+0140 E                    ARW         8  1                                WSCLEN
+0141 E                    N1         31  1
+0142 E                    N2         25  1
+0143 E                    COIBM   1   2 76                                WSCLEN
+0144 IINPUT   NS  01                                                      WSCLEN
+0145 I                                        1 512 ARF                   WSCLEN
+0146 I                                        1   90FLD001                WSCLEN
+0147 I                                       18  48 FLD002                WSCLEN
+0148 I                                       18  37 FLD0A2
+0149 I                                       38  47 FLD0B2
+0150 I                                       17  17 FLD003                WSCLEN
+0151 I                                      463 4640FLD004                WSCLEN
+0152 I                                      465 4660FLD005                WSCLEN
+0153 I                                      119 1200FLD006                WSCLEN
+0154 I                                      128 129 FLD007                WSCLEN
+0155 I                                    P 467 4700FLD008                WSCLEN
+0156 I                                      142 1430FLD009                WSCLEN
+0157 I                                       92  930FLD010                WSCLEN
+0158 I                                      145 1450FLD011                WSCLEN
+0159 I                                      195 1950FLD012
+0160 I                                    P 206 2090FLD013
+0161 I                                      132 133 FLD014
+0162 I                                      171 1720FLD015
+0163 I                                      143 1430FLD016
+0164 I                                      487 4880FLD017
+0165 I                                      489 4900FLD018
+0166 I                                      499 5000FLD019
+0167 I                                      449 450 FLD020
+0168 I                                    P 491 4940FLD021
+0169 I********************************************************************WSCLEN
+0170 I*                                                                   WSCLEN
+0171 I*     INSERT INPUT SPECS FOR EACH INDEX SIMILAR TO THE COMMENTED    WSCLEN
+0172 I*     CODE BELOW WITH AA IN THE FILE NAME REPLACED BY THE           WSCLEN
+0173 I*     DESIGNATOR FOR THE INDEX FILE                                 WSCLEN
+0174 I*NDEXAA NS  01                                                      WSCLEN
+0175 I*                                       1   4 KEYFD                 WSCLEN
+0176 I*                                   P   5   80POITR                 WSCLEN
+0177 I*                                                                   WSCLEN
+0178 I********************************************************************WSCLEN
+0179 IINDEX01 NS  01                                                      WSCLEN
+0180 I                                        1   4 KEYFD                 WSCLEN
+0181 I                                    P   5   80POITR                 WSCLEN
+0182 IINDEX02 NS  01                                                      WSCLEN
+0183 I                                        1   4 KEYFD                 WSCLEN
+0184 I                                    P   5   80POITR                 WSCLEN
+0185 IWORKSTN NS  03   1 C1                                               WSCLEN
+0186 I                                        1   1 RCDID                 WSCLEN
+0187 I                                        2   7 FLD,1                 WSCLEN
+0188 I                                        8   9 OPR,1                 WSCLEN
+0189 I                                       10  17 VLU,1                 WSCLEN
+0190 I                                       18  20 AO,1                  WSCLEN
+0191 I                                       21  26 FLD,2                 WSCLEN
+0192 I                                       27  28 OPR,2                 WSCLEN
+0193 I                                       29  36 VLU,2                 WSCLEN
+0194 I                                       37  39 AO,2                  WSCLEN
+0195 I                                       40  45 FLD,3                 WSCLEN
+0196 I                                       46  47 OPR,3                 WSCLEN
+0197 I                                       48  55 VLU,3                 WSCLEN
+0198 I                                       56  59 SCODE                 WSCLEN
+0199 I        NS  02   1 C5                                               WSCLEN
+0200 I                                        1   1 RCDID                 WSCLEN
+0201 I                                        2   2 ACTCD                 WSCLEN
+0202 I                                        3   50NUMBR                 WSCLEN
+0203 I        NS  04                                                      WSCLEN
+0204 I                                        1   1 RCDID                 WSCLEN
+0205 C        N99          EXSR FIRST                                     WSCLEN
+0206 C           DET000    TAG                                            WSCLEN
+0207 C                     EXSR INIT                                      WSCLEN
+0208 C           DET010    TAG                                            WSCLEN
+0209 C                     SETOF                     94                   WSCLEN
+0210 C*  PRESENT THE INITIAL SCREEN AND READ THE REQUEST                  WSCLEN
+0211 C                     SETON                     82                   WSCLEN
+0212 C                     EXSR PUT                                       WSCLEN
+0213 C                     EXSR GET                                       WSCLEN
+0214 C         KY          GOTO DETEND                                    WSCLEN
+0215 C      86   SECCD     COMP SCODE                    88               WSCLEN
+0216 C      86N88          SETON                     LR                   WSCLEN
+0217 C      86N88          GOTO DETEND                                    WSCLEN
+0218 C                     SETON                     87                   WSCLEN
+0219 C                     SETOF                       86                 WSCLEN
+0220 C*     REMOVE LAST ERROR MESSAGE FROM ENTER REQUEST SCREEN           WSCLEN
+0221 C   20                EXSR INIT                                      WSCLEN
+0222 C   20                SETON                     8294                 WSCLEN
+0223 C                     SETOF                     20                   WSCLEN
+0224 C   82                EXSR PUT                                       WSCLEN
+0225 C*   EDIT THE REQUEST FOR CORRECTNESS.                               WSCLEN
+0226 C                     EXSR EDIT                                      WSCLEN
+0227 C         20          GOTO DET010                                    WSCLEN
+0228 C*   IF AN "OR" IS USED, BREAK REQUEST INTO TWO PARTS                WSCLEN
+0229 C         78                                                         WSCLEN
+0230 COR       79          EXSR BREAK                                     WSCLEN
+0231 C                     EXSR PREP                                      WSCLEN
+0232 C*   GET THE NEXT HIT AND ADD TO LIST.                               WSCLEN
+0233 C           DET020    TAG                                            WSCLEN
+0234 C                     EXSR GETHIT                                    WSCLEN
+0235 C*  IF HITS ARE EXHAUSTED                                            WSCLEN
+0236 C         38          GOTO DET030                                    WSCLEN
+0237 C     N78N79          GOTO DET040                                    WSCLEN
+0238 C*    PROCESS THE "OR"                                               WSCLEN
+0239 C                     EXSR MORE                                      WSCLEN
+0240 C                     GOTO DET020                                    WSCLEN
+0241 C*   PUT THE NEW HIT ON THE SCREEN                                   WSCLEN
+0242 C           DET030    TAG                                            WSCLEN
+0243 C                     EXSR PUTHIT                                    WSCLEN
+0244 C         59          GOTO DET040                                    WSCLEN
+0245 C*  IS THERE A HIT NOT YET ON THE SCREEN                             WSCLEN
+0246 C           I3        COMP I1                       89               WSCLEN
+0247 C        N89          GOTO DET030                                    WSCLEN
+0248 C*   IS THE HIT LIST FULL                                            WSCLEN
+0249 C        N40          GOTO DET020                                    WSCLEN
+0250 C*   THE SCREEN IS FULL, SHOW THE BOTTOM LINE                        WSCLEN
+0251 C           DET040    TAG                                            WSCLEN
+0252 C                     EXSR GETPAG                                    WSCLEN
+0253 C         KY          GOTO DETEND                                    WSCLEN
+0254 C         60          GOTO DET000                                    WSCLEN
+0255 C         59          GOTO DET040                                    WSCLEN
+0256 C           I3        COMP I1                       89               WSCLEN
+0257 C        N89          GOTO DET030                                    WSCLEN
+0258 C         38          GOTO DET020                                    WSCLEN
+0259 C                     GOTO DET040                                    WSCLEN
+0260 C           DETEND    TAG                                            WSCLEN
+0261 CLR                   MOVE BLNK25    BLNK25 25
+0262 C********************************************************************WSCLEN
+0263 C*                                                                   WSCLEN
+0264 C*   ADDSR - ADD THE HIT TO THE HIT LIST                             WSCLEN
+0265 C*                                                                   WSCLEN
+0266 C********************************************************************WSCLEN
+0267 CSR         ADDSR     BEGSR                                          WSCLEN
+02685CSR         I1        COMP MXHIT                40  40               WSCLEN
+02696CSR   N40   RECNO     LOKUPARL                      96               WSCLEN
+0270 CSR   N40N96I1        ADD  1         I1                              WSCLEN
+0271 CSR   N40N96          MOVE RECNO     ARL,I1                          WSCLEN
+0272 CSR         I1        COMP MXHIT                40  40               WSCLEN
+0273 CSR                   ENDSR                                          WSCLEN
+0274 C********************************************************************WSCLEN
+0275 C*                                                                   WSCLEN
+0276 C*    ANCHK - RETURNS WITH INDICATOR ON IF CHARACTER IS ALPHABETIC   WSCLEN
+0277 C*            OR NUMERIC                                             WSCLEN
+0278 C*                                                                   WSCLEN
+0279 C********************************************************************WSCLEN
+0280 CSR         ANCHK     BEGSR                                          WSCLEN
+0281 CSR         CHAR      COMP 'A'                  57  57               WSCLEN
+0282 CSR 57      CHAR      COMP 'I'                    5757               WSCLEN
+0283 CSR 57                GOTO ALPH99                                    WSCLEN
+0284 CSR         CHAR      COMP 'J'                  57  57               WSCLEN
+0285 CSR 57      CHAR      COMP 'R'                    5757               WSCLEN
+0286 CSR 57                GOTO ALPH99                                    WSCLEN
+0287 CSR         CHAR      COMP 'S'                  57  57               WSCLEN
+0288 CSR 57      CHAR      COMP 'Z'                    5757               WSCLEN
+0289 CSR 57                GOTO ALPH99                                    WSCLEN
+0290 CSR         CHAR      COMP '0'                  57  57               WSCLEN
+0291 CSR 57      CHAR      COMP '9'                    5757               WSCLEN
+0292 CSR         ALPH99    ENDSR                                          WSCLEN
+0293 C********************************************************************WSCLEN
+0294 C*                                                                   WSCLEN
+0295 C*   BACK - PAGE BACKWARD                                            WSCLEN
+0296 C*                                                                   WSCLEN
+0297 C********************************************************************WSCLEN
+0298 CSR         BACK      BEGSR                                          WSCLEN
+0299 CSR                   SETOF                     405992               WSCLEN
+0300 CSR                   Z-ADD0         I4                              WSCLEN
+0301 CSR         I3        SUB  NUMBR     I3           88                 WSCLEN
+0302 CSRN88      I3        SUB  0001      I3           88                 WSCLEN
+0303 CSR 88                Z-ADD0         I3                              WSCLEN
+0304 CSR                   ENDSR                                          WSCLEN
+0305 C********************************************************************WSCLEN
+0306 C*                                                                   WSCLEN
+0307 C*   BLANK - BLANKS THE END OF A FIELD BEING CONSIDERED FOR A MATCH. WSCLEN
+0308 C*           EVERYTHING AFTER THE FIRST BLANK AND ANY SPECIAL        WSCLEN
+0309 C*           CHARACTERS IMMEDIATELY PRECEEDING THE FIRST BLANK       WSCLEN
+0310 C*           ARE BLANKED OUT                                         WSCLEN
+0311 C*                                                                   WSCLEN
+0312 C********************************************************************WSCLEN
+0313 CSR         BLANK     BEGSR                                          WSCLEN
+0314 CSR                   Z-ADD1         K                               WSCLEN
+0315 CSR         ' '       LOKUPARW,K                    90               WSCLEN
+0316 CSRN90                Z-ADD9         K                               WSCLEN
+0317 CSR         BLANKA    TAG                                            WSCLEN
+0318 CSR         K         SUB  1         K              90               WSCLEN
+0319 CSR 90                GOTO BLANKB                                    WSCLEN
+0320 CSR                   MOVE ARW,K     CHAR                            WSCLEN
+0321 CSR                   EXSR ANCHK                                     WSCLEN
+0322 CSRN57                GOTO BLANKA                                    WSCLEN
+0323 CSR         BLANKB    TAG                                            WSCLEN
+0324 CSR         K         ADD  1         K                               WSCLEN
+0325 CSR         K         COMP 9                      90                 WSCLEN
+0326 CSR 90                MOVEA'        'ARW,K                           WSCLEN
+0327 CSR                   ENDSR                                          WSCLEN
+0328 C********************************************************************WSCLEN
+0329 C*                                                                   WSCLEN
+0330 C*   BREAK - CHECKS FOR A BOOLEAN OPERATOR OF 'OR' IN THE REQUEST    WSCLEN
+0331 C*           IF AN 'OR' IS PRESENT, THE REQUEST IS BROKEN INTO TWO   WSCLEN
+0332 C*           PARTS TO BE PROCESSED SEPARATELY. FOR EXAMPLE,          WSCLEN
+0333 C*           X  AND  Y  OR  Z  IS TREATED AS TWO REQUESTS            WSCLEN
+0334 C*               X  AND  Y                                           WSCLEN
+0335 C*               X  AND  Z                                           WSCLEN
+0336 C*                                                                   WSCLEN
+0337 C*           X  OR  Y  AND  Z  IS TREATED AS TWO REQUESTS            WSCLEN
+0338 C*               X  AND  Z                                           WSCLEN
+0339 C*               Y  AND  Z                                           WSCLEN
+0340 C*                                                                   WSCLEN
+0341 C********************************************************************WSCLEN
+0342 CSR         BREAK     BEGSR                                          WSCLEN
+0343 CSR 78                Z-ADD2         X                               WSCLEN
+0344 CSR 79                Z-ADD3         X                               WSCLEN
+0345 CSR                   MOVE FLD,X     HOLDF   6                       WSCLEN
+0346 CSR                   MOVE OPR,X     HOLDO   2                       WSCLEN
+0347 CSR                   MOVE VLU,X     HOLDV   8                       WSCLEN
+0348 CSR                   MOVE '      '  FLD,X                           WSCLEN
+0349 CSR                   MOVE '  '      OPR,X                           WSCLEN
+0350 CSR                   MOVE '        'VLU,X                           WSCLEN
+0351 CSR                   ENDSR                                          WSCLEN
+0352 C********************************************************************WSCLEN
+0353 C*                                                                   WSCLEN
+0354 C*   CHAINS - CHAINS TO THE CURRENT INDEX FILE USING THE             WSCLEN
+0355 C*            RELATIVE RECORD NUMBER                                 WSCLEN
+0356 C*                                                                   WSCLEN
+0357 C********************************************************************WSCLEN
+0358 CSR         CHAINS    BEGSR                                          WSCLEN
+0359 CSR                   SETOF                     42                   WSCLEN
+0360 C*     INSERT A CHAIN OPERATION FOR EACH INDEX FILE USED             WSCLEN
+0361 C*                                                                   WSCLEN
+0362 C*R NN      IREC      CHAININDXAA               42                   WSCLEN
+0363 C*                                                                   WSCLEN
+0364 CSR 61      IREC      CHAININDEX01              42                   WSCLEN
+0365 CSR 62      IREC      CHAININDEX02              42                   WSCLEN
+0366 CSR                   ENDSR                                          WSCLEN
+0367 C********************************************************************WSCLEN
+0368 C*                                                                   WSCLEN
+0369 C*   CHKOP - COMPARES THE OPERATOR OP WITH VALID VALUES AND RETURNS  WSCLEN
+0370 C*   WITH INDICATOR ON IF IT MATCHES ONE.                            WSCLEN
+0371 C*                                                                   WSCLEN
+0372 C********************************************************************WSCLEN
+0373 CSR         CHKOP     BEGSR                                          WSCLEN
+0374 CSR         OP        COMP EQ                       85               WSCLEN
+0375 CSRN85      OP        COMP GT                       85               WSCLEN
+0376 CSRN85      OP        COMP LT                       85               WSCLEN
+0377 CSRN85      OP        COMP GE                       85               WSCLEN
+0378 CSRN85      OP        COMP LE                       85               WSCLEN
+0379 CSRN85      OP        COMP NE                       85               WSCLEN
+0380 CSR                   ENDSR                                          WSCLEN
+0381 C********************************************************************WSCLEN
+0382 C*                                                                   WSCLEN
+0383 C*   CHKVL - WILL CHECK THE COMPARE VALUE OF A REQUEST. COMPARE      WSCLEN
+0384 C*           VALUES CANNOT START WITH SPECIAL CHARACTERS,AND         WSCLEN
+0385 C*           CANNOT CONTAIN EMBEDDED BLANKS                          WSCLEN
+0386 C*                                                                   WSCLEN
+0387 C********************************************************************WSCLEN
+0388 CSR         CHKVL     BEGSR                                          WSCLEN
+0389 CSR                   SETOF                     85                   WSCLEN
+0390 CSR                   MOVEAVALUE     ARG                             WSCLEN
+0391 CSR                   MOVE ARG,1     CHAR                            WSCLEN
+0392 CSR                   SETON                     58                   WSCLEN
+0393 CSR                   EXSR ANCHK                                     WSCLEN
+0394 CSR 57                SETON                     85                   WSCLEN
+0395 CSR 85                EXSR BLANK                                     WSCLEN
+0396 CSR                   SETOF                     58                   WSCLEN
+0397 CSR 85                MOVEAARG       WK08                            WSCLEN
+0398 CSR 85      VALUE     COMP WK08                     85               WSCLEN
+0399 CSR                   ENDSR                                          WSCLEN
+0400 C********************************************************************WSCLEN
+0401 C*                                                                   WSCLEN
+0402 C*   DISPLY - DISPLAYS THE FIRST 256 CHARACTERS OF A MASTER FILE     WSCLEN
+0403 C*            RECORD. THE RECORD IS IDENTIFIED BY LINE NUMBER        WSCLEN
+0404 C*                                                                   WSCLEN
+0405 C********************************************************************WSCLEN
+0406 CSR         DISPLY    BEGSR                                          WSCLEN
+04074CSR         NUMBR     COMP 000                      89               WSCLEN
+04085CSR 89      NUMBR     ADD  001       NUMBR                           WSCLEN
+0409 CSR         NUMBRS    COMP NUMBR                    89               WSCLEN
+0410 CSRN89                MOVE NUMBR     NUMBRS  40                      WSCLEN
+0411 CSR 89      NUMBRS    ADD  1         NUMBRS                          WSCLEN
+0412 CSR 89                MOVE NUMBRS    NUMBR                           WSCLEN
+0413 CSR                   MOVE ' '       ARF                             WSCLEN
+0414 CSR         NUMBR     COMP I1                   77                   WSCLEN
+0415 CSRN77      ARL,NUMBR CHAININPUT                77                   WSCLEN
+0416 CSR 77                GOTO DISP20                                    WSCLEN
+0417 CSR                   Z-ADD0256      X                               WSCLEN
+0418 CSR         DISP10    TAG                                            WSCLEN
+0419 CSR         ' '       COMP ARF,X                88                   WSCLEN
+0420 CSR       88          MOVE ' '       ARF,X                           WSCLEN
+0421 CSR         X         SUB  1         X            8888               WSCLEN
+0422 CSR      N88          GOTO DISP10                                    WSCLEN
+0423 CSR         DISP20    TAG                                            WSCLEN
+0424 CSR                   MOVEAARF       DUMP  256                       WSCLEN
+0425 CSR                   SETON                     8384                 WSCLEN
+0426 CSR                   EXSR PUT                                       WSCLEN
+0427 CSR                   SETOF                     88                   WSCLEN
+0428 CSR                   MOVE 'D'       ACTCD                           WSCLEN
+0429 CSR 77                Z-ADD1         NUMBR                           WSCLEN
+0430 CSR 77                MOVE 'F'       ACTCD                           WSCLEN
+0431 CSR                   SETON                     80                   WSCLEN
+0432 CSR                   EXSR PUT                                       WSCLEN
+0433 CSR                   ENDSR                                          WSCLEN
+0434 C********************************************************************WSCLEN
+0435 C*                                                                   WSCLEN
+0436 C*   EDIT - PERFORMS AN EDIT ON THE REQUEST.  INDICATOR 22 INDICATES WSCLEN
+0437 C*          AN ERROR WHEN IT RETURNS. OTHER ERROR INDICATORS ARE     WSCLEN
+0438 C*          ALSO SET ON TO INDICATE FIELDS IN ERROR                  WSCLEN
+0439 C*                                                                   WSCLEN
+0440 C********************************************************************WSCLEN
+0441 CSR         EDIT      BEGSR                                          WSCLEN
+0442 CSR                   Z-ADD1         Y       30                      WSCLEN
+0443 C*     VALIDATE FIELD NAME, OPERATOR, AND COMPARE VALUE              WSCLEN
+0444 CSR         FLD,1     LOKUPARC,Y                    85               WSCLEN
+0445 CSRN85                SETON                     212032               WSCLEN
+0446 CSR                   MOVE OPR,1     OP      2                       WSCLEN
+0447 CSR                   EXSR CHKOP                                     WSCLEN
+0448 CSRN85                SETON                     222033               WSCLEN
+0449 CSR                   MOVE VLU,1     VALUE                           WSCLEN
+0450 CSR                   EXSR CHKVL                                     WSCLEN
+0451 CSRN85                SETON                     232034               WSCLEN
+0452 CSR         AO,1      COMP OR                       78               WSCLEN
+0453 CSR         AO,2      COMP OR                       79               WSCLEN
+0454 C*   BYPASS TESTS IF REMAINING FIELDS BLANK                          WSCLEN
+0455 CSR         AO,1      COMP '   '                    88               WSCLEN
+0456 CSR    88   AO,2      COMP '   '                    88               WSCLEN
+0457 CSR    88   FLD,2     COMP '      '                 88               WSCLEN
+0458 CSR    88   FLD,3     COMP '      '                 88               WSCLEN
+0459 CSR    88   OPR,2     COMP '  '                     88               WSCLEN
+0460 CSR    88   OPR,3     COMP '  '                     88               WSCLEN
+0461 CSR    88   VLU,2     COMP '        '               88               WSCLEN
+0462 CSR    88   VLU,3     COMP '        '               88               WSCLEN
+0463 CSR    88             GOTO EDIT90                                    WSCLEN
+0464 CSR         AO,1      COMP AND                      85               WSCLEN
+0465 CSRN85      AO,1      COMP OR                       85               WSCLEN
+0466 CSRN85                SETON                     242035               WSCLEN
+0467 CSR                   Z-ADD1         Y                               WSCLEN
+0468 C*     VALIDATE SECOND FIELD, OPERATOR, AND VALUE                    WSCLEN
+0469 CSR         FLD,2     LOKUPARC,Y                    85               WSCLEN
+0470 CSRN85                SETON                     252032               WSCLEN
+0471 CSR                   MOVE OPR,2     OP                              WSCLEN
+0472 CSR                   EXSR CHKOP                                     WSCLEN
+0473 CSRN85                SETON                     262033               WSCLEN
+0474 CSR                   MOVE VLU,2     VALUE                           WSCLEN
+0475 CSR                   EXSR CHKVL                                     WSCLEN
+0476 CSRN85                SETON                     272034               WSCLEN
+0477 C*  IF REMAINING FIELDS BLANK, BYPASS TESTS                          WSCLEN
+0478 CSR         AO,2      COMP '   '                    88               WSCLEN
+0479 CSR    88   FLD,3     COMP '      '                 88               WSCLEN
+0480 CSR    88   OPR,3     COMP '  '                     88               WSCLEN
+0481 CSR    88   VLU,3     COMP '        '               88               WSCLEN
+0482 CSR    88             GOTO EDIT90                                    WSCLEN
+0483 CSR         AO,2      COMP AND                      85               WSCLEN
+0484 CSRN85      AO,2      COMP OR                       85               WSCLEN
+0485 CSRN85                SETON                     282035               WSCLEN
+0486 CSR                   Z-ADD1         Y                               WSCLEN
+0487 CSR         FLD,3     LOKUPARC,Y                    85               WSCLEN
+0488 CSRN85                SETON                     292032               WSCLEN
+0489 CSR                   MOVE OPR,3     OP                              WSCLEN
+0490 CSR                   EXSR CHKOP                                     WSCLEN
+0491 CSRN85                SETON                     302033               WSCLEN
+0492 CSR                   MOVE VLU,3     VALUE                           WSCLEN
+0493 CSR                   EXSR CHKVL                                     WSCLEN
+0494 CSRN85                SETON                     312034               WSCLEN
+0495 C*     CHECK FOR 2 OR OPERANDS                                       WSCLEN
+0496 CSR 78 79             SETON                     202428               WSCLEN
+0497 CSR 78 79             SETON                     3536                 WSCLEN
+0498 CSR         EDIT90    TAG                                            WSCLEN
+0499 CSR       20          GOTO EDIT99                                    WSCLEN
+0500 C*  SAVE THE CURRENT REQUEST                                         WSCLEN
+0501 CSR                   MOVEAFLD       SFLD                            WSCLEN
+0502 CSR                   MOVEAOPR       SOPR                            WSCLEN
+0503 CSR                   MOVEAVLU       SVLU                            WSCLEN
+0504 CSR                   MOVEAAO        SAO                             WSCLEN
+0505 CSR                   SETOF                     57                   WSCLEN
+0506 CSR         EDIT99    ENDSR                                          WSCLEN
+0507 C********************************************************************WSCLEN
+0508 C*                                                                   WSCLEN
+0509 C*   FIRST - ONLY USED ONCE AT BEGINNING OF A SESSION                WSCLEN
+0510 C*                                                                   WSCLEN
+0511 C********************************************************************WSCLEN
+0512 CSR         FIRST     BEGSR                                          WSCLEN
+0513 C*     INSERT LINES OF CODE TO PROVIDE DELETE CODE AND DELETE        WSCLEN
+0514 C*     POSITION.  FOR EXAMPLE-                                       WSCLEN
+0515 C*R                   MOVE 'D'       DELCD   1                       WSCLEN
+0516 C*R                   Z-ADD3         DP      40                      WSCLEN
+0517 C*                                                                   WSCLEN
+0518 C*    INSERT LINES OF CODE TO PROVIDE SECURITY CODE AND SEARCH       WSCLEN
+0519 C*    PROCEDURE NAME.                                                WSCLEN
+0520 C*R                   MOVE 'CODE'    SECCD   4                       WSCLEN
+0521 C*R                   MOVE 'SEARCH'  SPROG   8                       WSCLEN
+0522 C*                                                                   WSCLEN
+0523 CSR U8                MOVEAARA       ARC
+0524 CSR U7                MOVEAARB       ARC
+0525 CSR U7                MOVEAAR2       ARD
+0526 CSR U8                MOVEAAR1       ARD
+0527 CSR                   MOVE 'D'       DELCD   1                       WSCLEN
+0528 CSR                   Z-ADD0017      DP      40                      WSCLEN
+0529 CSR                   MOVE '    '    SECCD   4                       WSCLEN
+0530 CSR                   MOVE 'WSCLENP 'SPROC   8                       WSCLEN
+0531 CSR U7                MOVE 'WSCLNHSP'SPROC
+0532 CSR U8                MOVE 'WSAPPLP 'SPROC
+0533 CSR         SECCD     COMP '    '               868687               WSCLEN
+0534 CSR                   Z-ADD200       MXHIT   30                      WSCLEN
+0535 CSR      NU2          Z-ADD20        MXLNS   20                      WSCLEN
+0536 CSR       U2          Z-ADD8         MXLNS                           WSCLEN
+0537 CSR                   MOVE 'EQ'      EQ      2                       WSCLEN
+0538 CSR                   MOVE 'LT'      LT      2                       WSCLEN
+0539 CSR                   MOVE 'GT'      GT      2                       WSCLEN
+0540 CSR                   MOVE 'NE'      NE      2                       WSCLEN
+0541 CSR                   MOVE 'LE'      LE      2                       WSCLEN
+0542 CSR                   MOVE 'GE'      GE      2                       WSCLEN
+0543 CSR                   MOVE 'AND'     AND     3                       WSCLEN
+0544 CSR                   MOVE 'OR'      OR      2                       WSCLEN
+0545 CSR                   MOVE RCDID     RCDID                           WSCLEN
+0546 CSR                   EXSR GET                                       WSCLEN
+0547 CSR                   ENDSR                                          WSCLEN
+0548 C********************************************************************WSCLEN
+0549 C*                                                                   WSCLEN
+0550 C*   FORMAT - SETS INDICATORS TO SHOW FIELD TYPE PER DATA DICTIONARY WSCLEN
+0551 C*                                                                   WSCLEN
+0552 C********************************************************************WSCLEN
+0553 CSR         FORMAT    BEGSR                                          WSCLEN
+0554 CSR                   SETOF                     50                   WSCLEN
+0555 CSR                   MOVE IDX,I     Y                               WSCLEN
+0556 CSR                   MOVE ARD,Y     WK3     3                       WSCLEN
+0557 CSR                   MOVELWK3       WK1     1                       WSCLEN
+0558 CSR         WK1       COMP 'C'                      46               WSCLEN
+0559 CSR         WK1       COMP 'B'                      47               WSCLEN
+0560 CSR   N47   WK1       COMP 'A'                      47               WSCLEN
+0561 CSR         WK1       COMP 'N'                      48               WSCLEN
+0562 CSR         WK1       COMP 'P'                      49               WSCLEN
+0563 CSR       48                                                         WSCLEN
+0564 COR       49          SETON                     50                   WSCLEN
+0565 CSR                   ENDSR                                          WSCLEN
+0566 C********************************************************************WSCLEN
+0567 C*                                                                   WSCLEN
+0568 C*   FORWRD - PAGE FORWARD                                           WSCLEN
+0569 C*                                                                   WSCLEN
+0570 C********************************************************************WSCLEN
+0571 CSR         FORWRD    BEGSR                                          WSCLEN
+0572 CSR                   SETOF                     59                   WSCLEN
+0573 CSR                   Z-ADD00        I4                              WSCLEN
+0574 CSR         NUMBR     COMP 001                      98               WSCLEN
+0575 CSR 98                GOTO FOREND                                    WSCLEN
+0576 CSR         I3        ADD  NUMBR     I3                              WSCLEN
+0577 CSR         I3        COMP I1                   77                   WSCLEN
+0578 CSR 77      I3        SUB  NUMBR     I3                              WSCLEN
+05795CSRN77      I3        SUB  001       I3                              WSCLEN
+0580 CSR         FOREND    TAG                                            WSCLEN
+0581 CSR 98      I1        COMP MXHIT                    77               WSCLEN
+05825CSR 98 77   I3        COMP MXHIT                    77               WSCLEN
+0583 CSR                   SETOF                     98                   WSCLEN
+0584 CSR                   ENDSR                                          WSCLEN
+0585 C********************************************************************WSCLEN
+0586 C*                                                                   WSCLEN
+0587 C*   GET - READS THE USERS RESPONSE FROM THE DISPLAY                 WSCLEN
+0588 C*                                                                   WSCLEN
+0589 C********************************************************************WSCLEN
+0590 CSR         GET       BEGSR                                          WSCLEN
+0591 CSR                   SETOF                         88               WSCLEN
+0592 CSR                   READ WORKSTN                  88               WSCLEN
+0593 CSR                   SETOF                     020304               WSCLEN
+0594 CSR       KY          SETON                     LR                   WSCLEN
+0595 CSR                   ENDSR                                          WSCLEN
+0596 C********************************************************************WSCLEN
+0597 C*                                                                   WSCLEN
+0598 C*   GETHIT - FINDS THE NEXT HIT AND ADDS IT TO THE LIST             WSCLEN
+0599 C*                                                                   WSCLEN
+0600 C********************************************************************WSCLEN
+0601 CSR         GETHIT    BEGSR                                          WSCLEN
+0602 CSR                   SETOF                     3738                 WSCLEN
+0603 CSR         GETH10    TAG                                            WSCLEN
+0604 CSR                   EXSR SUSPCT                                    WSCLEN
+0605 CSR      N37          GOTO GETH99                                    WSCLEN
+0606 CSR                   EXSR HITSR                                     WSCLEN
+0607 C*  END OF MASTER FILE                                               WSCLEN
+0608 CSR       44          GOTO GETH99                                    WSCLEN
+0609 CSR      N38          GOTO GETH10                                    WSCLEN
+0610 CSR                   EXSR ADDSR                                     WSCLEN
+0611 CSR         GETH99    ENDSR                                          WSCLEN
+0612 C********************************************************************WSCLEN
+0613 C*                                                                   WSCLEN
+0614 C*   GETPAG - TESTS THE USERS PAGING RESPONSES                       WSCLEN
+0615 C*                                                                   WSCLEN
+0616 C********************************************************************WSCLEN
+0617 CSR         GETPAG    BEGSR                                          WSCLEN
+0618 CSRN40N59             SETON                     92                   WSCLEN
+0619 CSR         GETP00    TAG                                            WSCLEN
+0620 CSR                   SETON                     80                   WSCLEN
+0621 CSR                   EXSR PUT                                       WSCLEN
+0622 CSR                   SETOF                     77                   WSCLEN
+0623 CSR         GETP10    TAG                                            WSCLEN
+0624 CSR                   EXSR GET                                       WSCLEN
+0625 CSR       KY          GOTO GETP99                                    WSCLEN
+06264CSR         'D'       COMP ACTCD                9090                 WSCLEN
+06275CSR 90                Z-ADD0         NUMBRS                          WSCLEN
+0628 CSR         'C'       COMP ACTCD                    90               WSCLEN
+0629 CSR       90          SETON                     60                   WSCLEN
+0630 CSR       60          GOTO GETP99                                    WSCLEN
+0631 CSR         'F'       COMP ACTCD                    90               WSCLEN
+0632 CSR       90          EXSR FORWRD                                    WSCLEN
+0633 CSRN77    90          GOTO GETP99                                    WSCLEN
+0634 CSR         'B'       COMP ACTCD                    90               WSCLEN
+06355CSR 90 40             SETON                     95                   WSCLEN
+0636 CSR       90          EXSR BACK                                      WSCLEN
+0637 CSR         'N'       COMP ACTCD                    93               WSCLEN
+0638 CSR       93          EXSR NEW100                                    WSCLEN
+0639 CSRN91    93          SETON                     8183                 WSCLEN
+0640 CSRN91    93          EXSR PUT                                       WSCLEN
+0641 CSRN91    93          Z-ADD00        I4                              WSCLEN
+0642 CSR         'D'       COMP ACTCD                    90               WSCLEN
+0643 CSR       90          EXSR DISPLY                                    WSCLEN
+0644 CSR       90          GOTO GETP00                                    WSCLEN
+0645 CSR                   SETOF                     919398               WSCLEN
+0646 CSR                   MOVE 'F'       ACTCD                           WSCLEN
+0647 CSR                   Z-ADD1         NUMBR                           WSCLEN
+0648 CSR 77                GOTO GETP00                                    WSCLEN
+0649 CSR         GETP99    ENDSR                                          WSCLEN
+0650 C********************************************************************WSCLEN
+0651 C*                                                                   WSCLEN
+0652 C*   HITSR - RETRIEVES THE MASTER FILE RECORD DESIGNATED AS A        WSCLEN
+0653 C*           SUSPECT BY THE INDEXES, THEN ACCEPTS IT AS A HIT OR     WSCLEN
+0654 C*           REJECTS IT                                              WSCLEN
+0655 C*                                                                   WSCLEN
+0656 C********************************************************************WSCLEN
+0657 CSR         HITSR     BEGSR                                          WSCLEN
+0658 CSR                   Z-ADD0         I                               WSCLEN
+0659 CSR         RECNO     CHAININPUT                44                   WSCLEN
+0660 CSR       44          SETON                     45                   WSCLEN
+0661 CSR       44          GOTO HIT99                                     WSCLEN
+0662 CSR         DELCD     COMP ' '                      89               WSCLEN
+0663 CSR 89                GOTO HIT10                                     WSCLEN
+0664 C*    MATCH ON DELETE CODE-DO NOT PROCESS                            WSCLEN
+0665 CSR         DELCD     COMP ARF,DP                   88               WSCLEN
+0666 CSR       88          GOTO HIT99                                     WSCLEN
+0667 CSR         HIT10     TAG                                            WSCLEN
+0668 CSR         I         ADD  1         I                               WSCLEN
+0669 CSR         I         COMP 3                    38                   WSCLEN
+0670 CSR                   SETOF                     89                   WSCLEN
+0671 CSR       38          GOTO HIT99                                     WSCLEN
+0672 CSR         FLD,I     COMP '      '                 88               WSCLEN
+0673 CSR       88          GOTO HIT10                                     WSCLEN
+0674 CSR                   EXSR OPRCMP                                    WSCLEN
+0675 CSR                   EXSR FORMAT                                    WSCLEN
+0676 CSR                   EXSR MCOMP                                     WSCLEN
+0677 CSR       38          GOTO HIT10                                     WSCLEN
+0678 CSR         HIT99     ENDSR                                          WSCLEN
+0679 C********************************************************************WSCLEN
+0680 C*                                                                   WSCLEN
+0681 C*   ICOMP - RETRIVES THE INDEX FILE RECORD AND TESTS PER THE PRESET WSCLEN
+0682 C*           INDICATORS                                              WSCLEN
+0683 C*                                                                   WSCLEN
+0684 C********************************************************************WSCLEN
+0685 CSR         ICOMP     BEGSR                                          WSCLEN
+0686 CSR                   EXSR SETIND                                    WSCLEN
+0687 CSR                   EXSR CHAINS                                    WSCLEN
+0688 CSR       42          SETON                     43                   WSCLEN
+0689 CSR       42          GOTO ICOM99                                    WSCLEN
+0690 CSR                   MOVELKEYFD     FDATA   8                       WSCLEN
+0691 CSR                   SETOF                     4143                 WSCLEN
+0692 CSR                   MOVEAFDATA     ARH                             WSCLEN
+0693 CSR                   MOVEAVALUE     ARG                             WSCLEN
+0694 CSR                   Z-ADD1         X       70                      WSCLEN
+0695 CSR         '_'       LOKUPARG,X                    88               WSCLEN
+0696 CSRN88                GOTO ICOM02                                    WSCLEN
+0697 CSR         ICOM01    TAG                                            WSCLEN
+0698 CSR                   MOVEA'_'       ARH,X                           WSCLEN
+06995CSR                   MOVEA'_'       ARG,X                           WSCLEN
+0700 CSR         X         ADD  1         X                               WSCLEN
+0701 CSR         X         COMP 9                      88                 WSCLEN
+0702 CSR 88                GOTO ICOM01                                    WSCLEN
+0703 CSR         ICOM02    TAG                                            WSCLEN
+0704 CSR                   MOVEA'    '    ARH,5                           WSCLEN
+0705 CSR                   MOVEA'    '    ARG,5                           WSCLEN
+0706 CSR                   MOVEAARH       WK08                            WSCLEN
+0707 CSR                   MOVEAARG       WL08    8                       WSCLEN
+0708 CSR         WK08      COMP WL08                 565554               WSCLEN
+0709 CSR    56N53          SETON                     43                   WSCLEN
+0710 CSR    56 53                                                         WSCLEN
+0711 COR    55 52                                                         WSCLEN
+0712 COR    54 51          SETON                     41                   WSCLEN
+0713 CSR         ICOM99    ENDSR                                          WSCLEN
+0714 C********************************************************************WSCLEN
+0715 C*                                                                   WSCLEN
+0716 C*   INEXT - FINDS THE RELATIVE RECORD NUMBER OF A SUSPECT FROM      WSCLEN
+0717 C*           ONE INDEX FILE. FOR THE FIRST SUSPECT, IT CALLS SEARCH  WSCLEN
+0718 C*           WHICH PERFORMS A BINARY SEARCH TO FIND THE STARTING     WSCLEN
+0719 C*           POINT. THEREAFTER IT MOVES SEQUENTIALLY THROUGH         WSCLEN
+0720 C*           THE INDEX FILE                                          WSCLEN
+0721 C*                                                                   WSCLEN
+0722 C********************************************************************WSCLEN
+0723 CSR         INEXT     BEGSR                                          WSCLEN
+0724 CSR                   EXSR OPRCMP                                    WSCLEN
+07255CSR                   EXSR FORMAT                                    WSCLEN
+0726 CSR                   MOVE VLU,I     VALUE   8                       WSCLEN
+0727 CSR                   MOVE ID,I      WA02    2                       WSCLEN
+07283CSR 50                MOVE VALUE     WK08                            WSCLEN
+07294CSR 50                EXSR JSTFY                                     WSCLEN
+07305CSR 50                MOVE WK08      WK04    4                       WSCLEN
+07316CSR 50                MOVELWK04      VALUE                           WSCLEN
+0732 CSR                   MOVE '    '    VALUE                           WSCLEN
+0733 CSR         REC,I     COMP 0                        88               WSCLEN
+0734 CSR       88          GOTO INEX20                                    WSCLEN
+0735 CSR         INEX10    TAG                                            WSCLEN
+0736 CSR         REC,I     ADD  1         REC,I                           WSCLEN
+0737 CSR                   MOVE REC,I     IREC    70                      WSCLEN
+0738 CSR                   EXSR ICOMP                                     WSCLEN
+0739 CSR       42          GOTO INEX30                                    WSCLEN
+0740 CSR       41          GOTO INEX40                                    WSCLEN
+0741 CSR      N43          GOTO INEX10                                    WSCLEN
+0742 CSR                   GOTO INEX30                                    WSCLEN
+0743 C*   TO FIND THE FIRST RECORD SATISFYING                             WSCLEN
+0744 CSR         INEX20    TAG                                            WSCLEN
+0745 CSR                   SETOF                     39                   WSCLEN
+0746 CSR                   EXSR SEARCH                                    WSCLEN
+0747 CSR       41          GOTO INEX40                                    WSCLEN
+0748 CSR         INEX30    TAG                                            WSCLEN
+0749 CSR                   SETON                     39                   WSCLEN
+0750 CSR                   GOTO INEX99                                    WSCLEN
+0751 CSR         INEX40    TAG                                            WSCLEN
+0752 CSR                   MOVE IREC      REC,I                           WSCLEN
+0753 CSR         INEX99    ENDSR                                          WSCLEN
+0754 C********************************************************************WSCLEN
+0755 C*                                                                   WSCLEN
+0756 C*   INIT - RESETS FIELDS AND INDICATORS FOR THE NEXT REQUEST        WSCLEN
+0757 C*                                                                   WSCLEN
+0758 C********************************************************************WSCLEN
+0759 CSR         INIT      BEGSR                                          WSCLEN
+0760 CSR                   SETOF                     010203               WSCLEN
+0761 CSR                   SETOF                     0405                 WSCLEN
+0762 CSR                   SETOF                       2122               WSCLEN
+0763 CSR                   SETOF                     232425               WSCLEN
+0764 CSR                   SETOF                     262728               WSCLEN
+0765 CSR                   SETOF                     293031               WSCLEN
+0766 CSR                   SETOF                     323334               WSCLEN
+0767 CSR                   SETOF                     3536                 WSCLEN
+0768 CSR                   SETOF                     373839               WSCLEN
+0769 CSR                   SETOF                     404142               WSCLEN
+0770 CSR                   SETOF                     434445               WSCLEN
+0771 CSR                   SETOF                     464748               WSCLEN
+0772 CSR                   SETOF                     495051               WSCLEN
+0773 CSR                   SETOF                     525354               WSCLEN
+0774 CSR                   SETOF                     555657               WSCLEN
+0775 CSR                   SETOF                     585960               WSCLEN
+0776 CSR                   SETOF                     616263               WSCLEN
+0777 CSR                   SETOF                     646566               WSCLEN
+0778 CSR                   SETOF                     676869               WSCLEN
+0779 CSR                   SETOF                     707172               WSCLEN
+0780 CSR                   SETOF                     737475               WSCLEN
+0781 CSR                   SETOF                     767778               WSCLEN
+0782 CSR                   SETOF                     798081               WSCLEN
+0783 CSR                   SETOF                     828384               WSCLEN
+0784 CSR                   SETOF                     8592                 WSCLEN
+0785 CSR 20                GOTO INIEND                                    WSCLEN
+0786 CSR                   Z-ADD0         IDX                             WSCLEN
+0787 CSR                   MOVE '  '      ID                              WSCLEN
+07885CSR                   Z-ADD0         ARL                             WSCLEN
+0789 CSR                   Z-ADD0         REC                             WSCLEN
+0790 CSR                   Z-ADD0         I1      40                      WSCLEN
+0791 CSR                   Z-ADD0         I3      40                      WSCLEN
+0792 CSR                   Z-ADD0         I4      20                      WSCLEN
+0793 CSR                   Z-ADD0         RECNO   70                      WSCLEN
+0794 CSR                   Z-ADD1         NUMBR                           WSCLEN
+0795 CSR                   MOVE 'F'       ACTCD                           WSCLEN
+0796 CSR                   MOVEASFLD      FLD                             WSCLEN
+0797 CSR                   MOVEASOPR      OPR                             WSCLEN
+0798 CSR                   MOVEASVLU      VLU                             WSCLEN
+0799 CSR                   MOVEASAO       AO                              WSCLEN
+0800 CSR                   SETON                     99                   WSCLEN
+0801 CSR         INIEND    ENDSR                                          WSCLEN
+0802 C********************************************************************
+0803 C*
+0804 C*   FLPDTE - FLIPS DATE FROM YYMMDD FORMAT TO MMDDY FORMAT
+0805 C*
+0806 C********************************************************************
+0807 CSR         FLPDTE    BEGSR
+0808 CSR U8                Z-ADDFLD013    DTE006  60
+0809 CSR U7                Z-ADDFLD021    DTE006
+0810 CSRNU7NU8             Z-ADDFLD008    DTE006
+0811 CSR                   MOVELDTE006    YY      20
+0812 CSR                   MOVE DTE006    MMDD    40
+0813 CSR                   MOVE YY        DTE006  60
+0814 CSR                   MOVELMMDD      DTE006
+0815 CSR                   ENDSR
+0816 C********************************************************************
+0817 C********************************************************************
+0818 C*
+0819 C*   FLPNME - ROUTINE TO CONDENSE  NAME FIELD
+0820 C*
+0821 C********************************************************************
+0822 CSR         FLPNME    BEGSR
+0823 CSR                   Z-ADD20        P1      20
+0824 CSR                   MOVEAFLD002    N1
+0825 CSR                   MOVEABLNK25    N2
+0826 CSR                   MOVEAFLD0A2    N2
+0827 CSR         LOOPNM    TAG
+0828 CSR         N2,P1     COMP ' '                      10
+0829 CSR 10      P1        SUB  1         P1
+0830 CSRN10      P1        ADD  1         P1
+0831 CSRN10                MOVE ','       N2,P1
+0832 CSRN10      P1        ADD  2         P1
+0833 CSRN10                MOVEAFLD0B2    N2,P1
+0834 CSR 10      P1        COMP 0                        11
+0835 CSR 10N11             GOTO LOOPNM
+0836 CSR 11                GOTO NONAME
+0837 CSR                   Z-ADD23        P1
+0838 C           N2,P1     COMP ' '                      10
+0839 C  N10                GOTO NONAME
+0840 CSR         LOOPNX    TAG
+0841 CSR         N2,P1     COMP ' '                      10
+0842 CSR 10      P1        SUB  1         P1
+0843 CSRN10      P1        ADD  2         P1
+0844 CSRN10                MOVE N1,31     N2,P1
+0845 CSR 10                GOTO LOOPNX
+0846 CSR         NONAME    TAG
+0847 C                     MOVEAN2        FLDAA2 25
+0848 CSR                   ENDSR
+0849 C********************************************************************WSCLEN
+0850 C*                                                                   WSCLEN
+0851 C*   JSTFY - RIGHT JUSTIFY NUMERIC DATA                              WSCLEN
+0852 C*                                                                  *WSCLEN
+0853 C********************************************************************WSCLEN
+0854 CSR         JSTFY     BEGSR                                          WSCLEN
+0855 CSR         JSTFYA    TAG                                            WSCLEN
+0856 CSR                   MOVE WK08      WK01                            WSCLEN
+0857 CSR         WK01      COMP '-'                  90  89               WSCLEN
+0858 CSR 90                GOTO JSTFYE                                    WSCLEN
+0859 CSR                   MOVELWK08      WK07    7                       WSCLEN
+0860 CSR 89                MLLZO'J'       WK07                            WSCLEN
+0861 CSR                   MOVE WK07      WK08                            WSCLEN
+0862 CSR                   MOVEL'0'       WK08                            WSCLEN
+0863 CSR                   GOTO JSTFYA                                    WSCLEN
+0864 CSR         JSTFYE    ENDSR                                          WSCLEN
+0865 C********************************************************************WSCLEN
+0866 C*                                                                   WSCLEN
+0867 C*   MCOMP - PERFORMS THE COMPARISON OF AN ARGUMENT TO THE MASTER    WSCLEN
+0868 C*           RECORD                                                  WSCLEN
+0869 C*                                                                   WSCLEN
+0870 C********************************************************************WSCLEN
+0871 CSR         MCOMP     BEGSR                                          WSCLEN
+0872 CSR                   MOVEAVLU,I     ARG                             WSCLEN
+0873 CSR                   MOVE IDX,I     Y                               WSCLEN
+0874 CSR                   MOVELARD,Y     WK08    8                       WSCLEN
+0875 CSR                   MOVELWK08      START   40                      WSCLEN
+0876 CSR                   MOVE WK08      END     40                      WSCLEN
+0877 CSR         MCOM10    TAG                                            WSCLEN
+0878 CSR    47   ARF,END   COMP ' '                      88               WSCLEN
+0879 CSR    47 88END       SUB  1         END                             WSCLEN
+0880 CSR    47 88          GOTO MCOM10                                    WSCLEN
+0881 CSR         END       SUB  START     X                               WSCLEN
+0882 CSR    48   X         COMP 7                    88                   WSCLEN
+0883 CSR    48 88END       SUB  7         START                           WSCLEN
+0884 CSR    49   X         COMP 4                    88                   WSCLEN
+0885 CSR    49 88END       SUB  4         START                           WSCLEN
+0886 CSR         END       COMP START                  88                 WSCLEN
+0887 CSR       88          Z-ADDSTART     END                             WSCLEN
+0888 CSR                   Z-ADDSTART     M       40                      WSCLEN
+0889 CSR      N47          GOTO MCOM30                                    WSCLEN
+0890 CSR         MCOM20    TAG                                            WSCLEN
+0891 CSR                   MOVE ARF,M     CHAR    1                       WSCLEN
+0892 CSR                   EXSR ANCHK                                     WSCLEN
+0893 CSR      N57          GOTO MCOM60                                    WSCLEN
+0894 C*  MOVE RECORD TO ARW                                               WSCLEN
+0895 CSR         MCOM30    TAG                                            WSCLEN
+0896 CSRN46N49             MOVEAARF,M     ARW                             WSCLEN
+0897 CSR         END       SUB  M         K       40                      WSCLEN
+0898 CSR       46                                                         WSCLEN
+0899 COR       49          EXSR UNPACK                                    WSCLEN
+0900 CSR         K         ADD  2         K                               WSCLEN
+0901 C*   IF FIELD LNG LT 9, BLANK TAIL END OF ARW                        WSCLEN
+0902 CSR         K         COMP 9                      88                 WSCLEN
+0903 CSRN49    88          MOVEA'        'ARW,K                           WSCLEN
+0904 CSR                   MOVEAARW       WK08                            WSCLEN
+0905 CSR       50          EXSR JSTFY                                     WSCLEN
+0906 CSR                   MOVEAWK08      ARW                             WSCLEN
+0907 CSR                   MOVEAARG       WK08                            WSCLEN
+0908 CSR       50          EXSR JSTFY                                     WSCLEN
+0909 CSR                   MOVEAWK08      ARG                             WSCLEN
+0910 CSRN50                EXSR BLANK                                     WSCLEN
+0911 C*  PUT UNDERSCORE IN ARW, IF IN ARGUMENT ARG                        WSCLEN
+0912 CSR                   Z-ADD1         K                               WSCLEN
+0913 CSR         MCOM40    TAG                                            WSCLEN
+0914 CSR         '_'       LOKUPARG,K                    88               WSCLEN
+0915 CSRN88                GOTO MCOM50                                    WSCLEN
+0916 CSR                   MOVEA'_'       ARW,K                           WSCLEN
+0917 CSR         K         ADD  1         K                               WSCLEN
+0918 CSR         K         COMP 9                      88                 WSCLEN
+0919 CSR 88                GOTO MCOM40                                    WSCLEN
+0920 CSR         MCOM50    TAG                                            WSCLEN
+0921 CSR                   MOVEAARG       VALUE                           WSCLEN
+0922 CSR                   MOVEAARW       WK08                            WSCLEN
+0923 CSR                   MOVE VALUE     VALUEN  80                      WSCLEN
+0924 CSR                   MOVE WK08      WK08N   80                      WSCLEN
+0925 CSR         WK08      COMP VALUE                565554               WSCLEN
+0926 CSR    50   WK08N     COMP VALUEN               565554               WSCLEN
+0927 CSR    56 53                                                         WSCLEN
+0928 COR    55 52                                                         WSCLEN
+0929 COR    54 51          SETON                     38                   WSCLEN
+0930 CSR       38                                                         WSCLEN
+0931 COR      N47          GOTO MCOM99                                    WSCLEN
+0932 C*   SEARCH FOR NEXT WORD, FIRST SCAN FOR CHAR LT A.                 WSCLEN
+0933 CSR         MCOM60    TAG                                            WSCLEN
+0934 CSR         ARF,M     COMP 'A'                    88                 WSCLEN
+0935 CSR       88          GOTO MCOM65                                    WSCLEN
+0936 CSR         M         ADD  1         M                               WSCLEN
+0937 CSR         M         COMP END                  88  88               WSCLEN
+0938 CSR       88          GOTO MCOM99                                    WSCLEN
+0939 CSR                   GOTO MCOM60                                    WSCLEN
+0940 C*  NEXT SCAN FOR AN ALPHAMERIC CHARACTER                            WSCLEN
+0941 CSR         MCOM65    TAG                                            WSCLEN
+0942 CSR         M         ADD  1         M                               WSCLEN
+0943 CSR         M         COMP END                  88                   WSCLEN
+0944 CSR       88          GOTO MCOM99                                    WSCLEN
+0945 CSR         ARF,M     COMP 'A'                  88  88               WSCLEN
+0946 CSR      N88          GOTO MCOM65                                    WSCLEN
+0947 CSR                   GOTO MCOM20                                    WSCLEN
+0948 CSR         MCOM99    ENDSR                                          WSCLEN
+0949 C********************************************************************WSCLEN
+0950 C*                                                                   WSCLEN
+0951 C*   MORE - RESETS THE SEARCH ARGUMENTS IF THE ORIGINAL REQUEST      WSCLEN
+0952 C*          CONTAINED AN 'OR' AND RESETS POINTERS FOR THE REST       WSCLEN
+0953 C*          OF THE SEARCH                                            WSCLEN
+0954 C*                                                                   WSCLEN
+0955 C********************************************************************WSCLEN
+0956 CSR         MORE      BEGSR                                          WSCLEN
+0957 CSR       78          Z-ADD1         X                               WSCLEN
+0958 CSR       79          Z-ADD2         X                               WSCLEN
+0959 CSR                   MOVE HOLDF     FLD,X                           WSCLEN
+0960 CSR                   MOVE HOLDO     OPR,X                           WSCLEN
+0961 CSR                   MOVE HOLDV     VLU,X                           WSCLEN
+0962 CSR                   Z-ADD0         REC                             WSCLEN
+0963 CSR                   Z-ADD0         RECNO                           WSCLEN
+0964 CSR                   SETOF                     7879                 WSCLEN
+0965 CSR                   EXSR PREP                                      WSCLEN
+0966 CSR                   ENDSR                                          WSCLEN
+0967 C********************************************************************WSCLEN
+0968 C*                                                                   WSCLEN
+0969 C*   NEW100 - RESETS POINTERS TO REFILL THE LIST                     WSCLEN
+0970 C*                                                                   WSCLEN
+0971 C********************************************************************WSCLEN
+0972 CSR         NEW100    BEGSR                                          WSCLEN
+0973 CSR         I1        COMP MXHIT                  91                 WSCLEN
+0974 CSR 91                GOTO NEW199                                    WSCLEN
+0975 CSR                   SETOF                     405995               WSCLEN
+0976 CSR                   Z-ADD0         I1                              WSCLEN
+0977 CSR                   Z-ADD0         I3                              WSCLEN
+0978 CSR                   Z-ADD02        I4                              WSCLEN
+0979 CSR         NEW199    ENDSR                                          WSCLEN
+0980 C********************************************************************WSCLEN
+0981 C*                                                                   WSCLEN
+0982 C*   OPRCMP - SETS INDICATORS TO TEST RECORDS IN ACCORD WITH THE     WSCLEN
+0983 C*            REQUEST                                                WSCLEN
+0984 C*                                                                   WSCLEN
+0985 C********************************************************************WSCLEN
+0986 CSR         OPRCMP    BEGSR                                          WSCLEN
+0987 CSR                   SETOF                     515253               WSCLEN
+0988 CSR         OPR,I     COMP EQ                       51               WSCLEN
+0989 CSR         OPR,I     COMP LT                       52               WSCLEN
+0990 CSR         OPR,I     COMP GT                       53               WSCLEN
+0991 CSR       51                                                         WSCLEN
+0992 COR       52                                                         WSCLEN
+0993 COR       53          GOTO OPRC99                                    WSCLEN
+0994 CSR         OPR,I     COMP NE                       52               WSCLEN
+0995 CSR         OPR,I     COMP NE                       53               WSCLEN
+0996 CSR       53          GOTO OPRC99                                    WSCLEN
+0997 CSR         OPR,I     COMP LE                       51               WSCLEN
+0998 CSR         OPR,I     COMP LE                       52               WSCLEN
+0999 CSR       52          GOTO OPRC99                                    WSCLEN
+1000 CSR         OPR,I     COMP GE                       51               WSCLEN
+1001 CSR         OPR,I     COMP GE                       53               WSCLEN
+1002 CSR         OPRC99    ENDSR                                          WSCLEN
+1003 C********************************************************************WSCLEN
+1004 C*                                                                   WSCLEN
+1005 C*   PREP - SETUP FOR SEARCH                                         WSCLEN
+1006 C*                                                                   WSCLEN
+1007 C********************************************************************WSCLEN
+1008 CSR         PREP      BEGSR                                          WSCLEN
+1009 CSR                   Z-ADD1         X                               WSCLEN
+1010 CSR         PREP10    TAG                                            WSCLEN
+1011 CSR                   Z-ADD1         Y                               WSCLEN
+1012 CSR         FLD,X     LOKUPARC,Y                    88               WSCLEN
+1013 CSR       88          MOVE ARD,Y     WA02    2                       WSCLEN
+1014 CSR      N88          MOVE '  '      WA02                            WSCLEN
+1015 CSR                   MOVE WA02      ID,X                            WSCLEN
+1016 CSR                   MOVE Y         IDX,X                           WSCLEN
+1017 CSR         X         COMP 3                        88               WSCLEN
+1018 CSR      N88X         ADD  1         X                               WSCLEN
+1019 CSR      N88          GOTO PREP10                                    WSCLEN
+1020 CSR                   ENDSR                                          WSCLEN
+1021 C********************************************************************WSCLEN
+1022 C*                                                                   WSCLEN
+1023 C*   PUT - PUTS ANY LINE ON THE DISPLAY                              WSCLEN
+1024 C*                                                                   WSCLEN
+1025 C********************************************************************WSCLEN
+1026 CSR         PUT       BEGSR                                          WSCLEN
+1027 CSR 81N93             EXSR FLPDTE
+1028 CSR 81N93             EXSR FLPNME
+1029 CSR         I4        ADD  2         SLNO                            WSCLEN
+1030 CSR                   EXCPT                                          WSCLEN
+1031 CSR                   SETOF                       2122               WSCLEN
+1032 CSR                   SETOF                     232425               WSCLEN
+1033 CSR                   SETOF                     262728               WSCLEN
+1034 CSR                   SETOF                     293031               WSCLEN
+1035 CSR                   SETOF                     323334               WSCLEN
+1036 CSR                   SETOF                     3536                 WSCLEN
+1037 CSR                   SETOF                     808182               WSCLEN
+1038 CSR                   SETOF                     8384                 WSCLEN
+1039 CSR                   ENDSR                                          WSCLEN
+1040 C********************************************************************WSCLEN
+1041 C*                                                                   WSCLEN
+1042 C*   PUTHIT - PUTS THE NEXT HIT ON THE DISPLAY                       WSCLEN
+1043 C*                                                                   WSCLEN
+1044 C********************************************************************WSCLEN
+1045 CSR         PUTHIT    BEGSR                                          WSCLEN
+1046 CSR         I3        COMP I1                   59  59               WSCLEN
+1047 CSR       59          GOTO PUTH99                                    WSCLEN
+1048 CSR         I3        ADD  1         I3                              WSCLEN
+1049 CSR                   MOVE ARL,I3    WA07N   70                      WSCLEN
+1050 CSR         I4        ADD  1         I4                              WSCLEN
+1051 C*    CHAIN USING THE RELATIVE RECORD NUMBER.                        WSCLEN
+1052 CSR         WA07N     CHAININPUT                88                   WSCLEN
+1053 C*    EQUAL COMPARE-OUTPUT HEADING SCREEN                            WSCLEN
+1054 CSR         I4        COMP 1                        83               WSCLEN
+1055 CSR                   SETON                     81                   WSCLEN
+1056 CSR                   MOVE I3        L3      30                      WSCLEN
+1057 CSR                   EXSR PUT                                       WSCLEN
+1058 CSR         I4        COMP MXLNS                    59               WSCLEN
+10594CSR         PUTH99    TAG                                            WSCLEN
+10605CSR 96                SETOF                     5996                 WSCLEN
+1061 CSR                   ENDSR                                          WSCLEN
+1062 C********************************************************************WSCLEN
+1063 C*                                                                   WSCLEN
+1064 C*   SEARCH - FINDS THE BEGINNING POINT IN AN INDEX FILE USING       WSCLEN
+1065 C*            BINARY SEARCH                                          WSCLEN
+1066 C*                                                                   WSCLEN
+1067 C********************************************************************WSCLEN
+1068 CSR         SEARCH    BEGSR                                          WSCLEN
+1069 CSR                   EXSR SETIND                                    WSCLEN
+1070 CSR                   Z-ADD1         IREC                            WSCLEN
+1071 CSR                   Z-ADD0         FIRST   70                      WSCLEN
+1072 CSR                   EXSR CHAINS                                    WSCLEN
+1073 CSR       42          GOTO SEAR50                                    WSCLEN
+1074 CSR                   Z-ADD2         LOWER   70                      WSCLEN
+1075 CSR                   Z-ADDPOITR     UPPER   70                      WSCLEN
+1076 CSR         SEAR10    TAG                                            WSCLEN
+1077 CSR         LOWER     ADD  UPPER     W07N    70                      WSCLEN
+1078 CSR         W07N      MULT .5        MIDDLE  70                      WSCLEN
+1079 CSR                   Z-ADDMIDDLE    IREC                            WSCLEN
+1080 CSR                   EXSR ICOMP                                     WSCLEN
+1081 CSR       41          GOTO SEAR20                                    WSCLEN
+1082 CSR   N43   MIDDLE    ADD  1         LOWER                           WSCLEN
+1083 CSR    43   MIDDLE    SUB  1         UPPER                           WSCLEN
+1084 CSR         UPPER     COMP LOWER                  88                 WSCLEN
+1085 CSR       88          GOTO SEAR99                                    WSCLEN
+1086 CSR                   GOTO SEAR10                                    WSCLEN
+1087 CSR         SEAR20    TAG                                            WSCLEN
+1088 CSR         MIDDLE    SUB  1         UPPER                           WSCLEN
+1089 CSR                   Z-ADDMIDDLE    FIRST                           WSCLEN
+1090 CSR         SEAR30    TAG                                            WSCLEN
+1091 CSR         UPPER     COMP LOWER                  88                 WSCLEN
+1092 CSR       88          GOTO SEAR40                                    WSCLEN
+1093 CSR         LOWER     ADD  UPPER     W07N                            WSCLEN
+1094 CSR         W07N      MULT .5        MIDDLE                          WSCLEN
+1095 CSR                   Z-ADDMIDDLE    IREC                            WSCLEN
+1096 CSR                   EXSR ICOMP                                     WSCLEN
+1097 CSR       41          GOTO SEAR20                                    WSCLEN
+1098 CSR         MIDDLE    ADD  1         LOWER                           WSCLEN
+1099 CSR                   GOTO SEAR30                                    WSCLEN
+1100 CSR         SEAR40    TAG                                            WSCLEN
+1101 CSR                   Z-ADDFIRST     IREC                            WSCLEN
+1102 CSR                   EXSR CHAINS                                    WSCLEN
+1103 CSR         SEAR50    TAG                                            WSCLEN
+1104 CSR                   SETON                     41                   WSCLEN
+1105 CSR         SEAR99    ENDSR                                          WSCLEN
+1106 C********************************************************************WSCLEN
+1107 C*                                                                   WSCLEN
+1108 C*   SETIND - SETS ONE OF 13 INDICATORS FOR THE INDEX FILE IN USE    WSCLEN
+1109 C*                                                                   WSCLEN
+1110 C********************************************************************WSCLEN
+1111 CSR         SETIND    BEGSR                                          WSCLEN
+1112 C*     INSERT A COMPARE FOR EACH INDEX SIMILAR TO THE COMMMENT BELOW WSCLEN
+1113 C*                                                                   WSCLEN
+1114 C*R         WA02      COMP 'AA'                     NN               WSCLEN
+1115 C*                                                                   WSCLEN
+1116 CSR         WA02      COMP '01'                     61               WSCLEN
+1117 CSR         WA02      COMP '02'                     62               WSCLEN
+1118 CSR                   ENDSR                                          WSCLEN
+1119 C********************************************************************WSCLEN
+1120 C*                                                                   WSCLEN
+1121 C*   SUSPCT - RETURNS THE RELATIVE RECORD NUMBER OF A MASTER FILE    WSCLEN
+1122 C*            RECORD WHICH APPEARS TO SATISFY THE REQUEST. THIS IS   WSCLEN
+1123 C*            BASED UPON THE INDEX                                   WSCLEN
+1124 C*                                                                   WSCLEN
+1125 C********************************************************************WSCLEN
+1126 CSR         SUSPCT    BEGSR                                          WSCLEN
+1127 CSR                   Z-ADD1         I       40                      WSCLEN
+1128 CSR                   SETOF                     378990               WSCLEN
+1129 CSR         ID,I      COMP '  '                     88               WSCLEN
+1130 CSRN88      OPR,I     COMP 'EQ'                 8888                 WSCLEN
+1131 CSR      N88          GOTO SUSP20                                    WSCLEN
+1132 CSRN95      RECNO     ADD  1         RECNO                           WSCLEN
+1133 CSR                   SETON                     37                   WSCLEN
+1134 C*    GO TO END-NOT PROCESSING AN INDEX FILE                         WSCLEN
+1135 CSR                   GOTO SUSP99                                    WSCLEN
+1136 CSR         SUSP15    TAG                                            WSCLEN
+1137 CSR                   SETOF                     37                   WSCLEN
+1138 CSR                   GOTO SUSP99                                    WSCLEN
+1139 CSR         SUSP20    TAG                                            WSCLEN
+1140 CSR                   EXSR INEXT                                     WSCLEN
+1141 CSR                   Z-ADDPOITR     RECNO                           WSCLEN
+1142 CSR       39          GOTO SUSP15                                    WSCLEN
+1143 CSR         SUSP30    TAG                                            WSCLEN
+1144 CSR                   SETOF                     89  97               WSCLEN
+1145 CSR         I         ADD  1         I                               WSCLEN
+1146 CSR         I         COMP 3                    88                   WSCLEN
+1147 CSR       88          SETON                     37                   WSCLEN
+1148 CSR       88          GOTO SUSP99                                    WSCLEN
+1149 CSR         FLD,I     COMP '      '                 88               WSCLEN
+1150 CSR       88          GOTO SUSP30                                    WSCLEN
+1151 CSR         ID,I      COMP '  '                     88               WSCLEN
+1152 CSRN88      OPR,I     COMP 'EQ'                 8888                 WSCLEN
+1153 CSR       88          GOTO SUSP30                                    WSCLEN
+1154 CSR         SUSP40    TAG                                            WSCLEN
+1155 CSR                   EXSR INEXT                                     WSCLEN
+1156 CSR       39          GOTO SUSP15                                    WSCLEN
+1157 CSR         POITR     COMP RECNO                97  88               WSCLEN
+1158 CSR    97             MOVE POITR     RECNO                           WSCLEN
+1159 CSR    97                                                            WSCLEN
+1160 COR       88          GOTO SUSP30                                    WSCLEN
+1161 CSR                   GOTO SUSP40                                    WSCLEN
+1162 CSR         SUSP99    ENDSR                                          WSCLEN
+1163 C********************************************************************WSCLEN
+1164 C*                                                                   WSCLEN
+1165 C*   UNPACK - CALLED BY THE COMPARE ROUTINE WHEN THE TABEL SHOWS     WSCLEN
+1166 C*            THAT THE MASTER FILE DATA NEEDS UNPACKING PRIOR TO     WSCLEN
+1167 C*            COMPARISON                                             WSCLEN
+1168 C*                                                                   WSCLEN
+1169 C********************************************************************WSCLEN
+1170 CSR         UNPACK    BEGSR                                          WSCLEN
+1171 CSR                   MOVEA'00000000'ARW                             WSCLEN
+1172 CSR                   Z-ADDEND       K1      40                      WSCLEN
+1173 CSR                   Z-ADD9         K2      10                      WSCLEN
+1174 CSR 46      M         SUB  1         K1                              WSCLEN
+1175 CSR 46                Z-ADD0         K2                              WSCLEN
+1176 CSR         UNP001    TAG                                            WSCLEN
+1177 CSR 49      K2        SUB  1         K2                              WSCLEN
+1178 CSR 46      K1        ADD  1         K1                              WSCLEN
+1179 CSR 46      K2        ADD  1         K2                              WSCLEN
+1180 CSR                   MOVE '0'       WK11    1                       WSCLEN
+1181 CSR                   MOVE ARF,K1    WK01    1                       WSCLEN
+1182 CSR                   TESTB'0'       WK01           90               WSCLEN
+1183 CSR 90                BITON'4'       WK11                            WSCLEN
+1184 CSR                   TESTB'1'       WK01           90               WSCLEN
+1185 CSR 90                BITON'5'       WK11                            WSCLEN
+1186 CSR                   TESTB'2'       WK01           90               WSCLEN
+1187 CSR 90                BITON'6'       WK11                            WSCLEN
+1188 CSR                   TESTB'3'       WK01           90               WSCLEN
+1189 CSR 90                BITON'7'       WK11                            WSCLEN
+1190 CSR         K1        COMP END                      89               WSCLEN
+1191 CSRN89                GOTO UNP002                                    WSCLEN
+1192 CSR                   TESTB'6'       WK01       90                   WSCLEN
+1193 CSR 90                TESTB'4'       WK01           90               WSCLEN
+1194 CSR 90                BITOF'2'       WK11                            WSCLEN
+1195 CSR         UNP002    TAG                                            WSCLEN
+1196 CSR                   MOVE WK11      ARW,K2                          WSCLEN
+1197 CSR 49      K1        COMP START                  8989               WSCLEN
+1198 CSR 49 89             GOTO UNP003                                    WSCLEN
+1199 CSR 49      K1        SUB  1         K1                              WSCLEN
+1200 CSR 49      K2        SUB  1         K2                              WSCLEN
+1201 CSR 46      K2        ADD  1         K2                              WSCLEN
+1202 CSR                   MOVE '0'       WK11                            WSCLEN
+1203 CSR                   BITONARF,K1    WK11                            WSCLEN
+1204 CSR                   MOVE WK11      ARW,K2                          WSCLEN
+1205 CSR         K2        COMP 2                      89                 WSCLEN
+1206 CSR 46      K2        COMP 7                    89                   WSCLEN
+1207 CSRN89                GOTO UNP001                                    WSCLEN
+1208 CSR         UNP003    TAG                                            WSCLEN
+1209 CSR         K         ADD  K         K                               WSCLEN
+1210 CSR                   ENDSR                                          WSCLEN
+1211 O********************************************************************WSCLEN
+1212 O*                                                                   WSCLEN
+1213 O* ENTER SEARCH REQUEST DISPLAY                                      WSCLEN
+1214 O* PUT INITIAL SCREEN - 1920 CHARACTER SCREEN                        WSCLEN
+1215 O*                                                                   WSCLEN
+1216 O********************************************************************WSCLEN
+1217 OWORKSTN E        82NU2                                              WSCLEN
+1218 O                                   K8 'AVA301  '                    WSCLEN
+1219 O                         UDATE Y    8                               WSCLEN
+1220 O                         WKSID     10                               WSCLEN
+1221 O                         FLD,1     16                               WSCLEN
+1222 O                         OPR,1     18                               WSCLEN
+1223 O                         VLU,1     26                               WSCLEN
+1224 O                         AO,1      29                               WSCLEN
+1225 O                         FLD,2     35                               WSCLEN
+1226 O                         OPR,2     37                               WSCLEN
+1227 O                         VLU,2     45                               WSCLEN
+1228 O                         AO,2      48                               WSCLEN
+1229 O                         FLD,3     54                               WSCLEN
+1230 O                         OPR,3     56                               WSCLEN
+1231 O                         VLU,3     64                               WSCLEN
+1232 O                         ERR,1    104                               WSCLEN
+1233 O                         ERR,2    144                               WSCLEN
+1234 O                         ERR,3    184                               WSCLEN
+1235 O                         ERR,4    224                               WSCLEN
+1236 O                         ERR,5    264                               WSCLEN
+1237 O                         SPROC    272                               WSCLEN
+1238 O********************************************************************WSCLEN
+1239 O*                                                                   WSCLEN
+1240 O* ENTER SEARCH REQUEST DISPLAY                                      WSCLEN
+1241 O* PUT INITIAL SCREEN - 960 CHARACTER SCREEN                         WSCLEN
+1242 O*                                                                   WSCLEN
+1243 O********************************************************************WSCLEN
+1244 OWORKSTN E        82 U2                                              WSCLEN
+1245 O                                   K8 'AVA302  '                    WSCLEN
+1246 O                         UDATE Y    8                               WSCLEN
+1247 O                         WKSID     10                               WSCLEN
+1248 O                         FLD,1     16                               WSCLEN
+1249 O                         OPR,1     18                               WSCLEN
+1250 O                         VLU,1     26                               WSCLEN
+1251 O                         AO,1      29                               WSCLEN
+1252 O                         FLD,2     35                               WSCLEN
+1253 O                         OPR,2     37                               WSCLEN
+1254 O                         VLU,2     45                               WSCLEN
+1255 O                         AO,2      48                               WSCLEN
+1256 O                         FLD,3     54                               WSCLEN
+1257 O                         OPR,3     56                               WSCLEN
+1258 O                         VLU,3     64                               WSCLEN
+1259 O                         ERR,1    104                               WSCLEN
+1260 O                         ERR,2    144                               WSCLEN
+1261 O                         ERR,3    184                               WSCLEN
+1262 O                         ERR,4    224                               WSCLEN
+1263 O                         ERR,5    264                               WSCLEN
+1264 O                         SPROC    272                               WSCLEN
+1265 O********************************************************************WSCLEN
+1266 O*                                                                   WSCLEN
+1267 O* HEADING DISPLAY                                                   WSCLEN
+1268 O*                                                                   WSCLEN
+1269 O********************************************************************WSCLEN
+1270 O        E        83                                                 WSCLEN
+1271 O                                   K8 'AVA303  '                    WSCLEN
+1272 O                         UDATE Y    8                               WSCLEN
+1273 O                         SPROC     16                               WSCLEN
+1274 O                         WKSID     18                               WSCLEN
+1275 O                         SFLD,1    29                               WSCLEN
+1276 O                         SOPR,1    32                               WSCLEN
+1277 O                         SVLU,1    41                               WSCLEN
+1278 O                         SAO,1     45                               WSCLEN
+1279 O                         SFLD,2    52                               WSCLEN
+1280 O                         SOPR,2    55                               WSCLEN
+1281 O                         SVLU,2    64                               WSCLEN
+1282 O                         SAO,2     68                               WSCLEN
+1283 O                         SFLD,3    75                               WSCLEN
+1284 O                         SOPR,3    78                               WSCLEN
+1285 O                         SVLU,3    87                               WSCLEN
+1286 O********************************************************************WSCLEN
+1287 O*                                                                   WSCLEN
+1288 O* DETAIL RECORD DISPLAY                                             WSCLEN
+1289 O*                                                                   WSCLEN
+1290 O********************************************************************WSCLEN
+1291 O        E        81                                                 WSCLEN
+1292 O                                   K8 'AVA304  '                    WSCLEN
+1293 O                      N93L3    Z    3                               WSCLEN
+1294 O                      N93FLD001    13                               WSCLEN
+1295 O                      N93FLDAA2    39                               WSCLEN
+1296 O                      N93FLD003    42                               WSCLEN
+1297 O                      N93FLD004    45                               WSCLEN
+1298 O                                   46 '-'
+1299 O                      N93FLD005    48                               WSCLEN
+1300 O                      N93FLD006    51                               WSCLEN
+1301 O                      N93FLD007    55                               WSCLEN
+1302 O                      N93DTE006Y   67                               WSCLEN
+1303 O                      N93FLD009    70                               WSCLEN
+1304 O                      N93FLD010    73                               WSCLEN
+1305 O                      N93FLD011    75                               WSCLEN
+1306 O                    U8N93FLD012    42
+1307 O                    U8N93FLD006    45
+1308 O                    U8N93FLD010    48
+1309 O                    U8N93FLD007    51
+1310 O                    U8N93FLD009    55
+1311 O                    U8N93FLD014    70
+1312 O                    U8N93FLD015    73
+1313 O                    U7N93FLD016    42
+1314 O                    U7N93FLD017    45
+1315 O                    U7N93FLD018    48
+1316 O                    U7N93FLD019    51
+1317 O                    U7N93FLD020    55
+1318 O                    U7N93FLD010    70
+1319 O                    U7N93FLD006    73
+1320 O********************************************************************WSCLEN
+1321 O*                                                                   WSCLEN
+1322 O* MESSAGE AND COMMAND FUNCTION KEY DISPLAY                          WSCLEN
+1323 O* FULL SCREEN OR END OF SEARCH - 1920 CHARACTER SCREEN              WSCLEN
+1324 O*                                                                   WSCLEN
+1325 O********************************************************************WSCLEN
+1326 O        E        80NU2                                              WSCLEN
+1327 O                                   K8 'AVA305  '                    WSCLEN
+1328 O                         ACTCD      1                               WSCLEN
+1329 O                         NUMBR      4                               WSCLEN
+1330 O                         MSG,1     44                               WSCLEN
+1331 O                 92      MSG,2     44                               WSCLEN
+1332 O                 40      MSG,3     44                               WSCLEN
+1333 O                       77MSG,4     44                               WSCLEN
+1334 O********************************************************************WSCLEN
+1335 O*                                                                   WSCLEN
+1336 O* MESSAGE AND COMMAND FUNCTION KEY DISPLAY                          WSCLEN
+1337 O* FULL SCREEN OR END OF SEARCH - 960 CHARACTER SCREEN               WSCLEN
+1338 O*                                                                   WSCLEN
+1339 O********************************************************************WSCLEN
+1340 O        E        80 U2                                              WSCLEN
+1341 O                                   K8 'AVA306  '                    WSCLEN
+1342 O                         ACTCD      1                               WSCLEN
+1343 O                         NUMBR      4                               WSCLEN
+1344 O                         MSG,1     44                               WSCLEN
+1345 O                 92      MSG,2     44                               WSCLEN
+1346 O                 40      MSG,3     44                               WSCLEN
+1347 O                       77MSG,4     44                               WSCLEN
+1348 O********************************************************************WSCLEN
+1349 O*                                                                   WSCLEN
+1350 O* DISPLAY UP TO 256 CHARACTERS OF A RECORD                          WSCLEN
+1351 O*                                                                   WSCLEN
+1352 O********************************************************************WSCLEN
+1353 O        E        84                                                 WSCLEN
+1354 O                                   K8 'AVA307  '                    WSCLEN
+1355 O                N77      DUMP   B 256                               WSCLEN
+1356 O                    77   ACTCD      2                               WSCLEN
+1357 O                    77   NUMBR      6                               WSCLEN
+1358 O                    77   MSG,4     50                               WSCLEN
+** ARA..........AR2
+SSN   000100090N01
+NAME  00180048 A02
+LNAME 00180037 A
+FNAME 00380047 A
+LFS   019501950N
+AGE   011901200N
+CENTER009200930N
+FAMSTS01280129 A
+ETHNIC014201430N
+APDATE020602090P
+DSPFOS01320133 A
+LLS   017101720N
+EDUC  014501450N
+SEX   01140114 A
+** ARC..........ARD
+SSN   000100090N01
+NAME  00180048 A02
+LNAME 00180037 A
+FNAME 00380047 A
+STATUS00170017 A
+CTITLE046304640N
+CACTY 046504660N
+AGE   011901200N
+FAMSTS01280129 A
+CDATE 046704700P
+ETHNIC014201430N
+CENTER009200930N
+EDUC  014501450N
+SEX   01140114 A
+STAFF#009801000N
+CITY  00690084 A
+DSPLHM01320132 A
+HANDCP013501350N
+JUD   013801380N
+LE    01410141 A
+INSCLY01510151 A
+VET   01560156 A
+VIET  01570157 A
+TJTC  01650165 A
+EL05  02190219 A
+EL06  02200220 A
+EL07  02210221 A
+EL09  02230223 A
+EL22  02360236 A
+EL23  02370237 A
+EL24  02380238 A
+EL37  02510251 A
+EL42  02560256 A
+EL43  02570257 A
+TJOB  03010315 A
+TNAME 03160335
+STITLE047504760N
+SACTY 047704780N
+** ARB..........AR2
+SSN   000100090N01
+NAME  00180048 A02
+LNAME 00180037 A
+FNAME 00380047 A
+ETHNIC014301430N
+TTITLE048704880N
+TACTY 048904900N
+TCODE 049905000N
+PLCMNT04490450 A
+TDATE 049104940P
+CENTER009200930N
+AGE   011901200N
+EDUC  014501450N
+SEX   01140114 A
+**  ERR
+E AV-0300 UNDEFINED FIELD NAME
+E AV-0310 INVALID OPERATOR SPECIFIED
+E AV-0320 INVALID FIELD VALUE
+E AV-0330 INVALID AND/OR RELATIONSHIP
+E AV-0340 MORE THAN ONE OR SPECIFIED
+**  MSG
+AV-0350  MORE POSSIBLE MATCHES
+AV-0360 END OF SEARCH
+AV-0370 END OF 200 MATCHES
+AV-0380 NO RECORD FOUND
+** COIBM
+5726-XR1 COPYRIGHT IBM CORP 1978 LICENSED MATERIAL - PROGRAM PROPERTY OF IBM
+VERSION 01/MODIFICATION 01      PTF 0010
