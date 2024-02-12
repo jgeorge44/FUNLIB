@@ -1,0 +1,664 @@
+0001 H    P014                                                            BLOCK2
+0002 FINPUT   IP  F  32  30            KEYBORD
+0003 FSCREEN  O   F  30  30            CRT
+0004 FPRINTR  O   F 132 132            PRINTER
+0005 E                    CHAR    1 565 12
+0006 E                    TABA   16  47  1   TABN    3 0
+0007 E                    SET       120 12
+0008 E                    PRT        10 12
+0009 E                    COL        30  1
+0010 C           'KEY DATA'SET
+0011 C           '30 CHAR.'SET
+0012 C           'OR END..'SET
+0013 C                     SETON                     01
+0014 C                     EXCPT
+0015 C                     SETOF                     01
+0016 C           ' '       KEY            COLA   30
+0017 C                     MOVEACOLA      COL
+0018 C                     MOVELCOLA      WORK    3
+0019 C           WORK      COMP 'END'                    LR
+0020 C   LR                GOTO ENDF
+00213C                     SETON                     82
+00224C                     EXCPT
+00235C                     SETOF                     82
+0024 C           AGN2      TAG
+0025 C           N         ADD  1         N       20       SET N TO COL
+0026 C           COL,N     LOKUPTABA      TABN           43LOKUP CH FOR PS
+0027 C   43                Z-ADDTABN      M       30       SETUP SUBSCRIPT
+0028 C           AGN1      TAG
+0029 C           P         ADD  1         P       30       COUNT - MAX
+0030 C                     MOVE CHAR,M    SET,P            ARRAY 4 PRT SEQ
+0031 C           M         ADD  1         M
+0032 C           C         ADD  1         C       20
+0033 C           C         COMP 12                       43
+0034 C  N43                GOTO AGN1
+0035 C                     Z-ADD0         C
+0036 C           N         COMP 10                       43IS 1ST LN CMPLT
+0037 C  N43      N         COMP 20                       43IS 2ND LN CMPLT
+0038 C  N43      N         COMP 30                       44IS 3RD LN CMPLT
+0039 C  N43N44             GOTO AGN2
+0040 C                     SETON                     80
+0041 C                     EXCPT                           SPACE 8
+0042 C                     SETOF                     80
+0043 C           AGN4      TAG
+0044 C                     Z-ADD1         Q       30       SET FOR PRT LIN
+0045 C           T         ADD  1         T       20       FOR ELMNT IN ST
+0046 C                     Z-ADDT         P
+0047 C           AGN3      TAG
+0048 C                     MOVE SET,P     PRT,Q
+0049 C           Q         COMP 10                       81
+0050 C   81                GOTO NXT1
+0051 C           Q         ADD  1         Q
+0052 C           P         ADD  12        P
+0053 C                     GOTO AGN3
+0054 C           NXT1      TAG
+0055 C                     EXCPT                           PRINT LINE
+00565C                     SETOF                     81
+0057 C           T         COMP 12                       4312 LINES YET?
+0058 C  N43                GOTO AGN4
+0059 C                     Z-ADD0         T                RESET
+0060 C                     Z-ADD0         P
+0061 C  N44                GOTO AGN2
+0062 C                     Z-ADD0         N
+0063 C           ENDF      TAG
+0064 OPRINTR  E  301   82
+0065 O                                  122 '   THORNWOOD H.S.'
+0066 O                         UDATE Y  132
+0067 O        E 33     80
+0068 O                                  132 '                        '
+0069 O        E  1     81
+0070 O                         PRT,1     13
+0071 O                         PRT,2     26
+0072 O                         PRT,3     39
+0073 O                         PRT,4     52
+0074 O                         PRT,5     65
+0075 O                         PRT,6     78
+0076 O                         PRT,7     91
+0077 O                         PRT,8    104
+0078 O                         PRT,9    117
+0079 O                         PRT,10   130
+0080 OSCREEN  E 1      01
+0081 O                                   20 '*/////////*/////////'
+0082 O                                   30 '*/////////'
+**
+     AA
+    AAAA
+   AAAAAA
+  AAA  AAA
+ AAA    AAA
+AAA      AAA
+AAAAAAAAAAAA
+AAAAAAAAAAAA
+AAA      AAA
+AAA      AAA
+AAA      AAA
+AAA      AAA
+BBBBBBBBBB
+BBBBBBBBBBB
+BBB      BBB
+BBB      BBB
+BBB      BB
+BBBBBBBBBB
+BBBBBBBBBBB
+BBB      BBB
+BBB      BBB
+BBB      BBB
+BBBBBBBBBBB
+BBBBBBBBBB
+  CCCCCCCC
+ CCCCCCCCCC
+CCC      CCC
+CCC      CCC
+CCC
+CCC
+CCC
+CCC
+CCC      CCC
+CCC      CCC
+ CCCCCCCCCC
+  CCCCCCCC
+DDDDDDDDDD
+DDDDDDDDDDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDD      DDD
+DDDDDDDDDDD
+DDDDDDDDDD
+EEEEEEEEEEEE
+EEEEEEEEEEEE
+EEE
+EEE
+EEE
+EEEEEEEEEE
+EEEEEEEEEE
+EEE
+EEE
+EEE
+EEEEEEEEEEEE
+EEEEEEEEEEEE
+FFFFFFFFFFFF
+FFFFFFFFFFFF
+FFF
+FFF
+FFF
+FFFFFFFFFF
+FFFFFFFFFF
+FFF
+FFF
+FFF
+FFF
+FFF
+  GGGGGGGG
+ GGGGGGGGGG
+GGG      GGG
+GGG      GGG
+GGG
+GGG
+GGG    GGGGG
+GGG    GGGGG
+GGG      GGG
+GGG      GGG
+ GGGGGGGGGG
+  GGGGGGGGG
+HHH      HHH
+HHH      HHH
+HHH      HHH
+HHH      HHH
+HHH      HHH
+HHHHHHHHHHHH
+HHHHHHHHHHHH
+HHH      HHH
+HHH      HHH
+HHH      HHH
+HHH      HHH
+HHH      HHH
+  IIIIIIIII
+  IIIIIIIII
+     III
+     III
+     III
+     III
+     III
+     III
+     III
+     III
+  IIIIIIIII
+  IIIIIIIII
+         JJJ
+         JJJ
+         JJJ
+         JJJ
+         JJJ
+         JJJ
+         JJJ
+         JJJ
+JJJ      JJJ
+JJJ     JJJJ
+ JJJJJJJJJJ
+  JJJJJJJJ
+KKK     KKKK
+KKK    KKKKK
+KKK   KKK
+KKK  KKK
+KKK KKK
+KKKKKK
+KKKKKK
+KKK KKK
+KKK  KKK
+KKK   KKK
+KKK    KKKKK
+KKK     KKKK
+LLL
+LLL
+LLL
+LLL
+LLL
+LLL
+LLL
+LLL
+LLL      LLL
+LLL      LLL
+LLLLLLLLLLLL
+LLLLLLLLLLLL
+MMM      MMM
+MMMM    MMMM
+MMMMM  MMMMM
+MMMMMMMMMMMM
+MMM MMMM MMM
+MMM  MM  MMM
+MMM      MMM
+MMM      MMM
+MMM      MMM
+MMM      MMM
+MMM      MMM
+MMM      MMM
+NNN      NNN
+NNN      NNN
+NNNN     NNN
+NNNNN    NNN
+NNNNNN   NNN
+NNN NNN  NNN
+NNN  NNN NNN
+NNN   NNNNNN
+NNN    NNNNN
+NNN     NNNN
+NNN      NNN
+NNN      NNN
+  OOOOOOOO
+ OOOOOOOOOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+OOO      OOO
+ OOOOOOOOOO
+  OOOOOOOO
+PPPPPPPPPP
+PPPPPPPPPPP
+PPP      PPP
+PPP       PP
+PPP      PPP
+PPPPPPPPPPP
+PPPPPPPPPP
+PPP
+PPP
+PPP
+PPP
+PPP
+  QQQQQQQQ
+ QQQQQQQQQQ
+QQQ      QQQ
+QQQ      QQQ
+QQQ      QQQ
+QQQ      QQQ
+QQQ   Q  QQQ
+QQQ   QQ QQQ
+QQQ    QQQQQ
+QQQQ    QQQQ
+ QQQQQQQQQQQ
+  QQQQQQQQQQ
+RRRRRRRRRR
+RRRRRRRRRRR
+RRR      RRR
+RRR       RR
+RRR      RRR
+RRRRRRRRRRR
+RRRRRRRRRR
+RRR  RRR
+RRR   RRR
+RRR    RRR
+RRR     RRR
+RRR      RRR
+  SSSSSSSSS
+ SSSSSSSSSSS
+SSS      SSS
+SSS
+SSS
+ SSSSSSSSS
+  SSSSSSSSS
+         SSS
+         SSS
+SSS      SSS
+SSSSSSSSSSS
+ SSSSSSSSS
+ TTTTTTTTTTT
+ TTTTTTTTTTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+     TTT
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUU      UUU
+UUUU    UUUU
+ UUUUUUUUUU
+  UUUUUUUU
+VV        VV
+VV        VV
+VVV      VVV
+VVV      VVV
+  VV    VV
+  VV    VV
+   VV  VV
+   VV  VV
+    VVVV
+    VVVV
+     VV
+     VV
+WWW      WWW
+WWW      WWW
+WWW      WWW
+WWW      WWW
+WWW      WWW
+WWW      WWW
+WWW  WW  WWW
+WWW WWWW WWW
+WWWWWWWWWWWW
+WWWWW  WWWWW
+ WWW    WWW
+  W      W
+XX        XX
+XXX      XXX
+ XXX    XXX
+  XXX  XXX
+   XXXXXX
+    XXXX
+    XXXX
+   XXXXXX
+  XXX  XXX
+ XXX    XXX
+XXX      XXX
+XX        XX
+YY        YY
+YYY      YYY
+ YYY    YYY
+  YYY  YYY
+   YYYYYY
+    YYYY
+     YY
+     YY
+     YY
+     YY
+     YY
+     YY
+ZZZZZZZZZZZZ
+ZZZZZZZZZZZZ
+        ZZZ
+       ZZZ
+      ZZZ
+     ZZZ
+    ZZZ
+   ZZZ
+  ZZZ
+ ZZZ
+ZZZZZZZZZZZZ
+ZZZZZZZZZZZZ
+          //
+         ///
+        ///
+       ///
+      ///
+     ///
+    ///
+   ///
+  ///
+ ///
+///
+//
+
+
+
+
+
+  --------
+  --------
+
+
+
+
+
+     111
+    1111
+   11111
+  111111
+     111
+     111
+     111
+     111
+     111
+     111
+  111111111
+  111111111
+3333333333
+33333333333
+         333
+         333
+        3333
+    3333333
+    3333333
+        3333
+         333
+         333
+33333333333
+3333333333
+555555555555
+555555555555
+555
+555
+555
+5555555555
+55555555555
+         555
+          55
+55       555
+55555555555
+ 555555555
+  22222222
+ 2222222222
+222      222
+22        22
+         222
+  222222222
+ 222222222
+222
+22
+22
+222222222222
+222222222222
+      4444
+     44444
+    44  44
+   44   44
+  44    44
+ 44     44
+444444444444
+444444444444
+        44
+        44
+        44
+        44
+
+
+
+
+
+
+
+
+   ......
+   ......
+   ......
+   ......
+777777777777
+777777777777
+777      777
+         777
+         777
+         777
+         777
+         777
+         777
+         777
+         777
+         777
+ 8888888888
+888888888888
+88        88
+88        88
+ 8888888888
+  88888888
+ 8888888888
+88        88
+88        88
+88        88
+888888888888
+ 8888888888
+ 9999999999
+999999999999
+99       999
+99       999
+999999999999
+ 99999999999
+         999
+         999
+         999
+99       999
+999999999999
+ 9999999999
+  00000000
+ 0000000000
+00        00
+00        00
+00        00
+00        00
+00        00
+00        00
+00        00
+00        00
+ 0000000000
+  00000000
+ 6666666666
+666666666666
+666      666
+666
+666
+666
+66666666666
+666666666666
+666       66
+666       66
+666666666666
+ 6666666666
+     *
+ *   *   *
+  *  *  *
+   * * *
+    ***
+***********
+    ***
+   * * *
+  *  *  *
+ *   *   *
+     *
+
+     $$
+     $$
+   $$$$$$
+ $$  $$  $
+ $$  $$
+  $$$$$$$
+     $$ $$
+     $$  $$
+  $  $$  $$
+   $$$$$$
+     $$
+     $$
+     &&
+     &&
+   &&&&&&&&
+ &&      &&
+ &&
+   &&&
+   &&&
+ &&
+ &&      &&
+   &&&&&&&&
+     &&
+     &&
+   %%      %
+  %  %    %
+  %  %   %
+  %  %  %
+   %%  %
+      %
+     %
+    %  %%
+   %  %  %
+  %   %  %
+ %    %  %
+%      %%
+     ''''
+    ''''''
+    ''''''
+    ''''''
+      '''
+      ''
+     ''
+
+
+
+
+
+ ??????????
+????????????
+????     ???
+        ???
+       ???
+      ???
+     ???
+     ???
+     ???
+
+     ???
+     ???
+ @   @@   @
+  @ @@@@ @
+   @@@@@@
+  @      @
+ @  @  @  @
+@          @
+@    @@    @
+ @ @    @ @
+  @ @@@@ @
+   @    @
+    @  @
+     @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**
+A001B013C025D037E049F061G073H085I097J109K121L133M145N157O169P181
+Q193R205S217T229U241V253W265X277Y289Z301/313-3251337334953612373
+4385.39774098421943304456457*469$481&493%505'517?529@541 553
+**
