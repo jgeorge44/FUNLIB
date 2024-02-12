@@ -1,0 +1,482 @@
+0001 H                                      1                             JCAL
+0002 FINPUT   IP  F  40  40            KEYBORD                            JCAL
+0003 FFIG     IC  F 128 128R05AI     1 DISK                               JCAL
+0004 FPRINTER O   F 132 132            PRINTER                            JCAL
+0005 E                    YER     1 180 13                                JCAL
+0006 E                    TABNUM 10  10  1   TABPOS  3 0                  JCAL
+0007 E                    TABYER 19 260  4   TABSTR  1 0                  JCAL
+0008 E                    TABMTH 12  12  2 0 TABDAY  2 0                  JCAL
+0009 E                    YR          4  1                                JCAL
+0010 E                    CAL        27  3 0                              JCAL
+0011 IFIG                                                                 JCAL
+0012 I                                        1   5 KEY                   JCAL
+0013 I                                        6 128 PICLNE                JCAL
+0014 C                     SETOF                     030897               JCAL
+0015 C                     SETOF                     222324               JCAL
+0016 C           MTH       SUB  MTH       MTH     20                      JCAL
+0017 C           AGAIN     TAG                                            JCAL
+0018 C                     MOVE 'KEY ANY 'JIM1   16                       JCAL
+0019 C                     MOVEL'YEAR FRO'JIM2   14                       JCAL
+0020 C                     MOVE 'M     '  JIM2                            JCAL
+0021 C                     MOVELJIM1      JIM3   30                       JCAL
+0022 C                     MOVE JIM2      JIM3                            JCAL
+0023 C           JIM3      SET                                            JCAL
+0024 C           '1800 TO' SET                                            JCAL
+0025 C           '2059...' SET                                            JCAL
+0026 C           ' '       KEY            YEARA   4                       JCAL
+0027 C           YEARA     COMP 'NCAL'                   49               JCAL
+0028 C   49                GOTO PRNTFG                                    JCAL
+0029 C           YEARA     COMP 'END'                    LR               JCAL
+0030 C   LR                GOTO ENDF                                      JCAL
+0031 C           YEARA     COMP '1800'                 02                 JCAL
+0032 C           YEARA     COMP '2059'               01                   JCAL
+0033 C   01                GOTO AGAIN                                     JCAL
+0034 C   02                GOTO AGAIN                                     JCAL
+0035 C                     EXSR SEP                                       JCAL
+0036 C* PRINT YEAR....                                                    JCAL
+0037 C                     MOVE YEARA     YEAR    40                      JCAL
+0038 C                     MOVEAYEARA     YR                              JCAL
+0039 C           YR,1      LOKUPTABNUM    TABPOS         01               JCAL
+0040 C                     Z-ADDTABPOS    X1      30                      JCAL
+0041 C           YR,2      LOKUPTABNUM    TABPOS         01               JCAL
+0042 C                     Z-ADDTABPOS    X2      30                      JCAL
+0043 C           YR,3      LOKUPTABNUM    TABPOS         01               JCAL
+0044 C                     Z-ADDTABPOS    X3      30                      JCAL
+0045 C           YR,4      LOKUPTABNUM    TABPOS         01               JCAL
+0046 C                     Z-ADDTABPOS    X4      30                      JCAL
+0047 C                     Z-ADD01        COUNT   20                      JCAL
+0048 C                     SETON                     11                   JCAL
+0049 C           LOOP      TAG                                            JCAL
+0050 C                     EXCPT                                          JCAL
+0051 C           X1        ADD  001       X1                              JCAL
+0052 C           X2        ADD  001       X2                              JCAL
+0053 C           X3        ADD  001       X3                              JCAL
+0054 C           X4        ADD  001       X4                              JCAL
+0055 C           COUNT     ADD  01        COUNT                           JCAL
+0056 C           COUNT     COMP 19                       01               JCAL
+0057 C  N01                GOTO LOOP                                      JCAL
+0058 C   01                SETOF                     11                   JCAL
+0059 C                     EXSR SEP                                       JCAL
+0060 C*                                                                   JCAL
+0061 C* PRINT FIGURE....                                                  JCAL
+0062 C  NU1                GOTO NLOOP1                                    JCAL
+0063 C*                                                                   JCAL
+0064 C           PRNTFG    TAG                                            JCAL
+0065 C                     Z-ADD001       XJ      50                      JCAL
+0066 C                     SETON                     14                   JCAL
+0067 C           LOOP1     TAG                                            JCAL
+0068 C           XJ        CHAINFIG                  01                   JCAL
+0069 C   01                GOTO NLOOP1                                    JCAL
+0070 C                     EXCPT                                          JCAL
+0071 C           XJ        ADD  00001     XJ                              JCAL
+0072 C                     GOTO LOOP1                                     JCAL
+0073 C           NLOOP1    TAG                                            JCAL
+0074 C                     SETOF                     14                   JCAL
+0075 C   49                GOTO ENDF                                      JCAL
+0076 C                     EXSR SEP                                       JCAL
+0077 C*                                                                   JCAL
+0078 C* LEAP YEAR CHECK....                                               JCAL
+0079 C*                                                                   JCAL
+0080 C           YEAR      DIV  4         WORK    30                      JCAL
+0081 C                     MVR            WORK                            JCAL
+0082 C           WORK      COMP 000                      99               JCAL
+0083 C                     MOVE YEAR      COUNT                           JCAL
+0084 C           COUNT     COMP 00                       01               JCAL
+0085 C   01      YEAR      DIV  400       WORK                            JCAL
+0086 C   01                MVR            WORK                            JCAL
+0087 C   01      WORK      COMP 000                      99               JCAL
+0088 C*                                                                   JCAL
+0089 C*  DETERMINE START DAYS....                                         JCAL
+0090 C*                                                                   JCAL
+0091 C           YEARA     LOKUPTABYER    TABSTR         01               JCAL
+0092 C                     Z-ADDTABSTR    X1                              JCAL
+0093 C           MTH1      SUB  MTH1      MTH1    20                      JCAL
+0094 C                     Z-ADDX1        WORK                            JCAL
+0095 C           NEXT      TAG                                            JCAL
+0096 C                     SETOF                     818283               JCAL
+0097 C                     SETOF                     0607                 JCAL
+0098 C           MTH1      LOKUPTABMTH    TABDAY         01               JCAL
+0099 C   01      WORK      ADD  TABDAY    WORK                            JCAL
+0100 C           MTH1      COMP 02                       01               JCAL
+0101 C   99 01   WORK      ADD  001       WORK                            JCAL
+0102 C   97N02   WORK      DIV  7         WORK                            JCAL
+0103 C   97N02             MVR            X1             05               JCAL
+0104 C   05 97N02X1        ADD  007       X1                              JCAL
+0105 C   97N02             Z-ADDX1        WORK                            JCAL
+0106 C   02N03   WORK      DIV  7         WORK                            JCAL
+0107 C   02N03             MVR            X2             05               JCAL
+0108 C   05 02N03X2        ADD  007       X2                              JCAL
+0109 C   02N03             Z-ADDX2        WORK                            JCAL
+0110 C   03      WORK      DIV  7         WORK                            JCAL
+0111 C   03                MVR            X3             05               JCAL
+0112 C   05 03   X3        ADD  007       X3                              JCAL
+0113 C   03                Z-ADDX3        WORK                            JCAL
+0114 C           MTH1      ADD  01        MTH1                            JCAL
+0115 C   03                GOTO BYPASS                                    JCAL
+0116 C   02N03             SETON                     03                   JCAL
+0117 C  N02                SETON                     02                   JCAL
+0118 C   02                GOTO NEXT                                      JCAL
+0119 C           BYPASS    TAG                                            JCAL
+0120 C                     SETON                     97                   JCAL
+0121 C           X2        ADD  10        X2                              JCAL
+0122 C           X3        ADD  20        X3                              JCAL
+0123 C           CAL       SUB  CAL       CAL                             JCAL
+0124 C*                                                                   JCAL
+0125 C* SET-UP FIRST LINE....                                             JCAL
+0126 C*                                                                   JCAL
+0127 C                     SETON                     010203               JCAL
+0128 C                     Z-ADD1         DAY     10                      JCAL
+0129 C                     SETOF                     414243               JCAL
+0130 C           LOOP2     TAG                                            JCAL
+0131 C   01                MOVE DAY       CAL,X1                          JCAL
+0132 C   02                MOVE DAY       CAL,X2                          JCAL
+0133 C   03                MOVE DAY       CAL,X3                          JCAL
+0134 C           X1        COMP 7                      01                 JCAL
+0135 C           X2        COMP 17                     02                 JCAL
+0136 C           X3        COMP 27                     03                 JCAL
+0137 C  N01N41             Z-ADDDAY       DAY1    10 41                   JCAL
+0138 C  N02N42             Z-ADDDAY       DAY2    10 42                   JCAL
+0139 C  N03N43             Z-ADDDAY       DAY3    10 43                   JCAL
+0140 C           X1        ADD  001       X1                              JCAL
+0141 C           X2        ADD  001       X2                              JCAL
+0142 C           X3        ADD  001       X3                              JCAL
+0143 C           DAY       ADD  1         DAY                             JCAL
+0144 C           DAY       COMP 8                        04               JCAL
+0145 C  N04                GOTO LOOP2                                     JCAL
+0146 C                     SETOF                     010203               JCAL
+0147 C*                                                                   JCAL
+0148 C* PRINT LINES....                                                   JCAL
+0149 C*                                                                   JCAL
+0150 C                     SETOF                     20                   JCAL
+0151 C  N22                SETON                     1519                 JCAL
+0152 C   22N23             SETON                     1619                 JCAL
+0153 C   23N24             SETON                     1719                 JCAL
+0154 C   24                SETON                     1819                 JCAL
+0155 C                     EXCPT                                          JCAL
+0156 C                     SETOF                     1519                 JCAL
+0157 C                     SETOF                     161718               JCAL
+0158 C   23                SETON                     24                   JCAL
+0159 C   22                SETON                     23                   JCAL
+0160 C  N22                SETON                     22                   JCAL
+0161 C                     SETON                     20                   JCAL
+0162 C                     EXCPT                                          JCAL
+0163 C           CAL       ADD  7         CAL                             JCAL
+0164 C*                                                                   JCAL
+0165 C* SET UP SECOND LINE....                                            JCAL
+0166 C*                                                                   JCAL
+0167 C                     Z-ADD001       X1                              JCAL
+0168 C                     Z-ADD011       X2                              JCAL
+0169 C                     Z-ADD021       X3                              JCAL
+0170 C           REPEAT    TAG                                            JCAL
+0171 C           DAY1      ADD  1         DAY1                            JCAL
+0172 C           CAL,X1    COMP 007                      01               JCAL
+0173 C   01                MOVE DAY1      CAL,X1                          JCAL
+0174 C           DAY2      ADD  1         DAY2                            JCAL
+0175 C           CAL,X2    COMP 007                      02               JCAL
+0176 C   02                MOVE DAY2      CAL,X2                          JCAL
+0177 C           DAY3      ADD  1         DAY3                            JCAL
+0178 C           CAL,X3    COMP 007                      03               JCAL
+0179 C   03                MOVE DAY3      CAL,X3                          JCAL
+0180 C           X1        ADD  001       X1                              JCAL
+0181 C           X2        ADD  001       X2                              JCAL
+0182 C           X3        ADD  001       X3                              JCAL
+0183 C  N01N02N03          GOTO ARND                                      JCAL
+0184 C                     GOTO REPEAT                                    JCAL
+0185 C           ARND      TAG                                            JCAL
+0186 C                     EXCPT                                          JCAL
+0187 C           CAL       ADD  007       CAL                             JCAL
+0188 C                     EXCPT                                          JCAL
+0189 C           CAL       ADD  007       CAL                             JCAL
+0190 C           LOOP4     TAG                                            JCAL
+0191 C                     EXCPT                                          JCAL
+0192 C   06      MTH       COMP 12                       08               JCAL
+0193 C   08                SETOF                     20                   JCAL
+0194 C   08                EXSR SEP                                       JCAL
+0195 C   08                GOTO ENDF                                      JCAL
+0196 C   06                SETOF                     010203               JCAL
+0197 C   06                GOTO NEXT                                      JCAL
+0198 C   01 02 03          SETON                     0607                 JCAL
+0199 C   07      MTH       SUB  03        MTH                             JCAL
+0200 C                     SETOF                     010203               JCAL
+0201 C           CAL       ADD  007       CAL                             JCAL
+0202 C                     Z-ADD001       X1                              JCAL
+0203 C           LOOP3     TAG                                            JCAL
+0204 C           MTH       ADD  01        MTH                             JCAL
+0205 C           MTH       LOKUPTABMTH    TABDAY         04               JCAL
+0206 C   04                MOVE TABDAY    COUNT                           JCAL
+0207 C           MTH       COMP 02                       05               JCAL
+0208 C   05 99             Z-ADD29        COUNT                           JCAL
+0209 C           LOOP5     TAG                                            JCAL
+0210 C           CAL,X1    COMP COUNT                80                   JCAL
+0211 C   80N02             SETON                     81                   JCAL
+0212 C   80 02N03          SETON                     82                   JCAL
+0213 C   80 03             SETON                     83                   JCAL
+0214 C   81N02   CAL,X1    SUB  CAL,X1    CAL,X1                          JCAL
+0215 C   82 02N03CAL,X1    SUB  CAL,X1    CAL,X1                          JCAL
+0216 C   83 03   CAL,X1    SUB  CAL,X1    CAL,X1                          JCAL
+0217 C           X1        ADD  001       X1                              JCAL
+0218 C  N02      X1        COMP 008                      01               JCAL
+0219 C   02N03   X1        COMP 018                      01               JCAL
+0220 C   02 03   X1        COMP 028                      01               JCAL
+0221 C  N01                GOTO LOOP5                                     JCAL
+0222 C   02 03             GOTO LOOP4                                     JCAL
+0223 C   01 02             SETON                     03                   JCAL
+0224 C   01                SETON                     02                   JCAL
+0225 C   02N03             Z-ADD011       X1                              JCAL
+0226 C   02 03             Z-ADD021       X1                              JCAL
+0227 C                     GOTO LOOP3                                     JCAL
+0228 C           ENDF      TAG                                            JCAL
+0229 C                     SETON                     LR                   JCAL
+0230 C*                                                                   JCAL
+0231 C* ROUTINE TO PRINT SEPARATOR ****'S....                             JCAL
+0232 C*                                                                   JCAL
+0233 CSR         SEP       BEGSR                                          JCAL
+0234 CSR                   SETON                     1012                 JCAL
+0235 CSR                   EXCPT                                          JCAL
+0236 CSR                   SETOF                     12                   JCAL
+0237 CSR                   EXCPT                                          JCAL
+0238 CSR                   SETON                     13                   JCAL
+0239 CSR                   EXCPT                                          JCAL
+0240 CSR                   SETOF                     1013                 JCAL
+0241 CSR                   ENDSR                                          JCAL
+0242 OPRINTER E 3      12                                                 JCAL
+0243 O                                    1 ' '                           JCAL
+0244 O        E  1     10                                                 JCAL
+0245 O                                   49 '************************'    JCAL
+0246 O                                   73 '************************'    JCAL
+0247 O                                   97 '************************'    JCAL
+0248 O                                  105 '********'                    JCAL
+0249 O        E  1     11                                                 JCAL
+0250 O                         YER,X1    40                               JCAL
+0251 O                         YER,X2    60                               JCAL
+0252 O                         YER,X3    81                               JCAL
+0253 O                         YER,X4   105                               JCAL
+0254 O        E 3      13                                                 JCAL
+0255 O                                    1 ' '                           JCAL
+0256 O        E  1     14                                                 JCAL
+0257 O                         PICLNE   128                               JCAL
+0258 O        E  2     15                                                 JCAL
+0259 O                                   43 'J A N U A R Y'               JCAL
+0260 O                                   74 'F E B R U A R Y'             JCAL
+0261 O                                   99 'M A R C H'                   JCAL
+0262 O        E 32     16                                                 JCAL
+0263 O                                   40 'A P R I L'                   JCAL
+0264 O                                   68 'M A Y'                       JCAL
+0265 O                                   97 'J U N E'                     JCAL
+0266 O        E 32     17                                                 JCAL
+0267 O                                   40 'J U L Y'                     JCAL
+0268 O                                   71 'A U G U S T'                 JCAL
+0269 O                                  102 'S E P T E M B E R'           JCAL
+0270 O        E 32     18                                                 JCAL
+0271 O                                   42 'O C T O B E R'               JCAL
+0272 O                                   73 'N O V E M B E R'             JCAL
+0273 O                                  101 'D E C E M B E R'             JCAL
+0274 O        E  1     19                                                 JCAL
+0275 O                                   44 'S  M  T  W  T  F  S'         JCAL
+0276 O                                   74 'S  M  T  W  T  F  S'         JCAL
+0277 O                                  104 'S  M  T  W  T  F  S'         JCAL
+0278 O        E  1     20                                                 JCAL
+0279 O                         CAL      105 '  0'                         JCAL
+0280 O                                   54 '         '                   JCAL
+0281 O                                   84 '         '                   JCAL
+**
+    1111
+   11111
+  11 111
+ 11  111
+ 1   111
+     111
+     111
+     111
+     111
+     111
+     111
+     111
+     111
+     111
+     111
+     111
+1111111111111
+1111111111111
+ 222222222222
+2222222222222
+2         222
+          222
+          222
+          222
+          222
+          222
+ 222222222222
+222222222222
+22
+22
+22
+22
+22
+22
+2222222222222
+ 222222222222
+ 33333333333
+3333333333333
+33        333
+          333
+          333
+          333
+          333
+          333
+ 333333333333
+3333333333333
+          333
+          333
+          333
+          333
+          333
+3         333
+3333333333333
+ 33333333333
+444       444
+444       444
+444       444
+444       444
+444       444
+444       444
+444       444
+444       444
+444       444
+4444444444444
+4444444444444
+          444
+          444
+          444
+          444
+          444
+          444
+          444
+5555555555555
+5555555555555
+55
+55
+55
+55
+55
+55
+555555555555
+5555555555555
+          555
+          555
+          555
+          555
+          555
+          555
+5555555555555
+ 55555555555
+ 66666666666
+6666666666666
+66         66
+66
+66
+66
+66
+66
+666666666666
+6666666666666
+66        666
+66        666
+66        666
+66        666
+66        666
+66        666
+6666666666666
+ 66666666666
+7777777777777
+7777777777777
+77        777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+          777
+ 88888888888
+8888888888888
+88        888
+88        888
+88        888
+88        888
+88        888
+88        888
+8888888888888
+8888888888888
+88        888
+88        888
+88        888
+88        888
+88        888
+88        888
+8888888888888
+ 88888888888
+ 99999999999
+9999999999999
+99        999
+99        999
+99        999
+99        999
+99        999
+9999999999999
+ 999999999999
+          999
+          999
+          999
+          999
+          999
+          999
+99        999
+9999999999999
+ 99999999999
+ 00000000000
+0000000000000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+00        000
+0000000000000
+ 00000000000
+**
+1001201930374055507360917109812791450163
+**
+18004180151802618037180411805318064180751808618091181021811318124181361814718151181621817418185
+18196182071821218223182341824518257182611827218283182951830618317183211833318344183551836618371
+18382183931840418416184271843118442184541846518476184871849218503185141852518537185411855218563
+18575185861859718601186131862418635186461865118662186731868418696187071871118722187341874518756
+18767187721878318794188051881718821188321884318855188661887718881188931890418915189261893118942
+18953189641897618987189911900219013190241903519046190511906219073190841909619107191111912219134
+19145191561916719172191831919419205192171922119232192431925519266192771928119293193041931519326
+19331193421935319364193761938719391194021941419425194361944719452194631947419485194971950119512
+19523195351954619557195611957319584195951960619611196221963319644196561966719671196821969419705
+19716197271973219743197541976519777197811979219803198151982619837198411985319864198751988619891
+19902199131992419936199471995119962199741998519996200072001220023200342004520057200612007220083
+20095201062011720121201332014420155201662017120182201932020420216202272023120242202542026520276
+20287202922030320314203252033720341203522036320375203862039720401204132042420435204462045120462
+20473204842049620507205112052220534205452055620567205722058320594
+**
+013102280331043005310630073108310930103111301231
+**
