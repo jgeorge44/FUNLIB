@@ -1,0 +1,8 @@
+0001 SSCRN01    0124 YY Y   Y
+0002 DFL0001  00020202Y  YN         Y     Y            C01
+0003 D        00150514Y               Y                CENTER YOUR NAME
+0004 DNAME    00300531   YB   BY  YY            Y
+0005 D        00350814Y                                CPRESS FIELD EXIT------FX
+0006 DOR NEXT COPY
+0007 D        00280914Y                                CPRESS CMD KEY 7 ------TX
+0008 DO END
